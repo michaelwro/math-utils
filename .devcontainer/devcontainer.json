@@ -1,25 +1,26 @@
 {
     "name": "math-utils",
     "build": {
-        "dockerfile": "../Dockerfile"
+        "dockerfile": "Dockerfile"
     },
-    "workspaceFolder": "/home/math-utils-dev/",
     "customizations": {
         "vscode": {
             "extensions": [
                 "ms-python.python",
-                "eamodio.gitlens",
                 "ms-vscode.cpptools",
                 "ms-vscode.cpptools-extension-pack",
-                "jeff-hykin.better-cpp-syntax",
-                "davidanson.vscode-markdownlint",
-                "ue.alphabetical-sorter",
                 "cschlosser.doxdocgen",
-                "njpwerner.autodocstring"
+                "davidanson.vscode-markdownlint",
+                "eamodio.gitlens",
+                "jeff-hykin.better-cpp-syntax",
+                "matepek.vscode-catch2-test-adapter",
+                "njpwerner.autodocstring",
+                "ue.alphabetical-sorter"
             ],
             "settings": {
                 "C_Cpp.vcFormat.indent.namespaceContents": false
             }
         }
-    }
+    },
+    "postCreateCommand": "pre-commit install"
 }

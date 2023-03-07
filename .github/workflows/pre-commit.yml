@@ -1,5 +1,5 @@
-# cppcheck static analysis
-name: pre-commit Linting & Style
+# run pre-commit hooks
+name: Pre-Commit
 
 on:
   pull_request:
@@ -9,11 +9,18 @@ on:
 
 jobs:
   pre-commit:
-    name: Run Pre-Commit Checks
+    name: Pre-Commit Checks
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'ci skip')"
-
     steps:
       - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install pre-commit
+        run: python3 -m pip install pre-commit
+
       - name: Run pre-commit
         run: pre-commit run --all-files --color=always --show-diff-on-failure

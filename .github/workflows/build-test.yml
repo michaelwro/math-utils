@@ -1,5 +1,5 @@
 # Build and run test suite
-name: Build & Test
+name: Build and Test
 
 on:
   pull_request:
@@ -26,7 +26,8 @@ jobs:
           g++ --version
       - name: Build
         run: |
-          mkdir -p build && cd build/
+          mkdir -p build
+          cd build/
           cmake .. -DCMAKE_BUILD_TYPE=Debug
           make -j2
       - name: Run tests

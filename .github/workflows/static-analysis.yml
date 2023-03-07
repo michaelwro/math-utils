@@ -20,16 +20,19 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install cppcheck
         run: |
-          sudo apt update && \
+          sudo apt update
           DEBIAN_FRONTEND=noninteractive sudo apt install -y cppcheck
+
       - name: Check cppcheck version
         run: cppcheck --version
+
       - name: Run cppcheck
         run: |
-          cppcheck ./src/** \
+          cppcheck . \
             --quiet \
             --enable=style,warning \
             --language=c++ \
             --std=${{ matrix.cpp-standard }} \
             --platform=unix64 \
             -I include/
+            -i build/

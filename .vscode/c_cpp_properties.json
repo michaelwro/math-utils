@@ -13,8 +13,10 @@
             ],
             "cppStandard": "c++20",
             "intelliSenseMode": "${default}",
-            "configurationProvider": "${default}",
-            "defines": ["MATHUTILS_TEST_REPORT_DIR=\"build/test-reports/\""],
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "defines": [
+                "MATHUTILS_TEST_REPORT_DIR=\"build/test-reports/\""
+            ],
             "compilerPath": "/usr/bin/g++"
         }
     ]
