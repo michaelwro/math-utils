@@ -1,0 +1,25 @@
+{
+    "name": "math-utils",
+    "build": {
+        "dockerfile": "../Dockerfile"
+    },
+    "workspaceFolder": "/home/math-utils-dev/",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "eamodio.gitlens",
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-extension-pack",
+                "jeff-hykin.better-cpp-syntax",
+                "davidanson.vscode-markdownlint",
+                "ue.alphabetical-sorter",
+                "cschlosser.doxdocgen",
+                "njpwerner.autodocstring"
+            ],
+            "settings": {
+                "C_Cpp.vcFormat.indent.namespaceContents": false
+            }
+        }
+    }
+}
