@@ -1,0 +1,11 @@
+build/
+Build/
+
+*.a
+*.o
+*.so
+
+**/__pycache__/
+*.pyc
+
+.vscode/settings.json

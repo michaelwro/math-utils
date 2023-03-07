@@ -1,0 +1,35 @@
+# cppcheck static analysis
+name: Static Analysis
+
+on:
+  pull_request:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+jobs:
+  static-analysis:
+    name: Static Analysis
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'ci skip')"
+    strategy:
+      matrix:
+        cpp-standard: [c++17, c++20]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install cppcheck
+        run: |
+          sudo apt update && \
+          DEBIAN_FRONTEND=noninteractive sudo apt install -y cppcheck
+      - name: Check cppcheck version
+        run: cppcheck --version
+      - name: Run cppcheck
+        run: |
+          cppcheck ./src/** \
+            --quiet \
+            --enable=style,warning \
+            --language=c++ \
+            --std=${{ matrix.cpp-standard }} \
+            --platform=unix64 \
+            -I include/

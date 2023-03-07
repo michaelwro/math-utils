@@ -1,0 +1,19 @@
+# cppcheck static analysis
+name: pre-commit Linting & Style
+
+on:
+  pull_request:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+jobs:
+  pre-commit:
+    name: Run Pre-Commit Checks
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'ci skip')"
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run pre-commit
+        run: pre-commit run --all-files --color=always --show-diff-on-failure

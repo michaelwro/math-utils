@@ -1,0 +1,36 @@
+# Build and run test suite
+name: Build & Test
+
+on:
+  pull_request:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-22.04
+    if: "!contains(github.event.head_commit.message, 'ci skip')"
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install deps
+        run: |
+          sudo apt update
+          DEBIAN_FRONTEND=noninteractive sudo apt install -y cmake
+      - name: Check deps versions
+        run: |
+          cmake --version
+          ctest --version
+          g++ --version
+      - name: Build
+        run: |
+          mkdir -p build && cd build/
+          cmake .. -DCMAKE_BUILD_TYPE=Debug
+          make -j2
+      - name: Run tests
+        working-directory: build
+        run: ctest --output-on-failure
+
+
