@@ -160,6 +160,37 @@ TEST(VectorTest, FillFillsVector)
 
 
 // ====================================================================================================================
+TEST(VectorTest, ComputesCorrectMagnitude)
+{
+  Vector<3> vec = {1, 1, 1};
+
+  double mag = vec.magnitude();
+
+  EXPECT_DOUBLE_EQ(
+    mag, std::sqrt((vec(0)*vec(0)) + (vec(1)*vec(1)) + (vec(2)*vec(2)))
+  );
+}
+
+
+// ====================================================================================================================
+TEST(VectorTest, NormalizesCorrectly)
+{
+  const double val0 = 3;
+  const double val1 = 2;
+  const double val2 = 1;
+  Vector<3> vec = {val0, val1, val2};
+
+  double mag = std::sqrt((vec(0)*vec(0)) + (vec(1)*vec(1)) + (vec(2)*vec(2)));
+
+  vec.normalize();
+
+  EXPECT_DOUBLE_EQ(vec(0), val0 / mag);
+  EXPECT_DOUBLE_EQ(vec(1), val1 / mag);
+  EXPECT_DOUBLE_EQ(vec(2), val2 / mag);
+}
+
+
+// ====================================================================================================================
 int main(int argc, char** argv)
 {
   ::testing::GTEST_FLAG(output) = std::string("xml:") + test_reports_file;

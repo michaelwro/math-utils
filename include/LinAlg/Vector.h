@@ -11,9 +11,11 @@
 #include <algorithm>
 #include <array>
 #include <cassert>
+#include <cmath>
 #include <initializer_list>
 #include <iomanip>
 #include <iostream>
+#include <numeric>
 #include <type_traits>
 
 namespace MathUtils { namespace LinAlg {
@@ -172,6 +174,36 @@ public:
   {
     m_arr.fill(val);
   }
+
+
+  /**
+   * @brief Return the magnitude/norm of the vector.
+   *
+   * @return Vector magnitude.
+   */
+  double magnitude() const
+  {
+    const double magn = std::accumulate(
+      m_arr.begin(), m_arr.end(), 0.0,
+      [](double accum, const double& val){return accum += val * val;}
+      );
+
+    return std::sqrt(magn);
+  }
+
+
+  /**
+   * @brief Normalize the vector.
+   */
+  void normalize()
+  {
+    const double magn = magnitude();
+
+    std::for_each(
+      m_arr.begin(), m_arr.end(), [magn](double& val){val /= magn;}
+    );
+  }
+
 
   /**
    * @brief Print a vector to a stream. Comma-separates values. Does not add a newline at the end.
