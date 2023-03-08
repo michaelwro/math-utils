@@ -1,6 +1,6 @@
-cppcheck-junit==2.2.0
-numpy==1.24.2
-scipy==1.10.1
-pre-commit==3.1.1
 black==23.1.0
+cppcheck-junit
 isort==5.12.0
+numpy
+pre-commit
+scipy
