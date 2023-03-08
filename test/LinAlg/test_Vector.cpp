@@ -14,6 +14,10 @@
 
 using MathUtils::LinAlg::Vector;
 
+
+namespace {
+
+
 // file to save test repots to
 const std::string test_reports_file = std::string("./LinAlg-Vector-report.xml");
 
@@ -32,7 +36,7 @@ TEST(VectorTest, DefaultConstructorZerosElements)
 // ====================================================================================================================
 TEST(VectorTest, InitListConstructionWorks)
 {
-  Vector<4> vec = {1, 2, 3, 4};
+  Vector<4> vec({1, 2, 3, 4});
 
   EXPECT_DOUBLE_EQ(vec(0), 1);
   EXPECT_DOUBLE_EQ(vec(1), 2);
@@ -164,3 +168,5 @@ int main(int argc, char** argv)
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
+
+}  // namespace

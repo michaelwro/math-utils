@@ -12,7 +12,6 @@
 
 #include <cstddef>
 
-
 namespace MathUtils { namespace LinAlg {
 
 

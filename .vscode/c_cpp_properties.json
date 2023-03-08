@@ -5,13 +5,13 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/include/**",
+                "${workspaceFolder}/include/LinAlg**",
                 "${workspaceFolder}/build/_deps/googletest-src/googletest/include/**",
                 "${workspaceFolder}/build/_deps/googletest-src/googlemock/include/**"
             ],
             "cppStandard": "c++20",
-            "intelliSenseMode": "${default}",
-            "configurationProvider": "ms-vscode.cmake-tools",
+            "intelliSenseMode": "linux-gcc-x64",
+            "configurationProvider": "${default}",
             "defines": [],
             "compilerPath": "/usr/bin/g++"
         }

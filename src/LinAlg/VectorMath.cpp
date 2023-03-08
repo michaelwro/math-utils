@@ -79,7 +79,7 @@ double dot(const Vector<N1>& v1, const Vector<N2>& v2)
 
 Vector<3> cross(const Vector<3>& v1, const Vector<3>& v2)
 {
-  return Vector<3> {
+  return Vector<3>{
     (v1(1) * v2(2)) - (v1(2) - v2(1)),
     (v1(2) * v2(0)) - (v1(0) - v2(2)),
     (v1(0) * v2(1)) - (v1(1) - v2(0))

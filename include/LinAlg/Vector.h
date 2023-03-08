@@ -16,7 +16,6 @@
 #include <iostream>
 #include <type_traits>
 
-
 namespace MathUtils { namespace LinAlg {
 
 
@@ -29,6 +28,9 @@ template<std::size_t N>
 class Vector
 {
 public:
+
+  static_assert(N > 1, "One-length or zero-length vectors are not allowed.");
+
   /**
    * @brief Create a Vector.
    *
@@ -50,13 +52,13 @@ public:
    * @param vector_vals Vector values.
    */
   template<typename T>
-  Vector(const std::initializer_list<T>& vector_vals)
+  Vector(std::initializer_list<T> vector_vals)
   {
     /**
      * NOTE: Since an initializer list is non-static, we cannot use `static_assert` to check the length. Therefore,
      * this assert is done at runtime.
      */
-    static_assert(std::is_fundamental<T>::value);
+    static_assert(std::is_fundamental<T>::value, "Vectors can only be initialized from fundamental types");
     assert(N == vector_vals.size());
 
     /**
@@ -109,13 +111,13 @@ public:
    * @param vector_vals New vector values.
    */
   template<typename T>
-  Vector& operator=(const std::initializer_list<T>& vector_vals)
+  Vector& operator=(std::initializer_list<T> vector_vals)
   {
     /**
      * NOTE: Since an initializer list is non-static, we cannot use `static_assert` to check the length. Therefore,
      * this assert is done at runtime.
      */
-    static_assert(std::is_fundamental<T>::value);
+    static_assert(std::is_fundamental<T>::value, "Vectors can only be initialized from fundamental types");
     assert(N == vector_vals.size());
 
     /**

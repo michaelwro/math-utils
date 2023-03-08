@@ -12,9 +12,6 @@ jobs:
     name: Static Analysis
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'ci skip')"
-    strategy:
-      matrix:
-        cpp-standard: [c++17, c++20]
 
     steps:
       - uses: actions/checkout@v3
@@ -28,11 +25,11 @@ jobs:
 
       - name: Run cppcheck
         run: |
-          cppcheck . \
+          cppcheck ./src/ \
             --quiet \
             --enable=style,warning \
             --language=c++ \
-            --std=${{ matrix.cpp-standard }} \
+            --std=c++20 \
             --platform=unix64 \
-            -I include/
-            -i build/
+            -I ./include/ \
+            -i ./build/
