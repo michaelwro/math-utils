@@ -10,11 +10,6 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(googletest)
 
-# directory for test results XML files
-# this is so CI pipelines can output to a specified directory
-if (NOT MATHUTILS_TEST_REPORT_DIR)
-    set(MATHUTILS_TEST_REPORT_DIR ${PROJECT_BINARY_DIR}/test-reports/)
-endif()
 
-# MAKE TESTS
+# MAKE TESTS ==========================================================================================================
 add_subdirectory("./LinAlg/")

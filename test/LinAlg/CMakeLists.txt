@@ -1,13 +1,13 @@
-# linalg tests
+# BUILD TESTS =========================================================================================================
 set(TEST_LINALG_EXEC test_linalg)
 
 # get sources
-file(GLOB LINALG_SRC
+file(GLOB TEST_LINALG_SRC
     "./*.cpp"
 )
 
 add_executable(${TEST_LINALG_EXEC}
-    ${LINALG_SRC}
+    ${TEST_LINALG_SRC}
 )
 
 target_include_directories(${TEST_LINALG_EXEC} PUBLIC
@@ -16,11 +16,10 @@ target_include_directories(${TEST_LINALG_EXEC} PUBLIC
 
 target_link_libraries(${TEST_LINALG_EXEC} PUBLIC
     GTest::gtest_main
-    # ${MATHUTILS_LIB}
+    ${MATHUTILS_LIB}
 )
 
-target_compile_definitions(${TEST_LINALG_EXEC} PRIVATE MATHUTILS_TEST_REPORT_DIR="${MATHUTILS_TEST_REPORT_DIR}")
-
+# ADD TESTS ===========================================================================================================
 add_test(NAME ${TEST_LINALG_EXEC}
     COMMAND ${TEST_LINALG_EXEC}
 )
