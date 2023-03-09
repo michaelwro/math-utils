@@ -6,6 +6,9 @@ project(MathUtils LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# set path to CMake modules
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules/)
+
 # define compiler and preprocessor options
 # compile with -DCMAKE_BUILD_TYPE=Release or -DCMAKE_BUILD_TYPE=Debug
 set(MATHUTILS_COMPILE_DEBUG_DEFINITIONS "")

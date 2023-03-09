@@ -19,7 +19,7 @@ namespace {
 
 
 // file to save test repots to
-const std::string test_reports_file = std::string("./LinAlg-Vector-report.xml");
+const std::string test_reports_file = std::string("./TESTRESULTS-LinAlg-Vector.xml");
 
 
 // ====================================================================================================================
@@ -59,7 +59,7 @@ TEST(VectorTest, InitListConstructorAssertsInvalidSize)
 // ====================================================================================================================
 TEST(VectorTest, CopyConstructorWorks)
 {
-  Vector<2> vec = {-1, -2};
+  Vector<2> vec {-1, -2};
   Vector<2> vec2(vec);
 
   EXPECT_DOUBLE_EQ(vec2(0), -1);
@@ -70,7 +70,7 @@ TEST(VectorTest, CopyConstructorWorks)
 // ====================================================================================================================
 TEST(VectorTest, CopyAssignWorks)
 {
-  Vector<3> vec = {1, 3, 2};
+  Vector<3> vec({1, 3, 2});
   Vector<3> vec2;
 
   vec2 = vec;
@@ -84,7 +84,7 @@ TEST(VectorTest, CopyAssignWorks)
 // ====================================================================================================================
 TEST(VectorTest, MoveAssignWorks)
 {
-  Vector<4> vec = {4, 3, 2, 1};
+  Vector<4> vec {4, 3, 2, 1};
   Vector<4> vec2;
 
   vec2 = std::move(vec);
@@ -125,7 +125,7 @@ TEST(VectorTest, InitListAssignAssertsIncompatibleSize)
 // ====================================================================================================================
 TEST(VectorTest, ParenthesisAccessorCanModifyValues)
 {
-  Vector<3> vec = {1, 2, 3};
+  Vector<3> vec({1, 2, 3});
 
   vec(0) = 4;
   vec(1) = 5;
@@ -140,7 +140,7 @@ TEST(VectorTest, ParenthesisAccessorCanModifyValues)
 // ====================================================================================================================
 TEST(VectorTest, LengthGetterReturnsCorrectLength)
 {
-  Vector<4> vec = {1, 2, 3, 4};
+  Vector<4> vec {1, 2, 3, 4};
 
   EXPECT_EQ(vec.length(), 4);
 }
@@ -149,7 +149,7 @@ TEST(VectorTest, LengthGetterReturnsCorrectLength)
 // ====================================================================================================================
 TEST(VectorTest, FillFillsVector)
 {
-  Vector<3> vec = {1, 1, 1};
+  Vector<3> vec {1, 1, 1};
 
   vec.fill(123.0);
 
@@ -162,7 +162,7 @@ TEST(VectorTest, FillFillsVector)
 // ====================================================================================================================
 TEST(VectorTest, ComputesCorrectMagnitude)
 {
-  Vector<3> vec = {1, 1, 1};
+  Vector<3> vec {1, 1, 1};
 
   double mag = vec.magnitude();
 
@@ -178,7 +178,7 @@ TEST(VectorTest, NormalizesCorrectly)
   const double val0 = 3;
   const double val1 = 2;
   const double val2 = 1;
-  Vector<3> vec = {val0, val1, val2};
+  Vector<3> vec({val0, val1, val2});
 
   double mag = std::sqrt((vec(0)*vec(0)) + (vec(1)*vec(1)) + (vec(2)*vec(2)));
 
@@ -187,6 +187,15 @@ TEST(VectorTest, NormalizesCorrectly)
   EXPECT_DOUBLE_EQ(vec(0), val0 / mag);
   EXPECT_DOUBLE_EQ(vec(1), val1 / mag);
   EXPECT_DOUBLE_EQ(vec(2), val2 / mag);
+}
+
+
+// ====================================================================================================================
+TEST(VectorTest, SumsElementsCorrectly)
+{
+  Vector<3> vec({5, 4, 3});
+
+  EXPECT_DOUBLE_EQ(vec.sum(), 12);
 }
 
 

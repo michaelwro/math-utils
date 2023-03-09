@@ -43,9 +43,25 @@ cmake .. && make -j
 ctest
 ```
 
-## Get Repository
+## Code Coverage
+
+Generate a `lcov` code coverage report with the following commands. NOTE: be sure to `Debug` build.
+
+```shell
+# run tests (debug built)
+cd build/
+ctest
+
+# generate lcov report
+lcov --base-directory $(pwd) --directory $(pwd)/../ --capture --output-file coverage-results.info &&\
+lcov --remove coverage-results.info '/usr/*' '*/gtest/*' --output-file coverage-results-cleaned.info &&\
+genhtml -o coverage-html coverage-results-cleaned.info --legend --title "MathUtils Test Coverage"
+```
+
+## Repository
 
 The code repo can be found [here](https://github.com/michaelwro/math-utils).
+
 ```shell
 git clone https://github.com/michaelwro/math-utils.git
 ```

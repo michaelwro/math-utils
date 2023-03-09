@@ -32,4 +32,5 @@ jobs:
             --std=c++20 \
             --platform=unix64 \
             -I ./include/ \
-            -i ./build/
+            -i ./build/ \
+            -i ./test/

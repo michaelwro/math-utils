@@ -14,6 +14,7 @@
 #include <cmath>
 #include <initializer_list>
 #include <iomanip>
+#include <functional>
 #include <iostream>
 #include <numeric>
 #include <type_traits>
@@ -54,7 +55,7 @@ public:
    * @param vector_vals Vector values.
    */
   template<typename T>
-  Vector(std::initializer_list<T> vector_vals)
+  explicit Vector(std::initializer_list<T> vector_vals)
   {
     /**
      * NOTE: Since an initializer list is non-static, we cannot use `static_assert` to check the length. Therefore,
@@ -202,6 +203,17 @@ public:
     std::for_each(
       m_arr.begin(), m_arr.end(), [magn](double& val){val /= magn;}
     );
+  }
+
+
+  /**
+   * @brief Return the sum of all elements in the vector.
+   *
+   * @return Sum of all vector elements.
+   */
+  double sum() const
+  {
+    return std::accumulate(m_arr.begin(), m_arr.end(), 0.0, std::plus<double>());
   }
 
 

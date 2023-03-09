@@ -16,7 +16,7 @@ namespace MathUtils { namespace LinAlg {
 template<std::size_t N_LEFT, std::size_t N_RIGHT>
 Vector<N_LEFT> operator+(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
 {
-  static_assert(N_LEFT == N_RIGHT);
+  static_assert(N_LEFT == N_RIGHT, "Incompatible dimensions.");
 
   Vector<N_LEFT> result;
 
@@ -36,11 +36,12 @@ Vector<N_LEFT> operator+(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
 template<std::size_t N, typename T>
 Vector<N> operator*(const Vector<N>& vec, const T scalar)
 {
-  static_assert(std::is_fundamental<T>::value);
+  static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
 
   Vector<N> res;
 
-  for (std::size_t idx = 0; idx < vec.length(); idx++) {
+  for (std::size_t idx = 0; idx < vec.length(); idx++)
+  {
     res(idx) = static_cast<double>(scalar) * vec(idx);
   }
 
@@ -55,7 +56,7 @@ Vector<N> operator*(const Vector<N>& vec, const T scalar)
 template<std::size_t N, typename T>
 Vector<N> operator*(const T scalar, const Vector<N>& vec)
 {
-  static_assert(std::is_fundamental<T>::value);
+  static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
   return Vector<N> {vec * static_cast<double>(scalar)};
 }
 
@@ -63,11 +64,10 @@ Vector<N> operator*(const T scalar, const Vector<N>& vec)
 template<std::size_t N1, std::size_t N2>
 double dot(const Vector<N1>& v1, const Vector<N2>& v2)
 {
-  static_assert(N1 == N2);
+  static_assert(N1 == N2, "Incompatible dimensions.");
 
   double dot_prod = 0.0;
 
-  // TODO: Use std::accumulate?
   for (std::size_t idx = 0; idx < N1; idx++)
   {
     dot_prod += v1(idx) * v2(idx);

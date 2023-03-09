@@ -10,6 +10,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     gdb \
     git \
     cmake \
+    lcov \
+    pmccabe \
     cppcheck \
     python3.10 \
     python3-pip
