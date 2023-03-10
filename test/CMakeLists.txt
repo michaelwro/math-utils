@@ -10,9 +10,9 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(googletest)
 
-# CODE COVERAGE SETUP =================================================================================================
-
-set(MATHUTILS_TEST_COMPILE_OPTIONS -g3 -O0 -fprofile-arcs -ftest-coverage)
-
 # MAKE TESTS ==========================================================================================================
+link_directories(${TEST_LINALG_EXEC} PRIVATE
+    ${MATHUTILS_LIB_OUTPUT_DIR}
+)
+
 add_subdirectory("./LinAlg/")

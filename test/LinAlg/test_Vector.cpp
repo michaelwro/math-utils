@@ -7,6 +7,7 @@
 
 #include "LinAlg/Vector.h"
 
+#include <cmath>
 #include <gtest/gtest.h>
 #include <initializer_list>
 #include <string>
@@ -14,16 +15,12 @@
 
 using MathUtils::LinAlg::Vector;
 
-
 namespace {
 
-
-// file to save test repots to
-const std::string test_reports_file = std::string("./TESTRESULTS-LinAlg-Vector.xml");
-
+const std::string test_reports_file = std::string("TESTRESULTS-LinAlg-Vector.xml");
 
 // ====================================================================================================================
-TEST(VectorTest, DefaultConstructorZerosElements)
+TEST(LinAlg_Vector, DefaultConstructorZerosElements)
 {
   Vector<3> vec;
 
@@ -32,9 +29,8 @@ TEST(VectorTest, DefaultConstructorZerosElements)
   EXPECT_DOUBLE_EQ(vec(2), 0.0);
 }
 
-
 // ====================================================================================================================
-TEST(VectorTest, InitListConstructionWorks)
+TEST(LinAlg_Vector, InitListConstructionWorks)
 {
   Vector<4> vec({1, 2, 3, 4});
 
@@ -44,9 +40,8 @@ TEST(VectorTest, InitListConstructionWorks)
   EXPECT_DOUBLE_EQ(vec(3), 4);
 }
 
-
 // ====================================================================================================================
-TEST(VectorTest, InitListConstructorAssertsInvalidSize)
+TEST(LinAlg_Vector, AssertsInvalidLengthInitializerList)
 {
   std::initializer_list<double> vals = {1, 2, 3, 4};
 
@@ -55,9 +50,8 @@ TEST(VectorTest, InitListConstructorAssertsInvalidSize)
     }, "");
 }
 
-
 // ====================================================================================================================
-TEST(VectorTest, CopyConstructorWorks)
+TEST(LinAlg_Vector, CopyConstructorWorks)
 {
   Vector<2> vec {-1, -2};
   Vector<2> vec2(vec);
@@ -66,9 +60,8 @@ TEST(VectorTest, CopyConstructorWorks)
   EXPECT_DOUBLE_EQ(vec2(1), -2);
 }
 
-
 // ====================================================================================================================
-TEST(VectorTest, CopyAssignWorks)
+TEST(LinAlg_Vector, CopyAssignWorks)
 {
   Vector<3> vec({1, 3, 2});
   Vector<3> vec2;
@@ -80,9 +73,8 @@ TEST(VectorTest, CopyAssignWorks)
   EXPECT_DOUBLE_EQ(vec2(2), 2);
 }
 
-
 // ====================================================================================================================
-TEST(VectorTest, MoveAssignWorks)
+TEST(LinAlg_Vector, MoveAssignWorks)
 {
   Vector<4> vec {4, 3, 2, 1};
   Vector<4> vec2;
@@ -95,9 +87,8 @@ TEST(VectorTest, MoveAssignWorks)
   EXPECT_DOUBLE_EQ(vec2(3), 1);
 }
 
-
 // ====================================================================================================================
-TEST(VectorTest, InitListAssignWorks)
+TEST(LinAlg_Vector, InitializerListAssignWorks)
 {
   Vector<4> vec;
 
@@ -109,9 +100,8 @@ TEST(VectorTest, InitListAssignWorks)
   EXPECT_DOUBLE_EQ(vec(3), 4);
 }
 
-
 // ====================================================================================================================
-TEST(VectorTest, InitListAssignAssertsIncompatibleSize)
+TEST(LinAlg_Vector, InitListAssignAssertsIncompatibleSize)
 {
   Vector<3> vec;
   std::initializer_list<double> four_vals = {1, 3, 2, 4};
@@ -121,9 +111,8 @@ TEST(VectorTest, InitListAssignAssertsIncompatibleSize)
   }, "");
 }
 
-
 // ====================================================================================================================
-TEST(VectorTest, ParenthesisAccessorCanModifyValues)
+TEST(LinAlg_Vector, ParenthesisAccessorCanModifyValues)
 {
   Vector<3> vec({1, 2, 3});
 
@@ -136,18 +125,16 @@ TEST(VectorTest, ParenthesisAccessorCanModifyValues)
   EXPECT_DOUBLE_EQ(vec(2), 6);
 }
 
-
 // ====================================================================================================================
-TEST(VectorTest, LengthGetterReturnsCorrectLength)
+TEST(LinAlg_Vector, LengthGetterReturnsCorrectLength)
 {
   Vector<4> vec {1, 2, 3, 4};
 
   EXPECT_EQ(vec.length(), 4);
 }
 
-
 // ====================================================================================================================
-TEST(VectorTest, FillFillsVector)
+TEST(LinAlg_Vector, FillFillsVector)
 {
   Vector<3> vec {1, 1, 1};
 
@@ -158,9 +145,8 @@ TEST(VectorTest, FillFillsVector)
   EXPECT_DOUBLE_EQ(vec(2), 123);
 }
 
-
 // ====================================================================================================================
-TEST(VectorTest, ComputesCorrectMagnitude)
+TEST(LinAlg_Vector, ComputesCorrectMagnitude)
 {
   Vector<3> vec {1, 1, 1};
 
@@ -171,9 +157,8 @@ TEST(VectorTest, ComputesCorrectMagnitude)
   );
 }
 
-
 // ====================================================================================================================
-TEST(VectorTest, NormalizesCorrectly)
+TEST(LinAlg_Vector, NormalizesCorrectly)
 {
   const double val0 = 3;
   const double val1 = 2;
@@ -189,15 +174,13 @@ TEST(VectorTest, NormalizesCorrectly)
   EXPECT_DOUBLE_EQ(vec(2), val2 / mag);
 }
 
-
 // ====================================================================================================================
-TEST(VectorTest, SumsElementsCorrectly)
+TEST(LinAlg_Vector, SumsElementsCorrectly)
 {
   Vector<3> vec({5, 4, 3});
 
   EXPECT_DOUBLE_EQ(vec.sum(), 12);
 }
-
 
 // ====================================================================================================================
 int main(int argc, char** argv)

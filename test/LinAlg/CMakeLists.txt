@@ -6,7 +6,6 @@ file(GLOB TEST_LINALG_SRC
     "./*.cpp"
 )
 
-# include(CTestCoverageCollectGCOV)
 add_executable(${TEST_LINALG_EXEC}
     ${TEST_LINALG_SRC}
 )
@@ -21,7 +20,6 @@ target_include_directories(${TEST_LINALG_EXEC} PUBLIC
 
 target_link_libraries(${TEST_LINALG_EXEC} PUBLIC
     ${MATHUTILS_LIB}
-    gcov
     GTest::gtest_main
 )
 

@@ -6,21 +6,18 @@
     "customizations": {
         "vscode": {
             "extensions": [
-                "ms-python.python",
-                "ms-vscode.cpptools",
-                "ms-vscode.cpptools-extension-pack",
                 "cschlosser.doxdocgen",
                 "davidanson.vscode-markdownlint",
                 "eamodio.gitlens",
                 "jeff-hykin.better-cpp-syntax",
                 "matepek.vscode-catch2-test-adapter",
+                "ms-python.python",
+                "ms-vscode.cpptools-extension-pack",
+                "ms-vscode.cpptools",
                 "njpwerner.autodocstring",
                 "ue.alphabetical-sorter"
-            ],
-            "settings": {
-                "C_Cpp.vcFormat.indent.namespaceContents": false
-            }
+            ]
         }
     },
-    "postCreateCommand": "pre-commit install"
+    "postStartCommand": "pre-commit install"
 }

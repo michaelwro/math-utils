@@ -14,12 +14,15 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules/)
 set(MATHUTILS_COMPILE_DEBUG_DEFINITIONS "")
 set(MATHUTILS_COMPILE_RELEASE_DEFINITIONS "NDEBUG")
 
+# set(COVERAGE_COMPILE_OPTIONS "-fprofile-arcs;-ftest-coverage;--coverage")
+
 set(MATHUTILS_COMPILE_OPTIONS "-Wall;-Wextra;-Wpedantic;-Wshadow;-Wconversion;-Wdouble-promotion;-Wundef;-Wformat=2;-fno-common")
-set(MATHUTILS_COMPILE_DEBUG_OPTIONS "${MATHUTILS_COMPILE_OPTIONS};-g3;-O0;-Werror")
+set(MATHUTILS_COMPILE_DEBUG_OPTIONS "${MATHUTILS_COMPILE_OPTIONS};${COVERAGE_COMPILE_OPTIONS};-g3;-O0;-Werror")
 set(MATHUTILS_COMPILE_RELEASE_OPTIONS "${MATHUTILS_COMPILE_OPTIONS};-O1")
 
 # library name
 set(MATHUTILS_LIB "mathutils")
+set(MATHUTILS_LIB_OUTPUT_DIR ${PROJECT_BINARY_DIR}/lib/)
 
 # source and include folders
 set(SRC_DIR "src/")
@@ -38,7 +41,7 @@ set(LINALG_DIR "LinAlg/")
 # )
 
 file(GLOB LINALG_SRC
-    ${SRC_DIR}/${LINALG_DIR}/*.cpp
+    "${SRC_DIR}/${LINALG_DIR}/*.cpp"
 )
 
 # BUILD LIBRARY
@@ -54,12 +57,15 @@ target_compile_options(${MATHUTILS_LIB} PRIVATE "$<$<CONFIG:DEBUG>:${MATHUTILS_C
 target_compile_options(${MATHUTILS_LIB} PRIVATE "$<$<CONFIG:RELEASE>:${MATHUTILS_COMPILE_RELEASE_OPTIONS}>")
 
 target_include_directories(${MATHUTILS_LIB} PUBLIC
-    # ${INCL_DIR}/${GEODESY_DIR}
-    ${INCL_DIR}/${LINALG_DIR}
-)
-
-include_directories(${MATHUTILS_LIB} PUBLIC
     ${INCL_DIR}
+    # ${INCL_DIR}/${LINALG_DIR}
+)
+# include_directories(${MATHUTILS_LIB} PUBLIC
+#     ${INCL_DIR}
+# )
+
+set_target_properties(${MATHUTILS_LIB} PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY ${MATHUTILS_LIB_OUTPUT_DIR}
 )
 
 

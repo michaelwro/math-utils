@@ -12,10 +12,9 @@
 #include <array>
 #include <cassert>
 #include <cmath>
+#include <functional>
 #include <initializer_list>
 #include <iomanip>
-#include <functional>
-#include <iostream>
 #include <numeric>
 #include <type_traits>
 
@@ -44,9 +43,10 @@ public:
     m_arr.fill(0.0);
   }
 
-
+  /**
+   * @brief Destroy the vector.
+   */
   ~Vector() = default;
-
 
   /**
    * @brief Create a vector from an initializer list.
@@ -55,13 +55,10 @@ public:
    * @param vector_vals Vector values.
    */
   template<typename T>
-  explicit Vector(std::initializer_list<T> vector_vals)
+  explicit Vector(const std::initializer_list<T> vector_vals)
   {
-    /**
-     * NOTE: Since an initializer list is non-static, we cannot use `static_assert` to check the length. Therefore,
-     * this assert is done at runtime.
-     */
-    static_assert(std::is_fundamental<T>::value, "Vectors can only be initialized from fundamental types");
+    // NOTE: Use an `assert` since the initializer list is non-static.
+    static_assert(std::is_fundamental<T>::value, "Vectors can only be initialized from fundamental types.");
     assert(N == vector_vals.size());
 
     /**
@@ -72,7 +69,6 @@ public:
     std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
   }
 
-
   /**
    * @brief Copy-construct vector.
    *
@@ -81,7 +77,6 @@ public:
   Vector(const Vector& src_vec)
     :m_arr{src_vec.m_arr}
   {}
-
 
   /**
    * @brief Copy-assign vector.
@@ -94,7 +89,6 @@ public:
     return *this;
   }
 
-
   /**
    * @brief Move-assign vector.
    * @param src_vec Other vector.
@@ -106,15 +100,14 @@ public:
     return *this;
   }
 
-
   /**
    * @brief Assign vector values from an initializer list.
    *
    * @tparam T Initializer list type.
-   * @param vector_vals New vector values.
+   * @param vector_vals New vector.
    */
   template<typename T>
-  Vector& operator=(std::initializer_list<T> vector_vals)
+  Vector& operator=(const std::initializer_list<T> vector_vals)
   {
     /**
      * NOTE: Since an initializer list is non-static, we cannot use `static_assert` to check the length. Therefore,
@@ -132,7 +125,6 @@ public:
     return *this;
   }
 
-
   /**
    * @brief Access vector element.
    *
@@ -144,9 +136,8 @@ public:
     return m_arr.at(idx);
   }
 
-
   /**
-   * @brief Get Vector element.
+   * @brief Get vector element.
    *
    * @param idx Vector index.
    * @return Vector value at specified index.
@@ -176,7 +167,6 @@ public:
     m_arr.fill(val);
   }
 
-
   /**
    * @brief Return the magnitude/norm of the vector.
    *
@@ -192,7 +182,6 @@ public:
     return std::sqrt(magn);
   }
 
-
   /**
    * @brief Normalize the vector.
    */
@@ -205,7 +194,6 @@ public:
     );
   }
 
-
   /**
    * @brief Return the sum of all elements in the vector.
    *
@@ -216,13 +204,12 @@ public:
     return std::accumulate(m_arr.begin(), m_arr.end(), 0.0, std::plus<double>());
   }
 
-
   /**
    * @brief Print a vector to a stream. Comma-separates values. Does not add a newline at the end.
    *
    * @param os Output stream.
    * @param vec Vector to print.
-   * @return Output stream with Vector.
+   * @return Output stream with vector.
    *
    * @code {.cpp}
    * std::cout << my_vector << "\n";
@@ -231,14 +218,15 @@ public:
   friend std::ostream& operator<<(std::ostream& os, const Vector& vec)
   {
     for (std::size_t idx = 0; idx < vec.m_arr.size() - 1; idx++)
+    {
       os << std::setprecision(8) << vec.m_arr.at(idx) << ", ";
+    }
 
     os << std::setprecision(8) << vec.m_arr.at(vec.m_arr.size() - 1);
     return os;
   }
 
 private:
-  static constexpr std::size_t m_print_prec = 8;  ///< Number of decimals to use when printing to stream.
   std::array<double, N> m_arr;  ///< Underlying array to store vector values.
 };
 

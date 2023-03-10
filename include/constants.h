@@ -6,6 +6,7 @@
  *
  * @ref https://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf
  * @ref https://en.wikipedia.org/wiki/Earth_radius#Arithmetic_mean_radius
+ * @ref https://en.wikipedia.org/w/index.php?title=International_Standard_Atmosphere
  */
 
 #ifndef MATHUTILS_CONSTANTS_H_
@@ -15,7 +16,7 @@ namespace MathUtils { namespace Constants {
 
 static constexpr double PI = 3.14159265358979;  ///< Pi constant.
 static constexpr double TWO_PI = 2.0 * PI;  ///< Two time pi
-static constexpr double PI_DIV2 = 0.5 * PI;  ///< Pi divided by two, `pi /2`
+static constexpr double PI_DIV2 = 0.5 * PI;  ///< Pi divided by two, pi / 2
 
 static constexpr double WGS84_RADIUS_M = 6371008.77141505945474;  ///< IUGG earth arithmetic mean radius, (2a + b) / 3 [m].
 static constexpr double WGS84_INVF = 298.257223563;  ///< WGS84 inverse of flattening.
@@ -27,6 +28,11 @@ static constexpr double WGS84_B_M = 6356752.31424517929554;  ///< WGS semiminor 
 static constexpr double WGS84_GRAV_MPS2 = 9.80665;  ///< WGS84 standard gravity [m/s/s].
 static constexpr double WGS84_GM_M3PS2 = 3.986004418e14;  ///< WGS84 gravitational parameter [m^3 / s^2].
 static constexpr double WGS84_RATE_RPS = 7.292115e-5;  ///< WGS84 mean angular velocity [rad/sec].
+
+// International Civil Aviation Organization Standard Atmosphere
+static constexpr double ICAO_TEMP_C = 15.0;  ///< ICAO sea-level temperature [C].
+static constexpr double ICAO_PRES_PA = 101325.0;  ///< ICAO sea-level pressure [Pa].
+static constexpr double ICAO_LAPSE_RATE_CPM = -6.5e-3;  ///< ICAO sea-level temperature lapse rate [C/m]
 
 }  // namespace Constants
 }  // namespace MathUtils

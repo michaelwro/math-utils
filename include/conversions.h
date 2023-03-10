@@ -47,8 +47,8 @@ static constexpr double BAR_TO_PA = 1e5;  ///< Bar to pascals.
 static constexpr double PA_TO_BAR = 1e-5;  ///< Pascals to bar.
 static constexpr double BAR_TO_HPA = 1e3;  ///< Bar to hectopascals.
 static constexpr double HPA_TO_BAR = 1e-3;  ///< Bar to hectopascals.
-static constexpr double PA_TO_INHG = MM_TO_IN * 133.322;  ///< Pascals to inches of mercury.
-static constexpr double INHG_TO_PA = 1.0 / (MM_TO_IN * 133.322);  ///< Inches of mercury to pascals.
+static constexpr double PA_TO_INHG = 3.386389e-3;  ///< Pascals to inches of mercury (~32degF).
+static constexpr double INHG_TO_PA = 3.386389e3;  ///< Inches of mercury to pascals (~32degF).
 static constexpr double ATM_TO_PA = 101325.0;  ///< Atmospheres to pascals.
 static constexpr double PA_TO_ATM = 1.0 / ATM_TO_PA;  ///< Atmospheres to pascals.
 
