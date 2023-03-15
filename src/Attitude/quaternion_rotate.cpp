@@ -1,16 +1,14 @@
 /**
- * @file QuaternionMath.cpp
+ * @file quaternion_rotate.cpp
  * @author Michael Wrona
  * @date 2023-03-15
- * @brief Quaternion math functions.
  */
 
-#include "Attitude/QuaternionMath.h"
-#include "LinAlg/VectorOperators.h"
+#include "Attitude/quaternion_rotate.h"
 
 namespace MathUtils {
 
-Vector<3> quatrotate(const Quaternion& q_a_b, const Vector<3>& v_b)
+Vector<3> quaternion_rotate(const Quaternion& q_a_b, const Vector<3>& v_b)
 {
   const double q0 = q_a_b(0);
   const double q00 = q0 * q0;
@@ -46,16 +44,6 @@ Vector<3> quatrotate(const Quaternion& q_a_b, const Vector<3>& v_b)
   v_a(2) += (q00 - q11 - q22 + q33) * v_b(2);
 
   return v_a;
-}
-
-Vector<4> quatderivative(Quaternion q, Vector<3> w_rps)
-{
-  return Vector<4>({
-    -0.5 * ((w_rps(0) * q(1)) + (w_rps(1) * q(2)) + (w_rps(2) * q(3))),
-    0.5 * ((w_rps(0) * q(0)) + (w_rps(2) * q(2)) - (w_rps(1) * q(3))),
-    0.5 * ((w_rps(1) * q(0)) - (w_rps(2) * q(1)) + (w_rps(0) * q(3))),
-    0.5 * ((w_rps(2) * q(0)) + (w_rps(1) * q(1)) - (w_rps(0) * q(2)))
-  });
 }
 
 }  // namespace MathUtils

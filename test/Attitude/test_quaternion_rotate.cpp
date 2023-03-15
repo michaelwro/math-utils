@@ -5,7 +5,8 @@
  * @brief Quaternion math unit tests.
  */
 
-#include "Attitude/Attitude.h"
+#include "Attitude/Quaternion.h"
+#include "Attitude/quaternion_rotate.h"
 #include "LinAlg/Vector.h"
 
 #include <cmath>
@@ -25,7 +26,7 @@ TEST(Attitude_QuaternionMath, QuaternionRotate1)
   Quaternion q_a_b({0.961798, -0.14565, 0.202665, 0.112505});
   Vector<3> v_b({1, -3, 2});
 
-  Vector<3> v_a = quatrotate(q_a_b, v_b);
+  Vector<3> v_a = quaternion_rotate(q_a_b, v_b);
 
   const double tol = 1e-6;
 
@@ -41,7 +42,7 @@ TEST(Attitude_QuaternionMath, QuaternionRotate2)
   Quaternion q_a_b({1, 0, 1, 0});
   Vector<3> v_b({1, -3, 2});
 
-  Vector<3> v_a = quatrotate(q_a_b, v_b);
+  Vector<3> v_a = quaternion_rotate(q_a_b, v_b);
 
   EXPECT_DOUBLE_EQ(v_a(0), -2);
   EXPECT_DOUBLE_EQ(v_a(1), -3);

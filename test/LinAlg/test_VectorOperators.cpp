@@ -6,7 +6,6 @@
  */
 
 #include "LinAlg/Vector.h"
-#include "LinAlg/VectorOperators.h"
 
 #include <cmath>
 #include <gtest/gtest.h>

@@ -6,7 +6,6 @@
  */
 
 #include "Attitude/Quaternion.h"
-#include "Attitude/QuaternionOperators.h"
 
 
 #include <cmath>

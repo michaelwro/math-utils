@@ -2,7 +2,7 @@
  * @file Vector.h
  * @author Michael Wrona
  * @date 2023-03-08
- * @brief Vector template class.
+ * @brief Vector template class & functions.
  */
 
 #ifndef MATHUTILS_LINALG_VECTOR_H_
@@ -359,6 +359,225 @@ public:
 private:
   std::array<double, N> m_arr;  ///< Underlying array to store vector values.
 };
+
+// ============================================================================
+// VECTOR-ONLY FUNCTIONS
+// ============================================================================
+
+/**
+ * @brief 3D vector cross product of v1 x v2.
+ *
+ * @param v1 Vector 1 (LHS).
+ * @param v2 Vector2 (RHS).
+ * @return Vector cross product.
+ */
+inline Vector<3> cross(const Vector<3>& v1, const Vector<3>& v2)
+{
+  return Vector<3>{
+    (v1(1) * v2(2)) - (v1(2) * v2(1)),
+    (v1(2) * v2(0)) - (v1(0) * v2(2)),
+    (v1(0) * v2(1)) - (v1(1) * v2(0))
+  };
+}
+
+/**
+ * @brief Compute the vector dot product.
+ *
+ * @tparam N1 First vector length.
+ * @tparam N2 Second vector length.
+ * @param v1 First vector.
+ * @param v2 Second vector.
+ * @return Dot product.
+ */
+template<std::size_t N1, std::size_t N2>
+double dot(const Vector<N1>& v1, const Vector<N2>& v2)
+{
+  static_assert(N1 == N2, "Incompatible dimensions.");
+
+  double dot_prod = 0.0;
+
+  for (std::size_t idx = 0; idx < N1; idx++)
+  {
+    dot_prod += v1(idx) * v2(idx);
+  }
+
+  return dot_prod;
+}
+
+
+// ============================================================================
+// VECTOR-ONLY OPERATOR OVERLOADS
+// ============================================================================
+
+/**
+ * @brief Add two vectors.
+ *
+ * @tparam N_LEFT First vector length.
+ * @tparam N_RIGHT Second vector length.
+ * @param v1 First vector.
+ * @param v2 Second vector.
+ * @return Vector sum, v1 + v2.
+ */
+template<std::size_t N_LEFT, std::size_t N_RIGHT>
+Vector<N_LEFT> operator+(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
+{
+  static_assert(N_LEFT == N_RIGHT, "Incompatible dimensions.");
+
+  Vector<N_LEFT> result;
+
+  for (std::size_t idx = 0; idx < N_LEFT; idx++)
+  {
+    result(idx) = v1(idx) + v2(idx);
+  }
+
+  return result;
+}
+
+/**
+ * @brief Add a scalar to a vector.
+ *
+ * @tparam N Vector length.
+ * @tparam T Scalar type
+ * @param v Vector.
+ * @param scalar Scalar.
+ * @return Scalar added to vector.
+ */
+template<std::size_t N, typename T>
+Vector<N> operator+(const Vector<N>& v, const T scalar)
+{
+  static_assert(std::is_fundamental<T>::value, "Scalar must be fundamental type.");
+
+  Vector<N> res;
+
+  for (std::size_t idx = 0; idx < N; idx++)
+  {
+    res(idx) = v(idx) + static_cast<double>(scalar);
+  }
+
+  return res;
+}
+
+/**
+ * @brief Add a scalar to a vector.
+ *
+ * @tparam T Scalar type
+ * @tparam N Vector length.
+ * @param scalar Scalar.
+ * @param v Vector.
+ * @return Scalar added to vector.
+ */
+template<typename T, std::size_t N>
+Vector<N> operator+(const T scalar, const Vector<N>& v)
+{
+  static_assert(std::is_fundamental<T>::value, "Scalar must be fundamental type.");
+
+  return v + scalar;
+}
+
+/**
+ * @brief Subtract two vectors.
+ *
+ * @tparam N_LEFT First vector length.
+ * @tparam N_RIGHT Second vector length.
+ * @param v1 First vector.
+ * @param v2 Second vector.
+ * @return Vector difference, v1 - v2.
+ */
+template<std::size_t N_LEFT, std::size_t N_RIGHT>
+Vector<N_LEFT> operator-(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
+{
+  static_assert(N_LEFT == N_RIGHT, "Incompatible dimensions.");
+
+  Vector<N_LEFT> result;
+
+  for (std::size_t idx = 0; idx < N_LEFT; idx++)
+  {
+    result(idx) = v1(idx) - v2(idx);
+  }
+
+  return result;
+}
+
+/**
+ * @brief Subract a scalar from a vector.
+ *
+ * @tparam N Vector length.
+ * @tparam T Scalar type.
+ * @param v Vector.
+ * @param scalar Scalar
+ * @return Vector with scalar subtracted from it.
+ */
+template<std::size_t N, typename T>
+Vector<N> operator-(const Vector<N>& v, const T scalar)
+{
+  static_assert(std::is_fundamental<T>::value, "Scalar must be fundamental type.");
+
+  Vector<N> res;
+
+  for (std::size_t idx = 0; idx < N; idx++)
+  {
+    res(idx) = v(idx) - static_cast<double>(scalar);
+  }
+
+  return res;
+}
+
+/**
+ * @brief Subract a scalar from a vector.
+ *
+ * @tparam T Scalar type.
+ * @tparam N Vector length.
+ * @param scalar Scalar
+ * @param v Vector.
+ * @return Vector with scalar subtracted from it.
+ */
+template<typename T, std::size_t N>
+Vector<N> operator-(const T scalar, const Vector<N>& v)
+{
+  static_assert(std::is_fundamental<T>::value, "Scalar must be fundamental type.");
+
+  return v - scalar;
+}
+
+/**
+ * @brief Vector-scalar multiplication.
+ *
+ * @tparam N Length of the vector.
+ * @tparam T Scalar type.
+ * @param vec Vector to be multiplied by the scalar.
+ * @param scalar Scalar to multiply the vector by.
+ * @return Vector-scalar multiplication result.
+ */
+template<std::size_t N, typename T>
+Vector<N> operator*(const Vector<N>& vec, const T scalar)
+{
+  static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
+
+  Vector<N> res;
+
+  for (std::size_t idx = 0; idx < vec.size(); idx++)
+  {
+    res(idx) = static_cast<double>(scalar) * vec(idx);
+  }
+
+  return res;
+}
+
+/**
+ * @brief Scalar-vector multiplication.
+ *
+ * @tparam N Length of the vector.
+ * @tparam T Scalar type.
+ * @param scalar Scalar to multiply the vector by.
+ * @param vec Vector to be multiplied by the scalar.
+ * @return Scalar-vector multiplication result.
+ */
+template<std::size_t N, typename T>
+Vector<N> operator*(const T scalar, const Vector<N>& vec)
+{
+  static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
+  return Vector<N>(vec * static_cast<double>(scalar));
+}
 
 }  // namespace MathUtils
 
