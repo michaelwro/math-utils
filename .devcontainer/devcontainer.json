@@ -18,6 +18,5 @@
                 "ue.alphabetical-sorter"
             ]
         }
-    },
-    "postStartCommand": "pre-commit install"
+    }
 }

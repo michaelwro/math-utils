@@ -5,6 +5,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/include/**",
                 "${workspaceFolder}/include/LinAlg**",
                 "${workspaceFolder}/build/_deps/googletest-src/googletest/include/**",
                 "${workspaceFolder}/build/_deps/googletest-src/googlemock/include/**"
