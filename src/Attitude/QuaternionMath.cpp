@@ -13,7 +13,7 @@ Vector<3> quatrotate(const Quaternion& q_a_b, const Vector<3>& v_b)
 {
   const double q0 = q_a_b(0);
   const double q00 = q0 * q0;
-  
+
   const double q1 = q_a_b(1);
   const double q11 = q1 * q1;
 
@@ -29,7 +29,7 @@ Vector<3> quatrotate(const Quaternion& q_a_b, const Vector<3>& v_b)
   const double q12 = q1 * q2;
   const double q13 = q1 * q3;
   const double q23 = q2 * q3;
-  
+
   Vector<3> v_a;
 
   v_a(0) = (q00 + q11 - q22 - q33) * v_b(0);

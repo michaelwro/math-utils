@@ -135,7 +135,7 @@ public:
 
   /**
    * @brief Return the conjugate (inverse) of the quaternion.
-   * 
+   *
    * @return Quaternion conjugate/inverse.
    */
   Quaternion conjugate() const

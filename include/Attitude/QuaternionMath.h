@@ -15,11 +15,11 @@ namespace MathUtils {
 
 /**
  * @brief Rotate a vector defined by a quaternion.
- * 
+ *
  * @details Sequence loos like `q_a = rotate(q_a_b, v_b)`
- * 
+ *
  * Equation from "Analytical Mechanics of Aerospace Systems" (H. Schaub et. al.).
- * 
+ *
  * @param q_a_b Quaternion rotation defining the rotation from frame "B" to "A."
  * @param v_b Vector in frame "B."
  * @return Vector rotated to frame "A."

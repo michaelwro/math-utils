@@ -14,11 +14,11 @@ namespace MathUtils {
 
 /**
  * @brief Compute the quaternion product. Normalizes result.
- * 
+ *
  * @details `q_a_c = q_a_b * q_b_c`
- * 
+ *
  * "Analytical Mechanics of Aerospace Systems" equation 3.97.
- * 
+ *
  * @param q_b First quaternion.
  * @param q_c Second quaternion.
  * @return Quaternion product q_b * q_c.
