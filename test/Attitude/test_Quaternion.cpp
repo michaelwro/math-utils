@@ -5,7 +5,7 @@
  * @brief Quaternion class unit tests.
  */
 
-#include "LinAlg/Quaternion.h"
+#include "Attitude/Quaternion.h"
 
 #include <cmath>
 #include <gtest/gtest.h>
@@ -13,15 +13,14 @@
 #include <string>
 #include <utility>
 
-using MathUtils::LinAlg::Quaternion;
+using MathUtils::Quaternion;
 
 namespace {
 
-
-const std::string test_reports_file = std::string("TESTRESULTS-LinAlg-Quaternion.xml");
+const std::string test_reports_file = std::string("TESTRESULTS-Quaternion.xml");
 
 // ====================================================================================================================
-TEST(LinAlg_Quaternion, DefaultConstructorIsUnity)
+TEST(Attitude_Quaternion, DefaultConstructorIsUnityQuaternion)
 {
   Quaternion quat;
 
@@ -32,7 +31,7 @@ TEST(LinAlg_Quaternion, DefaultConstructorIsUnity)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Quaternion, FourArgConstructionNormalizes)
+TEST(Attitude_Quaternion, FourArgConstructionNormalizes)
 {
   const double val = 1.0;
   const double magn = std::sqrt(4.0 * val * val);
@@ -47,7 +46,7 @@ TEST(LinAlg_Quaternion, FourArgConstructionNormalizes)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Quaternion, ListInitConstructionNormalizes)
+TEST(Attitude_Quaternion, ListInitConstructionNormalizes)
 {
   const double val = 1.0;
   const double magn = std::sqrt(4.0 * val * val);
@@ -61,7 +60,7 @@ TEST(LinAlg_Quaternion, ListInitConstructionNormalizes)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Quaternion, AssertsInvalidLengthInitializerList)
+TEST(Attitude_Quaternion, AssertsInvalidLengthInitializerList)
 {
   std::initializer_list<double> vals = {1, 2, 3};
 
@@ -71,7 +70,7 @@ TEST(LinAlg_Quaternion, AssertsInvalidLengthInitializerList)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Quaternion, CopyConstructionWorks)
+TEST(Attitude_Quaternion, CopyConstructs)
 {
   Quaternion q1 {1, 1, 1, 1};
   Quaternion q2(q1);
@@ -83,7 +82,7 @@ TEST(LinAlg_Quaternion, CopyConstructionWorks)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Quaternion, CopyAssignWorks)
+TEST(Attitude_Quaternion, CopyAssigns)
 {
   Quaternion q1 {1, 1, 1, 1};
   Quaternion q2;
@@ -97,7 +96,7 @@ TEST(LinAlg_Quaternion, CopyAssignWorks)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Quaternion, MoveAssignWorks)
+TEST(Attitude_Quaternion, MoveAssigns)
 {
   const double val = 1.0;
   const double magn = std::sqrt(4.0 * val * val);
@@ -114,7 +113,7 @@ TEST(LinAlg_Quaternion, MoveAssignWorks)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Quaternion, InitializerListAssignWorks)
+TEST(Attitude_Quaternion, InitializerListAssigns)
 {
   const double val = 1.0;
   const double magn = std::sqrt(4.0 * val * val);
@@ -129,7 +128,7 @@ TEST(LinAlg_Quaternion, InitializerListAssignWorks)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Quaternion, AssertsInvalidSizeInitializerListAssignment)
+TEST(Attitude_Quaternion, AssertsInvalidLengthInitializerListAssignment)
 {
   std::initializer_list<double> vals = {1, 2, 3};
 
@@ -140,7 +139,33 @@ TEST(LinAlg_Quaternion, AssertsInvalidSizeInitializerListAssignment)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Quaternion, ProperlyForcesPositiveRotation)
+TEST(Attitude_Quaternion, Conjugate)
+{
+  Quaternion q(0.5, 0.5, -0.5, -0.5);
+
+  Quaternion qt = q.conjugate();
+
+  EXPECT_DOUBLE_EQ(0.5, qt(0));
+  EXPECT_DOUBLE_EQ(-0.5, qt(1));
+  EXPECT_DOUBLE_EQ(0.5, qt(2));
+  EXPECT_DOUBLE_EQ(0.5, qt(3));
+}
+
+// ====================================================================================================================
+TEST(Attitude_Quaternion, Invert)
+{
+  Quaternion q(-0.5, -0.5, -0.5, 0.5);
+
+  q.invert();
+
+  EXPECT_DOUBLE_EQ(-0.5, q(0));
+  EXPECT_DOUBLE_EQ(0.5, q(1));
+  EXPECT_DOUBLE_EQ(0.5, q(2));
+  EXPECT_DOUBLE_EQ(-0.5, q(3));
+}
+
+// ====================================================================================================================
+TEST(Attitude_Quaternion, ForcePositiveRotation)
 {
   const double val = 1.0;
   const double magn = std::sqrt(4.0 * val * val);
@@ -153,6 +178,7 @@ TEST(LinAlg_Quaternion, ProperlyForcesPositiveRotation)
   EXPECT_DOUBLE_EQ(quat(2), -val / magn);
   EXPECT_DOUBLE_EQ(quat(3), -val / magn);
 }
+
 
 // ====================================================================================================================
 int main(int argc, char** argv)

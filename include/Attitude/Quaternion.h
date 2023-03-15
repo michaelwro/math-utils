@@ -5,8 +5,8 @@
  * @brief Quaternion class.
  */
 
-#ifndef MATHUTILS_LINALG_QUATERNION_H_
-#define MATHUTILS_LINALG_QUATERNION_H_
+#ifndef MATHUTILS_ATTITUDE_QUATERNION_H_
+#define MATHUTILS_ATTITUDE_QUATERNION_H_
 
 #include <algorithm>
 #include <array>
@@ -18,8 +18,7 @@
 #include <iostream>
 #include <type_traits>
 
-namespace MathUtils { namespace LinAlg {
-
+namespace MathUtils {
 
 /**
  * @brief Quaternion class.
@@ -28,7 +27,6 @@ namespace MathUtils { namespace LinAlg {
  */
 class Quaternion
 {
-
 public:
   /**
    * @brief Create a quaternion.
@@ -45,9 +43,7 @@ public:
   ~Quaternion() = default;
 
   /**
-   * @brief Create a quaternion.
-   *
-   * @details Normalizes input.
+   * @brief Create a quaternion. Normalizes input.
    *
    * @param qs Scalar component.
    * @param qx X-component.
@@ -61,9 +57,7 @@ public:
   }
 
   /**
-   * @brief Create a quaternion from an initializer list.
-   *
-   * @details Normalizes input.
+   * @brief Create a quaternion from an initializer list. Normalizes input.
    *
    * @tparam T Initializer list data type.
    * @param quat_vals Quaternion values.
@@ -112,7 +106,7 @@ public:
   }
 
   /**
-   * @brief Assign quaternion values from an initializer list.
+   * @brief Assign quaternion values from an initializer list. Normalizes input.
    *
    * @param quat_vals Quaternion values.
    * @return New quaternion.
@@ -140,6 +134,28 @@ public:
   }
 
   /**
+   * @brief Return the conjugate (inverse) of the quaternion.
+   * 
+   * @return Quaternion conjugate/inverse.
+   */
+  Quaternion conjugate() const
+  {
+    return Quaternion(m_arr.at(0), -m_arr.at(1), -m_arr.at(2), -m_arr.at(3));
+  }
+
+  /**
+   * @brief Invert the quaternion.
+   */
+  Quaternion& invert()
+  {
+    m_arr.at(1) = -m_arr.at(1);
+    m_arr.at(2) = -m_arr.at(2);
+    m_arr.at(3) = -m_arr.at(3);
+
+    return *this;
+  }
+
+  /**
    * @brief Negate (*= -1) the quaternion if the scalar component is negative to force a positive rotation.
    */
   void force_positive_rotation()
@@ -157,10 +173,10 @@ public:
   {
     // compute magnitude
     const double magn = std::sqrt(
-      (m_arr.at(0)*m_arr.at(0)) +
-      (m_arr.at(1)*m_arr.at(1)) +
-      (m_arr.at(2)*m_arr.at(2)) +
-      (m_arr.at(3)*m_arr.at(3))
+      (m_arr.at(0) * m_arr.at(0)) +
+      (m_arr.at(1) * m_arr.at(1)) +
+      (m_arr.at(2) * m_arr.at(2)) +
+      (m_arr.at(3) * m_arr.at(3))
     );
 
     // normalize each element
@@ -193,9 +209,6 @@ private:
   std::array<double, 4> m_arr;  ///< Underlying array to store elements
 };
 
-
-}  // namespace LinAlg
 }  // namespace MathUtils
 
-
-#endif  // MATHUTILS_LINALG_QUATERNION_H_
+#endif  // MATHUTILS_ATTITUDE_QUATERNION_H_

@@ -29,24 +29,24 @@ set(SRC_DIR "src/")
 set(INCL_DIR "include/")
 
 # folder names for sub-folders
-# set(GEODESY_DIR "geodesy/")
+set(ATTITUDE_DIR "Attitude/")
 set(LINALG_DIR "LinAlg/")
 
 
 # BUILD PROJECT =======================================================================================================
 
-# # FIND SOURCE FILES
-# file(GLOB GEODESY_SRC
-#     ${SRC_DIR}/${GEODESY_DIR}/*.cpp
-# )
+# FIND SOURCE FILES
+file(GLOB ATTITUDE_SRC
+    ${SRC_DIR}/${ATTITUDE_DIR}/*.cpp
+)
 
 file(GLOB LINALG_SRC
-    "${SRC_DIR}/${LINALG_DIR}/*.cpp"
+    ${SRC_DIR}/${LINALG_DIR}/*.cpp
 )
 
 # BUILD LIBRARY
 add_library(${MATHUTILS_LIB} SHARED
-    # ${GEODESY_SRC}
+    ${ATTITUDE_SRC}
     ${LINALG_SRC}
 )
 

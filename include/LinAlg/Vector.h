@@ -18,8 +18,7 @@
 #include <numeric>
 #include <type_traits>
 
-namespace MathUtils { namespace LinAlg {
-
+namespace MathUtils {
 
 /**
  * @brief N-length vector class.
@@ -116,11 +115,6 @@ public:
     static_assert(std::is_fundamental<T>::value, "Vectors can only be initialized from fundamental types");
     assert(N == vector_vals.size());
 
-    /**
-     * NOTE: Using std::copy with a list of non-double vals will implicitly convert to `double`. This should be fine
-     * for `double` and integer-type lists, but a `float` list might have strange conversions. Compiler flags should
-     * catch this scenario, though?
-     */
     std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
     return *this;
   }
@@ -152,7 +146,7 @@ public:
    *
    * @return Vector length.
    */
-  std::size_t length() const
+  std::size_t size() const
   {
     return N;
   }
@@ -177,7 +171,7 @@ public:
     const double magn = std::accumulate(
       m_arr.begin(), m_arr.end(), 0.0,
       [](double accum, const double& val){return accum += val * val;}
-      );
+    );
 
     return std::sqrt(magn);
   }
@@ -230,9 +224,6 @@ private:
   std::array<double, N> m_arr;  ///< Underlying array to store vector values.
 };
 
-
-}  // namespace LinAlg
 }  // namespace MathUtils
-
 
 #endif  // MATHUTILS_LINALG_VECTOR_H_

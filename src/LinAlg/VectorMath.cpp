@@ -1,17 +1,14 @@
 /**
  * @file VectorMath.cpp
  * @author Michael Wrona
- * @date 2023-03-08
- * @brief Vector math functions and operator overloads.
+ * @date 2023-03-15
+ * @brief Vector math functions.
  */
 
 #include "LinAlg/Vector.h"
 #include "LinAlg/VectorMath.h"
 
-#include <cstddef>
-
-namespace MathUtils { namespace LinAlg {
-
+namespace MathUtils {
 
 Vector<3> cross(const Vector<3>& v1, const Vector<3>& v2)
 {
@@ -22,5 +19,4 @@ Vector<3> cross(const Vector<3>& v1, const Vector<3>& v2)
   };
 }
 
-}  // namespace LinAlg
 }  // namespace MathUtils

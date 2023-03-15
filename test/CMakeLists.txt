@@ -16,3 +16,4 @@ link_directories(${TEST_LINALG_EXEC} PRIVATE
 )
 
 add_subdirectory("./LinAlg/")
+add_subdirectory("./Attitude/")
