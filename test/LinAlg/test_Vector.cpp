@@ -182,6 +182,102 @@ TEST(LinAlg_Vector, SumsElements)
   EXPECT_DOUBLE_EQ(vec.sum(), 12);
 }
 
+// ====================================================================================================================
+TEST(LinAlg_Vector, ScalarAddInPlace)
+{
+  Vector<3> vec({4, 5, 6});
+
+  vec += 3.0;
+
+  EXPECT_DOUBLE_EQ(vec(0), 7.0);
+  EXPECT_DOUBLE_EQ(vec(1), 8.0);
+  EXPECT_DOUBLE_EQ(vec(2), 9.0);
+}
+
+// ====================================================================================================================
+TEST(LinAlg_Vector, VectorAddInPlace)
+{
+  Vector<3> vec1({1, 2, 3});
+  Vector<3> vec2({4, 5, 6});
+
+  vec1 += vec2;
+
+  EXPECT_DOUBLE_EQ(vec1(0), 5.0);
+  EXPECT_DOUBLE_EQ(vec1(1), 7.0);
+  EXPECT_DOUBLE_EQ(vec1(2), 9.0);
+}
+
+// ====================================================================================================================
+TEST(LinAlg_Vector, ScalarSubtractInPlace)
+{
+  Vector<3> vec({4, 5, 6});
+
+  vec -= 3.0;
+
+  EXPECT_DOUBLE_EQ(vec(0), 1.0);
+  EXPECT_DOUBLE_EQ(vec(1), 2.0);
+  EXPECT_DOUBLE_EQ(vec(2), 3.0);
+}
+
+// ====================================================================================================================
+TEST(LinAlg_Vector, VectorSubtractInPlace)
+{
+  Vector<3> vec1({1, 2, 3});
+  Vector<3> vec2({4, 5, 6});
+
+  vec1 -= vec2;
+
+  EXPECT_DOUBLE_EQ(vec1(0), -3.0);
+  EXPECT_DOUBLE_EQ(vec1(1), -3.0);
+  EXPECT_DOUBLE_EQ(vec1(2), -3.0);
+}
+
+// ====================================================================================================================
+TEST(LinAlg_Vector, ScalarMultiplyInPlace)
+{
+  Vector<3> vec({1, 2, 3});
+
+  vec *= -2.0;
+
+  EXPECT_DOUBLE_EQ(vec(0), -2.0);
+  EXPECT_DOUBLE_EQ(vec(1), -4.0);
+  EXPECT_DOUBLE_EQ(vec(2), -6.0);
+}
+
+// ====================================================================================================================
+TEST(LinAlg_Vector, ScalarDivideInPlace)
+{
+  Vector<3> vec({6, 8, 10});
+
+  vec /= 2.0;
+
+  EXPECT_DOUBLE_EQ(vec(0), 3.0);
+  EXPECT_DOUBLE_EQ(vec(1), 4.0);
+  EXPECT_DOUBLE_EQ(vec(2), 5.0);
+}
+
+// ====================================================================================================================
+TEST(LinAlg_Vector, ScalarDivideInPlaceAssertSmallNumber)
+{
+  Vector<3> vec({6, 8, 10});
+
+  EXPECT_DEBUG_DEATH({
+    vec /= 1e-15;
+  }, "");
+}
+
+// ====================================================================================================================
+TEST(LinAlg_Vector, Negate)
+{
+  Vector<3> vec({6, -8, 10});
+
+  vec.negate();
+
+  EXPECT_DOUBLE_EQ(vec(0), -6);
+  EXPECT_DOUBLE_EQ(vec(1), 8);
+  EXPECT_DOUBLE_EQ(vec(2), -10);
+}
+
 
 // ====================================================================================================================
 int main(int argc, char** argv)

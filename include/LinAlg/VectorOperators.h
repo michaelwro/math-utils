@@ -10,6 +10,8 @@
 
 #include "LinAlg/Vector.h"
 
+#include <type_traits>
+
 namespace MathUtils {
 
 /**
@@ -37,6 +39,47 @@ Vector<N_LEFT> operator+(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
 }
 
 /**
+ * @brief Add a scalar to a vector.
+ *
+ * @tparam N Vector length.
+ * @tparam T Scalar type
+ * @param v Vector.
+ * @param scalar Scalar.
+ * @return Scalar added to vector.
+ */
+template<std::size_t N, typename T>
+Vector<N> operator+(const Vector<N>& v, const T scalar)
+{
+  static_assert(std::is_fundamental<T>::value, "Scalar must be fundamental type.");
+
+  Vector<N> res;
+
+  for (std::size_t idx = 0; idx < N; idx++)
+  {
+    res(idx) = v(idx) + static_cast<double>(scalar);
+  }
+
+  return res;
+}
+
+/**
+ * @brief Add a scalar to a vector.
+ *
+ * @tparam T Scalar type
+ * @tparam N Vector length.
+ * @param scalar Scalar.
+ * @param v Vector.
+ * @return Scalar added to vector.
+ */
+template<typename T, std::size_t N>
+Vector<N> operator+(const T scalar, const Vector<N>& v)
+{
+  static_assert(std::is_fundamental<T>::value, "Scalar must be fundamental type.");
+
+  return v + scalar;
+}
+
+/**
  * @brief Subtract two vectors.
  *
  * @tparam N_LEFT First vector length.
@@ -58,6 +101,47 @@ Vector<N_LEFT> operator-(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
   }
 
   return result;
+}
+
+/**
+ * @brief Subract a scalar from a vector.
+ *
+ * @tparam N Vector length.
+ * @tparam T Scalar type.
+ * @param v Vector.
+ * @param scalar Scalar
+ * @return Vector with scalar subtracted from it.
+ */
+template<std::size_t N, typename T>
+Vector<N> operator-(const Vector<N>& v, const T scalar)
+{
+  static_assert(std::is_fundamental<T>::value, "Scalar must be fundamental type.");
+
+  Vector<N> res;
+
+  for (std::size_t idx = 0; idx < N; idx++)
+  {
+    res(idx) = v(idx) - static_cast<double>(scalar);
+  }
+
+  return res;
+}
+
+/**
+ * @brief Subract a scalar from a vector.
+ *
+ * @tparam T Scalar type.
+ * @tparam N Vector length.
+ * @param scalar Scalar
+ * @param v Vector.
+ * @return Vector with scalar subtracted from it.
+ */
+template<typename T, std::size_t N>
+Vector<N> operator-(const T scalar, const Vector<N>& v)
+{
+  static_assert(std::is_fundamental<T>::value, "Scalar must be fundamental type.");
+
+  return v - scalar;
 }
 
 /**

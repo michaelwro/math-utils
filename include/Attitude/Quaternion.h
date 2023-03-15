@@ -130,7 +130,8 @@ public:
    */
   const double& operator()(const std::size_t idx) const
   {
-    return m_arr.at(idx);
+    assert(idx < 4);
+    return m_arr[idx];
   }
 
   /**
@@ -140,7 +141,7 @@ public:
    */
   Quaternion conjugate() const
   {
-    return Quaternion(m_arr.at(0), -m_arr.at(1), -m_arr.at(2), -m_arr.at(3));
+    return Quaternion(m_arr[0], -m_arr[1], -m_arr[2], -m_arr[3]);
   }
 
   /**
@@ -148,9 +149,9 @@ public:
    */
   Quaternion& invert()
   {
-    m_arr.at(1) = -m_arr.at(1);
-    m_arr.at(2) = -m_arr.at(2);
-    m_arr.at(3) = -m_arr.at(3);
+    m_arr[1] *= -1.0;
+    m_arr[2] *= -1.0;
+    m_arr[3] *= -1.0;
 
     return *this;
   }
@@ -160,7 +161,7 @@ public:
    */
   void force_positive_rotation()
   {
-    if (m_arr.at(0) < 0.0)
+    if (m_arr[0] < 0.0)
     {
       std::for_each(m_arr.begin(), m_arr.end(), [](double& val){val *= -1.0;});
     }
@@ -173,10 +174,10 @@ public:
   {
     // compute magnitude
     const double magn = std::sqrt(
-      (m_arr.at(0) * m_arr.at(0)) +
-      (m_arr.at(1) * m_arr.at(1)) +
-      (m_arr.at(2) * m_arr.at(2)) +
-      (m_arr.at(3) * m_arr.at(3))
+      (m_arr[0] * m_arr[0]) +
+      (m_arr[1] * m_arr[1]) +
+      (m_arr[2] * m_arr[2]) +
+      (m_arr[3] * m_arr[3])
     );
 
     // normalize each element
@@ -197,10 +198,10 @@ public:
   friend std::ostream& operator<<(std::ostream& os, const Quaternion& quat)
   {
     os << std::setprecision(8) <<
-      quat.m_arr.at(0) << ", " <<
-      quat.m_arr.at(1) << ", " <<
-      quat.m_arr.at(2) << ", " <<
-      quat.m_arr.at(3);
+      quat.m_arr[0] << ", " <<
+      quat.m_arr[1] << ", " <<
+      quat.m_arr[2] << ", " <<
+      quat.m_arr[3];
 
     return os;
   }

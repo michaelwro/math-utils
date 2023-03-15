@@ -26,6 +26,17 @@ namespace MathUtils {
  */
 Vector<3> quatrotate(const Quaternion& q_a_b, const Vector<3>& v_b);
 
+/**
+ * @brief Return q-dot quaternion kinematic differential equation.
+ *
+ * @details Equation 3.103 from "Analytical Mechanics of Aerospace Systems."
+ *
+ * @param q Quaternion.
+ * @param w_rps Angular rates in [rad/sec]
+ * @return Q-dot (time derivative).
+ */
+Vector<4> quatderivative(Quaternion q, Vector<3> w_rps);
+
 }  // namespace MathUtils
 
 #endif  // MATHUTILS_ATTITUDE_QUATERNION_MATH_H_

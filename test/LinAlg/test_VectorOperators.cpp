@@ -53,6 +53,26 @@ TEST_F(LinAlg_VectorOperators, Add)
 }
 
 // ====================================================================================================================
+TEST_F(LinAlg_VectorOperators, VectorScalarAdd)
+{
+  const Vector<3> res = vec1 + scalar;
+
+  EXPECT_DOUBLE_EQ(res(0), vec1(0) + scalar);
+  EXPECT_DOUBLE_EQ(res(1), vec1(1) + scalar);
+  EXPECT_DOUBLE_EQ(res(2), vec1(2) + scalar);
+}
+
+// ====================================================================================================================
+TEST_F(LinAlg_VectorOperators, ScalarVectorAdd)
+{
+  const Vector<3> res = scalar + vec1;
+
+  EXPECT_DOUBLE_EQ(res(0), vec1(0) + scalar);
+  EXPECT_DOUBLE_EQ(res(1), vec1(1) + scalar);
+  EXPECT_DOUBLE_EQ(res(2), vec1(2) + scalar);
+}
+
+// ====================================================================================================================
 TEST_F(LinAlg_VectorOperators, Subtract)
 {
   const Vector<3> numpy_result {-3, -3, -3};
@@ -62,6 +82,26 @@ TEST_F(LinAlg_VectorOperators, Subtract)
   EXPECT_DOUBLE_EQ(res(0), numpy_result(0));
   EXPECT_DOUBLE_EQ(res(1), numpy_result(1));
   EXPECT_DOUBLE_EQ(res(2), numpy_result(2));
+}
+
+// ====================================================================================================================
+TEST_F(LinAlg_VectorOperators, VectorScalarSubtract)
+{
+  const Vector<3> res = vec1 - scalar;
+
+  EXPECT_DOUBLE_EQ(res(0), vec1(0) - scalar);
+  EXPECT_DOUBLE_EQ(res(1), vec1(1) - scalar);
+  EXPECT_DOUBLE_EQ(res(2), vec1(2) - scalar);
+}
+
+// ====================================================================================================================
+TEST_F(LinAlg_VectorOperators, ScalarVectorSubtract)
+{
+  const Vector<3> res = scalar - vec1;
+
+  EXPECT_DOUBLE_EQ(res(0), vec1(0) - scalar);
+  EXPECT_DOUBLE_EQ(res(1), vec1(1) - scalar);
+  EXPECT_DOUBLE_EQ(res(2), vec1(2) - scalar);
 }
 
 // ====================================================================================================================

@@ -112,7 +112,7 @@ public:
      * NOTE: Since an initializer list is non-static, we cannot use `static_assert` to check the length. Therefore,
      * this assert is done at runtime.
      */
-    static_assert(std::is_fundamental<T>::value, "Vectors can only be initialized from fundamental types");
+    static_assert(std::is_fundamental<T>::value, "Vectors can only be initialized from fundamental types.");
     assert(N == vector_vals.size());
 
     std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
@@ -127,7 +127,8 @@ public:
    */
   double& operator()(const std::size_t idx)
   {
-    return m_arr.at(idx);
+    assert(idx < N);
+    return m_arr[idx];
   }
 
   /**
@@ -138,7 +139,133 @@ public:
    */
   const double& operator()(const std::size_t idx) const
   {
-    return m_arr.at(idx);
+    assert(idx < N);
+    return m_arr[idx];
+  }
+
+  /**
+   * @brief Add scalar to all vector elements in-place (accumulate).
+   *
+   * @tparam T Scalar type.
+   * @param scalar Scalar to add.
+   * @return Vector with scalar added.
+   */
+  template<typename T>
+  Vector& operator+=(const T scalar)
+  {
+    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+
+    std::for_each(
+      m_arr.begin(),
+      m_arr.end(),
+      [scalar](double& element){element += static_cast<double>(scalar);}
+    );
+
+    return *this;
+  }
+
+  /**
+   * @brief Add vector in-place (accumulate).
+   *
+   * @tparam LEN Other vector length.
+   * @param vec Vector to add.
+   * @return Vector with other vector added.
+   */
+  template<std::size_t LEN>
+  Vector& operator+=(const Vector<LEN>& vec)
+  {
+    static_assert(LEN == N, "Vector is incompatible length.");
+
+    for (std::size_t idx = 0; idx < N; idx++)
+    {
+      m_arr[idx] += vec.m_arr[idx];
+    }
+    return *this;
+  }
+
+  /**
+   * @brief Subtract scalar from all vector elements in-place.
+   *
+   * @tparam T Scalar type.
+   * @param scalar Scalar to subtract.
+   * @return Vector with scalar subtracted.
+   */
+  template<typename T>
+  Vector& operator-=(const T scalar)
+  {
+    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+
+    std::for_each(
+      m_arr.begin(),
+      m_arr.end(),
+      [scalar](double& element){element -= static_cast<double>(scalar);}
+    );
+
+    return *this;
+  }
+
+  /**
+   * @brief Subtract vector in-place (accumulate).
+   *
+   * @tparam LEN Other vector length.
+   * @param vec Vector to subtract.
+   * @return Vector with other vector subtracted.
+   */
+  template<std::size_t LEN>
+  Vector& operator-=(const Vector<LEN>& vec)
+  {
+    static_assert(LEN == N, "Vector is incompatible length.");
+
+    for (std::size_t idx = 0; idx < N; idx++)
+    {
+      m_arr[idx] -= vec.m_arr[idx];
+    }
+    return *this;
+  }
+
+  /**
+   * @brief Multiply all elements by a scalar in-place.
+   *
+   * @tparam T Scalar type.
+   * @param scalar Scalar to multiply by.
+   * @return Vector with scalar multiplied.
+   */
+  template<typename T>
+  Vector& operator*=(const T scalar)
+  {
+    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+
+    std::for_each(
+      m_arr.begin(),
+      m_arr.end(),
+      [scalar](double& element){element *= static_cast<double>(scalar);}
+    );
+
+    return *this;
+  }
+
+  /**
+   * @brief Divide all elements by a scalar in-place.
+   *
+   * @tparam T Scalar type.
+   * @param scalar Scalar to divide by.
+   * @return Vector with scalar divided.
+   */
+  template<typename T>
+  Vector& operator/=(const T scalar)
+  {
+    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+
+    const double scalard = static_cast<double>(scalar);
+    assert(scalard > 1e-14);  // make sure denominator is not too small
+
+    std::for_each(
+      m_arr.begin(),
+      m_arr.end(),
+      [scalard](double& element){element /= scalard;}
+    );
+
+    return *this;
   }
 
   /**
@@ -183,9 +310,7 @@ public:
   {
     const double magn = magnitude();
 
-    std::for_each(
-      m_arr.begin(), m_arr.end(), [magn](double& val){val /= magn;}
-    );
+    std::for_each(m_arr.begin(), m_arr.end(), [magn](double& val){val /= magn;});
   }
 
   /**
@@ -196,6 +321,17 @@ public:
   double sum() const
   {
     return std::accumulate(m_arr.begin(), m_arr.end(), 0.0, std::plus<double>());
+  }
+
+  /**
+   * @brief Multiply all elements by -1.0. Change the sign of all elements.
+   *
+   * @return Vector with signs changed.
+   */
+  Vector& negate()
+  {
+    std::for_each(m_arr.begin(), m_arr.end(), [](double& val){val *= -1.0;});
+    return *this;
   }
 
   /**
@@ -213,10 +349,10 @@ public:
   {
     for (std::size_t idx = 0; idx < vec.m_arr.size() - 1; idx++)
     {
-      os << std::setprecision(8) << vec.m_arr.at(idx) << ", ";
+      os << std::setprecision(8) << vec.m_arr[idx] << ", ";
     }
 
-    os << std::setprecision(8) << vec.m_arr.at(vec.m_arr.size() - 1);
+    os << std::setprecision(8) << vec.m_arr[vec.m_arr.size() - 1];
     return os;
   }
 
