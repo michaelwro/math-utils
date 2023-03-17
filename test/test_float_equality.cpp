@@ -1,3 +1,8 @@
+/**
+ * @file test_float_equality.cpp
+ * @author Michael Wrona
+ * @date 2023-03-17
+ */
 
 #include "float_equality.h"
 

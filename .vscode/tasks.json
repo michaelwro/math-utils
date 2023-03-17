@@ -42,6 +42,20 @@
       "options": {
         "cwd": "${workspaceFolder}/build/"
       }
+    },
+    {
+      "label": "Static Analysis",
+      "type": "shell",
+      "group": {
+          "kind": "none"
+      },
+      "linux": {
+        "command": "./scripts/run-cppcheck.sh"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
     }
   ]
 }

@@ -23,19 +23,5 @@ jobs:
       - name: Check cppcheck version
         run: cppcheck --version
 
-      - name: Get file list
-        run: |
-          find ./src ./include \
-          -type f \( -iname *.cpp -o -iname *.h \) > files.txt
-
       - name: Run cppcheck
-        run: |
-          cppcheck --file-list=./files.txt \
-            --quiet \
-            --enable=style,warning \
-            --language=c++ \
-            --std=c++20 \
-            --platform=unix64 \
-            -I ./include/ \
-            -i ./build/ \
-            -i ./test/
+        run: ./scripts/run-cppcheck.sh
