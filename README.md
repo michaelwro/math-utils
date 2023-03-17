@@ -1,6 +1,6 @@
 # Math Utilities
 
-[![Build and Test](https://github.com/michaelwro/math-utils/actions/workflows/build-test.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/build-test.yml)  [![Pre-Commit](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml/badge.svg?branch=main)](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml)  [![Static Analysis](https://github.com/michaelwro/math-utils/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/static-analysis.yml)
+[![Build and Test](https://github.com/michaelwro/math-utils/actions/workflows/build-test.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/build-test.yml) [![Pre-Commit](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml/badge.svg?branch=main)](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml) [![Static Analysis](https://github.com/michaelwro/math-utils/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/static-analysis.yml)
 
 **Created By:** Michael Wrona
 
