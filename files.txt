@@ -1,0 +1,9 @@
+./include/Attitude/Quaternion.h
+./include/Attitude/quaternion_derivative.h
+./include/Attitude/quaternion_rotate.h
+./include/constants.h
+./include/conversions.h
+./include/float_equality.h
+./include/LinAlg/Vector.h
+./src/Attitude/quaternion_derivative.cpp
+./src/Attitude/quaternion_rotate.cpp
