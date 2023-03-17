@@ -18,7 +18,7 @@ jobs:
       - name: Install cppcheck
         run: |
           sudo apt update
-          DEBIAN_FRONTEND=noninteractive sudo apt install -y cppcheck
+          DEBIAN_FRONTEND=noninteractive sudo apt install -y cppcheck=2.10-2
 
       - name: Check cppcheck version
         run: cppcheck --version
