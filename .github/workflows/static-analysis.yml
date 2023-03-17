@@ -24,4 +24,4 @@ jobs:
         run: cppcheck --version
 
       - name: Run cppcheck
-        run: ./scripts/run-cppcheck.sh
+        run: bash scripts/run-cppcheck.sh
