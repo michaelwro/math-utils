@@ -1,5 +1,7 @@
 # Math Utilities
 
+[![Build & Tests](https://github.com/michaelwro/math-utils/actions/workflows/build-test.yml/badge.svg?branch=main)](https://github.com/michaelwro/math-utils/actions/workflows/build-test.yml)
+
 **Created By:** Michael Wrona
 
 A collection of math utilities for MicWro Engineering projects.
