@@ -16,7 +16,20 @@
                 "ms-vscode.cpptools",
                 "njpwerner.autodocstring",
                 "ue.alphabetical-sorter"
-            ]
+            ],
+            "settings": {
+                "doxdocgen.c.getterText": "Get {name}",
+                "doxdocgen.c.setterText": "Set {name}",
+                "doxdocgen.cpp.ctorText": "Construct {name}",
+                "doxdocgen.cpp.dtorText": "Destroy {name}",
+                "doxdocgen.file.fileOrder": [
+                    "file", "author", "date"
+                ],
+                "doxdocgen.generic.useGitUserName": true,
+                "doxdocgen.generic.authorTag": "@author {author}",
+                "doxdocgen.generic.returnTemplate": "@return ",
+                "doxdocgen.generic.dateFormat": "YYYY-MM-DD"
+            }
         }
     }
 }

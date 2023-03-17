@@ -262,7 +262,7 @@ TEST(LinAlg_Vector, ScalarDivideInPlaceAssertSmallNumber)
   Vector<3> vec({6, 8, 10});
 
   EXPECT_DEBUG_DEATH({
-    vec /= 1e-15;
+    vec /= 0lu;
   }, "");
 }
 

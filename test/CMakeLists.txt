@@ -10,10 +10,32 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(googletest)
 
+
 # MAKE TESTS ==========================================================================================================
-link_directories(${TEST_LINALG_EXEC} PRIVATE
+link_directories(
     ${MATHUTILS_LIB_OUTPUT_DIR}
 )
 
+# Make tests in this folder
+set(MATHUTILS_TEST_EXEC test_math_utils)
+file(GLOB MATHUTILS_TEST_SRC
+    ./*.cpp
+)
+
+add_executable(${MATHUTILS_TEST_EXEC}
+    ${MATHUTILS_TEST_SRC}
+)
+
+target_include_directories(${MATHUTILS_TEST_EXEC} PUBLIC
+    ${CMAKE_SOURCE_DIR}/${INCL_DIR}
+)
+
+target_link_libraries(${MATHUTILS_TEST_EXEC} PUBLIC
+    ${MATHUTILS_LIB}
+    GTest::gtest_main
+)
+
+
+# MAKE OTHER TESTS ====================================================================================================
 add_subdirectory("./LinAlg/")
 add_subdirectory("./Attitude/")

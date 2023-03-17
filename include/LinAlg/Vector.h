@@ -15,6 +15,7 @@
 #include <functional>
 #include <initializer_list>
 #include <iomanip>
+#include <limits>
 #include <numeric>
 #include <type_traits>
 
@@ -257,7 +258,7 @@ public:
     static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
 
     const double scalard = static_cast<double>(scalar);
-    assert(scalard > 1e-14);  // make sure denominator is not too small
+    assert(std::abs(scalard) > std::numeric_limits<double>::epsilon());  // make sure denominator is not too small
 
     std::for_each(
       m_arr.begin(),
@@ -378,6 +379,20 @@ inline Vector<3> cross(const Vector<3>& v1, const Vector<3>& v2)
     (v1(2) * v2(0)) - (v1(0) * v2(2)),
     (v1(0) * v2(1)) - (v1(1) * v2(0))
   };
+}
+
+/**
+ * @brief Compute the vector dot product.
+ *
+ * @details Explicit calculation for length-3 vectors.
+ *
+ * @param v1 First vector.
+ * @param v2 Second vector.
+ * @return Dot product.
+ */
+inline double dot(const Vector<3>& v1, const Vector<3>& v2)
+{
+  return (v1(0) * v2(0)) + (v1(1) * v2(1)) + (v1(2) * v2(2));
 }
 
 /**

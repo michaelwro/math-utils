@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 project(MathUtils LANGUAGES CXX)
 
+include(CTest)
 
 # PROJECT CONFIGURATION ===============================================================================================
 set(CMAKE_CXX_STANDARD 20)
@@ -36,6 +37,9 @@ set(LINALG_DIR "LinAlg/")
 # BUILD PROJECT =======================================================================================================
 
 # FIND SOURCE FILES
+file(GLOB SRC_DIR_SRC
+    ${SRC_DIR}/*.cpp
+)
 file(GLOB ATTITUDE_SRC
     ${SRC_DIR}/${ATTITUDE_DIR}/*.cpp
 )
@@ -48,6 +52,7 @@ file(GLOB LINALG_SRC
 add_library(${MATHUTILS_LIB} SHARED
     ${ATTITUDE_SRC}
     ${LINALG_SRC}
+    ${SRC_DIR_SRC}
 )
 
 target_compile_definitions(${MATHUTILS_LIB} PRIVATE "$<$<CONFIG:DEBUG>:${MATHUTILS_COMPILE_DEBUG_DEFINITIONS}>")
