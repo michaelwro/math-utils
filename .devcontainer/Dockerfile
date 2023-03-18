@@ -23,4 +23,4 @@ RUN python3 -m pip install --disable-pip-version-check --no-cache-dir -r /opt/re
     rm -rf /opt/requirements.txt
 
 # set nano to default
-RUN git config core.editor "nano"
+RUN git config --global core.editor "nano"

@@ -20,7 +20,7 @@
             "settings": {
                 "doxdocgen.c.getterText": "Get {name}",
                 "doxdocgen.c.setterText": "Set {name}",
-                "doxdocgen.cpp.ctorText": "Construct {name}",
+                "doxdocgen.cpp.ctorText": "Create a {name}",
                 "doxdocgen.cpp.dtorText": "Destroy {name}",
                 "doxdocgen.file.fileOrder": [
                     "file", "author", "date"
