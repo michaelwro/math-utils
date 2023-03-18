@@ -1,5 +1,4 @@
-# run pre-commit hooks
-name: Pre-Commit
+name: Linting & Style
 
 on:
   push:

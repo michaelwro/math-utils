@@ -1,5 +1,4 @@
-# Build and run test suite
-name: Build and Test
+name: Tests
 
 on:
   push:
@@ -11,7 +10,7 @@ on:
 
 jobs:
   build-and-test:
-    name: Build and Test
+    name: Build & Test
     runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'ci skip')"
 
@@ -35,5 +34,3 @@ jobs:
       - name: Run tests
         working-directory: build
         run: ctest --output-on-failure
-
-
