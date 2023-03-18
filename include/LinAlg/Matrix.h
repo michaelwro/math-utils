@@ -29,7 +29,7 @@ namespace MathUtils {
  * @tparam ROWS Number of rows.
  * @tparam COLS Number of columns.
  */
-template<std::size_t ROWS, std::size_t M>
+template<std::size_t ROWS, std::size_t COLS>
 class Matrix
 {
 public:
