@@ -197,8 +197,7 @@ public:
    */
   friend std::ostream& operator<<(std::ostream& os, const Quaternion& quat)
   {
-    os << std::setprecision(8) <<
-      quat.m_arr[0] << ", " <<
+    os << quat.m_arr[0] << ", " <<
       quat.m_arr[1] << ", " <<
       quat.m_arr[2] << ", " <<
       quat.m_arr[3];

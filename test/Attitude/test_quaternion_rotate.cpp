@@ -20,7 +20,7 @@ namespace {
 const std::string test_reports_file = std::string("TESTRESULTS-QuaternionMath.xml");
 
 // ====================================================================================================================
-TEST(Attitude_QuaternionMath, QuaternionRotate1)
+TEST(QuaternionRotateTest, QuaternionRotate1)
 {
   // Example 3.6 from "Analytical Mechanics of Aerospace Systems"
   Quaternion q_a_b({0.961798, -0.14565, 0.202665, 0.112505});
@@ -36,7 +36,7 @@ TEST(Attitude_QuaternionMath, QuaternionRotate1)
 }
 
 // ====================================================================================================================
-TEST(Attitude_QuaternionMath, QuaternionRotate2)
+TEST(QuaternionRotateTest, QuaternionRotate2)
 {
   // https://www.mathworks.com/help/aerotbx/ug/quat2dcm.html
   Quaternion q_a_b({1, 0, 1, 0});

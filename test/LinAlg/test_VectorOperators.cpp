@@ -17,9 +17,9 @@ using namespace MathUtils;
 
 namespace {
 
-const std::string test_reports_file = std::string("TESTRESULTS-VectorOperators.xml");
+const std::string test_reports_file = std::string("TESTRESULTS-VectorOperatorsTest.xml");
 
-class LinAlg_VectorOperators : public ::testing::Test
+class VectorOperatorsTest : public ::testing::Test
 {
 protected:
   void SetUp() override
@@ -40,7 +40,7 @@ protected:
 
 
 // ====================================================================================================================
-TEST_F(LinAlg_VectorOperators, Add)
+TEST_F(VectorOperatorsTest, Add)
 {
   const Vector<3> numpy_result {5, 7, 9};
 
@@ -52,7 +52,7 @@ TEST_F(LinAlg_VectorOperators, Add)
 }
 
 // ====================================================================================================================
-TEST_F(LinAlg_VectorOperators, VectorScalarAdd)
+TEST_F(VectorOperatorsTest, VectorScalarAdd)
 {
   const Vector<3> res = vec1 + scalar;
 
@@ -62,7 +62,7 @@ TEST_F(LinAlg_VectorOperators, VectorScalarAdd)
 }
 
 // ====================================================================================================================
-TEST_F(LinAlg_VectorOperators, ScalarVectorAdd)
+TEST_F(VectorOperatorsTest, ScalarVectorAdd)
 {
   const Vector<3> res = scalar + vec1;
 
@@ -72,7 +72,7 @@ TEST_F(LinAlg_VectorOperators, ScalarVectorAdd)
 }
 
 // ====================================================================================================================
-TEST_F(LinAlg_VectorOperators, Subtract)
+TEST_F(VectorOperatorsTest, Subtract)
 {
   const Vector<3> numpy_result {-3, -3, -3};
 
@@ -84,7 +84,7 @@ TEST_F(LinAlg_VectorOperators, Subtract)
 }
 
 // ====================================================================================================================
-TEST_F(LinAlg_VectorOperators, VectorScalarSubtract)
+TEST_F(VectorOperatorsTest, VectorScalarSubtract)
 {
   const Vector<3> res = vec1 - scalar;
 
@@ -94,7 +94,7 @@ TEST_F(LinAlg_VectorOperators, VectorScalarSubtract)
 }
 
 // ====================================================================================================================
-TEST_F(LinAlg_VectorOperators, ScalarVectorSubtract)
+TEST_F(VectorOperatorsTest, ScalarVectorSubtract)
 {
   const Vector<3> res = scalar - vec1;
 
@@ -104,7 +104,7 @@ TEST_F(LinAlg_VectorOperators, ScalarVectorSubtract)
 }
 
 // ====================================================================================================================
-TEST_F(LinAlg_VectorOperators, VectorScalarMultiplication)
+TEST_F(VectorOperatorsTest, VectorScalarMultiplication)
 {
   const Vector<3> numpy_result {4, 8, 12};
 
@@ -116,7 +116,7 @@ TEST_F(LinAlg_VectorOperators, VectorScalarMultiplication)
 }
 
 // ====================================================================================================================
-TEST_F(LinAlg_VectorOperators, ScalarVectorMultiplication)
+TEST_F(VectorOperatorsTest, ScalarVectorMultiplication)
 {
   const Vector<3> numpy_result {16, 20, 24};
 

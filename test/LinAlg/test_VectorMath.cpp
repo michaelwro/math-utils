@@ -19,7 +19,7 @@ namespace {
 
 const std::string test_reports_file = std::string("TESTRESULTS-VectorMath.xml");
 
-class LinAlg_VectorMath : public ::testing::Test
+class VectorMathTest : public ::testing::Test
 {
 protected:
   void SetUp() override
@@ -40,7 +40,7 @@ protected:
 
 
 // ====================================================================================================================
-TEST_F(LinAlg_VectorMath, CrossProduct)
+TEST_F(VectorMathTest, CrossProduct)
 {
   const Vector<3> numpy_result {-3, 6, -3};
 
@@ -52,7 +52,7 @@ TEST_F(LinAlg_VectorMath, CrossProduct)
 }
 
 // ====================================================================================================================
-TEST_F(LinAlg_VectorMath, DotProduct)
+TEST_F(VectorMathTest, DotProduct)
 {
   const double numpy_result = 32;
 

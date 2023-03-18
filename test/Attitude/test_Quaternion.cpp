@@ -20,7 +20,7 @@ namespace {
 const std::string test_reports_file = std::string("TESTRESULTS-Quaternion.xml");
 
 // ====================================================================================================================
-TEST(Attitude_Quaternion, DefaultConstructorIsUnityQuaternion)
+TEST(QuaternionTest, DefaultConstructorIsUnityQuaternion)
 {
   Quaternion quat;
 
@@ -31,7 +31,7 @@ TEST(Attitude_Quaternion, DefaultConstructorIsUnityQuaternion)
 }
 
 // ====================================================================================================================
-TEST(Attitude_Quaternion, FourArgConstructionNormalizes)
+TEST(QuaternionTest, FourArgConstructionNormalizes)
 {
   const double val = 1.0;
   const double magn = std::sqrt(4.0 * val * val);
@@ -46,7 +46,7 @@ TEST(Attitude_Quaternion, FourArgConstructionNormalizes)
 }
 
 // ====================================================================================================================
-TEST(Attitude_Quaternion, ListInitConstructionNormalizes)
+TEST(QuaternionTest, ListInitConstructionNormalizes)
 {
   const double val = 1.0;
   const double magn = std::sqrt(4.0 * val * val);
@@ -60,7 +60,7 @@ TEST(Attitude_Quaternion, ListInitConstructionNormalizes)
 }
 
 // ====================================================================================================================
-TEST(Attitude_Quaternion, AssertsInvalidLengthInitializerList)
+TEST(QuaternionDeathTest, AssertsInvalidLengthInitializerList)
 {
   std::initializer_list<double> vals = {1, 2, 3};
 
@@ -70,7 +70,7 @@ TEST(Attitude_Quaternion, AssertsInvalidLengthInitializerList)
 }
 
 // ====================================================================================================================
-TEST(Attitude_Quaternion, CopyConstructs)
+TEST(QuaternionTest, CopyConstructs)
 {
   Quaternion q1 {1, 1, 1, 1};
   Quaternion q2(q1);
@@ -82,7 +82,7 @@ TEST(Attitude_Quaternion, CopyConstructs)
 }
 
 // ====================================================================================================================
-TEST(Attitude_Quaternion, CopyAssigns)
+TEST(QuaternionTest, CopyAssigns)
 {
   Quaternion q1 {1, 1, 1, 1};
   Quaternion q2;
@@ -96,7 +96,7 @@ TEST(Attitude_Quaternion, CopyAssigns)
 }
 
 // ====================================================================================================================
-TEST(Attitude_Quaternion, MoveAssigns)
+TEST(QuaternionTest, MoveAssigns)
 {
   const double val = 1.0;
   const double magn = std::sqrt(4.0 * val * val);
@@ -113,7 +113,7 @@ TEST(Attitude_Quaternion, MoveAssigns)
 }
 
 // ====================================================================================================================
-TEST(Attitude_Quaternion, InitializerListAssigns)
+TEST(QuaternionTest, InitializerListAssigns)
 {
   const double val = 1.0;
   const double magn = std::sqrt(4.0 * val * val);
@@ -128,7 +128,7 @@ TEST(Attitude_Quaternion, InitializerListAssigns)
 }
 
 // ====================================================================================================================
-TEST(Attitude_Quaternion, AssertsInvalidLengthInitializerListAssignment)
+TEST(QuaternionDeathTest, AssertsInvalidLengthInitializerListAssignment)
 {
   std::initializer_list<double> vals = {1, 2, 3};
 
@@ -139,7 +139,7 @@ TEST(Attitude_Quaternion, AssertsInvalidLengthInitializerListAssignment)
 }
 
 // ====================================================================================================================
-TEST(Attitude_Quaternion, Conjugate)
+TEST(QuaternionTest, Conjugate)
 {
   Quaternion q(0.5, 0.5, -0.5, -0.5);
 
@@ -152,7 +152,7 @@ TEST(Attitude_Quaternion, Conjugate)
 }
 
 // ====================================================================================================================
-TEST(Attitude_Quaternion, Invert)
+TEST(QuaternionTest, Invert)
 {
   Quaternion q(-0.5, -0.5, -0.5, 0.5);
 
@@ -165,7 +165,7 @@ TEST(Attitude_Quaternion, Invert)
 }
 
 // ====================================================================================================================
-TEST(Attitude_Quaternion, ForcePositiveRotation)
+TEST(QuaternionTest, ForcePositiveRotation)
 {
   const double val = 1.0;
   const double magn = std::sqrt(4.0 * val * val);

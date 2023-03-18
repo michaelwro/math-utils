@@ -19,7 +19,7 @@ namespace {
 const std::string test_reports_file = std::string("TESTRESULTS-QuaternionOperators.xml");
 
 // ====================================================================================================================
-TEST(Attitude_QuaternionOperators, QuaternionMultiply)
+TEST(QuaternionOperatorsTest, Multiply)
 {
   // Quaternion q_a(1, 2, 3, 4);
   // Quaternion q_b(4, 3, 2, 1);

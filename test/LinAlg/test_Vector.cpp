@@ -20,7 +20,7 @@ namespace {
 const std::string test_reports_file = std::string("TESTRESULTS-LinAlg-Vector.xml");
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, DefaultConstructorZerosElements)
+TEST(VectorTest, DefaultConstructorZerosElements)
 {
   Vector<3> vec;
 
@@ -30,7 +30,7 @@ TEST(LinAlg_Vector, DefaultConstructorZerosElements)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, InitListConstruction)
+TEST(VectorTest, InitListConstruction)
 {
   Vector<4> vec({1, 2, 3, 4});
 
@@ -41,7 +41,7 @@ TEST(LinAlg_Vector, InitListConstruction)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, AssertsInvalidLengthInitializerList)
+TEST(VectorDeathTest, AssertsInvalidLengthInitializerList)
 {
   std::initializer_list<double> vals = {1, 2, 3, 4};
 
@@ -51,7 +51,7 @@ TEST(LinAlg_Vector, AssertsInvalidLengthInitializerList)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, CopyConstruction)
+TEST(VectorTest, CopyConstruction)
 {
   Vector<2> vec {-1, -2};
   Vector<2> vec2(vec);
@@ -61,7 +61,7 @@ TEST(LinAlg_Vector, CopyConstruction)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, CopyAssigns)
+TEST(VectorTest, CopyAssigns)
 {
   Vector<3> vec({1, 3, 2});
   Vector<3> vec2;
@@ -74,7 +74,7 @@ TEST(LinAlg_Vector, CopyAssigns)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, MoveAssigns)
+TEST(VectorTest, MoveAssigns)
 {
   Vector<4> vec {4, 3, 2, 1};
   Vector<4> vec2;
@@ -88,7 +88,7 @@ TEST(LinAlg_Vector, MoveAssigns)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, InitializerListAssigns)
+TEST(VectorTest, InitializerListAssigns)
 {
   Vector<4> vec;
 
@@ -101,7 +101,7 @@ TEST(LinAlg_Vector, InitializerListAssigns)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, InitListAssignAssertsIncompatibleSize)
+TEST(VectorDeathTest, InitListAssignAssertsIncompatibleSize)
 {
   Vector<3> vec;
   std::initializer_list<double> four_vals = {1, 3, 2, 4};
@@ -112,7 +112,7 @@ TEST(LinAlg_Vector, InitListAssignAssertsIncompatibleSize)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, ParenthesisAccessorModifiesValues)
+TEST(VectorTest, ParenthesisAccessorModifiesValues)
 {
   Vector<3> vec({1, 2, 3});
 
@@ -126,7 +126,7 @@ TEST(LinAlg_Vector, ParenthesisAccessorModifiesValues)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, SizeGetterReturnsCorrectLength)
+TEST(VectorTest, SizeGetterReturnsCorrectLength)
 {
   Vector<4> vec {1, 2, 3, 4};
 
@@ -134,7 +134,7 @@ TEST(LinAlg_Vector, SizeGetterReturnsCorrectLength)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, FillsVector)
+TEST(VectorTest, FillsVector)
 {
   Vector<3> vec {1, 1, 1};
 
@@ -146,7 +146,7 @@ TEST(LinAlg_Vector, FillsVector)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, ComputesMagnitude)
+TEST(VectorTest, ComputesMagnitude)
 {
   Vector<3> vec {1, 1, 1};
 
@@ -158,7 +158,7 @@ TEST(LinAlg_Vector, ComputesMagnitude)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, Normalizes)
+TEST(VectorTest, Normalizes)
 {
   const double val0 = 3;
   const double val1 = 2;
@@ -175,7 +175,7 @@ TEST(LinAlg_Vector, Normalizes)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, SumsElements)
+TEST(VectorTest, SumsElements)
 {
   Vector<3> vec({5, 4, 3});
 
@@ -183,7 +183,7 @@ TEST(LinAlg_Vector, SumsElements)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, ScalarAddInPlace)
+TEST(VectorTest, ScalarAddInPlace)
 {
   Vector<3> vec({4, 5, 6});
 
@@ -195,7 +195,7 @@ TEST(LinAlg_Vector, ScalarAddInPlace)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, VectorAddInPlace)
+TEST(VectorTest, VectorAddInPlace)
 {
   Vector<3> vec1({1, 2, 3});
   Vector<3> vec2({4, 5, 6});
@@ -208,7 +208,7 @@ TEST(LinAlg_Vector, VectorAddInPlace)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, ScalarSubtractInPlace)
+TEST(VectorTest, ScalarSubtractInPlace)
 {
   Vector<3> vec({4, 5, 6});
 
@@ -220,7 +220,7 @@ TEST(LinAlg_Vector, ScalarSubtractInPlace)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, VectorSubtractInPlace)
+TEST(VectorTest, VectorSubtractInPlace)
 {
   Vector<3> vec1({1, 2, 3});
   Vector<3> vec2({4, 5, 6});
@@ -233,7 +233,7 @@ TEST(LinAlg_Vector, VectorSubtractInPlace)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, ScalarMultiplyInPlace)
+TEST(VectorTest, ScalarMultiplyInPlace)
 {
   Vector<3> vec({1, 2, 3});
 
@@ -245,7 +245,7 @@ TEST(LinAlg_Vector, ScalarMultiplyInPlace)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, ScalarDivideInPlace)
+TEST(VectorTest, ScalarDivideInPlace)
 {
   Vector<3> vec({6, 8, 10});
 
@@ -257,7 +257,7 @@ TEST(LinAlg_Vector, ScalarDivideInPlace)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, ScalarDivideInPlaceAssertSmallNumber)
+TEST(VectorDeathTest, ScalarDivideInPlaceAssertSmallNumber)
 {
   Vector<3> vec({6, 8, 10});
 
@@ -267,7 +267,7 @@ TEST(LinAlg_Vector, ScalarDivideInPlaceAssertSmallNumber)
 }
 
 // ====================================================================================================================
-TEST(LinAlg_Vector, Negate)
+TEST(VectorTest, Negate)
 {
   Vector<3> vec({6, -8, 10});
 

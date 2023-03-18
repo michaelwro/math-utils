@@ -17,6 +17,7 @@
 #include <iomanip>
 #include <limits>
 #include <numeric>
+#include <ostream>
 #include <type_traits>
 
 namespace MathUtils {
@@ -350,13 +351,14 @@ public:
   {
     for (std::size_t idx = 0; idx < vec.m_arr.size() - 1; idx++)
     {
-      os << std::setprecision(8) << vec.m_arr[idx] << ", ";
+      os << vec.m_arr[idx] << ", ";
     }
 
-    os << std::setprecision(8) << vec.m_arr[vec.m_arr.size() - 1];
+    os << vec.m_arr[vec.m_arr.size() - 1];
     return os;
   }
 
+protected:
 private:
   std::array<double, N> m_arr;  ///< Underlying array to store vector values.
 };
