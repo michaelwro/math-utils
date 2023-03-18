@@ -33,7 +33,7 @@ template<std::size_t ROWS, std::size_t M>
 class Matrix
 {
 public:
-  static_assert(ROWS != 0 && COLS != 0, "Cannot have zero rows or columns.");
+  static_assert(ROWS != 0 && COLS != 0, "Cannot have zero rows/columns.");
 
   /**
    * @brief Create a matrix.
