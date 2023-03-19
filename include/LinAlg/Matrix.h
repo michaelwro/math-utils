@@ -107,7 +107,8 @@ public:
       for (const auto& val : row)
       {
         assert(array_element != m_arr.end());  // make sure we're not at the end
-        *(array_element++) = static_cast<double>(val);  // assign value to array
+        *array_element = static_cast<double>(val);  // assign value to array
+        array_element++;
       }
     }
 
@@ -131,6 +132,11 @@ public:
    */
   Matrix& operator=(const Matrix& mat)
   {
+    if (&mat == this)
+    {
+      return *this;
+    }
+
     m_arr = mat.m_arr;
     return *this;
   }
@@ -143,6 +149,11 @@ public:
    */
   Matrix& operator=(Matrix&& mat)
   {
+    if (&mat == this)
+    {
+      return *this;
+    }
+
     m_arr.swap(mat.m_arr);
     return *this;
   }
@@ -394,8 +405,10 @@ public:
     {
       for (std::size_t jj = 0; jj < mat.cols(); jj++)
       {
-        os << (jj == 0 ? "\n" : "") << std::setw(most_chars) << std::left <<
-          mat(ii, jj) << (jj == mat.cols()-1 ? "" : ", ");
+        std::string prefix = jj == 0 ? "\n" : "";  // put a newline or no char before the value
+        std::string suffix = jj == mat.cols()-1 ? "" : ", ";  // put a comma or no char after the value
+
+        os << prefix << std::setw(most_chars) << std::left << mat(ii, jj) << suffix;
       }
     }
 

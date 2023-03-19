@@ -86,6 +86,11 @@ public:
    */
   Vector& operator=(const Vector& src_vec)
   {
+    if (&src_vec == this)
+    {
+      return *this;
+    }
+
     m_arr = src_vec.m_arr;
     return *this;
   }
@@ -97,6 +102,11 @@ public:
    */
   Vector& operator=(Vector&& src_vec)
   {
+    if (&src_vec == this)
+    {
+      return *this;
+    }
+
     m_arr.swap(src_vec.m_arr);
     return *this;
   }
@@ -315,6 +325,7 @@ public:
       [](double accum, const double& val){return accum += val * val;}
     );
 
+    // NOTE: Since all elements were squared in the above operation, this argument will never be negative
     return std::sqrt(magn);
   }
 
@@ -343,10 +354,9 @@ public:
    *
    * @return Vector with signs changed.
    */
-  Vector& negate()
+  void negate()
   {
     std::for_each(m_arr.begin(), m_arr.end(), [](double& val){val *= -1.0;});
-    return *this;
   }
 
   /**

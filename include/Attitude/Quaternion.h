@@ -89,6 +89,11 @@ public:
    */
   Quaternion& operator=(const Quaternion& quat)
   {
+    if (&quat == this)
+    {
+      return *this;
+    }
+
     m_arr = quat.m_arr;
     return *this;
   }
@@ -101,6 +106,11 @@ public:
    */
   Quaternion& operator=(Quaternion&& quat)
   {
+    if (&quat == this)
+    {
+      return *this;
+    }
+
     m_arr.swap(quat.m_arr);
     return *this;
   }
@@ -147,13 +157,11 @@ public:
   /**
    * @brief Invert the quaternion.
    */
-  Quaternion& invert()
+  void invert()
   {
     m_arr[1] *= -1.0;
     m_arr[2] *= -1.0;
     m_arr[3] *= -1.0;
-
-    return *this;
   }
 
   /**
@@ -161,7 +169,7 @@ public:
    *
    * @return Quaternion.
    */
-  Quaternion& force_positive_rotation()
+  void force_positive_rotation()
   {
     if (m_arr[0] < 0.0)
     {
@@ -170,8 +178,6 @@ public:
       m_arr[2] *= -1.0;
       m_arr[3] *= -1.0;
     }
-
-    return *this;
   }
 
   /**
@@ -180,12 +186,15 @@ public:
   void normalize()
   {
     // compute magnitude
+    // NOTE: since elements are squared, there's no opportunity for this to accidentally be negative.
     const double magn = std::sqrt(
       (m_arr[0] * m_arr[0]) +
       (m_arr[1] * m_arr[1]) +
       (m_arr[2] * m_arr[2]) +
       (m_arr[3] * m_arr[3])
     );
+
+    assert(std::abs(magn) > std::numeric_limits<double>::epsilon());  // make sure its not too small before dividing
 
     // normalize each element
     m_arr[0] /= magn;
