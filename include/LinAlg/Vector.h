@@ -453,11 +453,11 @@ Vector<N_LEFT> operator+(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
 {
   static_assert(N_LEFT == N_RIGHT, "Incompatible dimensions.");
 
-  Vector<N_LEFT> result;
+  Vector<N_LEFT> result(v1);
 
   for (std::size_t idx = 0; idx < N_LEFT; idx++)
   {
-    result(idx) = v1(idx) + v2(idx);
+    result(idx) += v2(idx);
   }
 
   return result;
@@ -477,38 +477,14 @@ Vector<N_LEFT> operator-(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
 {
   static_assert(N_LEFT == N_RIGHT, "Incompatible dimensions.");
 
-  Vector<N_LEFT> result;
+  Vector<N_LEFT> result(v1);
 
   for (std::size_t idx = 0; idx < N_LEFT; idx++)
   {
-    result(idx) = v1(idx) - v2(idx);
+    result(idx) -= v2(idx);
   }
 
   return result;
-}
-
-/**
- * @brief Vector-scalar multiplication.
- *
- * @tparam N Length of the vector.
- * @tparam T Scalar type.
- * @param vec Vector to be multiplied by the scalar.
- * @param scalar Scalar to multiply the vector by.
- * @return Vector-scalar multiplication result.
- */
-template<std::size_t N, typename T>
-Vector<N> operator*(const Vector<N>& vec, const T scalar)
-{
-  static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
-
-  Vector<N> res;
-
-  for (std::size_t idx = 0; idx < vec.size(); idx++)
-  {
-    res(idx) = static_cast<double>(scalar) * vec(idx);
-  }
-
-  return res;
 }
 
 /**
@@ -524,7 +500,31 @@ template<std::size_t N, typename T>
 Vector<N> operator*(const T scalar, const Vector<N>& vec)
 {
   static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
-  return Vector<N>(vec * static_cast<double>(scalar));
+
+  Vector<N> res(vec);
+
+  for (std::size_t idx = 0; idx < vec.size(); idx++)
+  {
+    res(idx) *= static_cast<double>(scalar);
+  }
+
+  return res;
+}
+
+/**
+ * @brief Vector-scalar multiplication.
+ *
+ * @tparam N Length of the vector.
+ * @tparam T Scalar type.
+ * @param vec Vector to be multiplied by the scalar.
+ * @param scalar Scalar to multiply the vector by.
+ * @return Vector-scalar multiplication result.
+ */
+template<std::size_t N, typename T>
+Vector<N> operator*(const Vector<N>& vec, const T scalar)
+{
+  static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
+  return scalar * vec;
 }
 
 /**
@@ -541,11 +541,11 @@ Vector<N_LEFT> operator*(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
 {
   static_assert(N_LEFT == N_RIGHT, "Incompatible dimensions.");
 
-  Vector<N_LEFT> result;
+  Vector<N_LEFT> result(v1);
 
   for (std::size_t idx = 0; idx < N_LEFT; idx++)
   {
-    result(idx) = v1(idx) * v2(idx);
+    result(idx) *= v2(idx);
   }
 
   return result;

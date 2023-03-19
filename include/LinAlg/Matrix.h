@@ -7,8 +7,8 @@
 #ifndef MATHUTILS_LINALG_MATRIX_H_
 #define MATHUTILS_LINALG_MATRIX_H_
 
-// #include <limits>
-// #include <numeric>
+#include "LinAlg/Vector.h"
+
 #include <algorithm>
 #include <array>
 #include <cassert>
@@ -17,6 +17,7 @@
 #include <functional>
 #include <initializer_list>
 #include <iomanip>
+#include <limits>
 #include <ostream>
 #include <sstream>
 #include <type_traits>
@@ -195,22 +196,170 @@ public:
   }
 
   /**
-   * @brief Get the trace of the matrix (sum of diagonal elements).
+   * @brief Add scalar to matrix in-place.
    *
-   * @return Matrix trace.
+   * @tparam T Scalar type.
+   * @param scalar Scalar to add.
+   * @return Matrix with scalar added.
    */
-  double trace() const
+  template<typename T>
+  Matrix& operator+=(const T scalar)
   {
-    assert(ROWS == COLS);  // only allowed for square matrices
+    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed");
 
-    double tr = 0.0;
+    std::for_each(
+      m_arr.begin(),
+      m_arr.end(),
+      [scalar](double& element){element += static_cast<double>(scalar);}
+    );
 
-    for (std::size_t idx = 0; idx < ROWS; idx++)
+    return *this;
+  }
+
+  /**
+   * @brief Add matrix in-place.
+   *
+   * @param mat Matrix to add.
+   * @return Matrix.
+   */
+  Matrix& operator+=(const Matrix& mat)
+  {
+    for (std::size_t idx = 0; idx < ROWS*COLS; idx++)
     {
-      tr += m_arr[(idx * COLS) + idx];
+      m_arr[idx] += mat.m_arr[idx];
     }
 
-    return tr;
+    return *this;
+  }
+
+  /**
+   * @brief Subtract scalar from matrix in-place.
+   *
+   * @tparam T Scalar type.
+   * @param scalar Scalar to subtract.
+   * @return Matrix with scalar subtracted.
+   */
+  template<typename T>
+  Matrix& operator-=(const T scalar)
+  {
+    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed");
+
+    std::for_each(
+      m_arr.begin(),
+      m_arr.end(),
+      [scalar](double& element){element -= static_cast<double>(scalar);}
+    );
+
+    return *this;
+  }
+
+  /**
+   * @brief Subtract matrix in-place.
+   *
+   * @param mat Matrix to subtract.
+   * @return Matrix.
+   */
+  Matrix& operator-=(const Matrix& mat)
+  {
+    for (std::size_t idx = 0; idx < ROWS*COLS; idx++)
+    {
+      m_arr[idx] -= mat.m_arr[idx];
+    }
+
+    return *this;
+  }
+
+  /**
+   * @brief Multiply matrix by scalar in-place.
+   *
+   * @tparam T Scalar type.
+   * @param scalar Scalar to multiply.
+   * @return Matrix with scalar multiplied.
+   */
+  template<typename T>
+  Matrix& operator*=(const T scalar)
+  {
+    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed");
+
+    std::for_each(
+      m_arr.begin(),
+      m_arr.end(),
+      [scalar](double& element){element *= static_cast<double>(scalar);}
+    );
+
+    return *this;
+  }
+
+  /**
+   * @brief Multiply matrix in-place.
+   *
+   * @details This isn't efficient because a new std::array needs to be created and copied.
+   *
+   * @param mat Matrix to multiply by.
+   * @return Matrix product.
+   */
+  Matrix& operator*=(const Matrix& mat)
+  {
+    std::array<double, ROWS*COLS> new_arr = {0};
+
+    for (std::size_t ii = 0; ii < ROWS; ii++)
+    {
+      for (std::size_t jj = 0; jj < COLS; jj++)
+      {
+        double sum = 0.0;
+
+        for (std::size_t kk = 0; kk < ROWS; kk++)
+        {
+          sum += m_arr[(ii * COLS) + kk] * mat.m_arr[(kk * COLS) + jj];
+        }
+
+        new_arr[(ii * COLS) + jj] = sum;
+      }
+    }
+
+    m_arr = new_arr;
+    return *this;
+  }
+
+  /**
+   * @brief Divide matrix by scalar in-place.
+   *
+   * @tparam T Scalar type.
+   * @param scalar Scalar to divide.
+   * @return Matrix divided by scalar.
+   */
+  template<typename T>
+  Matrix& operator/=(const T scalar)
+  {
+    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed");
+
+    const double scalard = static_cast<double>(scalar);
+    assert(std::abs(scalard) > std::numeric_limits<double>::epsilon());  // make sure denominator is not too small
+
+    std::for_each(
+      m_arr.begin(),
+      m_arr.end(),
+      [scalard](double& element){element /= scalard;}
+    );
+
+    return *this;
+  }
+
+  /**
+   * @brief Get an identity matrix.
+   *
+   * @return Identity matrix.
+   */
+  static Matrix identity()
+  {
+    Matrix eye;
+
+    for (std::size_t ii = 0; ii < ROWS; ii++)
+    {
+      eye.m_arr[(ii * COLS) + ii] = 1.0;
+    }
+
+    return eye;
   }
 
   /**
@@ -258,10 +407,82 @@ private:
   std::array<double, ROWS * COLS> m_arr;  ///< Underlying array to store values (row-major order).
 };
 
-// ====================================================================================================================
-// MATRIX-MATRIX OPERATOR OVERLOADS
-// ====================================================================================================================
 
+// ====================================================================================================================
+// MATRIX ONLY FUNCTIONS
+// ====================================================================================================================
+/**
+ * @brief Compute the trace of a matrix (sum of diagonal elements).
+ *
+ * @tparam Matrix dimension (square).
+ * @param Matrix.
+ * @return Matrix trace.
+ */
+template<std::size_t N>
+double trace(const Matrix<N,N>& mat)
+{
+  double tr = 0.0;
+
+  for (std::size_t idx = 0; idx < N; idx++)
+  {
+    tr += mat(idx, idx);
+  }
+
+  return tr;
+}
+
+
+// ====================================================================================================================
+// MATRIX <-> SCALAR OPERATOR OVERLOADS
+// ====================================================================================================================
+/**
+ * @brief Scalar-matrix multiplication.
+ *
+ * @tparam N Rows.
+ * @tparam M Columns.
+ * @tparam T Scalar type
+ * @param scalar Scalar to multiply.
+ * @param mat Matrix to multiply.
+ * @return Product.
+ */
+template<std::size_t N, std::size_t M, typename T>
+Matrix<N,M> operator*(const T scalar, const Matrix<N,M>& mat)
+{
+  static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
+  Matrix<N,M> out_mat(mat);
+
+  for (std::size_t ii = 0; ii < N; ii++)
+  {
+    for (std::size_t jj = 0; jj < M; jj++)
+    {
+      out_mat(ii, jj) *= static_cast<double>(scalar);
+    }
+  }
+
+  return out_mat;
+}
+
+/**
+ * @brief Matrix-scalar multiplication.
+ *
+ * @tparam N Rows.
+ * @tparam M Columns.
+ * @tparam T Scalar type
+ * @param mat Matrix to multiply.
+ * @param scalar Scalar to multiply.
+ * @return Product.
+ */
+template<std::size_t N, std::size_t M, typename T>
+Matrix<N,M> operator*(const Matrix<N,M>& mat, const T scalar)
+{
+  static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
+  return scalar * mat;
+}
+
+
+// ====================================================================================================================
+// MATRIX <-> MATRIX OPERATOR OVERLOADS
+// ====================================================================================================================
 /**
  * @brief 2x2 matrix-matrix multiplication A * B.
  *
@@ -352,13 +573,86 @@ Matrix<N,P> operator*(const Matrix<N,M>& a, const Matrix<M,P>& b)
 }
 
 
-
-
 // ====================================================================================================================
-// MATRIX-VECTOR OPERATOR OVERLOADS
+// MATRIX <-> VECTOR OPERATOR OVERLOADS
 // ====================================================================================================================
+/**
+ * @brief 2x2 matrix and 2x1 vector multiplication.
+ *
+ * @details Expanded multiplication operations with SymPy.
+ *
+ * @code {.py}
+ * a = sympy.MatrixSymbol('mat', 2, 2)
+ * b = sympy.MatrixSymbol('vec', 2, 1)
+ * numpy.matmul(a, b)
+ * @endcode
+ *
+ * @param mat Matrix.
+ * @param vec Vector.
+ * @return Matrix-vector product.
+ */
+inline Vector<2> operator*(const Matrix<2,2>& mat, const Vector<2>& vec)
+{
+  return Vector<2> {
+    mat(0,0)*vec(0) + mat(0,1)*vec(1),
+    mat(1,0)*vec(0) + mat(1,1)*vec(1)
+  };
+}
 
+/**
+ * @brief 3x3 matrix and 3x1 vector multiplication.
+ *
+ * @details Expanded multiplication operations with SymPy.
+ *
+ * @code {.py}
+ * a = sympy.MatrixSymbol('mat', 3, 3)
+ * b = sympy.MatrixSymbol('vec', 3, 1)
+ * numpy.matmul(a, b)
+ * @endcode
+ *
+ * @param mat Matrix.
+ * @param vec Vector.
+ * @return Matrix-vector product.
+ */
+inline Vector<3> operator*(const Matrix<3,3>& mat, const Vector<3>& vec)
+{
+  return Vector<3> {
+    mat(0,0)*vec(0) + mat(0,1)*vec(1) + mat(0,2)*vec(2),
+    mat(1,0)*vec(0) + mat(1,1)*vec(1) + mat(1,2)*vec(2),
+    mat(2,0)*vec(0) + mat(2,1)*vec(1) + mat(2,2)*vec(2)
+  };
+}
 
+/**
+ * @brief Matrix-vector multiplication.
+ *
+ * @tparam N Rows.
+ * @tparam M Columns.
+ * @param mat Matrix.
+ * @param vec Vector.
+ * @return Matrix-vector product.
+ *
+ * @ref http://www.cs.umsl.edu/~sanjiv/classes/cs5740/lectures/mvm.pdf
+ */
+template<std::size_t N, std::size_t M>
+Vector<N> operator*(const Matrix<N,M>& mat, const Vector<M>& vec)
+{
+  Vector<N> res;
+
+  for (std::size_t ii = 0; ii < N; ii++)
+  {
+    double sum = 0.0;
+
+    for (std::size_t jj = 0; jj < M; jj++)
+    {
+      sum += mat(ii, jj) * vec(jj);
+    }
+
+    res(ii) = sum;
+  }
+
+  return res;
+}
 
 }  // namespace MathUtils
 

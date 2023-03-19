@@ -1,5 +1,5 @@
 /**
- * @file test_Matrix.cpp
+ * @file test_MatrixMath.cpp
  * @author Michael Wrona
  * @date 2023-03-18
  *
@@ -7,6 +7,7 @@
  */
 
 #include "LinAlg/Matrix.h"
+#include "LinAlg/Vector.h"
 
 // #include <functional>
 #include <gtest/gtest.h>
@@ -15,6 +16,7 @@
 // #include <sstream>
 
 using MathUtils::Matrix;
+using MathUtils::Vector;
 
 namespace {
 
@@ -39,19 +41,181 @@ protected:
 
   Matrix<3,3> mat1 {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
   const double mat1_trace = 15;
+  Matrix<3,3> mat1_plus_scalar {{3, 4, 5}, {6, 7, 8}, {9, 10, 11}};
+  Matrix<3,3> mat1_minus_scalar {{-1, 0, 1}, {2, 3, 4}, {5, 6, 7}};
+  Matrix<3,3> mat1_times_scalar {{2, 4, 6}, {8, 10, 12}, {14, 16, 18}};
+  Matrix<3,3> mat1_div_scalar {{0.5, 1.0, 1.5}, {2.0, 2.5, 3.0}, {3.5, 4.0, 4.5}};
 
   Matrix<3,3> mat2 {{9, 8, 7}, {6, 5, 4}, {3, 2, 1}};
   const double mat2_trace = 15;
 
+  const Matrix<3,3> mat1_plus_mat2 {{10, 10, 10}, {10, 10, 10}, {10, 10, 10}};
+  const Matrix<3,3> mat1_minus_mat2 {{-8, -6, -4}, {-2, 0, 2}, {4, 6, 8}};
   const Matrix<3,3> mat1_times_mat2 {{30, 24, 18}, {84, 69, 54}, {138, 114, 90}};
-
 
 };
 
 // ====================================================================================================================
 TEST_F(MatrixMathTest, Trace)
 {
-  EXPECT_DOUBLE_EQ(mat1.trace(), mat1_trace);
+  EXPECT_DOUBLE_EQ(trace(mat1), mat1_trace);
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, Identity)
+{
+  Matrix<2,2> mat = Matrix<2,2>::identity();
+  EXPECT_DOUBLE_EQ(mat(0, 0), 1.0);
+  EXPECT_DOUBLE_EQ(mat(0, 1), 0.0);
+  EXPECT_DOUBLE_EQ(mat(1, 0), 0.0);
+  EXPECT_DOUBLE_EQ(mat(1, 1), 1.0);
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, NonSquareIdentity)
+{
+  Matrix<2,3> mat = Matrix<2,3>::identity();
+
+  EXPECT_DOUBLE_EQ(mat(0, 0), 1.0);
+  EXPECT_DOUBLE_EQ(mat(0, 1), 0.0);
+  EXPECT_DOUBLE_EQ(mat(0, 2), 0.0);
+  EXPECT_DOUBLE_EQ(mat(1, 0), 0.0);
+  EXPECT_DOUBLE_EQ(mat(1, 1), 1.0);
+  EXPECT_DOUBLE_EQ(mat(1, 2), 0.0);
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, ScalarAddInPlace)
+{
+  mat1 += scalar;
+
+  for (std::size_t ii : {0, 1, 2})
+  {
+    for (std::size_t jj : {0, 1, 2})
+    {
+      EXPECT_DOUBLE_EQ(mat1(ii, jj), mat1_plus_scalar(ii, jj));
+    }
+  }
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, MatrixAddInPlace)
+{
+  mat1 += mat2;
+
+  for (std::size_t ii : {0, 1, 2})
+  {
+    for (std::size_t jj : {0, 1, 2})
+    {
+      EXPECT_DOUBLE_EQ(mat1(ii, jj), mat1_plus_mat2(ii, jj));
+    }
+  }
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, ScalarSubtractInPlace)
+{
+  mat1 -= scalar;
+
+  for (std::size_t ii : {0, 1, 2})
+  {
+    for (std::size_t jj : {0, 1, 2})
+    {
+      EXPECT_DOUBLE_EQ(mat1(ii, jj), mat1_minus_scalar(ii, jj));
+    }
+  }
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, MatrixSubtractInPlace)
+{
+  mat1 -= mat2;
+
+  for (std::size_t ii : {0, 1, 2})
+  {
+    for (std::size_t jj : {0, 1, 2})
+    {
+      EXPECT_DOUBLE_EQ(mat1(ii, jj), mat1_minus_mat2(ii, jj));
+    }
+  }
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, ScalarMultiplyInPlace)
+{
+  mat1 *= scalar;
+
+  for (std::size_t ii : {0, 1, 2})
+  {
+    for (std::size_t jj : {0, 1, 2})
+    {
+      EXPECT_DOUBLE_EQ(mat1(ii, jj), mat1_times_scalar(ii, jj));
+    }
+  }
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, MatrixMultiplyInPlace)
+{
+  mat1 *= mat2;
+
+  for (std::size_t ii : {0, 1, 2})
+  {
+    for (std::size_t jj : {0, 1, 2})
+    {
+      EXPECT_DOUBLE_EQ(mat1(ii, jj), mat1_times_mat2(ii, jj));
+    }
+  }
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, ScalarDivideInPlace)
+{
+  mat1 /= scalar;
+
+  for (std::size_t ii : {0, 1, 2})
+  {
+    for (std::size_t jj : {0, 1, 2})
+    {
+      EXPECT_DOUBLE_EQ(mat1(ii, jj), mat1_div_scalar(ii, jj));
+    }
+  }
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, ScalarDivideInPlaceAssertsSmallNumber)
+{
+  ASSERT_DEBUG_DEATH({
+    mat1 /= 0ul;
+  }, "");
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, ScalarMatrixMultiply)
+{
+  Matrix<3,3> res = scalar * mat1;
+
+  for (std::size_t ii : {0, 1, 2})
+  {
+    for (std::size_t jj : {0, 1, 2})
+    {
+      EXPECT_DOUBLE_EQ(res(ii, jj), mat1_times_scalar(ii, jj));
+    }
+  }
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, MatrixScalarMultiply)
+{
+  Matrix<3,3> res = mat1 * scalar;
+
+  for (std::size_t ii : {0, 1, 2})
+  {
+    for (std::size_t jj : {0, 1, 2})
+    {
+      EXPECT_DOUBLE_EQ(res(ii, jj), mat1_times_scalar(ii, jj));
+    }
+  }
 }
 
 // ====================================================================================================================
@@ -105,11 +269,72 @@ TEST_F(MatrixMathTest, Multiply3x2And2x2)
   }
 }
 
+// ====================================================================================================================
+TEST_F(MatrixMathTest, MultiplyThree2x2)
+{
+  const Matrix<2,2> m1 {{1, 2}, {3, 4}};
+  const Matrix<2,2> m2 {{5, 6}, {7, 8}};
+  const Matrix<2,2> m3 {{9, 10}, {11, 12}};
 
+  const Matrix<2,2> result = m1 * m2 * m3;
+  const Matrix<2,2> expected {{413, 454}, {937, 1030}};
 
+  for (std::size_t ii : {0, 1})
+  {
+    for (std::size_t jj : {0, 1})
+    {
+      EXPECT_DOUBLE_EQ(expected(ii, jj), result(ii, jj));
+    }
+  }
+}
 
+// ====================================================================================================================
+TEST_F(MatrixMathTest, MatrixVectorMultiplication2x2)
+{
+  Matrix<2,2> mat {{1, 2}, {3, 4}};
+  Vector<2> vec {3, 4};
 
+  Vector<2> expected {11, 25};
 
+  Vector<2> res = mat * vec;
+
+  for (std::size_t idx : {0, 1})
+  {
+    EXPECT_DOUBLE_EQ(res(idx), expected(idx));
+  }
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, MatrixVectorMultiplication3x3)
+{
+  Matrix<3,3> mat {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+  Vector<3> vec {9, 8, 7};
+
+  Vector<3> expected {46, 118, 190};
+
+  Vector<3> res = mat * vec;
+
+  for (std::size_t idx : {0, 1, 2})
+  {
+    EXPECT_DOUBLE_EQ(res(idx), expected(idx));
+  }
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, NonSquareMatrixVectorMultiplication)
+{
+  Matrix<2,3> mat {{1, 2, 3}, {4, 5, 6}};
+  Vector<3> vec {7, 8, 9};
+
+  Vector<2> expected {50, 122};
+
+  Vector<2> res = mat * vec;
+
+  for (std::size_t idx : {0, 1})
+  {
+    EXPECT_DOUBLE_EQ(res(idx), expected(idx));
+  }
+}
 
 // ====================================================================================================================
 int main(int argc, char** argv)
