@@ -18,7 +18,7 @@ using MathUtils::Matrix;
 
 namespace {
 
-const std::string test_reports_file = std::string("TESTRESULTS-LinAlg-Matrix.xml");
+const std::string test_reports_file = std::string("TESTRESULTS-Matrix.xml");
 
 // ====================================================================================================================
 TEST(MatrixTest, DefaultConstructorZerosElements)
@@ -34,10 +34,10 @@ TEST(MatrixTest, DefaultConstructorZerosElements)
 // ====================================================================================================================
 TEST(MatrixTest, OneDimInitListConstruction)
 {
-  Matrix<2,2> mat({
+  Matrix<2,2> mat {
     1, 2,
     3, 4
-  });
+  };
 
   EXPECT_DOUBLE_EQ(mat(0,0), 1.0);
   EXPECT_DOUBLE_EQ(mat(0,1), 2.0);
@@ -48,11 +48,11 @@ TEST(MatrixTest, OneDimInitListConstruction)
 // ====================================================================================================================
 TEST(MatrixTest, TwoDimInitListConstruction)
 {
-  Matrix<3,2> mat({
+  Matrix<3,2> mat{
     {1, 2},
     {3, 4},
     {5, 6}
-  });
+  };
 
   EXPECT_DOUBLE_EQ(mat(0,0), 1.0);
   EXPECT_DOUBLE_EQ(mat(0,1), 2.0);
@@ -65,7 +65,7 @@ TEST(MatrixTest, TwoDimInitListConstruction)
 // ====================================================================================================================
 TEST(MatrixTest, CopyConstruct)
 {
-  Matrix<2,2> mat( {{1, 2}, {3, 4}} );
+  Matrix<2,2> mat {{1, 2}, {3, 4}};
   Matrix<2,2> mat2(mat);
 
   EXPECT_DOUBLE_EQ(mat2(0,0), 1.0);
@@ -77,7 +77,7 @@ TEST(MatrixTest, CopyConstruct)
 // ====================================================================================================================
 TEST(MatrixTest, CopyAssign)
 {
-  Matrix<2,2> mat( {{1, 2}, {3, 4}} );
+  Matrix<2,2> mat {{1, 2}, {3, 4}};
   Matrix<2,2> mat2;
 
   mat2= mat;
@@ -91,10 +91,22 @@ TEST(MatrixTest, CopyAssign)
 // ====================================================================================================================
 TEST(MatrixTest, MoveAssign)
 {
-  Matrix<2,2> mat( {{1, 2}, {3, 4}} );
+  Matrix<2,2> mat {{1, 2}, {3, 4}};
   Matrix<2,2> mat2;
 
   mat2 = std::move(mat);
+
+  EXPECT_DOUBLE_EQ(mat2(0,0), 1.0);
+  EXPECT_DOUBLE_EQ(mat2(0,1), 2.0);
+  EXPECT_DOUBLE_EQ(mat2(1,0), 3.0);
+  EXPECT_DOUBLE_EQ(mat2(1,1), 4.0);
+}
+
+// ====================================================================================================================
+TEST(MatrixTest, MoveConstruct)
+{
+  Matrix<2,2> mat {{1, 2}, {3, 4}};
+  Matrix<2,2> mat2(std::move(mat));
 
   EXPECT_DOUBLE_EQ(mat2(0,0), 1.0);
   EXPECT_DOUBLE_EQ(mat2(0,1), 2.0);
@@ -143,14 +155,14 @@ TEST(MatrixDeathTest, ModifyElementAssertsInvalidColumnIndex)
 }
 
 // ====================================================================================================================
-TEST(MatrixTest, RowsGetter)
+TEST(MatrixTest, RowGetter)
 {
   Matrix<4,3> mat;
   EXPECT_EQ(mat.rows(), 4);
 }
 
 // ====================================================================================================================
-TEST(MatrixTest, ColsGetter)
+TEST(MatrixTest, ColGetter)
 {
   Matrix<4,3> mat;
   EXPECT_EQ(mat.cols(), 3);

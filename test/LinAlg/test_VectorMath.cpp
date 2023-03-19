@@ -2,7 +2,6 @@
  * @file test_VectorMath.cpp
  * @author Michael Wrona
  * @date 2023-03-10
- * @brief Vector math unit tests.
  */
 
 #include "LinAlg/Vector.h"
@@ -63,7 +62,7 @@ protected:
 
 
 // ====================================================================================================================
-TEST_F(VectorMathTest, ComputesMagnitude)
+TEST_F(VectorMathTest, Magnitude)
 {
   double mag = vec1.magnitude();
 
@@ -71,7 +70,7 @@ TEST_F(VectorMathTest, ComputesMagnitude)
 }
 
 // ====================================================================================================================
-TEST_F(VectorMathTest, Normalizes)
+TEST_F(VectorMathTest, Normalize)
 {
   vec2.normalize();
 
@@ -81,7 +80,7 @@ TEST_F(VectorMathTest, Normalizes)
 }
 
 // ====================================================================================================================
-TEST_F(VectorMathTest, SumsElements)
+TEST_F(VectorMathTest, SumElements)
 {
   EXPECT_DOUBLE_EQ(vec1.sum(), vec1_sum);
 }
@@ -147,7 +146,7 @@ TEST_F(VectorMathTest, ScalarDivideInPlace)
 }
 
 // ====================================================================================================================
-TEST_F(VectorMathTest, ScalarDivideInPlaceAssertSmallNumber)
+TEST_F(VectorMathTest, ScalarDivideInPlaceAssertsSmallNumber)
 {
   EXPECT_DEBUG_DEATH({
     vec2 /= 0lu;
@@ -187,7 +186,7 @@ TEST_F(VectorMathTest, DotProduct)
 // ====================================================================================================================
 TEST_F(VectorMathTest, Add)
 {
-  const Vector<3> res = vec1 + vec2;
+  Vector<3> res = vec1 + vec2;
 
   EXPECT_DOUBLE_EQ(res(0), vec1_plus_vec2(0));
   EXPECT_DOUBLE_EQ(res(1), vec1_plus_vec2(1));

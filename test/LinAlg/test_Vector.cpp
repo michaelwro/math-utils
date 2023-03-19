@@ -2,7 +2,6 @@
  * @file test_Vector.cpp
  * @author Michael Wrona
  * @date 2023-03-08
- * @brief Vector unit tests.
  */
 
 #include "LinAlg/Vector.h"
@@ -17,7 +16,7 @@ using MathUtils::Vector;
 
 namespace {
 
-const std::string test_reports_file = std::string("TESTRESULTS-LinAlg-Vector.xml");
+const std::string test_reports_file = std::string("TESTRESULTS-Vector.xml");
 
 // ====================================================================================================================
 TEST(VectorTest, DefaultConstructorZerosElements)
@@ -32,7 +31,7 @@ TEST(VectorTest, DefaultConstructorZerosElements)
 // ====================================================================================================================
 TEST(VectorTest, InitListConstruction)
 {
-  Vector<4> vec({1, 2, 3, 4});
+  Vector<4> vec {1, 2, 3, 4};
 
   EXPECT_DOUBLE_EQ(vec(0), 1);
   EXPECT_DOUBLE_EQ(vec(1), 2);
@@ -88,7 +87,19 @@ TEST(VectorTest, MoveAssigns)
 }
 
 // ====================================================================================================================
-TEST(VectorTest, InitializerListAssigns)
+TEST(VectorTest, MoveConstruct)
+{
+  Vector<4> vec {4, 3, 2, 1};
+  Vector<4> vec2(std::move(vec));
+
+  EXPECT_DOUBLE_EQ(vec2(0), 4);
+  EXPECT_DOUBLE_EQ(vec2(1), 3);
+  EXPECT_DOUBLE_EQ(vec2(2), 2);
+  EXPECT_DOUBLE_EQ(vec2(3), 1);
+}
+
+// ====================================================================================================================
+TEST(VectorTest, InitializerListAssign)
 {
   Vector<4> vec;
 
@@ -114,7 +125,7 @@ TEST(VectorDeathTest, InitListAssignAssertsIncompatibleSize)
 // ====================================================================================================================
 TEST(VectorTest, ParenthesisAccessorModifiesValues)
 {
-  Vector<3> vec({1, 2, 3});
+  Vector<3> vec {1, 2, 3};
 
   vec(0) = 4;
   vec(1) = 5;
@@ -134,7 +145,7 @@ TEST(VectorTest, SizeGetterReturnsCorrectLength)
 }
 
 // ====================================================================================================================
-TEST(VectorTest, FillsVector)
+TEST(VectorTest, Fill)
 {
   Vector<3> vec {1, 1, 1};
 
@@ -148,7 +159,7 @@ TEST(VectorTest, FillsVector)
 // ====================================================================================================================
 TEST(VectorTest, PrintToStream)
 {
-  Vector<3> vec({12, 34, 56});
+  Vector<3> vec {12, 34, 56};
 
   std::stringstream ss;
   ss << vec << "\n";

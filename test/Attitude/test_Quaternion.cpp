@@ -2,7 +2,6 @@
  * @file test_Quaternion.cpp
  * @author Michael Wrona
  * @date 2023-03-10
- * @brief Quaternion class unit tests.
  */
 
 #include "Attitude/Quaternion.h"
@@ -21,7 +20,7 @@ namespace {
 const std::string test_reports_file = std::string("TESTRESULTS-Quaternion.xml");
 
 // ====================================================================================================================
-TEST(QuaternionTest, DefaultConstructorIsUnityQuaternion)
+TEST(QuaternionTest, DefaultCtorIsUnityQuaternion)
 {
   Quaternion quat;
 
@@ -32,7 +31,7 @@ TEST(QuaternionTest, DefaultConstructorIsUnityQuaternion)
 }
 
 // ====================================================================================================================
-TEST(QuaternionTest, FourArgConstructionNormalizes)
+TEST(QuaternionTest, FourArgCtorNormalizes)
 {
   const double val = 1.0;
   const double magn = std::sqrt(4.0 * val * val);
@@ -47,7 +46,7 @@ TEST(QuaternionTest, FourArgConstructionNormalizes)
 }
 
 // ====================================================================================================================
-TEST(QuaternionTest, ListInitConstructionNormalizes)
+TEST(QuaternionTest, ListInitCtorNormalizes)
 {
   const double val = 1.0;
   const double magn = std::sqrt(4.0 * val * val);
@@ -61,7 +60,7 @@ TEST(QuaternionTest, ListInitConstructionNormalizes)
 }
 
 // ====================================================================================================================
-TEST(QuaternionDeathTest, AssertsInvalidLengthInitializerList)
+TEST(QuaternionDeathTest, CtorAssertsInvalidLengthInitializerList)
 {
   std::initializer_list<double> vals = {1, 2, 3};
 
@@ -71,7 +70,7 @@ TEST(QuaternionDeathTest, AssertsInvalidLengthInitializerList)
 }
 
 // ====================================================================================================================
-TEST(QuaternionTest, CopyConstructs)
+TEST(QuaternionTest, CopyConstruct)
 {
   Quaternion q1 {1, 1, 1, 1};
   Quaternion q2(q1);
@@ -83,7 +82,7 @@ TEST(QuaternionTest, CopyConstructs)
 }
 
 // ====================================================================================================================
-TEST(QuaternionTest, CopyAssigns)
+TEST(QuaternionTest, CopyAssign)
 {
   Quaternion q1 {1, 1, 1, 1};
   Quaternion q2;
@@ -97,7 +96,7 @@ TEST(QuaternionTest, CopyAssigns)
 }
 
 // ====================================================================================================================
-TEST(QuaternionTest, MoveAssigns)
+TEST(QuaternionTest, MoveAssign)
 {
   const double val = 1.0;
   const double magn = std::sqrt(4.0 * val * val);
@@ -114,7 +113,20 @@ TEST(QuaternionTest, MoveAssigns)
 }
 
 // ====================================================================================================================
-TEST(QuaternionTest, InitializerListAssigns)
+TEST(QuaternionTest, MoveConstruct)
+{
+  const Quaternion q1 {1, 1, 1, 1};
+  const Quaternion q1_copy(q1);
+  const Quaternion q2(std::move(q1));
+
+  EXPECT_DOUBLE_EQ(q1_copy(0), q2(0));
+  EXPECT_DOUBLE_EQ(q1_copy(1), q2(1));
+  EXPECT_DOUBLE_EQ(q1_copy(2), q2(2));
+  EXPECT_DOUBLE_EQ(q1_copy(3), q2(3));
+}
+
+// ====================================================================================================================
+TEST(QuaternionTest, InitializerListAssign)
 {
   const double val = 1.0;
   const double magn = std::sqrt(4.0 * val * val);
@@ -129,7 +141,7 @@ TEST(QuaternionTest, InitializerListAssigns)
 }
 
 // ====================================================================================================================
-TEST(QuaternionDeathTest, AssertsInvalidLengthInitializerListAssignment)
+TEST(QuaternionDeathTest, AssignmentAssertsInvalidLengthInitializerList)
 {
   std::initializer_list<double> vals = {1, 2, 3};
 

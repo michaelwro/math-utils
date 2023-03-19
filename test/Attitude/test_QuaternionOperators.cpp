@@ -2,7 +2,6 @@
  * @file test_QuaternionOperators.cpp
  * @author Michael Wrona
  * @date 2023-03-15
- * @brief Quaternion math overload unit tests.
  */
 
 #include "Attitude/Quaternion.h"

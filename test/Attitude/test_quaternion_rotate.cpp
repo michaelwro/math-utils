@@ -1,8 +1,7 @@
 /**
- * @file test_QuaternionMath.cpp
+ * @file test_quaternion_rotate.cpp
  * @author Michael Wrona
  * @date 2023-03-15
- * @brief Quaternion math unit tests.
  */
 
 #include "Attitude/Quaternion.h"
@@ -17,7 +16,7 @@ using namespace MathUtils;
 
 namespace {
 
-const std::string test_reports_file = std::string("TESTRESULTS-QuaternionMath.xml");
+const std::string test_reports_file = std::string("TESTRESULTS-quaternion_rotate.xml");
 
 // ====================================================================================================================
 TEST(QuaternionRotateTest, QuaternionRotate1)
