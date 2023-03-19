@@ -59,12 +59,10 @@ public:
   /**
    * @brief Create a quaternion from an initializer list. Normalizes input.
    *
-   * @tparam T Initializer list data type.
    * @param quat_vals Quaternion values.
    */
   explicit Quaternion(const std::initializer_list<double> quat_vals)
   {
-    // NOTE: Use an `assert` since the initializer list is non-static.
     assert(quat_vals.size() == 4);
 
     std::copy(quat_vals.begin(), quat_vals.end(), m_arr.begin());
@@ -75,43 +73,52 @@ public:
   /**
    * @brief Copy-construct quaternion.
    *
-   * @param quat Other quaternion.
+   * @param other Other quaternion.
    */
-  Quaternion(const Quaternion& quat)
-    :m_arr{quat.m_arr}
+  Quaternion(const Quaternion& other)
+    :m_arr{other.m_arr}
+  {}
+
+  /**
+   * @brief Move construct quaternion.
+   *
+   * @param other Other quaternion.
+   */
+  Quaternion(Quaternion&& other)
+    :m_arr{std::move(other.m_arr)}
   {}
 
   /**
    * @brief Copy-assign quaternion.
    *
-   * @param quat Other quaternion.
+   * @param other Other quaternion.
    * @return Copied quaternion.
    */
-  Quaternion& operator=(const Quaternion& quat)
+  Quaternion& operator=(const Quaternion& other)
   {
-    if (&quat == this)
+    if (&other == this)
     {
       return *this;
     }
 
-    m_arr = quat.m_arr;
+    m_arr = other.m_arr;
     return *this;
   }
 
   /**
    * @brief Move-assign quaternion.
    *
-   * @param quat Other quaternion.
+   * @param other Other quaternion.
    * @return Copied quaternion.
    */
-  Quaternion& operator=(Quaternion&& quat)
+  Quaternion& operator=(Quaternion&& other)
   {
-    if (&quat == this)
+    if (&other == this)
     {
       return *this;
     }
 
-    m_arr.swap(quat.m_arr);
+    m_arr.swap(other.m_arr);
     return *this;
   }
 
@@ -123,7 +130,6 @@ public:
    */
   Quaternion& operator=(const std::initializer_list<double> quat_vals)
   {
-    // NOTE: Use an `assert` since the initializer list is non-static.
     assert(quat_vals.size() == 4);
 
     std::copy(quat_vals.begin(), quat_vals.end(), m_arr.begin());
@@ -194,7 +200,8 @@ public:
       (m_arr[3] * m_arr[3])
     );
 
-    assert(std::abs(magn) > std::numeric_limits<double>::epsilon());  // make sure its not too small before dividing
+    // make sure its not too small before dividing
+    assert(magn > std::numeric_limits<double>::epsilon());
 
     // normalize each element
     m_arr[0] /= magn;

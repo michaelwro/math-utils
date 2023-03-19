@@ -17,7 +17,7 @@ set(MATHUTILS_COMPILE_RELEASE_DEFINITIONS "NDEBUG")
 
 # set(COVERAGE_COMPILE_OPTIONS "-fprofile-arcs;-ftest-coverage;--coverage")
 
-set(MATHUTILS_COMPILE_OPTIONS "-Wall;-Wextra;-Wpedantic;-Wshadow;-Wconversion;-Wdouble-promotion;-Wundef;-Wformat=2;-fno-common")
+set(MATHUTILS_COMPILE_OPTIONS "-Wall;-Wextra;-Wpedantic;-Wshadow;-Wconversion;-Wdouble-promotion;-Wfloat-equal;-Wundef;-Wformat=2;-fno-common")
 set(MATHUTILS_COMPILE_DEBUG_OPTIONS "${MATHUTILS_COMPILE_OPTIONS};${COVERAGE_COMPILE_OPTIONS};-g3;-O0;-Werror")
 set(MATHUTILS_COMPILE_RELEASE_OPTIONS "${MATHUTILS_COMPILE_OPTIONS};-O1")
 

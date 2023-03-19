@@ -46,9 +46,8 @@ public:
    * @details Default constructor sets all values to zero.
    */
   Matrix()
-  {
-    m_arr.fill(0.0);
-  }
+    :m_arr{}
+  {}
 
   /**
    * @brief Destroy the matrix.
@@ -72,7 +71,7 @@ public:
   template<typename T>
   explicit Matrix(const std::initializer_list<T> new_matrix)
   {
-    static_assert(std::is_fundamental<T>::value, "Can only be initialized from fundamental types.");
+    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
     assert(new_matrix.size() == ROWS * COLS);
 
     std::copy(new_matrix.begin(), new_matrix.end(), m_arr.begin());
@@ -95,7 +94,7 @@ public:
   template<typename T>
   explicit Matrix(const std::initializer_list<std::initializer_list<T>> new_matrix)
   {
-    static_assert(std::is_fundamental<T>::value, "Can only be initialized from fundamental types.");
+    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
     assert(new_matrix.size() == ROWS);  // check number of rows
 
     auto array_element = m_arr.begin();  // start at the beginning of the array
@@ -118,43 +117,52 @@ public:
   /**
    * @brief Copy construct matrix.
    *
-   * @param mat Other matrix.
+   * @param other Other matrix.
    */
-  Matrix(const Matrix& mat)
-    :m_arr{mat.m_arr}
+  Matrix(const Matrix& other)
+    :m_arr{other.m_arr}
+  {}
+
+  /**
+   * @brief Move construct matrix.
+   *
+   * @param other Other matrix.
+   */
+  Matrix(Matrix&& other)
+    :m_arr{std::move(other.m_arr)}
   {}
 
   /**
    * @brief Copy-assign matrix.
    *
-   * @param mat Other matrix.
+   * @param other Other matrix.
    * @return Matrix.
    */
-  Matrix& operator=(const Matrix& mat)
+  Matrix& operator=(const Matrix& other)
   {
-    if (&mat == this)
+    if (&other == this)
     {
       return *this;
     }
 
-    m_arr = mat.m_arr;
+    m_arr = other.m_arr;
     return *this;
   }
 
   /**
    * @brief Move assign matrix.
    *
-   * @param mat Other matrix.
+   * @param other Other matrix.
    * @return Matrix.
    */
-  Matrix& operator=(Matrix&& mat)
+  Matrix& operator=(Matrix&& other)
   {
-    if (&mat == this)
+    if (&other == this)
     {
       return *this;
     }
 
-    m_arr.swap(mat.m_arr);
+    m_arr.swap(other.m_arr);
     return *this;
   }
 
@@ -218,10 +226,12 @@ public:
   {
     static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed");
 
+    const double scalard = static_cast<double>(scalar);
+
     std::for_each(
       m_arr.begin(),
       m_arr.end(),
-      [scalar](double& element){element += static_cast<double>(scalar);}
+      [scalard](double& element){element += scalard;}
     );
 
     return *this;
@@ -255,10 +265,12 @@ public:
   {
     static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed");
 
+    const double scalard = static_cast<double>(scalar);
+
     std::for_each(
       m_arr.begin(),
       m_arr.end(),
-      [scalar](double& element){element -= static_cast<double>(scalar);}
+      [scalard](double& element){element -= scalard;}
     );
 
     return *this;
@@ -292,10 +304,12 @@ public:
   {
     static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed");
 
+    const double scalard = static_cast<double>(scalar);
+
     std::for_each(
       m_arr.begin(),
       m_arr.end(),
-      [scalar](double& element){element *= static_cast<double>(scalar);}
+      [scalard](double& element){element *= scalard;}
     );
 
     return *this;
@@ -304,7 +318,7 @@ public:
   /**
    * @brief Multiply matrix in-place.
    *
-   * @details This isn't efficient because a new std::array needs to be created and copied.
+   * @details This probs isn't efficient because a new std::array needs to be created and copied.
    *
    * @param mat Matrix to multiply by.
    * @return Matrix product.
@@ -344,8 +358,9 @@ public:
   {
     static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed");
 
+    // make sure denominator is not too small
     const double scalard = static_cast<double>(scalar);
-    assert(std::abs(scalard) > std::numeric_limits<double>::epsilon());  // make sure denominator is not too small
+    assert(std::abs(scalard) > std::numeric_limits<double>::epsilon());
 
     std::for_each(
       m_arr.begin(),
@@ -428,7 +443,7 @@ private:
  * @brief Compute the trace of a matrix (sum of diagonal elements).
  *
  * @tparam Matrix dimension (square).
- * @param Matrix.
+ * @param Matrix Matrix.
  * @return Matrix trace.
  */
 template<std::size_t N>
@@ -462,13 +477,15 @@ template<std::size_t N, std::size_t M, typename T>
 Matrix<N,M> operator*(const T scalar, const Matrix<N,M>& mat)
 {
   static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
+
   Matrix<N,M> out_mat(mat);
+  const double scalard = static_cast<double>(scalar);
 
   for (std::size_t ii = 0; ii < N; ii++)
   {
     for (std::size_t jj = 0; jj < M; jj++)
     {
-      out_mat(ii, jj) *= static_cast<double>(scalar);
+      out_mat(ii, jj) *= scalard;
     }
   }
 

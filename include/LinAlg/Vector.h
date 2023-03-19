@@ -40,9 +40,8 @@ public:
    * @details Default constructor sets all values to zero.
    */
   Vector()
-  {
-    m_arr.fill(0.0);
-  }
+    :m_arr{0.0}
+  {}
 
   /**
    * @brief Destroy the vector.
@@ -58,9 +57,8 @@ public:
   template<typename T>
   explicit Vector(const std::initializer_list<T> vector_vals)
   {
-    // NOTE: Use an `assert` since the initializer list is non-static.
-    static_assert(std::is_fundamental<T>::value, "Vectors can only be initialized from fundamental types.");
-    assert(N == vector_vals.size());
+    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+    assert(vector_vals.size() == N);
 
     /**
      * NOTE: Using std::copy with a list of non-double vals will implicitly convert to `double`. This should be fine
@@ -73,41 +71,50 @@ public:
   /**
    * @brief Copy-construct vector.
    *
-   * @param src_vec Other vector.
+   * @param other Other vector.
    */
-  Vector(const Vector& src_vec)
-    :m_arr{src_vec.m_arr}
+  Vector(const Vector& other)
+    :m_arr{other.m_arr}
+  {}
+
+  /**
+   * @brief Move construct vector.
+   *
+   * @param other Other vector.
+   */
+  Vector(Vector&& other)
+    :m_arr{std::move(other.m_arr)}
   {}
 
   /**
    * @brief Copy-assign vector.
-   * @param src_vec Other vector.
+   * @param other Other vector.
    * @return Copied vector.
    */
-  Vector& operator=(const Vector& src_vec)
+  Vector& operator=(const Vector& other)
   {
-    if (&src_vec == this)
+    if (&other == this)
     {
       return *this;
     }
 
-    m_arr = src_vec.m_arr;
+    m_arr = other.m_arr;
     return *this;
   }
 
   /**
    * @brief Move-assign vector.
-   * @param src_vec Other vector.
+   * @param other Other vector.
    * @return Copied vector.
    */
-  Vector& operator=(Vector&& src_vec)
+  Vector& operator=(Vector&& other)
   {
-    if (&src_vec == this)
+    if (&other == this)
     {
       return *this;
     }
 
-    m_arr.swap(src_vec.m_arr);
+    m_arr.swap(other.m_arr);
     return *this;
   }
 
@@ -120,12 +127,8 @@ public:
   template<typename T>
   Vector& operator=(const std::initializer_list<T> vector_vals)
   {
-    /**
-     * NOTE: Since an initializer list is non-static, we cannot use `static_assert` to check the length. Therefore,
-     * this assert is done at runtime.
-     */
-    static_assert(std::is_fundamental<T>::value, "Vectors can only be initialized from fundamental types.");
-    assert(N == vector_vals.size());
+    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+    assert(vector_vals.size() == N);
 
     std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
     return *this;
@@ -167,10 +170,12 @@ public:
   {
     static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
 
+    const double scalard = static_cast<double>(scalar);
+
     std::for_each(
       m_arr.begin(),
       m_arr.end(),
-      [scalar](double& element){element += static_cast<double>(scalar);}
+      [scalard](double& element){element += scalard;}
     );
 
     return *this;
@@ -204,10 +209,12 @@ public:
   {
     static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
 
+    const double scalard = static_cast<double>(scalar);
+
     std::for_each(
       m_arr.begin(),
       m_arr.end(),
-      [scalar](double& element){element -= static_cast<double>(scalar);}
+      [scalard](double& element){element -= scalard;}
     );
 
     return *this;
@@ -241,10 +248,12 @@ public:
   {
     static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
 
+    const double scalard = static_cast<double>(scalar);
+
     std::for_each(
       m_arr.begin(),
       m_arr.end(),
-      [scalar](double& element){element *= static_cast<double>(scalar);}
+      [scalard](double& element){element *= scalard;}
     );
 
     return *this;
@@ -262,8 +271,9 @@ public:
   {
     static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
 
+    // make sure denominator is not too small
     const double scalard = static_cast<double>(scalar);
-    assert(std::abs(scalard) > std::numeric_limits<double>::epsilon());  // make sure denominator is not too small
+    assert(std::abs(scalard) > std::numeric_limits<double>::epsilon());
 
     std::for_each(
       m_arr.begin(),
@@ -335,6 +345,7 @@ public:
   void normalize()
   {
     const double magn = magnitude();
+    assert(magn > std::numeric_limits<double>::epsilon());
 
     std::for_each(m_arr.begin(), m_arr.end(), [magn](double& val){val /= magn;});
   }
@@ -350,9 +361,9 @@ public:
   }
 
   /**
-   * @brief Multiply all elements by -1.0. Change the sign of all elements.
+   * @brief Multiply all elements by -1.0. Flip the sign of all elements.
    *
-   * @return Vector with signs changed.
+   * @return Vector with signs flipped.
    */
   void negate()
   {
@@ -409,6 +420,20 @@ inline Vector<3> cross(const Vector<3>& v1, const Vector<3>& v2)
 /**
  * @brief Compute the vector dot product.
  *
+ * @details Explicit calculation for length-2 vectors.
+ *
+ * @param v1 First vector.
+ * @param v2 Second vector.
+ * @return Dot product.
+ */
+inline double dot(const Vector<2>& v1, const Vector<2>& v2)
+{
+  return (v1(0) * v2(0)) + (v1(1) * v2(1));
+}
+
+/**
+ * @brief Compute the vector dot product.
+ *
  * @details Explicit calculation for length-3 vectors.
  *
  * @param v1 First vector.
@@ -423,20 +448,17 @@ inline double dot(const Vector<3>& v1, const Vector<3>& v2)
 /**
  * @brief Compute the vector dot product.
  *
- * @tparam N1 First vector length.
- * @tparam N2 Second vector length.
+ * @tparam N Vector length.
  * @param v1 First vector.
  * @param v2 Second vector.
  * @return Dot product.
  */
-template<std::size_t N1, std::size_t N2>
-double dot(const Vector<N1>& v1, const Vector<N2>& v2)
+template<std::size_t N>
+double dot(const Vector<N>& v1, const Vector<N>& v2)
 {
-  static_assert(N1 == N2, "Incompatible dimensions.");
-
   double dot_prod = 0.0;
 
-  for (std::size_t idx = 0; idx < N1; idx++)
+  for (std::size_t idx = 0; idx < N; idx++)
   {
     dot_prod += v1(idx) * v2(idx);
   }
@@ -452,20 +474,17 @@ double dot(const Vector<N1>& v1, const Vector<N2>& v2)
 /**
  * @brief Add two vectors.
  *
- * @tparam N_LEFT First vector length.
- * @tparam N_RIGHT Second vector length.
+ * @tparam N Vector length.
  * @param v1 First vector.
  * @param v2 Second vector.
  * @return Vector sum, v1 + v2.
  */
-template<std::size_t N_LEFT, std::size_t N_RIGHT>
-Vector<N_LEFT> operator+(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
+template<std::size_t N>
+Vector<N> operator+(const Vector<N>& v1, const Vector<N>& v2)
 {
-  static_assert(N_LEFT == N_RIGHT, "Incompatible dimensions.");
+  Vector<N> result(v1);
 
-  Vector<N_LEFT> result(v1);
-
-  for (std::size_t idx = 0; idx < N_LEFT; idx++)
+  for (std::size_t idx = 0; idx < N; idx++)
   {
     result(idx) += v2(idx);
   }
@@ -476,20 +495,17 @@ Vector<N_LEFT> operator+(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
 /**
  * @brief Subtract two vectors.
  *
- * @tparam N_LEFT First vector length.
- * @tparam N_RIGHT Second vector length.
+ * @tparam N Vector length.
  * @param v1 First vector.
  * @param v2 Second vector.
  * @return Vector difference, v1 - v2.
  */
-template<std::size_t N_LEFT, std::size_t N_RIGHT>
-Vector<N_LEFT> operator-(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
+template<std::size_t N>
+Vector<N> operator-(const Vector<N>& v1, const Vector<N>& v2)
 {
-  static_assert(N_LEFT == N_RIGHT, "Incompatible dimensions.");
+  Vector<N> result(v1);
 
-  Vector<N_LEFT> result(v1);
-
-  for (std::size_t idx = 0; idx < N_LEFT; idx++)
+  for (std::size_t idx = 0; idx < N; idx++)
   {
     result(idx) -= v2(idx);
   }
@@ -512,10 +528,11 @@ Vector<N> operator*(const T scalar, const Vector<N>& vec)
   static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
 
   Vector<N> res(vec);
+  const double scalard = static_cast<double>(scalar);
 
   for (std::size_t idx = 0; idx < vec.size(); idx++)
   {
-    res(idx) *= static_cast<double>(scalar);
+    res(idx) *= scalard;
   }
 
   return res;
@@ -540,20 +557,17 @@ Vector<N> operator*(const Vector<N>& vec, const T scalar)
 /**
  * @brief Multiply two vectors.
  *
- * @tparam N_LEFT First vector length.
- * @tparam N_RIGHT Second vector length.
+ * @tparam N Vector length.
  * @param v1 First vector.
  * @param v2 Second vector.
  * @return Vector product, v1 * v2.
  */
-template<std::size_t N_LEFT, std::size_t N_RIGHT>
-Vector<N_LEFT> operator*(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
+template<std::size_t N>
+Vector<N> operator*(const Vector<N>& v1, const Vector<N>& v2)
 {
-  static_assert(N_LEFT == N_RIGHT, "Incompatible dimensions.");
+  Vector<N> result(v1);
 
-  Vector<N_LEFT> result(v1);
-
-  for (std::size_t idx = 0; idx < N_LEFT; idx++)
+  for (std::size_t idx = 0; idx < N; idx++)
   {
     result(idx) *= v2(idx);
   }
