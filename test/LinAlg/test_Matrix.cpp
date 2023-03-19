@@ -195,7 +195,7 @@ TEST(MatrixTest, Identity)
 // ====================================================================================================================
 TEST(MatrixTest, NegateUnaryLvalue)
 {
-  Matrix<2,2> mat {{1, 2, 3, 4}};
+  Matrix<2,2> mat {{1, 2}, {3, 4}};
 
   Matrix<2,2> mat_neg = -mat;
 
