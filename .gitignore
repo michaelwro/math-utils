@@ -5,6 +5,9 @@ Build/
 *.o
 *.so
 
+*.txt
+*.csv
+
 **/__pycache__/
 *.pyc
 
