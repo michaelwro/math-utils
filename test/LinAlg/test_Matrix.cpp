@@ -183,6 +183,30 @@ TEST(MatrixTest, PrintToStream)
 }
 
 // ====================================================================================================================
+TEST(MatrixTest, Identity)
+{
+  Matrix<2,2> mat = Matrix<2,2>::identity();
+  EXPECT_DOUBLE_EQ(mat(0, 0), 1.0);
+  EXPECT_DOUBLE_EQ(mat(0, 1), 0.0);
+  EXPECT_DOUBLE_EQ(mat(1, 0), 0.0);
+  EXPECT_DOUBLE_EQ(mat(1, 1), 1.0);
+}
+
+// ====================================================================================================================
+TEST(MatrixTest, NegateUnaryLvalue)
+{
+  Matrix<2,2> mat {{1, 2, 3, 4}};
+
+  Matrix<2,2> mat_neg = -mat;
+
+  EXPECT_DOUBLE_EQ(mat_neg(0, 0), -1);
+  EXPECT_DOUBLE_EQ(mat_neg(0, 1), -2);
+  EXPECT_DOUBLE_EQ(mat_neg(1, 0), -3);
+  EXPECT_DOUBLE_EQ(mat_neg(1, 1), -4);
+}
+
+
+// ====================================================================================================================
 int main(int argc, char** argv)
 {
   ::testing::GTEST_FLAG(output) = std::string("xml:") + test_reports_file;

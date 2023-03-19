@@ -8,12 +8,12 @@
 
 #include "LinAlg/Matrix.h"
 #include "LinAlg/Vector.h"
+#include "Tools/MatrixNear.h"
+#include "Tools/VectorNear.h"
 
-// #include <functional>
 #include <gtest/gtest.h>
 #include <initializer_list>
 #include <string>
-// #include <sstream>
 
 using MathUtils::Matrix;
 using MathUtils::Vector;
@@ -62,16 +62,6 @@ TEST_F(MatrixMathTest, Trace)
 }
 
 // ====================================================================================================================
-TEST_F(MatrixMathTest, Identity)
-{
-  Matrix<2,2> mat = Matrix<2,2>::identity();
-  EXPECT_DOUBLE_EQ(mat(0, 0), 1.0);
-  EXPECT_DOUBLE_EQ(mat(0, 1), 0.0);
-  EXPECT_DOUBLE_EQ(mat(1, 0), 0.0);
-  EXPECT_DOUBLE_EQ(mat(1, 1), 1.0);
-}
-
-// ====================================================================================================================
 TEST_F(MatrixMathTest, NonSquareIdentity)
 {
   Matrix<2,3> mat = Matrix<2,3>::identity();
@@ -89,13 +79,7 @@ TEST_F(MatrixMathTest, ScalarAddInPlace)
 {
   mat1 += scalar;
 
-  for (std::size_t ii : {0, 1, 2})
-  {
-    for (std::size_t jj : {0, 1, 2})
-    {
-      EXPECT_DOUBLE_EQ(mat1(ii, jj), mat1_plus_scalar(ii, jj));
-    }
-  }
+  EXPECT_TRUE(MathUtilsTesting::MatrixNear(mat1, mat1_plus_scalar));
 }
 
 // ====================================================================================================================
@@ -103,13 +87,7 @@ TEST_F(MatrixMathTest, MatrixAddInPlace)
 {
   mat1 += mat2;
 
-  for (std::size_t ii : {0, 1, 2})
-  {
-    for (std::size_t jj : {0, 1, 2})
-    {
-      EXPECT_DOUBLE_EQ(mat1(ii, jj), mat1_plus_mat2(ii, jj));
-    }
-  }
+  EXPECT_TRUE(MathUtilsTesting::MatrixNear(mat1, mat1_plus_mat2));
 }
 
 // ====================================================================================================================
@@ -117,13 +95,7 @@ TEST_F(MatrixMathTest, ScalarSubtractInPlace)
 {
   mat1 -= scalar;
 
-  for (std::size_t ii : {0, 1, 2})
-  {
-    for (std::size_t jj : {0, 1, 2})
-    {
-      EXPECT_DOUBLE_EQ(mat1(ii, jj), mat1_minus_scalar(ii, jj));
-    }
-  }
+  EXPECT_TRUE(MathUtilsTesting::MatrixNear(mat1, mat1_minus_scalar));
 }
 
 // ====================================================================================================================
@@ -131,13 +103,7 @@ TEST_F(MatrixMathTest, MatrixSubtractInPlace)
 {
   mat1 -= mat2;
 
-  for (std::size_t ii : {0, 1, 2})
-  {
-    for (std::size_t jj : {0, 1, 2})
-    {
-      EXPECT_DOUBLE_EQ(mat1(ii, jj), mat1_minus_mat2(ii, jj));
-    }
-  }
+  EXPECT_TRUE(MathUtilsTesting::MatrixNear(mat1, mat1_minus_mat2));
 }
 
 // ====================================================================================================================
@@ -145,13 +111,7 @@ TEST_F(MatrixMathTest, ScalarMultiplyInPlace)
 {
   mat1 *= scalar;
 
-  for (std::size_t ii : {0, 1, 2})
-  {
-    for (std::size_t jj : {0, 1, 2})
-    {
-      EXPECT_DOUBLE_EQ(mat1(ii, jj), mat1_times_scalar(ii, jj));
-    }
-  }
+  EXPECT_TRUE(MathUtilsTesting::MatrixNear(mat1, mat1_times_scalar));
 }
 
 // ====================================================================================================================
@@ -159,13 +119,7 @@ TEST_F(MatrixMathTest, MatrixMultiplyInPlace)
 {
   mat1 *= mat2;
 
-  for (std::size_t ii : {0, 1, 2})
-  {
-    for (std::size_t jj : {0, 1, 2})
-    {
-      EXPECT_DOUBLE_EQ(mat1(ii, jj), mat1_times_mat2(ii, jj));
-    }
-  }
+  EXPECT_TRUE(MathUtilsTesting::MatrixNear(mat1, mat1_times_mat2));
 }
 
 // ====================================================================================================================
@@ -173,13 +127,7 @@ TEST_F(MatrixMathTest, ScalarDivideInPlace)
 {
   mat1 /= scalar;
 
-  for (std::size_t ii : {0, 1, 2})
-  {
-    for (std::size_t jj : {0, 1, 2})
-    {
-      EXPECT_DOUBLE_EQ(mat1(ii, jj), mat1_div_scalar(ii, jj));
-    }
-  }
+  EXPECT_TRUE(MathUtilsTesting::MatrixNear(mat1, mat1_div_scalar));
 }
 
 // ====================================================================================================================
@@ -195,13 +143,7 @@ TEST_F(MatrixMathTest, ScalarMatrixMultiply)
 {
   Matrix<3,3> res = scalar * mat1;
 
-  for (std::size_t ii : {0, 1, 2})
-  {
-    for (std::size_t jj : {0, 1, 2})
-    {
-      EXPECT_DOUBLE_EQ(res(ii, jj), mat1_times_scalar(ii, jj));
-    }
-  }
+  EXPECT_TRUE(MathUtilsTesting::MatrixNear(res, mat1_times_scalar));
 }
 
 // ====================================================================================================================
@@ -209,13 +151,7 @@ TEST_F(MatrixMathTest, MatrixScalarMultiply)
 {
   Matrix<3,3> res = mat1 * scalar;
 
-  for (std::size_t ii : {0, 1, 2})
-  {
-    for (std::size_t jj : {0, 1, 2})
-    {
-      EXPECT_DOUBLE_EQ(res(ii, jj), mat1_times_scalar(ii, jj));
-    }
-  }
+  EXPECT_TRUE(MathUtilsTesting::MatrixNear(res, mat1_times_scalar));
 }
 
 // ====================================================================================================================
@@ -227,13 +163,7 @@ TEST_F(MatrixMathTest, Multiply2x2)
   const Matrix<2,2> result = m1 * m2;
   const Matrix<2,2> expected {{19, 22}, {43, 50}};
 
-  for (std::size_t ii : {0, 1})
-  {
-    for (std::size_t jj : {0, 1})
-    {
-      EXPECT_DOUBLE_EQ(expected(ii, jj), result(ii, jj));
-    }
-  }
+  EXPECT_TRUE(MathUtilsTesting::MatrixNear(expected, result));
 }
 
 // ====================================================================================================================
@@ -241,13 +171,7 @@ TEST_F(MatrixMathTest, Multiply3x3)
 {
   const Matrix<3,3> result = mat1 * mat2;
 
-  for (std::size_t ii : {0, 1, 2})
-  {
-    for (std::size_t jj : {0, 1, 2})
-    {
-      EXPECT_DOUBLE_EQ(mat1_times_mat2(ii, jj), result(ii, jj));
-    }
-  }
+  EXPECT_TRUE(MathUtilsTesting::MatrixNear(mat1_times_mat2, result));
 }
 
 // ====================================================================================================================
@@ -260,13 +184,7 @@ TEST_F(MatrixMathTest, Multiply3x2And2x2)
   const Matrix<3,2> result = mat1 * mat2;
   const Matrix<3,2> expected {{8, 5}, {20, 13}, {32, 21}};
 
-  for (std::size_t ii : {0, 1, 2})
-  {
-    for (std::size_t jj : {0, 1})
-    {
-      EXPECT_DOUBLE_EQ(expected(ii, jj), result(ii, jj));
-    }
-  }
+  EXPECT_TRUE(MathUtilsTesting::MatrixNear(expected, result));
 }
 
 // ====================================================================================================================
@@ -279,13 +197,7 @@ TEST_F(MatrixMathTest, MultiplyThree2x2)
   const Matrix<2,2> result = m1 * m2 * m3;
   const Matrix<2,2> expected {{413, 454}, {937, 1030}};
 
-  for (std::size_t ii : {0, 1})
-  {
-    for (std::size_t jj : {0, 1})
-    {
-      EXPECT_DOUBLE_EQ(expected(ii, jj), result(ii, jj));
-    }
-  }
+  EXPECT_TRUE(MathUtilsTesting::MatrixNear(expected, result));
 }
 
 // ====================================================================================================================
@@ -298,10 +210,7 @@ TEST_F(MatrixMathTest, MatrixVectorMultiplication2x2)
 
   Vector<2> res = mat * vec;
 
-  for (std::size_t idx : {0, 1})
-  {
-    EXPECT_DOUBLE_EQ(res(idx), expected(idx));
-  }
+  EXPECT_TRUE(MathUtilsTesting::VectorNear(expected, res));
 }
 
 // ====================================================================================================================
@@ -314,10 +223,7 @@ TEST_F(MatrixMathTest, MatrixVectorMultiplication3x3)
 
   Vector<3> res = mat * vec;
 
-  for (std::size_t idx : {0, 1, 2})
-  {
-    EXPECT_DOUBLE_EQ(res(idx), expected(idx));
-  }
+  EXPECT_TRUE(MathUtilsTesting::VectorNear(expected, res));
 }
 
 // ====================================================================================================================
@@ -330,10 +236,7 @@ TEST_F(MatrixMathTest, NonSquareMatrixVectorMultiplication)
 
   Vector<2> res = mat * vec;
 
-  for (std::size_t idx : {0, 1})
-  {
-    EXPECT_DOUBLE_EQ(res(idx), expected(idx));
-  }
+  EXPECT_TRUE(MathUtilsTesting::VectorNear(expected, res));
 }
 
 // ====================================================================================================================

@@ -135,6 +135,40 @@ public:
   }
 
   /**
+   * @brief Lvalue negate unary operator.
+   *
+   * @return Negated vector.
+   *
+   * @ref https://stackoverflow.com/a/37737947
+   */
+  Vector operator-() const &
+  {
+    Vector vec;
+    vec.m_arr = this->m_arr;
+
+    std::for_each(vec.m_arr.begin(), vec.m_arr.end(), [](double& val){val *= -1.0;});
+
+    return vec;
+  }
+
+  /**
+   * @brief Rvalue negate unary operator.
+   *
+   * @return Negated vector.
+   *
+   * @ref https://stackoverflow.com/a/37737947
+   */
+  Vector operator-() const &&
+  {
+    Vector vec;
+    vec.m_arr = this->m_arr;
+
+    std::for_each(vec.m_arr.begin(), vec.m_arr.end(), [](double& val){val *= -1.0;});
+
+    return vec;
+  }
+
+  /**
    * @brief Access vector element.
    *
    * @param idx Vector index.
@@ -468,7 +502,7 @@ double dot(const Vector<N>& v1, const Vector<N>& v2)
 
 
 // ============================================================================
-// VECTOR-ONLY OPERATOR OVERLOADS
+// VECTOR <-> VECTOR OPERATOR OVERLOADS
 // ============================================================================
 
 /**

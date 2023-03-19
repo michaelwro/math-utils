@@ -167,6 +167,40 @@ public:
   }
 
   /**
+   * @brief Lvalue negate unary operator.
+   *
+   * @return Negated matrix.
+   *
+   * @ref https://stackoverflow.com/a/37737947
+   */
+  Matrix operator-() const &
+  {
+    Matrix mat;
+    mat.m_arr = this->m_arr;
+
+    std::for_each(mat.m_arr.begin(), mat.m_arr.end(), [](double& val){val *= -1.0;});
+
+    return mat;
+  }
+
+  /**
+   * @brief Rvalue negate unary operator.
+   *
+   * @return Negated matrix.
+   *
+   * @ref https://stackoverflow.com/a/37737947
+   */
+  Matrix operator-() const &&
+  {
+    Matrix mat;
+    mat.m_arr = this->m_arr;
+
+    std::for_each(mat.m_arr.begin(), mat.m_arr.end(), [](double& val){val *= -1.0;});
+
+    return mat;
+  }
+
+  /**
    * @brief Access matrix element.
    *
    * @param row Row index.

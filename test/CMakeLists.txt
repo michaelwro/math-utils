@@ -16,10 +16,14 @@ link_directories(
     ${MATHUTILS_LIB_OUTPUT_DIR}
 )
 
+# test tools dir
+set(MATHUTILS_TEST_DIR ${CMAKE_SOURCE_DIR}/test/)
+
 # Make tests in this folder
 set(MATHUTILS_TEST_EXEC test_math_utils)
 file(GLOB MATHUTILS_TEST_SRC
     ./*.cpp
+    ${MATHUTILS_TEST_DIR}/Tools/*.cpp
 )
 
 add_executable(${MATHUTILS_TEST_EXEC}
@@ -28,6 +32,7 @@ add_executable(${MATHUTILS_TEST_EXEC}
 
 target_include_directories(${MATHUTILS_TEST_EXEC} PUBLIC
     ${CMAKE_SOURCE_DIR}/${INCL_DIR}
+    ${MATHUTILS_TEST_DIR}
 )
 
 target_link_libraries(${MATHUTILS_TEST_EXEC} PUBLIC

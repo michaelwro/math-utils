@@ -7,6 +7,7 @@
 #include "Attitude/Quaternion.h"
 #include "Attitude/quaternion_rotate.h"
 #include "LinAlg/Vector.h"
+#include "Tools/VectorNear.h"
 
 #include <cmath>
 #include <gtest/gtest.h>
@@ -29,9 +30,8 @@ TEST(QuaternionRotateTest, QuaternionRotate1)
 
   const double tol = 1e-6;
 
-  EXPECT_NEAR(v_a(0), -0.42483130, tol);
-  EXPECT_NEAR(v_a(1), -3.54136228, tol);
-  EXPECT_NEAR(v_a(2), 1.13060413, tol);
+  const Vector<3> expected {-0.42483130, -3.54136228, 1.13060413};
+  EXPECT_TRUE(MathUtilsTesting::VectorNear(v_a, expected, tol));
 }
 
 // ====================================================================================================================
@@ -43,9 +43,8 @@ TEST(QuaternionRotateTest, QuaternionRotate2)
 
   Vector<3> v_a = quaternion_rotate(q_a_b, v_b);
 
-  EXPECT_DOUBLE_EQ(v_a(0), -2);
-  EXPECT_DOUBLE_EQ(v_a(1), -3);
-  EXPECT_DOUBLE_EQ(v_a(2), 1);
+  const Vector<3> expected {-2, -3, 1};
+  EXPECT_TRUE(MathUtilsTesting::VectorNear(v_a, expected, 1e-15));
 }
 
 

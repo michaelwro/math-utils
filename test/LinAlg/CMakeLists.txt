@@ -3,7 +3,8 @@ set(TEST_LINALG_EXEC test_linalg)
 
 # get sources
 file(GLOB TEST_LINALG_SRC
-    "./*.cpp"
+    ./*.cpp
+    ${MATHUTILS_TEST_DIR}/Tools/*.cpp
 )
 
 add_executable(${TEST_LINALG_EXEC}
@@ -16,6 +17,7 @@ add_executable(${TEST_LINALG_EXEC}
 
 target_include_directories(${TEST_LINALG_EXEC} PUBLIC
     ${CMAKE_SOURCE_DIR}/${INCL_DIR}
+    ${MATHUTILS_TEST_DIR}
 )
 
 target_link_libraries(${TEST_LINALG_EXEC} PUBLIC

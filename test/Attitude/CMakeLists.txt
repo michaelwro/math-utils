@@ -3,7 +3,8 @@ set(TEST_ATTITUDE_EXEC test_attitude)
 
 # get sources
 file(GLOB TEST_LINALG_SRC
-    "./*.cpp"
+    ./*.cpp
+    ${MATHUTILS_TEST_DIR}/Tools/*.cpp
 )
 
 add_executable(${TEST_ATTITUDE_EXEC}
@@ -16,6 +17,7 @@ add_executable(${TEST_ATTITUDE_EXEC}
 
 target_include_directories(${TEST_ATTITUDE_EXEC} PUBLIC
     ${CMAKE_SOURCE_DIR}/${INCL_DIR}
+    ${MATHUTILS_TEST_DIR}
 )
 
 target_link_libraries(${TEST_ATTITUDE_EXEC} PUBLIC

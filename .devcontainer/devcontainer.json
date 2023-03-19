@@ -29,7 +29,9 @@
                 "doxdocgen.generic.useGitUserName": true,
                 "doxdocgen.generic.authorTag": "@author {author}",
                 "doxdocgen.generic.returnTemplate": "@return ",
-                "doxdocgen.generic.dateFormat": "YYYY-MM-DD"
+                "doxdocgen.generic.dateFormat": "YYYY-MM-DD",
+                "editor.tabSize": 2,
+                "editor.insertSpaces": true
             }
         }
     }
