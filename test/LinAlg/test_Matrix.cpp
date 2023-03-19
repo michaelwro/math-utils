@@ -12,6 +12,7 @@
 #include <gtest/gtest.h>
 #include <initializer_list>
 #include <string>
+#include <sstream>
 
 using MathUtils::Matrix;
 
@@ -139,6 +140,34 @@ TEST(MatrixDeathTest, ModifyElementAssertsInvalidColumnIndex)
   ASSERT_DEBUG_DEATH({
     mat(0, 3) = 123;
   }, "");
+}
+
+// ====================================================================================================================
+TEST(MatrixTest, RowsGetter)
+{
+  Matrix<4,3> mat;
+  EXPECT_EQ(mat.rows(), 4);
+}
+
+// ====================================================================================================================
+TEST(MatrixTest, ColsGetter)
+{
+  Matrix<4,3> mat;
+  EXPECT_EQ(mat.cols(), 3);
+}
+
+// ====================================================================================================================
+TEST(MatrixTest, PrintToStream)
+{
+  Matrix<2,2> mat({{1, 2}, {3, 4}});
+
+  std::stringstream ss;
+  ss << mat << "\n";
+
+  EXPECT_TRUE(ss.str().find("1") != std::string::npos);
+  EXPECT_TRUE(ss.str().find("2") != std::string::npos);
+  EXPECT_TRUE(ss.str().find("3") != std::string::npos);
+  EXPECT_TRUE(ss.str().find("4") != std::string::npos);
 }
 
 // ====================================================================================================================

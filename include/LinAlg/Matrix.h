@@ -58,7 +58,7 @@ public:
    * @brief Create a matrix from an initializer list.
    *
    * @code {.cpp}
-   * Matrix<2,3> my_mat({
+   * Matrix<3,2> my_mat({
    *  1, 2,
    *  3, 4,
    *  5, 6
@@ -81,7 +81,7 @@ public:
    * @brief Create a matrix from an initializer list of lists.
    *
    * @code {.cpp}
-   * Matrix<2,3> my_mat({
+   * Matrix<3,2> my_mat({
    *  {1, 2},
    *  {3, 4},
    *  {5, 6}
@@ -98,7 +98,6 @@ public:
     assert(new_matrix.size() == ROWS);  // check number of rows
 
     auto array_element = m_arr.begin();  // start at the beginning of the array
-
 
     for (const auto& row : new_matrix)
     {
@@ -190,9 +189,28 @@ public:
    *
    * @return Matrix columns.
    */
-  std::size_t columns() const
+  std::size_t cols() const
   {
     return COLS;
+  }
+
+  /**
+   * @brief Get the trace of the matrix (sum of diagonal elements).
+   *
+   * @return Matrix trace.
+   */
+  double trace() const
+  {
+    assert(ROWS == COLS);  // only allowed for square matrices
+
+    double tr = 0.0;
+
+    for (std::size_t idx = 0; idx < ROWS; idx++)
+    {
+      tr += m_arr[(idx * COLS) + idx];
+    }
+
+    return tr;
   }
 
   /**
@@ -223,12 +241,12 @@ public:
      * Print the matrix.
      * https://cplusplus.com/forum/beginner/275937/#msg1194918
      */
-    for (std::size_t i = 0; i < mat.rows(); i++)
+    for (std::size_t ii = 0; ii < mat.rows(); ii++)
     {
-      for (std::size_t j = 0; j < mat.columns(); j++)
+      for (std::size_t jj = 0; jj < mat.cols(); jj++)
       {
-        os << (j == 0 ? "\n" : "") << std::setw(most_chars) << std::left <<
-          mat(i, j) << (j == mat.columns()-1 ? "" : ", ");
+        os << (jj == 0 ? "\n" : "") << std::setw(most_chars) << std::left <<
+          mat(ii, jj) << (jj == mat.cols()-1 ? "" : ", ");
       }
     }
 
@@ -239,6 +257,108 @@ protected:
 private:
   std::array<double, ROWS * COLS> m_arr;  ///< Underlying array to store values (row-major order).
 };
+
+// ====================================================================================================================
+// MATRIX-MATRIX OPERATOR OVERLOADS
+// ====================================================================================================================
+
+/**
+ * @brief 2x2 matrix-matrix multiplication A * B.
+ *
+ * @details Expanded multiplication operations with SymPy.
+ *
+ * @code {.py}
+ * a = sympy.MatrixSymbol('a', 2, 2)
+ * b = sympy.MatrixSymbol('b', 2, 2)
+ * numpy.matmul(a, b)
+ * @endcode
+ *
+ * @param a Matrix A.
+ * @param b Matrix B.
+ * @return Matrix product.
+ */
+inline Matrix<2,2> operator*(const Matrix<2,2>& a, const Matrix<2,2>& b)
+{
+  return Matrix<2,2>({
+    {a(0,0)*b(0,0) + a(0,1)*b(1,0), a(0,0)*b(0,1) + a(0,1)*b(1,1)},
+    {a(1,0)*b(0,0) + a(1,1)*b(1,0), a(1,0)*b(0,1) + a(1,1)*b(1,1)}
+  });
+}
+
+/**
+ * @brief 3x3 matrix-matrix multiplication A * B.
+ *
+ * @details Expanded multiplication operations with SymPy.
+ *
+ * @code {.py}
+ * a = sympy.MatrixSymbol('a', 3, 3)
+ * b = sympy.MatrixSymbol('b', 3, 3)
+ * numpy.matmul(a, b)
+ * @endcode
+ *
+ * @param a Matrix A.
+ * @param b Matrix B.
+ * @return Matrix product.
+ */
+inline Matrix<3,3> operator*(const Matrix<3,3>& a, const Matrix<3,3>& b)
+{
+  return Matrix<3,3>({
+    {a(0,0)*b(0,0) + a(0,1)*b(1,0) + a(0,2)*b(2,0),
+    a(0,0)*b(0,1) + a(0,1)*b(1,1) + a(0,2)*b(2,1),
+    a(0,0)*b(0,2) + a(0,1)*b(1,2) + a(0,2)*b(2,2)},
+    {a(1,0)*b(0,0) + a(1,1)*b(1,0) + a(1,2)*b(2,0),
+    a(1,0)*b(0,1) + a(1,1)*b(1,1) + a(1,2)*b(2,1),
+    a(1,0)*b(0,2) + a(1,1)*b(1,2) + a(1,2)*b(2,2)},
+    {a(2,0)*b(0,0) + a(2,1)*b(1,0) + a(2,2)*b(2,0),
+    a(2,0)*b(0,1) + a(2,1)*b(1,1) + a(2,2)*b(2,1),
+    a(2,0)*b(0,2) + a(2,1)*b(1,2) + a(2,2)*b(2,2)}
+  });
+}
+
+/**
+ * @brief Matrix-matrix multiplication A * B.
+ *
+ * @details Naive implementation.
+ *
+ * @tparam N Matrix A rows.
+ * @tparam M Matrix A columns and matrix B rows.
+ * @tparam P Matrix B columns.
+ * @param a Matrix A.
+ * @param b Matrix B.
+ * @return Matrix-matrix product, (N, P).
+ *
+ * @ref https://en.wikipedia.org/wiki/Matrix_multiplication_algorithm
+ */
+template<std::size_t N, std::size_t M, std::size_t P>
+Matrix<N,P> operator*(const Matrix<N,M>& a, const Matrix<M,P>& b)
+{
+  Matrix<N,P> c;
+
+  for (std::size_t ii = 0; ii < N; ii++)
+  {
+    for (std::size_t jj = 0; jj < P; jj++)
+    {
+      double sum = 0.0;
+      for (std::size_t kk = 0; kk < M; kk++)
+      {
+        sum += a(ii, kk) * b(kk, jj);
+      }
+
+      c(ii, jj) = sum;
+    }
+  }
+
+  return c;
+}
+
+
+
+
+// ====================================================================================================================
+// MATRIX-VECTOR OPERATOR OVERLOADS
+// ====================================================================================================================
+
+
 
 }  // namespace MathUtils
 

@@ -169,19 +169,16 @@ public:
   /**
    * @brief Add vector in-place (accumulate).
    *
-   * @tparam LEN Other vector length.
    * @param vec Vector to add.
    * @return Vector with other vector added.
    */
-  template<std::size_t LEN>
-  Vector& operator+=(const Vector<LEN>& vec)
+  Vector& operator+=(const Vector& vec)
   {
-    static_assert(LEN == N, "Vector is incompatible length.");
-
     for (std::size_t idx = 0; idx < N; idx++)
     {
       m_arr[idx] += vec.m_arr[idx];
     }
+
     return *this;
   }
 
@@ -207,21 +204,18 @@ public:
   }
 
   /**
-   * @brief Subtract vector in-place (accumulate).
+   * @brief Subtract vector in-place.
    *
-   * @tparam LEN Other vector length.
    * @param vec Vector to subtract.
-   * @return Vector with other vector subtracted.
+   * @return Vector with other vector subtracted from it.
    */
-  template<std::size_t LEN>
-  Vector& operator-=(const Vector<LEN>& vec)
+  Vector& operator-=(const Vector& vec)
   {
-    static_assert(LEN == N, "Vector is incompatible length.");
-
     for (std::size_t idx = 0; idx < N; idx++)
     {
       m_arr[idx] -= vec.m_arr[idx];
     }
+
     return *this;
   }
 
@@ -266,6 +260,25 @@ public:
       m_arr.end(),
       [scalard](double& element){element /= scalard;}
     );
+
+    return *this;
+  }
+
+  /**
+   * @brief Divide all elements by another vector in-place.
+   *
+   * @param scalar Vector to divide by.
+   * @return Vector divided by other vector.
+   */
+  Vector& operator/=(const Vector& vec)
+  {
+    for (std::size_t idx = 0; idx < N; idx++)
+    {
+      const double val = vec.m_arr[idx];
+      assert(std::abs(val) > std::numeric_limits<double>::epsilon());
+
+      m_arr[idx] /= vec.m_arr[idx];
+    }
 
     return *this;
   }
@@ -451,47 +464,6 @@ Vector<N_LEFT> operator+(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
 }
 
 /**
- * @brief Add a scalar to a vector.
- *
- * @tparam N Vector length.
- * @tparam T Scalar type
- * @param v Vector.
- * @param scalar Scalar.
- * @return Scalar added to vector.
- */
-template<std::size_t N, typename T>
-Vector<N> operator+(const Vector<N>& v, const T scalar)
-{
-  static_assert(std::is_fundamental<T>::value, "Scalar must be fundamental type.");
-
-  Vector<N> res;
-
-  for (std::size_t idx = 0; idx < N; idx++)
-  {
-    res(idx) = v(idx) + static_cast<double>(scalar);
-  }
-
-  return res;
-}
-
-/**
- * @brief Add a scalar to a vector.
- *
- * @tparam T Scalar type
- * @tparam N Vector length.
- * @param scalar Scalar.
- * @param v Vector.
- * @return Scalar added to vector.
- */
-template<typename T, std::size_t N>
-Vector<N> operator+(const T scalar, const Vector<N>& v)
-{
-  static_assert(std::is_fundamental<T>::value, "Scalar must be fundamental type.");
-
-  return v + scalar;
-}
-
-/**
  * @brief Subtract two vectors.
  *
  * @tparam N_LEFT First vector length.
@@ -513,47 +485,6 @@ Vector<N_LEFT> operator-(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
   }
 
   return result;
-}
-
-/**
- * @brief Subract a scalar from a vector.
- *
- * @tparam N Vector length.
- * @tparam T Scalar type.
- * @param v Vector.
- * @param scalar Scalar
- * @return Vector with scalar subtracted from it.
- */
-template<std::size_t N, typename T>
-Vector<N> operator-(const Vector<N>& v, const T scalar)
-{
-  static_assert(std::is_fundamental<T>::value, "Scalar must be fundamental type.");
-
-  Vector<N> res;
-
-  for (std::size_t idx = 0; idx < N; idx++)
-  {
-    res(idx) = v(idx) - static_cast<double>(scalar);
-  }
-
-  return res;
-}
-
-/**
- * @brief Subract a scalar from a vector.
- *
- * @tparam T Scalar type.
- * @tparam N Vector length.
- * @param scalar Scalar
- * @param v Vector.
- * @return Vector with scalar subtracted from it.
- */
-template<typename T, std::size_t N>
-Vector<N> operator-(const T scalar, const Vector<N>& v)
-{
-  static_assert(std::is_fundamental<T>::value, "Scalar must be fundamental type.");
-
-  return v - scalar;
 }
 
 /**
@@ -594,6 +525,30 @@ Vector<N> operator*(const T scalar, const Vector<N>& vec)
 {
   static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
   return Vector<N>(vec * static_cast<double>(scalar));
+}
+
+/**
+ * @brief Multiply two vectors.
+ *
+ * @tparam N_LEFT First vector length.
+ * @tparam N_RIGHT Second vector length.
+ * @param v1 First vector.
+ * @param v2 Second vector.
+ * @return Vector product, v1 * v2.
+ */
+template<std::size_t N_LEFT, std::size_t N_RIGHT>
+Vector<N_LEFT> operator*(const Vector<N_LEFT>& v1, const Vector<N_RIGHT>& v2)
+{
+  static_assert(N_LEFT == N_RIGHT, "Incompatible dimensions.");
+
+  Vector<N_LEFT> result;
+
+  for (std::size_t idx = 0; idx < N_LEFT; idx++)
+  {
+    result(idx) = v1(idx) * v2(idx);
+  }
+
+  return result;
 }
 
 }  // namespace MathUtils

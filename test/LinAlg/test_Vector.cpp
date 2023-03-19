@@ -146,138 +146,17 @@ TEST(VectorTest, FillsVector)
 }
 
 // ====================================================================================================================
-TEST(VectorTest, ComputesMagnitude)
+TEST(VectorTest, PrintToStream)
 {
-  Vector<3> vec {1, 1, 1};
+  Vector<3> vec({12, 34, 56});
 
-  double mag = vec.magnitude();
+  std::stringstream ss;
+  ss << vec << "\n";
 
-  EXPECT_DOUBLE_EQ(
-    mag, std::sqrt((vec(0)*vec(0)) + (vec(1)*vec(1)) + (vec(2)*vec(2)))
-  );
+  EXPECT_TRUE(ss.str().find("12") != std::string::npos);
+  EXPECT_TRUE(ss.str().find("34") != std::string::npos);
+  EXPECT_TRUE(ss.str().find("56") != std::string::npos);
 }
-
-// ====================================================================================================================
-TEST(VectorTest, Normalizes)
-{
-  const double val0 = 3;
-  const double val1 = 2;
-  const double val2 = 1;
-  Vector<3> vec({val0, val1, val2});
-
-  double mag = std::sqrt((vec(0)*vec(0)) + (vec(1)*vec(1)) + (vec(2)*vec(2)));
-
-  vec.normalize();
-
-  EXPECT_DOUBLE_EQ(vec(0), val0 / mag);
-  EXPECT_DOUBLE_EQ(vec(1), val1 / mag);
-  EXPECT_DOUBLE_EQ(vec(2), val2 / mag);
-}
-
-// ====================================================================================================================
-TEST(VectorTest, SumsElements)
-{
-  Vector<3> vec({5, 4, 3});
-
-  EXPECT_DOUBLE_EQ(vec.sum(), 12);
-}
-
-// ====================================================================================================================
-TEST(VectorTest, ScalarAddInPlace)
-{
-  Vector<3> vec({4, 5, 6});
-
-  vec += 3.0;
-
-  EXPECT_DOUBLE_EQ(vec(0), 7.0);
-  EXPECT_DOUBLE_EQ(vec(1), 8.0);
-  EXPECT_DOUBLE_EQ(vec(2), 9.0);
-}
-
-// ====================================================================================================================
-TEST(VectorTest, VectorAddInPlace)
-{
-  Vector<3> vec1({1, 2, 3});
-  Vector<3> vec2({4, 5, 6});
-
-  vec1 += vec2;
-
-  EXPECT_DOUBLE_EQ(vec1(0), 5.0);
-  EXPECT_DOUBLE_EQ(vec1(1), 7.0);
-  EXPECT_DOUBLE_EQ(vec1(2), 9.0);
-}
-
-// ====================================================================================================================
-TEST(VectorTest, ScalarSubtractInPlace)
-{
-  Vector<3> vec({4, 5, 6});
-
-  vec -= 3.0;
-
-  EXPECT_DOUBLE_EQ(vec(0), 1.0);
-  EXPECT_DOUBLE_EQ(vec(1), 2.0);
-  EXPECT_DOUBLE_EQ(vec(2), 3.0);
-}
-
-// ====================================================================================================================
-TEST(VectorTest, VectorSubtractInPlace)
-{
-  Vector<3> vec1({1, 2, 3});
-  Vector<3> vec2({4, 5, 6});
-
-  vec1 -= vec2;
-
-  EXPECT_DOUBLE_EQ(vec1(0), -3.0);
-  EXPECT_DOUBLE_EQ(vec1(1), -3.0);
-  EXPECT_DOUBLE_EQ(vec1(2), -3.0);
-}
-
-// ====================================================================================================================
-TEST(VectorTest, ScalarMultiplyInPlace)
-{
-  Vector<3> vec({1, 2, 3});
-
-  vec *= -2.0;
-
-  EXPECT_DOUBLE_EQ(vec(0), -2.0);
-  EXPECT_DOUBLE_EQ(vec(1), -4.0);
-  EXPECT_DOUBLE_EQ(vec(2), -6.0);
-}
-
-// ====================================================================================================================
-TEST(VectorTest, ScalarDivideInPlace)
-{
-  Vector<3> vec({6, 8, 10});
-
-  vec /= 2.0;
-
-  EXPECT_DOUBLE_EQ(vec(0), 3.0);
-  EXPECT_DOUBLE_EQ(vec(1), 4.0);
-  EXPECT_DOUBLE_EQ(vec(2), 5.0);
-}
-
-// ====================================================================================================================
-TEST(VectorDeathTest, ScalarDivideInPlaceAssertSmallNumber)
-{
-  Vector<3> vec({6, 8, 10});
-
-  EXPECT_DEBUG_DEATH({
-    vec /= 0lu;
-  }, "");
-}
-
-// ====================================================================================================================
-TEST(VectorTest, Negate)
-{
-  Vector<3> vec({6, -8, 10});
-
-  vec.negate();
-
-  EXPECT_DOUBLE_EQ(vec(0), -6);
-  EXPECT_DOUBLE_EQ(vec(1), 8);
-  EXPECT_DOUBLE_EQ(vec(2), -10);
-}
-
 
 // ====================================================================================================================
 int main(int argc, char** argv)

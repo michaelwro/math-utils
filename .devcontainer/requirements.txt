@@ -4,3 +4,4 @@ isort
 numpy
 pre-commit
 scipy
+sympy

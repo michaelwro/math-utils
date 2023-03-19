@@ -158,13 +158,20 @@ public:
 
   /**
    * @brief Negate (*= -1) the quaternion if the scalar component is negative to force a positive rotation.
+   *
+   * @return Quaternion.
    */
-  void force_positive_rotation()
+  Quaternion& force_positive_rotation()
   {
     if (m_arr[0] < 0.0)
     {
-      std::for_each(m_arr.begin(), m_arr.end(), [](double& val){val *= -1.0;});
+      m_arr[0] *= -1.0;
+      m_arr[1] *= -1.0;
+      m_arr[2] *= -1.0;
+      m_arr[3] *= -1.0;
     }
+
+    return *this;
   }
 
   /**
@@ -181,7 +188,10 @@ public:
     );
 
     // normalize each element
-    std::for_each(m_arr.begin(), m_arr.end(), [magn](double& val){val /= magn;});
+    m_arr[0] /= magn;
+    m_arr[1] /= magn;
+    m_arr[2] /= magn;
+    m_arr[3] /= magn;
   }
 
   /**

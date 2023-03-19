@@ -11,6 +11,7 @@
 #include <gtest/gtest.h>
 #include <initializer_list>
 #include <string>
+#include <sstream>
 #include <utility>
 
 using MathUtils::Quaternion;
@@ -179,6 +180,19 @@ TEST(QuaternionTest, ForcePositiveRotation)
   EXPECT_DOUBLE_EQ(quat(3), -val / magn);
 }
 
+// ====================================================================================================================
+TEST(QuaternionTest, PrintToStream)
+{
+  Quaternion q {1, 2, 3, 4};
+
+  std::stringstream ss;
+  ss << q << "\n";
+
+  EXPECT_TRUE(ss.str().find("0.18") != std::string::npos);
+  EXPECT_TRUE(ss.str().find("0.36") != std::string::npos);
+  EXPECT_TRUE(ss.str().find("0.54") != std::string::npos);
+  EXPECT_TRUE(ss.str().find("0.73") != std::string::npos);
+}
 
 // ====================================================================================================================
 int main(int argc, char** argv)
