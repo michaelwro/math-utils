@@ -14,7 +14,7 @@ jobs:
       matrix:
         os: [ubuntu-22.04, ubuntu-20.04]
         build_type: [Debug, Release]
-    name: ${{ matrix.build_type }} Build & Test
+    name: ${{ matrix.os }} ${{ matrix.build_type }} Build & Test
     runs-on: ${{ matrix.os }}
     if: "!contains(github.event.head_commit.message, 'ci skip')"
 
@@ -36,5 +36,4 @@ jobs:
       - name: Run tests
         working-directory: build
         run: |
-          cd build/
           ctest --output-on-failure
