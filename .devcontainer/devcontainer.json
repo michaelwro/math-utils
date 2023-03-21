@@ -26,7 +26,7 @@
                 "doxdocgen.file.fileOrder": [
                     "file", "author", "date"
                 ],
-                "doxdocgen.generic.useGitUserName": true,
+                "doxdocgen.generic.useGitUserName": false,
                 "doxdocgen.generic.authorTag": "@author {author}",
                 "doxdocgen.generic.returnTemplate": "@return ",
                 "doxdocgen.generic.dateFormat": "YYYY-MM-DD",
