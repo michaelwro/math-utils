@@ -8,7 +8,7 @@
         "kind": "build"
       },
       "linux": {
-        "command": "mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Debug && make -j"
+        "command": "cmake -B build/ -DCMAKE_BUILD_TYPE==Debug && cmake --build build/ -j"
       },
       "options": {
         "cwd": "${workspaceFolder}"
@@ -21,7 +21,7 @@
           "kind": "build"
       },
       "linux": {
-        "command": "mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make -j"
+        "command": "cmake -B build/ -DCMAKE_BUILD_TYPE==Release && cmake --build build/ -j"
       },
       "options": {
         "cwd": "${workspaceFolder}"
