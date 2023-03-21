@@ -1,6 +1,6 @@
 /**
  * @file float_equality.h
- * @author michaelwro
+ * @author Michael Wrona
  * @date 2023-03-17
  */
 
@@ -19,6 +19,7 @@ namespace MathUtils {
  *
  * @details Uses absolute and relative tolerance.
  *
+ * @tparam T variable type.
  * @param a First value.
  * @param b Second value.
  * @return True if "close enough," false otherwise.

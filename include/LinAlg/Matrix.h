@@ -25,7 +25,7 @@
 namespace MathUtils {
 
 /**
- * @brief NxM matrix class.
+ * @brief 2D matrix class.
  *
  * @details Stores elements in row-major order.
  *
@@ -106,8 +106,7 @@ public:
       for (const auto& val : row)
       {
         assert(array_element != m_arr.end());  // make sure we're not at the end
-        *array_element = static_cast<double>(val);  // assign value to array
-        array_element++;
+        *(array_element++) = static_cast<double>(val);  // assign value to array
       }
     }
 
