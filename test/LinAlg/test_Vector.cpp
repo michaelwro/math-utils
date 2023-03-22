@@ -9,6 +9,7 @@
 #include <cmath>
 #include <gtest/gtest.h>
 #include <initializer_list>
+#include <stdexcept>
 #include <string>
 #include <utility>
 
@@ -40,13 +41,13 @@ TEST(VectorTest, InitListConstruction)
 }
 
 // ====================================================================================================================
-TEST(VectorDeathTest, AssertsInvalidLengthInitializerList)
+TEST(VectorTest, ThrowsInvalidLengthInitializerList)
 {
   std::initializer_list<double> vals = {1, 2, 3, 4};
 
-  ASSERT_DEBUG_DEATH({
+  EXPECT_THROW({
     Vector<3> vec(vals);
-    }, "");
+  }, std::length_error);
 }
 
 // ====================================================================================================================
@@ -112,14 +113,14 @@ TEST(VectorTest, InitializerListAssign)
 }
 
 // ====================================================================================================================
-TEST(VectorDeathTest, InitListAssignAssertsIncompatibleSize)
+TEST(VectorTest, InitListAssignThrowsIncompatibleSize)
 {
   Vector<3> vec;
   std::initializer_list<double> four_vals = {1, 3, 2, 4};
 
-  EXPECT_DEBUG_DEATH({
+  EXPECT_THROW({
     vec = four_vals;
-  }, "");
+  }, std::length_error);
 }
 
 // ====================================================================================================================
@@ -134,6 +135,16 @@ TEST(VectorTest, ParenthesisAccessorModifiesValues)
   EXPECT_DOUBLE_EQ(vec(0), 4);
   EXPECT_DOUBLE_EQ(vec(1), 5);
   EXPECT_DOUBLE_EQ(vec(2), 6);
+}
+
+// ====================================================================================================================
+TEST(VectorTest, ParenthesisAccessorThrowsInvalidIndex)
+{
+  Vector<3> vec {1, 2, 3};
+
+  EXPECT_THROW({
+    vec(4);
+  }, std::out_of_range);
 }
 
 // ====================================================================================================================

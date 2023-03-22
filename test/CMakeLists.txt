@@ -23,7 +23,7 @@ set(MATHUTILS_TEST_DIR ${CMAKE_SOURCE_DIR}/test/)
 set(MATHUTILS_TEST_EXEC test_math_utils)
 file(GLOB MATHUTILS_TEST_SRC
     ./*.cpp
-    ${MATHUTILS_TEST_DIR}/Tools/*.cpp
+    ${MATHUTILS_TEST_DIR}/TestTools/*.cpp
 )
 
 add_executable(${MATHUTILS_TEST_EXEC}

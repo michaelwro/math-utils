@@ -6,16 +6,17 @@ LABEL AUTHOR="Michael Wrona"
 
 # download packages
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    nano \
     build-essential \
+    cmake \
+    cppcheck \
+    doxygen \
     gdb \
     git \
-    cmake \
     lcov \
+    nano \
     pmccabe \
-    cppcheck \
-    python3.10 \
-    python3-pip
+    python3-pip \
+    python3.10
 
 # install python deps
 COPY ./requirements.txt /opt/

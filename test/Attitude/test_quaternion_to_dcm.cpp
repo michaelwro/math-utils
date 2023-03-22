@@ -7,7 +7,7 @@
 #include "Attitude/Quaternion.h"
 #include "LinAlg/Matrix.h"
 #include "Attitude/quaternion_to_dcm.h"
-#include "Tools/MatrixNear.h"
+#include "TestTools/MatrixNear.h"
 
 #include <gtest/gtest.h>
 #include <string>

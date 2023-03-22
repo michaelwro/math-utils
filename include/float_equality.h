@@ -28,7 +28,6 @@ namespace MathUtils {
  * @ref https://realtimecollisiondetection.net/blog/?p=89
  * @ref https://floating-point-gui.de/errors/comparison/
  */
-
 template<typename T>
 inline bool float_equality(const T a, const T b)
 {

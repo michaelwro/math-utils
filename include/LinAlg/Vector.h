@@ -8,6 +8,9 @@
 #ifndef MATHUTILS_LINALG_VECTOR_H_
 #define MATHUTILS_LINALG_VECTOR_H_
 
+#include "float_equality.h"
+#include "Internal/error_msg_helpers.h"
+
 #include <algorithm>
 #include <array>
 #include <cassert>
@@ -18,6 +21,8 @@
 #include <limits>
 #include <numeric>
 #include <ostream>
+#include <stdexcept>
+#include <string>
 #include <type_traits>
 
 namespace MathUtils {
@@ -53,18 +58,22 @@ public:
    *
    * @tparam T Initializer list data type.
    * @param vector_vals Vector values.
+   *
+   * @exception std::length_error Initializer list length doesn't match vector size.
    */
   template<typename T>
   explicit Vector(const std::initializer_list<T> vector_vals)
+    :m_arr{0.0}
   {
     static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
-    assert(vector_vals.size() == N);
 
-    /**
-     * NOTE: Using std::copy with a list of non-double vals will implicitly convert to `double`. This should be fine
-     * for `double` and integer-type lists, but a `float` list might have strange conversions. Compiler flags should
-     * catch this scenario, though?
-     */
+    const std::size_t input_length = vector_vals.size();
+
+    if (input_length != N)
+    {
+      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_length, N));
+    }
+
     std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
   }
 
@@ -82,7 +91,7 @@ public:
    *
    * @param other Other vector.
    */
-  Vector(Vector&& other)
+  Vector(Vector&& other) noexcept
     :m_arr{std::move(other.m_arr)}
   {}
 
@@ -91,7 +100,7 @@ public:
    * @param other Other vector.
    * @return Copied vector.
    */
-  Vector& operator=(const Vector& other)
+  Vector& operator=(const Vector& other) noexcept
   {
     if (&other == this)
     {
@@ -123,12 +132,20 @@ public:
    *
    * @tparam T Initializer list type.
    * @param vector_vals New vector.
+   *
+   * @exception std::length_error Initializer list length doesn't match vector size.
    */
   template<typename T>
   Vector& operator=(const std::initializer_list<T> vector_vals)
   {
     static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
-    assert(vector_vals.size() == N);
+
+    const std::size_t input_length = vector_vals.size();
+
+    if (input_length != N)
+    {
+      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_length, N));
+    }
 
     std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
     return *this;
@@ -173,10 +190,15 @@ public:
    *
    * @param idx Vector index.
    * @return Vector element at specified index.
+   * @exception std::out_of_range Index is beyond vector length.
    */
   double& operator()(const std::size_t idx)
   {
-    assert(idx < N);
+    if (idx >= N)
+    {
+      throw std::out_of_range(Internal::invalid_index_error_msg(idx, N));
+    }
+
     return m_arr[idx];
   }
 
@@ -185,9 +207,16 @@ public:
    *
    * @param idx Vector index.
    * @return Vector value at specified index.
+   *
+   * @exception std::out_of_range Index is beyond vector length.
    */
   const double& operator()(const std::size_t idx) const
   {
+    if (idx >= N)
+    {
+      throw std::out_of_range(Internal::invalid_index_error_msg(idx, N));
+    }
+
     assert(idx < N);
     return m_arr[idx];
   }
@@ -221,7 +250,7 @@ public:
    * @param vec Vector to add.
    * @return Vector with other vector added.
    */
-  Vector& operator+=(const Vector& vec)
+  Vector& operator+=(const Vector& vec) noexcept
   {
     for (std::size_t idx = 0; idx < N; idx++)
     {
@@ -260,7 +289,7 @@ public:
    * @param vec Vector to subtract.
    * @return Vector with other vector subtracted from it.
    */
-  Vector& operator-=(const Vector& vec)
+  Vector& operator-=(const Vector& vec) noexcept
   {
     for (std::size_t idx = 0; idx < N; idx++)
     {
@@ -299,6 +328,8 @@ public:
    * @tparam T Scalar type.
    * @param scalar Scalar to divide by.
    * @return Vector with scalar divided.
+   *
+   * @exception std::overflow_error Divisor would result in divide-by-zero.
    */
   template<typename T>
   Vector& operator/=(const T scalar)
@@ -307,7 +338,11 @@ public:
 
     // make sure denominator is not too small
     const double scalard = static_cast<double>(scalar);
-    assert(std::abs(scalard) > std::numeric_limits<double>::epsilon());
+
+    if (float_equality(std::abs(scalard), 0.0))
+    {
+      throw std::overflow_error(Internal::divide_by_zero_error_msg());
+    }
 
     std::for_each(
       m_arr.begin(),
@@ -323,13 +358,19 @@ public:
    *
    * @param scalar Vector to divide by.
    * @return Vector divided by other vector.
+   *
+   * @exception std::overflow_error Divisor would result in divide-by-zero.
    */
   Vector& operator/=(const Vector& vec)
   {
     for (std::size_t idx = 0; idx < N; idx++)
     {
       const double val = vec.m_arr[idx];
-      assert(std::abs(val) > std::numeric_limits<double>::epsilon());
+
+      if (float_equality(std::abs(val), 0.0))
+      {
+        throw std::overflow_error(Internal::divide_by_zero_error_msg());
+      }
 
       m_arr[idx] /= vec.m_arr[idx];
     }
@@ -342,7 +383,7 @@ public:
    *
    * @return Vector length.
    */
-  std::size_t size() const
+  std::size_t size() const noexcept
   {
     return N;
   }
@@ -352,7 +393,7 @@ public:
    *
    * @param val Value to fill the vector with.
    */
-  void fill(const double val)
+  void fill(const double val) noexcept
   {
     m_arr.fill(val);
   }
@@ -369,17 +410,24 @@ public:
       [](double accum, const double& val){return accum += val * val;}
     );
 
-    // NOTE: Since all elements were squared in the above operation, this argument will never be negative
+    // NOTE: Since all elements were squared in the above operation, this argument should never be negative
+    assert(magn >= 0.0);
     return std::sqrt(magn);
   }
 
   /**
    * @brief Normalize the vector.
+   *
+   * @exception std::overflow_error Divisor would result in divide-by-zero.
    */
   void normalize()
   {
     const double magn = magnitude();
-    assert(magn > std::numeric_limits<double>::epsilon());
+
+    if (float_equality(magn, 0.0))
+    {
+      throw std::overflow_error(Internal::divide_by_zero_error_msg());
+    }
 
     std::for_each(m_arr.begin(), m_arr.end(), [magn](double& val){val /= magn;});
   }

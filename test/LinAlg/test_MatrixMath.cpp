@@ -8,8 +8,8 @@
 
 #include "LinAlg/Matrix.h"
 #include "LinAlg/Vector.h"
-#include "Tools/MatrixNear.h"
-#include "Tools/VectorNear.h"
+#include "TestTools/MatrixNear.h"
+#include "TestTools/VectorNear.h"
 
 #include <gtest/gtest.h>
 #include <initializer_list>

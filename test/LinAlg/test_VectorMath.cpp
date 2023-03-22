@@ -5,7 +5,7 @@
  */
 
 #include "LinAlg/Vector.h"
-#include "Tools/VectorNear.h"
+#include "TestTools/VectorNear.h"
 
 #include <cmath>
 #include <gtest/gtest.h>
@@ -79,6 +79,16 @@ TEST_F(VectorMathTest, Normalize)
 }
 
 // ====================================================================================================================
+TEST_F(VectorMathTest, NormalizeThrows)
+{
+  Vector<2> vec;
+
+  EXPECT_THROW({
+    vec.normalize();
+  }, std::overflow_error);
+}
+
+// ====================================================================================================================
 TEST_F(VectorMathTest, SumElements)
 {
   EXPECT_DOUBLE_EQ(vec1.sum(), vec1_sum);
@@ -133,11 +143,11 @@ TEST_F(VectorMathTest, ScalarDivideInPlace)
 }
 
 // ====================================================================================================================
-TEST_F(VectorMathTest, ScalarDivideInPlaceAssertsSmallNumber)
+TEST_F(VectorMathTest, ScalarDivideInPlaceThrows)
 {
-  EXPECT_DEBUG_DEATH({
+  EXPECT_THROW({
     vec2 /= 0lu;
-  }, "");
+  }, std::overflow_error);
 }
 
 // ====================================================================================================================

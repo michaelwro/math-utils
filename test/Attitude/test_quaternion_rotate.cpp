@@ -7,7 +7,7 @@
 #include "Attitude/Quaternion.h"
 #include "Attitude/quaternion_rotate.h"
 #include "LinAlg/Vector.h"
-#include "Tools/VectorNear.h"
+#include "TestTools/VectorNear.h"
 
 #include <cmath>
 #include <gtest/gtest.h>
