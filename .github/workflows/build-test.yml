@@ -23,7 +23,7 @@ jobs:
       - name: Install deps
         run: |
           sudo apt update
-          DEBIAN_FRONTEND=noninteractive sudo apt install -y cmake
+          DEBIAN_FRONTEND=noninteractive sudo apt install -y cmake lcov
       - name: Check deps versions
         run: |
           cmake --version
