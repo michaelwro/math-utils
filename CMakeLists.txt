@@ -28,8 +28,9 @@ set(MATHUTILS_COMPILE_DEFINITIONS_RELEASE "NDEBUG")
 #     )
 # endif()
 
+# TODO: add --coverage
 set(MATHUTILS_COMPILE_OPTIONS "-Wall;-Wextra;-Wpedantic;-Wshadow;-Wconversion;-Wdouble-promotion;-Wfloat-equal;-Wundef;-Wformat=2;-fno-common")
-set(MATHUTILS_COMPILE_OPTIONS_DEBUG "${MATHUTILS_COMPILE_OPTIONS};-g3;-Werror;-O0;-Wduplicated-cond;-Wcast-align;-Wcast-qual;--coverage")
+set(MATHUTILS_COMPILE_OPTIONS_DEBUG "${MATHUTILS_COMPILE_OPTIONS};-g3;-Werror;-O0;-Wduplicated-cond;-Wcast-align;-Wcast-qual")
 set(MATHUTILS_COMPILE_OPTIONS_RELEASE "${MATHUTILS_COMPILE_OPTIONS};-O1")
 
 # library name
