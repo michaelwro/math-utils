@@ -100,7 +100,7 @@ public:
    * @param other Other vector.
    * @return Copied vector.
    */
-  Vector& operator=(const Vector& other) noexcept
+  Vector& operator=(const Vector& other)
   {
     if (&other == this)
     {

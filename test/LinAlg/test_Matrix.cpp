@@ -11,8 +11,9 @@
 #include <functional>
 #include <gtest/gtest.h>
 #include <initializer_list>
-#include <string>
 #include <sstream>
+#include <stdexcept>
+#include <string>
 
 using MathUtils::Matrix;
 
@@ -115,43 +116,43 @@ TEST(MatrixTest, MoveConstruct)
 }
 
 // ====================================================================================================================
-TEST(MatrixDeathTest, GetElementAssertsInvalidRowIndex)
+TEST(MatrixTest, GetInvalidRowIndexThrows)
 {
   Matrix<2,2> mat;
 
-  ASSERT_DEBUG_DEATH({
-    mat(3, 2);
-  }, "");
+  EXPECT_THROW({
+    mat(3, 0);
+  }, std::out_of_range);
 }
 
 // ====================================================================================================================
-TEST(MatrixDeathTest, GetElementAssertsInvalidColumnIndex)
+TEST(MatrixTest, GetInvalidColumnIndexThrows)
 {
   Matrix<2,2> mat;
 
-  ASSERT_DEBUG_DEATH({
-    mat(0, 3);
-  }, "");
+  EXPECT_THROW({
+    mat(0, 4);
+  }, std::out_of_range);
 }
 
 // ====================================================================================================================
-TEST(MatrixDeathTest, ModifyElementAssertsInvalidRowIndex)
+TEST(MatrixTest, ModifyInvalidRowIndexThrows)
 {
   Matrix<2,2> mat;
 
-  ASSERT_DEBUG_DEATH({
-    mat(3, 2) = 123;
-  }, "");
+  EXPECT_THROW({
+    mat(3, 0) = 123;
+  }, std::out_of_range);
 }
 
 // ====================================================================================================================
-TEST(MatrixDeathTest, ModifyElementAssertsInvalidColumnIndex)
+TEST(MatrixTest, ModifyInvalidColumnIndexThrows)
 {
   Matrix<2,2> mat;
 
-  ASSERT_DEBUG_DEATH({
-    mat(0, 3) = 123;
-  }, "");
+  EXPECT_THROW({
+    mat(0, 4) = 456;
+  }, std::out_of_range);
 }
 
 // ====================================================================================================================

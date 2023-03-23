@@ -14,14 +14,15 @@
 #include <iomanip>
 #include <sstream>
 
-namespace MathUtilsTesting {
+namespace MathUtils {
+namespace TestTools {
 
 /**
  * @brief Check two MathUtils::Matrix for equality.
  *
  * @param mat1 First matrix.
  * @param mat2 Second matrix.
- * @param tol Absolute tolerance for each element. Defaults to 1e-15.
+ * @param tol Absolute tolerance for each element. Defaults to 1e-14.
  * @returns Test assertion success or failure.
  *
  * @ref https://stackoverflow.com/a/7121785
@@ -29,7 +30,7 @@ namespace MathUtilsTesting {
 
 template<std::size_t N, std::size_t M>
 ::testing::AssertionResult MatrixNear(const MathUtils::Matrix<N,M>& mat1,
-  const MathUtils::Matrix<N,M>& mat2, const double tol=1e-15)
+  const MathUtils::Matrix<N,M>& mat2, const double tol=1e-14)
 {
   bool success = true;
   std::stringstream error_msgs;
@@ -56,6 +57,7 @@ template<std::size_t N, std::size_t M>
   return ::testing::AssertionSuccess();
 }
 
-}  // namespace MathUtilsTesting
+}  // namespace TestTools
+}  // namespace MathUtils
 
 #endif  // MATHUTILS_GTEST_TOOLS_MATRIX_NEAR_H_

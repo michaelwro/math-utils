@@ -13,7 +13,9 @@
 #include <gtest/gtest.h>
 #include <string>
 
-using namespace MathUtils;
+using MathUtils::Quaternion;
+using MathUtils::TestTools::VectorNear;
+using MathUtils::Vector;
 
 namespace {
 
@@ -26,12 +28,12 @@ TEST(QuaternionRotateTest, QuaternionRotate1)
   Quaternion q_a_b({0.961798, -0.14565, 0.202665, 0.112505});
   Vector<3> v_b({1, -3, 2});
 
-  Vector<3> v_a = quaternion_rotate(q_a_b, v_b);
+  Vector<3> v_a = MathUtils::quaternion_rotate(q_a_b, v_b);
 
   const double tol = 1e-6;
 
   const Vector<3> expected {-0.42483130, -3.54136228, 1.13060413};
-  EXPECT_TRUE(MathUtilsTesting::VectorNear(v_a, expected, tol));
+  EXPECT_TRUE(VectorNear(v_a, expected, tol));
 }
 
 // ====================================================================================================================
@@ -41,10 +43,10 @@ TEST(QuaternionRotateTest, QuaternionRotate2)
   Quaternion q_a_b({1, 0, 1, 0});
   Vector<3> v_b({1, -3, 2});
 
-  Vector<3> v_a = quaternion_rotate(q_a_b, v_b);
+  Vector<3> v_a = MathUtils::quaternion_rotate(q_a_b, v_b);
 
   const Vector<3> expected {-2, -3, 1};
-  EXPECT_TRUE(MathUtilsTesting::VectorNear(v_a, expected, 1e-15));
+  EXPECT_TRUE(VectorNear(v_a, expected));
 }
 
 

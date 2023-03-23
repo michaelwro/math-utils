@@ -4,7 +4,7 @@ set(TEST_ATTITUDE_EXEC test_attitude)
 # get sources
 file(GLOB TEST_LINALG_SRC
     ./*.cpp
-    ${MATHUTILS_TEST_DIR}/Tools/*.cpp
+    ${MATHUTILS_TEST_DIR}/TestTools/*.cpp
 )
 
 add_executable(${TEST_ATTITUDE_EXEC}

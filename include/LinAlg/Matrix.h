@@ -7,6 +7,8 @@
 #ifndef MATHUTILS_LINALG_MATRIX_H_
 #define MATHUTILS_LINALG_MATRIX_H_
 
+#include "float_equality.h"
+#include "Internal/error_msg_helpers.h"
 #include "LinAlg/Vector.h"
 
 #include <algorithm>
@@ -20,6 +22,7 @@
 #include <limits>
 #include <ostream>
 #include <sstream>
+#include <stdexcept>
 #include <type_traits>
 
 namespace MathUtils {
@@ -46,7 +49,7 @@ public:
    * @details Default constructor sets all values to zero.
    */
   Matrix()
-    :m_arr{}
+    :m_arr{0.0}
   {}
 
   /**
@@ -67,12 +70,20 @@ public:
    *
    * @tparam T Initializer list data type.
    * @param new_matrix New values to assign to the array.
+   *
+   * @exception std::length_error Invalid init. list size.
    */
   template<typename T>
   explicit Matrix(const std::initializer_list<T> new_matrix)
   {
     static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
-    assert(new_matrix.size() == ROWS * COLS);
+
+    const std::size_t input_size = new_matrix.size();
+
+    if (input_size != (ROWS * COLS))
+    {
+      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, ROWS*COLS));
+    }
 
     std::copy(new_matrix.begin(), new_matrix.end(), m_arr.begin());
   }
@@ -90,18 +101,31 @@ public:
    *
    * @tparam T Initializer list data type.
    * @param new_matrix New values to assign to the array.
+   *
+   * @exception std::length_error Invalid init. list size.
    */
   template<typename T>
   explicit Matrix(const std::initializer_list<std::initializer_list<T>> new_matrix)
   {
     static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
-    assert(new_matrix.size() == ROWS);  // check number of rows
+
+    const std::size_t input_rows = new_matrix.size();
+
+    if (input_rows != ROWS)
+    {
+      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_rows, ROWS));
+    }
 
     auto array_element = m_arr.begin();  // start at the beginning of the array
 
     for (const auto& row : new_matrix)
     {
-      assert(row.size() == COLS);  // check number of cols
+      const std::size_t input_cols = row.size();
+
+      if (input_cols != COLS)
+      {
+        throw std::length_error(Internal::invalid_init_list_length_error_msg(input_cols, COLS));
+      }
 
       for (const auto& val : row)
       {
@@ -127,7 +151,7 @@ public:
    *
    * @param other Other matrix.
    */
-  Matrix(Matrix&& other)
+  Matrix(Matrix&& other) noexcept
     :m_arr{std::move(other.m_arr)}
   {}
 
@@ -205,11 +229,16 @@ public:
    * @param row Row index.
    * @param col Column index.
    * @return Matrix element at specified index.
+   *
+   * @exception std::out_of_range Invalid matrix index.
    */
   double& operator()(const std::size_t row, std::size_t col)
   {
-    assert(row < ROWS);
-    assert(col < COLS);
+    if ((row >= ROWS) || (col >= COLS))
+    {
+      throw std::out_of_range(Internal::invalid_index_error_msg(row, col, ROWS, COLS));
+    }
+
     return m_arr[(row * COLS) + col];
   }
 
@@ -219,11 +248,16 @@ public:
    * @param row Row index.
    * @param col Column index.
    * @return Matrix element at specified index.
+   *
+   * @exception std::out_of_range Invalid matrix index.
    */
   const double& operator()(const std::size_t row, std::size_t col) const
   {
-    assert(row < ROWS);
-    assert(col < COLS);
+    if ((row >= ROWS) || (col >= COLS))
+    {
+      throw std::out_of_range(Internal::invalid_index_error_msg(row, col, ROWS, COLS));
+    }
+
     return m_arr[(row * COLS) + col];
   }
 
@@ -232,7 +266,7 @@ public:
    *
    * @return Matrix rows.
    */
-  std::size_t rows() const
+  std::size_t rows() const noexcept
   {
     return ROWS;
   }
@@ -242,7 +276,7 @@ public:
    *
    * @return Matrix columns.
    */
-  std::size_t cols() const
+  std::size_t cols() const noexcept
   {
     return COLS;
   }
@@ -276,7 +310,7 @@ public:
    * @param mat Matrix to add.
    * @return Matrix.
    */
-  Matrix& operator+=(const Matrix& mat)
+  Matrix& operator+=(const Matrix& mat) noexcept
   {
     for (std::size_t idx = 0; idx < ROWS*COLS; idx++)
     {
@@ -315,7 +349,7 @@ public:
    * @param mat Matrix to subtract.
    * @return Matrix.
    */
-  Matrix& operator-=(const Matrix& mat)
+  Matrix& operator-=(const Matrix& mat) noexcept
   {
     for (std::size_t idx = 0; idx < ROWS*COLS; idx++)
     {
@@ -356,7 +390,7 @@ public:
    * @param mat Matrix to multiply by.
    * @return Matrix product.
    */
-  Matrix& operator*=(const Matrix& mat)
+  Matrix& operator*=(const Matrix& mat) noexcept
   {
     std::array<double, ROWS*COLS> new_arr = {0};
 
@@ -385,6 +419,8 @@ public:
    * @tparam T Scalar type.
    * @param scalar Scalar to divide.
    * @return Matrix divided by scalar.
+   *
+   * @exception std::overlow_error Divisor would result in divide-by-zero.
    */
   template<typename T>
   Matrix& operator/=(const T scalar)
@@ -393,7 +429,11 @@ public:
 
     // make sure denominator is not too small
     const double scalard = static_cast<double>(scalar);
-    assert(std::abs(scalard) > std::numeric_limits<double>::epsilon());
+
+    if (float_equality(std::abs(scalard), 0.0))
+    {
+      throw std::overflow_error(Internal::divide_by_zero_error_msg());
+    }
 
     std::for_each(
       m_arr.begin(),

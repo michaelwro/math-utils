@@ -12,9 +12,9 @@
 #include <gtest/gtest.h>
 #include <string>
 
-using MathUtils::quaternion_to_dcm;
-using MathUtils::Quaternion;
 using MathUtils::Matrix;
+using MathUtils::Quaternion;
+using MathUtils::TestTools::MatrixNear;
 
 namespace {
 
@@ -25,9 +25,9 @@ TEST(QuaternionToDCMTest, UnityQuatIsIdentityMatrix)
 {
   Quaternion q;
 
-  Matrix<3,3> dcm = quaternion_to_dcm(q);
+  Matrix<3,3> dcm = MathUtils::quaternion_to_dcm(q);
 
-  EXPECT_TRUE(MathUtilsTesting::MatrixNear(dcm, Matrix<3,3>::identity()));
+  EXPECT_TRUE(MatrixNear(dcm, Matrix<3,3>::identity()));
 
 }
 

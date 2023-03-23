@@ -13,7 +13,8 @@
 #include <string>
 #include <utility>
 
-using namespace MathUtils;
+using MathUtils::Vector;
+using MathUtils::TestTools::VectorNear;
 
 namespace {
 
@@ -75,7 +76,7 @@ TEST_F(VectorMathTest, Normalize)
 {
   vec2.normalize();
 
-  EXPECT_TRUE(MathUtilsTesting::VectorNear(vec2, vec2_normalized));
+  EXPECT_TRUE(VectorNear(vec2, vec2_normalized));
 }
 
 // ====================================================================================================================
@@ -99,7 +100,7 @@ TEST_F(VectorMathTest, ScalarAddInPlace)
 {
   vec2 += scalar;
 
-  EXPECT_TRUE(MathUtilsTesting::VectorNear(vec2, vec2_plus_scalar));
+  EXPECT_TRUE(VectorNear(vec2, vec2_plus_scalar));
 }
 
 // ====================================================================================================================
@@ -107,7 +108,7 @@ TEST_F(VectorMathTest, VectorAddInPlace)
 {
   vec1 += vec2;
 
-  EXPECT_TRUE(MathUtilsTesting::VectorNear(vec1, vec1_plus_vec2));
+  EXPECT_TRUE(VectorNear(vec1, vec1_plus_vec2));
 }
 
 // ====================================================================================================================
@@ -115,7 +116,7 @@ TEST_F(VectorMathTest, ScalarSubtractInPlace)
 {
   vec2 -= scalar;
 
-  EXPECT_TRUE(MathUtilsTesting::VectorNear(vec2, vec2_minus_scalar));
+  EXPECT_TRUE(VectorNear(vec2, vec2_minus_scalar));
 }
 
 // ====================================================================================================================
@@ -123,7 +124,7 @@ TEST_F(VectorMathTest, VectorSubtractInPlace)
 {
   vec1 -= vec2;
 
-  EXPECT_TRUE(MathUtilsTesting::VectorNear(vec1, vec1_minus_vec2));
+  EXPECT_TRUE(VectorNear(vec1, vec1_minus_vec2));
 }
 
 // ====================================================================================================================
@@ -131,7 +132,7 @@ TEST_F(VectorMathTest, ScalarMultiplyInPlace)
 {
   vec2 *= scalar;
 
- EXPECT_TRUE(MathUtilsTesting::VectorNear(vec2, vec2_times_scalar));
+ EXPECT_TRUE(VectorNear(vec2, vec2_times_scalar));
 }
 
 // ====================================================================================================================
@@ -139,7 +140,7 @@ TEST_F(VectorMathTest, ScalarDivideInPlace)
 {
   vec1 /= scalar;
 
-  EXPECT_TRUE(MathUtilsTesting::VectorNear(vec1, vec1_div_scalar));
+  EXPECT_TRUE(VectorNear(vec1, vec1_div_scalar));
 }
 
 // ====================================================================================================================
@@ -157,7 +158,7 @@ TEST_F(VectorMathTest, Negate)
 
   vec1.negate();
 
-  EXPECT_TRUE(MathUtilsTesting::VectorNear(vec1, -vec1_before));
+  EXPECT_TRUE(VectorNear(vec1, -vec1_before));
 }
 
 // ====================================================================================================================
@@ -165,7 +166,7 @@ TEST_F(VectorMathTest, CrossProduct)
 {
   const Vector<3> res = cross(vec1, vec2);
 
-  EXPECT_TRUE(MathUtilsTesting::VectorNear(res, vec1_cross_vec2));
+  EXPECT_TRUE(VectorNear(res, vec1_cross_vec2));
 }
 
 // ====================================================================================================================
@@ -181,7 +182,7 @@ TEST_F(VectorMathTest, Add)
 {
   Vector<3> res = vec1 + vec2;
 
-  EXPECT_TRUE(MathUtilsTesting::VectorNear(res, vec1_plus_vec2));
+  EXPECT_TRUE(VectorNear(res, vec1_plus_vec2));
 }
 
 // ====================================================================================================================
@@ -189,7 +190,7 @@ TEST_F(VectorMathTest, Subtract)
 {
   const Vector<3> res = vec1 - vec2;
 
-  EXPECT_TRUE(MathUtilsTesting::VectorNear(res, vec1_minus_vec2));
+  EXPECT_TRUE(VectorNear(res, vec1_minus_vec2));
 }
 
 // ====================================================================================================================
@@ -197,7 +198,7 @@ TEST_F(VectorMathTest, VectorScalarMultiplication)
 {
   const Vector<3> res = vec1 * scalar;
 
-  EXPECT_TRUE(MathUtilsTesting::VectorNear(res, vec1_times_scalar));
+  EXPECT_TRUE(VectorNear(res, vec1_times_scalar));
 }
 
 // ====================================================================================================================
@@ -205,7 +206,7 @@ TEST_F(VectorMathTest, ScalarVectorMultiplication)
 {
   const Vector<3> res = scalar * vec2;
 
-  EXPECT_TRUE(MathUtilsTesting::VectorNear(res, vec2_times_scalar));
+  EXPECT_TRUE(VectorNear(res, vec2_times_scalar));
 }
 
 // ====================================================================================================================
@@ -213,7 +214,7 @@ TEST_F(VectorMathTest, Multiplication)
 {
   const Vector<3> res = vec1 * vec2;
 
-  EXPECT_TRUE(MathUtilsTesting::VectorNear(res, vec1_times_vec2));
+  EXPECT_TRUE(VectorNear(res, vec1_times_vec2));
 
   EXPECT_DOUBLE_EQ(res(0), vec1_times_vec2(0));
   EXPECT_DOUBLE_EQ(res(1), vec1_times_vec2(1));
