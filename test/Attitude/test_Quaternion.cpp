@@ -9,8 +9,9 @@
 #include <cmath>
 #include <gtest/gtest.h>
 #include <initializer_list>
-#include <string>
 #include <sstream>
+#include <stdexcept>
+#include <string>
 #include <utility>
 
 using MathUtils::Quaternion;
@@ -60,13 +61,13 @@ TEST(QuaternionTest, ListInitCtorNormalizes)
 }
 
 // ====================================================================================================================
-TEST(QuaternionDeathTest, CtorAssertsInvalidLengthInitializerList)
+TEST(QuaternionTest, CtorAssertsInvalidLengthInitializerList)
 {
   std::initializer_list<double> vals = {1, 2, 3};
 
-  ASSERT_DEBUG_DEATH({
+  EXPECT_THROW({
     Quaternion quat(vals);
-  }, "");
+  }, std::length_error);
 }
 
 // ====================================================================================================================
@@ -141,14 +142,23 @@ TEST(QuaternionTest, InitializerListAssign)
 }
 
 // ====================================================================================================================
-TEST(QuaternionDeathTest, AssignmentAssertsInvalidLengthInitializerList)
+TEST(QuaternionTest, InvalidIndexThrows)
+{
+  EXPECT_THROW({
+    Quaternion quat;
+    quat(4);
+  }, std::out_of_range);
+}
+
+// ====================================================================================================================
+TEST(QuaternionDeathTest, ThreeElementAssignmentThrows)
 {
   std::initializer_list<double> vals = {1, 2, 3};
 
-  ASSERT_DEBUG_DEATH({
+  EXPECT_THROW({
     Quaternion quat;
     quat = vals;
-  }, "");
+  }, std::length_error);
 }
 
 // ====================================================================================================================
@@ -190,6 +200,14 @@ TEST(QuaternionTest, ForcePositiveRotation)
   EXPECT_DOUBLE_EQ(quat(1), -val / magn);
   EXPECT_DOUBLE_EQ(quat(2), -val / magn);
   EXPECT_DOUBLE_EQ(quat(3), -val / magn);
+}
+
+// ====================================================================================================================
+TEST(QuaternionDeathTest, ZeroMagnitude)
+{
+  EXPECT_DEBUG_DEATH({
+    Quaternion q(0,0,0,0);
+  }, "");
 }
 
 // ====================================================================================================================

@@ -8,6 +8,9 @@
 #ifndef MATHUTILS_ATTITUDE_QUATERNION_H_
 #define MATHUTILS_ATTITUDE_QUATERNION_H_
 
+#include "float_equality.h"
+#include "Internal/error_msg_helpers.h"
+
 #include <algorithm>
 #include <array>
 #include <cassert>
@@ -16,6 +19,7 @@
 #include <initializer_list>
 #include <iomanip>
 #include <iostream>
+#include <stdexcept>
 #include <type_traits>
 
 namespace MathUtils {
@@ -60,10 +64,17 @@ public:
    * @brief Create a quaternion from an initializer list. Normalizes input.
    *
    * @param quat_vals Quaternion values.
+   *
+   * @exception std::length_error Input was not four elements.
    */
   explicit Quaternion(const std::initializer_list<double> quat_vals)
   {
-    assert(quat_vals.size() == 4);
+    const std::size_t input_size = quat_vals.size();
+
+    if (input_size != 4)
+    {
+      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 4));
+    }
 
     std::copy(quat_vals.begin(), quat_vals.end(), m_arr.begin());
 
@@ -84,7 +95,7 @@ public:
    *
    * @param other Other quaternion.
    */
-  Quaternion(Quaternion&& other)
+  Quaternion(Quaternion&& other) noexcept
     :m_arr{std::move(other.m_arr)}
   {}
 
@@ -127,10 +138,17 @@ public:
    *
    * @param quat_vals Quaternion values.
    * @return New quaternion.
+   *
+   * @exception std::length_error Input was not four elements.
    */
   Quaternion& operator=(const std::initializer_list<double> quat_vals)
   {
-    assert(quat_vals.size() == 4);
+    const std::size_t input_size = quat_vals.size();
+
+    if (input_size != 4)
+    {
+      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 4));
+    }
 
     std::copy(quat_vals.begin(), quat_vals.end(), m_arr.begin());
     this->normalize();
@@ -143,10 +161,16 @@ public:
    *
    * @param idx Quaternion index.
    * @return Quaternion element at specified index.
+   *
+   * @exception std::out_of_range Invalid index.
    */
   const double& operator()(const std::size_t idx) const
   {
-    assert(idx < 4);
+    if (idx >= 4)
+    {
+      throw std::out_of_range(Internal::invalid_index_error_msg(idx, 4));
+    }
+
     return m_arr[idx];
   }
 
@@ -163,7 +187,7 @@ public:
   /**
    * @brief Invert the quaternion.
    */
-  void invert()
+  void invert() noexcept
   {
     m_arr[1] *= -1.0;
     m_arr[2] *= -1.0;
@@ -175,7 +199,7 @@ public:
    *
    * @return Quaternion.
    */
-  void force_positive_rotation()
+  void force_positive_rotation() noexcept
   {
     if (m_arr[0] < 0.0)
     {
@@ -189,10 +213,9 @@ public:
   /**
    * @brief Normalize the quaternion to have a magnitude of 1.
    */
-  void normalize()
+  void normalize() noexcept
   {
     // compute magnitude
-    // NOTE: since elements are squared, there's no opportunity for this to accidentally be negative.
     const double magn = std::sqrt(
       (m_arr[0] * m_arr[0]) +
       (m_arr[1] * m_arr[1]) +
@@ -201,7 +224,7 @@ public:
     );
 
     // make sure its not too small before dividing
-    assert(magn > std::numeric_limits<double>::epsilon());
+    assert(!float_equality(magn, 0.0));
 
     // normalize each element
     m_arr[0] /= magn;
