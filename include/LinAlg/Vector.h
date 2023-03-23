@@ -190,15 +190,10 @@ public:
    *
    * @param idx Vector index.
    * @return Vector element at specified index.
-   * @exception std::out_of_range Index is beyond vector length.
    */
-  double& operator()(const std::size_t idx)
+  double& operator()(const std::size_t idx) noexcept
   {
-    if (idx >= N)
-    {
-      throw std::out_of_range(Internal::invalid_index_error_msg(idx, N));
-    }
-
+    assert(idx < N);
     return m_arr[idx];
   }
 
@@ -207,16 +202,9 @@ public:
    *
    * @param idx Vector index.
    * @return Vector value at specified index.
-   *
-   * @exception std::out_of_range Index is beyond vector length.
    */
-  const double& operator()(const std::size_t idx) const
+  const double& operator()(const std::size_t idx) const noexcept
   {
-    if (idx >= N)
-    {
-      throw std::out_of_range(Internal::invalid_index_error_msg(idx, N));
-    }
-
     assert(idx < N);
     return m_arr[idx];
   }
@@ -383,7 +371,7 @@ public:
    *
    * @return Vector length.
    */
-  std::size_t size() const noexcept
+  constexpr std::size_t size() const noexcept
   {
     return N;
   }

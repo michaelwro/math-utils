@@ -64,17 +64,11 @@ public:
    * @brief Create a quaternion from an initializer list. Normalizes input.
    *
    * @param quat_vals Quaternion values.
-   *
-   * @exception std::length_error Input was not four elements.
    */
   explicit Quaternion(const std::initializer_list<double> quat_vals)
   {
-    const std::size_t input_size = quat_vals.size();
-
-    if (input_size != 4)
-    {
-      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 4));
-    }
+    // assert since quaternions shall always have 4 elements.
+    assert(quat_vals.size() == 4);
 
     std::copy(quat_vals.begin(), quat_vals.end(), m_arr.begin());
 
@@ -143,12 +137,8 @@ public:
    */
   Quaternion& operator=(const std::initializer_list<double> quat_vals)
   {
-    const std::size_t input_size = quat_vals.size();
-
-    if (input_size != 4)
-    {
-      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 4));
-    }
+    // assert since quaternions shall always have 4 elements.
+    assert(quat_vals.size() == 4);
 
     std::copy(quat_vals.begin(), quat_vals.end(), m_arr.begin());
     this->normalize();
@@ -161,16 +151,10 @@ public:
    *
    * @param idx Quaternion index.
    * @return Quaternion element at specified index.
-   *
-   * @exception std::out_of_range Invalid index.
    */
-  const double& operator()(const std::size_t idx) const
+  const double& operator()(const std::size_t idx) const noexcept
   {
-    if (idx >= 4)
-    {
-      throw std::out_of_range(Internal::invalid_index_error_msg(idx, 4));
-    }
-
+    assert(idx < 4);
     return m_arr[idx];
   }
 
@@ -223,7 +207,12 @@ public:
       (m_arr[3] * m_arr[3])
     );
 
-    // make sure its not too small before dividing
+    /**
+     * Make sure its not too small before dividing.
+     * Assert instead of throwing, since it would never make logical sense that a quaternion would have zero
+     * magnitude. Also, throwing assumes that there'd be a corrective action for this scenario, which there
+     * really isn't.
+     */
     assert(!float_equality(magn, 0.0));
 
     // normalize each element

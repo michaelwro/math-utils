@@ -61,13 +61,13 @@ TEST(QuaternionTest, ListInitCtorNormalizes)
 }
 
 // ====================================================================================================================
-TEST(QuaternionTest, CtorAssertsInvalidLengthInitializerList)
+TEST(QuaternionDeathTest, CtorAssertsInvalidLengthInitializerList)
 {
   std::initializer_list<double> vals = {1, 2, 3};
 
-  EXPECT_THROW({
+  EXPECT_DEBUG_DEATH({
     Quaternion quat(vals);
-  }, std::length_error);
+  }, "");
 }
 
 // ====================================================================================================================
@@ -142,23 +142,23 @@ TEST(QuaternionTest, InitializerListAssign)
 }
 
 // ====================================================================================================================
-TEST(QuaternionTest, InvalidIndexThrows)
+TEST(QuaternionDeathTest, InvalidIndexAsserts)
 {
-  EXPECT_THROW({
+  EXPECT_DEBUG_DEATH({
     Quaternion quat;
     quat(4);
-  }, std::out_of_range);
+  }, "");
 }
 
 // ====================================================================================================================
-TEST(QuaternionDeathTest, ThreeElementAssignmentThrows)
+TEST(QuaternionDeathTest, ThreeElementAssignmentAsserts)
 {
   std::initializer_list<double> vals = {1, 2, 3};
 
-  EXPECT_THROW({
+  EXPECT_DEBUG_DEATH({
     Quaternion quat;
     quat = vals;
-  }, std::length_error);
+  }, "");
 }
 
 // ====================================================================================================================
@@ -203,7 +203,7 @@ TEST(QuaternionTest, ForcePositiveRotation)
 }
 
 // ====================================================================================================================
-TEST(QuaternionDeathTest, ZeroMagnitude)
+TEST(QuaternionDeathTest, ZeroMagnitudeAsserts)
 {
   EXPECT_DEBUG_DEATH({
     Quaternion q(0,0,0,0);

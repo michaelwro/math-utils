@@ -138,13 +138,13 @@ TEST(VectorTest, ParenthesisAccessorModifiesValues)
 }
 
 // ====================================================================================================================
-TEST(VectorTest, ParenthesisAccessorThrowsInvalidIndex)
+TEST(VectorDeathTest, ParenthesisAccessorAssertsInvalidIndex)
 {
   Vector<3> vec {1, 2, 3};
 
-  EXPECT_THROW({
+  EXPECT_DEBUG_DEATH({
     vec(4);
-  }, std::out_of_range);
+  }, "");
 }
 
 // ====================================================================================================================

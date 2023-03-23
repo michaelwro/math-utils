@@ -116,43 +116,43 @@ TEST(MatrixTest, MoveConstruct)
 }
 
 // ====================================================================================================================
-TEST(MatrixTest, GetInvalidRowIndexThrows)
+TEST(MatrixDeathTest, GetInvalidRowIndexAsserts)
 {
   Matrix<2,2> mat;
 
-  EXPECT_THROW({
+  EXPECT_DEBUG_DEATH({
     mat(3, 0);
-  }, std::out_of_range);
+  }, "");
 }
 
 // ====================================================================================================================
-TEST(MatrixTest, GetInvalidColumnIndexThrows)
+TEST(MatrixDeathTest, GetInvalidColumnIndexAsserts)
 {
   Matrix<2,2> mat;
 
-  EXPECT_THROW({
+  EXPECT_DEBUG_DEATH({
     mat(0, 4);
-  }, std::out_of_range);
+  }, "");
 }
 
 // ====================================================================================================================
-TEST(MatrixTest, ModifyInvalidRowIndexThrows)
+TEST(MatrixDeathTest, ModifyInvalidRowIndexAsserts)
 {
   Matrix<2,2> mat;
 
-  EXPECT_THROW({
+  EXPECT_DEBUG_DEATH({
     mat(3, 0) = 123;
-  }, std::out_of_range);
+  }, "");
 }
 
 // ====================================================================================================================
-TEST(MatrixTest, ModifyInvalidColumnIndexThrows)
+TEST(MatrixDeathTest, ModifyInvalidColumnIndexAsserts)
 {
   Matrix<2,2> mat;
 
-  EXPECT_THROW({
+  EXPECT_DEBUG_DEATH({
     mat(0, 4) = 456;
-  }, std::out_of_range);
+  }, "");
 }
 
 // ====================================================================================================================

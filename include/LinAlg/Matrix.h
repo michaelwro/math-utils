@@ -230,15 +230,11 @@ public:
    * @param col Column index.
    * @return Matrix element at specified index.
    *
-   * @exception std::out_of_range Invalid matrix index.
    */
-  double& operator()(const std::size_t row, std::size_t col)
+  double& operator()(const std::size_t row, std::size_t col) noexcept
   {
-    if ((row >= ROWS) || (col >= COLS))
-    {
-      throw std::out_of_range(Internal::invalid_index_error_msg(row, col, ROWS, COLS));
-    }
-
+    assert(row < ROWS);
+    assert(col < COLS);
     return m_arr[(row * COLS) + col];
   }
 
@@ -248,16 +244,11 @@ public:
    * @param row Row index.
    * @param col Column index.
    * @return Matrix element at specified index.
-   *
-   * @exception std::out_of_range Invalid matrix index.
    */
-  const double& operator()(const std::size_t row, std::size_t col) const
+  const double& operator()(const std::size_t row, std::size_t col) const noexcept
   {
-    if ((row >= ROWS) || (col >= COLS))
-    {
-      throw std::out_of_range(Internal::invalid_index_error_msg(row, col, ROWS, COLS));
-    }
-
+    assert(row < ROWS);
+    assert(col < COLS);
     return m_arr[(row * COLS) + col];
   }
 
@@ -266,7 +257,7 @@ public:
    *
    * @return Matrix rows.
    */
-  std::size_t rows() const noexcept
+  constexpr std::size_t rows() const noexcept
   {
     return ROWS;
   }
@@ -276,7 +267,7 @@ public:
    *
    * @return Matrix columns.
    */
-  std::size_t cols() const noexcept
+  constexpr std::size_t cols() const noexcept
   {
     return COLS;
   }
