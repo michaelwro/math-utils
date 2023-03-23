@@ -179,7 +179,6 @@ TEST_F(MatrixMathTest, Multiply3x3)
 // ====================================================================================================================
 TEST_F(MatrixMathTest, Multiply3x2And2x2)
 {
-
   const Matrix<3,2> mat1 {{1, 2}, {3, 4}, {5, 6}};
   const Matrix<2,2> mat2 {{4, 3}, {2, 1}};
 
@@ -239,6 +238,70 @@ TEST_F(MatrixMathTest, NonSquareMatrixVectorMultiplication)
   Vector<2> res = mat * vec;
 
   EXPECT_TRUE(VectorNear(expected, res));
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, Add2x2)
+{
+  const Matrix<2,2> m1 {{1, 2}, {3, 4}};
+  const Matrix<2,2> m2 {{5, 6}, {7, 8}};
+
+  const Matrix<2,2> result = m1 + m2;
+  const Matrix<2,2> expected {{6, 8}, {10, 12}};
+
+  EXPECT_TRUE(MatrixNear(expected, result));
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, Add3x3)
+{
+  const Matrix<3,3> result = mat1 + mat2;
+
+  EXPECT_TRUE(MatrixNear(mat1_plus_mat2, result));
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, Add3x2)
+{
+  const Matrix<3,2> m1 {{1, 2}, {3, 4}, {5, 6}};
+  const Matrix<3,2> m2 {{1, 2}, {3, 4}, {5, 6}};
+
+  const Matrix<3,2> result = m1 + m2;
+  const Matrix<3,2> expected {{2, 4}, {6, 8}, {10, 12}};
+
+  EXPECT_TRUE(MatrixNear(expected, result));
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, Subtract2x2)
+{
+  const Matrix<2,2> m1 {{1, 2}, {3, 4}};
+  const Matrix<2,2> m2 {{5, 6}, {7, 8}};
+
+  const Matrix<2,2> result = m1 - m2;
+  const Matrix<2,2> expected {{-4, -4}, {-4, -4}};
+
+  EXPECT_TRUE(MatrixNear(expected, result));
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, Subtract3x3)
+{
+  const Matrix<3,3> result = mat1 - mat2;
+
+  EXPECT_TRUE(MatrixNear(mat1_minus_mat2, result));
+}
+
+// ====================================================================================================================
+TEST_F(MatrixMathTest, Subtract3x2)
+{
+  const Matrix<3,2> m1 {{1, 2}, {3, 4}, {5, 6}};
+  const Matrix<3,2> m2 {{1, 3}, {5, 7}, {9, 11}};
+
+  const Matrix<3,2> result = m1 - m2;
+  const Matrix<3,2> expected {{0, -1}, {-2, -3}, {-4, -5}};
+
+  EXPECT_TRUE(MatrixNear(expected, result));
 }
 
 // ====================================================================================================================

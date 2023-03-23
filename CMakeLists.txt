@@ -15,10 +15,21 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules/)
 set(MATHUTILS_COMPILE_DEFINITIONS_DEBUG "")
 set(MATHUTILS_COMPILE_DEFINITIONS_RELEASE "NDEBUG")
 
-# set(COVERAGE_COMPILE_OPTIONS "-fprofile-arcs;-ftest-coverage;--coverage")
+# include coverage module
+# if(CMAKE_COMPILER_IS_GNUCXX)
+#     include(CodeCoverage)
+#     set(CODE_COVERAGE_VERBOSE true)
+
+#     set(COVERAGE_EXCLUDES
+#         "/usr/*"
+#         "*/gtest/*"
+#         "${PROJECT_SOURCE_DIR}/include/Internal/*"
+#         "${PROJECT_SOURCE_DIR}/test/TestTools/*"
+#     )
+# endif()
 
 set(MATHUTILS_COMPILE_OPTIONS "-Wall;-Wextra;-Wpedantic;-Wshadow;-Wconversion;-Wdouble-promotion;-Wfloat-equal;-Wundef;-Wformat=2;-fno-common")
-set(MATHUTILS_COMPILE_OPTIONS_DEBUG "${MATHUTILS_COMPILE_OPTIONS};${COVERAGE_COMPILE_OPTIONS};-g3;-Werror;-O0;-Wduplicated-cond;-Wcast-align;-Wcast-qual")
+set(MATHUTILS_COMPILE_OPTIONS_DEBUG "${MATHUTILS_COMPILE_OPTIONS};-g3;-Werror;-O0;-Wduplicated-cond;-Wcast-align;-Wcast-qual;--coverage")
 set(MATHUTILS_COMPILE_OPTIONS_RELEASE "${MATHUTILS_COMPILE_OPTIONS};-O1")
 
 # library name
@@ -47,6 +58,9 @@ file(GLOB ATTITUDE_SRC
 file(GLOB LINALG_SRC
     ${SRC_DIR}/${LINALG_DIR}/*.cpp
 )
+
+# # link gcov for debug
+# link_libraries("$<$<CONFIG:DEBUG>:gcov>")
 
 # BUILD LIBRARY
 add_library(${MATHUTILS_LIB} SHARED

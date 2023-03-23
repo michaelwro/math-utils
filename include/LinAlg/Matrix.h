@@ -189,39 +189,39 @@ public:
     return *this;
   }
 
-  /**
-   * @brief Lvalue negate unary operator.
-   *
-   * @return Negated matrix.
-   *
-   * @ref https://stackoverflow.com/a/37737947
-   */
-  Matrix operator-() const &
-  {
-    Matrix mat;
-    mat.m_arr = this->m_arr;
+  // /**
+  //  * @brief Lvalue negate unary operator.
+  //  *
+  //  * @return Negated matrix.
+  //  *
+  //  * @ref https://stackoverflow.com/a/37737947
+  //  */
+  // Matrix operator-() const &
+  // {
+  //   Matrix mat;
+  //   mat.m_arr = this->m_arr;
 
-    std::for_each(mat.m_arr.begin(), mat.m_arr.end(), [](double& val){val *= -1.0;});
+  //   std::for_each(mat.m_arr.begin(), mat.m_arr.end(), [](double& val){val *= -1.0;});
 
-    return mat;
-  }
+  //   return mat;
+  // }
 
-  /**
-   * @brief Rvalue negate unary operator.
-   *
-   * @return Negated matrix.
-   *
-   * @ref https://stackoverflow.com/a/37737947
-   */
-  Matrix operator-() const &&
-  {
-    Matrix mat;
-    mat.m_arr = this->m_arr;
+  // /**
+  //  * @brief Rvalue negate unary operator.
+  //  *
+  //  * @return Negated matrix.
+  //  *
+  //  * @ref https://stackoverflow.com/a/37737947
+  //  */
+  // Matrix operator-() const &&
+  // {
+  //   Matrix mat;
+  //   mat.m_arr = this->m_arr;
 
-    std::for_each(mat.m_arr.begin(), mat.m_arr.end(), [](double& val){val *= -1.0;});
+  //   std::for_each(mat.m_arr.begin(), mat.m_arr.end(), [](double& val){val *= -1.0;});
 
-    return mat;
-  }
+  //   return mat;
+  // }
 
   /**
    * @brief Access matrix element.
@@ -586,6 +586,151 @@ Matrix<N,M> operator*(const Matrix<N,M>& mat, const T scalar)
 // ====================================================================================================================
 // MATRIX <-> MATRIX OPERATOR OVERLOADS
 // ====================================================================================================================
+
+/**
+ * @brief 2x2 matrix-matrix addition A + B.
+ *
+ * @details Expanded multiplication operations with SymPy.
+ *
+ * @code {.py}
+ * a = sympy.MatrixSymbol('a', 2, 2)
+ * b = sympy.MatrixSymbol('b', 2, 2)
+ * numpy.add(a, b)
+ * @endcode
+ *
+ * @param a Matrix A.
+ * @param b Matrix B.
+ * @return Matrix sum.
+ */
+inline Matrix<2,2> operator+(const Matrix<2,2>& a, const Matrix<2,2>& b)
+{
+  return Matrix<2,2>({
+    {a(0,0) + b(0,0), a(0,1) + b(0,1)},
+    {a(1,0) + b(1,0), a(1,1) + b(1,1)}
+  });
+}
+
+/**
+ * @brief 3x3 matrix-matrix addition A + B.
+ *
+ * @details Expanded multiplication operations with SymPy.
+ *
+ * @code {.py}
+ * a = sympy.MatrixSymbol('a', 3, 3)
+ * b = sympy.MatrixSymbol('b', 3, 3)
+ * numpy.add(a, b)
+ * @endcode
+ *
+ * @param a Matrix A.
+ * @param b Matrix B.
+ * @return Matrix sum.
+ */
+inline Matrix<3,3> operator+(const Matrix<3,3>& a, const Matrix<3,3>& b)
+{
+  return Matrix<3,3>({
+    {a(0,0) + b(0,0), a(0,1) + b(0,1), a(0,2) + b(0,2)},
+    {a(1,0) + b(1,0), a(1,1) + b(1,1), a(1,2) + b(1,2)},
+    {a(2,0) + b(2,0), a(2,1) + b(2,1), a(2,2) + b(2,2)}
+  });
+}
+
+/**
+ * @brief Matrix-matrix addition A + B.
+ *
+ * @tparam N Matrix rows.
+ * @tparam M Matrix columns.
+ * @param a Matrix A.
+ * @param b Matrix B.
+ * @return Matrix-matrix sum.
+ */
+template<std::size_t N, std::size_t M>
+Matrix<N,M> operator+(const Matrix<N,M>& a, const Matrix<N,M>& b)
+{
+  Matrix<N,M> c(a);
+
+  for (std::size_t ii = 0; ii < N; ii++)
+  {
+    for (std::size_t jj = 0; jj < M; jj++)
+    {
+      c(ii, jj) += b(ii, jj);
+    }
+  }
+
+  return c;
+}
+
+/**
+ * @brief 2x2 matrix-matrix subtraction A - B.
+ *
+ * @details Expanded multiplication operations with SymPy.
+ *
+ * @code {.py}
+ * a = sympy.MatrixSymbol('a', 2, 2)
+ * b = sympy.MatrixSymbol('b', 2, 2)
+ * numpy.subtract(a, b)
+ * @endcode
+ *
+ * @param a Matrix A.
+ * @param b Matrix B.
+ * @return Matrix difference.
+ */
+inline Matrix<2,2> operator-(const Matrix<2,2>& a, const Matrix<2,2>& b)
+{
+  return Matrix<2,2>({
+    {a(0,0) - b(0,0), a(0,1) - b(0,1)},
+    {a(1,0) - b(1,0), a(1,1) - b(1,1)}
+  });
+}
+
+/**
+ * @brief 3x3 matrix-matrix subtraction A - B.
+ *
+ * @details Expanded multiplication operations with SymPy.
+ *
+ * @code {.py}
+ * a = sympy.MatrixSymbol('a', 3, 3)
+ * b = sympy.MatrixSymbol('b', 3, 3)
+ * numpy.subtract(a, b)
+ * @endcode
+ *
+ * @param a Matrix A.
+ * @param b Matrix B.
+ * @return Matrix difference.
+ */
+inline Matrix<3,3> operator-(const Matrix<3,3>& a, const Matrix<3,3>& b)
+{
+  return Matrix<3,3>({
+    {a(0,0) - b(0,0), a(0,1) - b(0,1), a(0,2) - b(0,2)},
+    {a(1,0) - b(1,0), a(1,1) - b(1,1), a(1,2) - b(1,2)},
+    {a(2,0) - b(2,0), a(2,1) - b(2,1), a(2,2) - b(2,2)}
+  });
+}
+
+/**
+ * @brief Matrix-matrix subtraction A - B.
+ *
+ * @tparam N Matrix rows.
+ * @tparam M Matrix columns.
+ * @param a Matrix A.
+ * @param b Matrix B.
+ * @return Matrix-matrix difference.
+ */
+template<std::size_t N, std::size_t M>
+Matrix<N,M> operator-(const Matrix<N,M>& a, const Matrix<N,M>& b)
+{
+  Matrix<N,M> c(a);
+
+  for (std::size_t ii = 0; ii < N; ii++)
+  {
+    for (std::size_t jj = 0; jj < M; jj++)
+    {
+      c(ii, jj) -= b(ii, jj);
+    }
+  }
+
+  return c;
+}
+
 /**
  * @brief 2x2 matrix-matrix multiplication A * B.
  *

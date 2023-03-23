@@ -20,26 +20,30 @@ link_directories(
 set(MATHUTILS_TEST_DIR ${CMAKE_SOURCE_DIR}/test/)
 
 # Make tests in this folder
-set(MATHUTILS_TEST_EXEC test_math_utils)
+set(TEST_MATHUTILS_EXEC test_math_utils)
 file(GLOB MATHUTILS_TEST_SRC
     ./*.cpp
     ${MATHUTILS_TEST_DIR}/TestTools/*.cpp
 )
 
-add_executable(${MATHUTILS_TEST_EXEC}
+add_executable(${TEST_MATHUTILS_EXEC}
     ${MATHUTILS_TEST_SRC}
 )
 
-target_include_directories(${MATHUTILS_TEST_EXEC} PUBLIC
+target_include_directories(${TEST_MATHUTILS_EXEC} PUBLIC
     ${CMAKE_SOURCE_DIR}/${INCL_DIR}
     ${MATHUTILS_TEST_DIR}
 )
 
-target_link_libraries(${MATHUTILS_TEST_EXEC} PUBLIC
+target_link_libraries(${TEST_MATHUTILS_EXEC} PUBLIC
     ${MATHUTILS_LIB}
     GTest::gtest_main
 )
 
+# ADD TESTS ===========================================================================================================
+add_test(NAME ${TEST_MATHUTILS_EXEC}
+    COMMAND ${TEST_MATHUTILS_EXEC}
+)
 
 # MAKE OTHER TESTS ====================================================================================================
 add_subdirectory("./LinAlg/")
