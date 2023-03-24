@@ -11,10 +11,6 @@ add_executable(${TEST_LINALG_EXEC}
     ${TEST_LINALG_SRC}
 )
 
-# target_compile_options(${TEST_LINALG_EXEC} PRIVATE
-#     ${MATHUTILS_TEST_COMPILE_OPTIONS}
-# )
-
 target_include_directories(${TEST_LINALG_EXEC} PUBLIC
     ${CMAKE_SOURCE_DIR}/${INCL_DIR}
     ${MATHUTILS_TEST_DIR}
@@ -23,8 +19,8 @@ target_include_directories(${TEST_LINALG_EXEC} PUBLIC
 target_link_libraries(${TEST_LINALG_EXEC} PUBLIC
     ${MATHUTILS_LIB}
     GTest::gtest_main
+    "$<$<CONFIG:DEBUG>:--coverage>"
 )
-
 
 # ADD TESTS ===========================================================================================================
 add_test(NAME ${TEST_LINALG_EXEC}

@@ -9,6 +9,7 @@
                 "cschlosser.doxdocgen",
                 "davidanson.vscode-markdownlint",
                 "eamodio.gitlens",
+                "gruntfuggly.todo-tree",
                 "jeff-hykin.better-cpp-syntax",
                 "matepek.vscode-catch2-test-adapter",
                 "ms-azuretools.vscode-docker",

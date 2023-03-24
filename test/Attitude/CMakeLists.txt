@@ -11,10 +11,6 @@ add_executable(${TEST_ATTITUDE_EXEC}
     ${TEST_LINALG_SRC}
 )
 
-# target_compile_options(${TEST_ATTITUDE_EXEC} PRIVATE
-#     ${MATHUTILS_TEST_COMPILE_OPTIONS}
-# )
-
 target_include_directories(${TEST_ATTITUDE_EXEC} PUBLIC
     ${CMAKE_SOURCE_DIR}/${INCL_DIR}
     ${MATHUTILS_TEST_DIR}
@@ -23,6 +19,7 @@ target_include_directories(${TEST_ATTITUDE_EXEC} PUBLIC
 target_link_libraries(${TEST_ATTITUDE_EXEC} PUBLIC
     ${MATHUTILS_LIB}
     GTest::gtest_main
+    "$<$<CONFIG:DEBUG>:--coverage>"
 )
 
 

@@ -16,21 +16,23 @@ set(MATHUTILS_COMPILE_DEFINITIONS_DEBUG "")
 set(MATHUTILS_COMPILE_DEFINITIONS_RELEASE "NDEBUG")
 
 # include coverage module
-# if(CMAKE_COMPILER_IS_GNUCXX)
-#     include(CodeCoverage)
-#     set(CODE_COVERAGE_VERBOSE true)
+# include(CodeCoverage)
+# set(CODE_COVERAGE_VERBOSE true)
+# set(COVERAGE_EXCLUDES
+    # "/usr/*"
+    # # "*/gtest/*"
+    # "${PROJECT_SOURCE_DIR}/include/Internal/*"
+    # "${PROJECT_SOURCE_DIR}/test/TestTools/*"
+# )
 
-#     set(COVERAGE_EXCLUDES
-#         "/usr/*"
-#         "*/gtest/*"
-#         "${PROJECT_SOURCE_DIR}/include/Internal/*"
-#         "${PROJECT_SOURCE_DIR}/test/TestTools/*"
-#     )
-# endif()
+# set(CTEST_CUSTOM_COVERAGE_EXCLUDE ${CTEST_CUSTOM_COVERAGE_EXCLUDE} "gtest")
+# "usr"
+# "include/Internal/"
+# "test/TestTools/"
 
-# TODO: add --coverage
+
 set(MATHUTILS_COMPILE_OPTIONS "-Wall;-Wextra;-Wpedantic;-Wshadow;-Wconversion;-Wdouble-promotion;-Wfloat-equal;-Wundef;-Wformat=2;-fno-common")
-set(MATHUTILS_COMPILE_OPTIONS_DEBUG "${MATHUTILS_COMPILE_OPTIONS};-g3;-Werror;-O0;-Wduplicated-cond;-Wcast-align;-Wcast-qual")
+set(MATHUTILS_COMPILE_OPTIONS_DEBUG "${MATHUTILS_COMPILE_OPTIONS};-g3;-Werror;-O0;-Wduplicated-cond;-Wcast-align;-Wcast-qual;--coverage")
 set(MATHUTILS_COMPILE_OPTIONS_RELEASE "${MATHUTILS_COMPILE_OPTIONS};-O1")
 
 # library name
@@ -60,9 +62,6 @@ file(GLOB LINALG_SRC
     ${SRC_DIR}/${LINALG_DIR}/*.cpp
 )
 
-# # link gcov for debug
-# link_libraries("$<$<CONFIG:DEBUG>:gcov>")
-
 # BUILD LIBRARY
 add_library(${MATHUTILS_LIB} SHARED
     ${ATTITUDE_SRC}
@@ -78,11 +77,12 @@ target_compile_options(${MATHUTILS_LIB} PRIVATE "$<$<CONFIG:RELEASE>:${MATHUTILS
 
 target_include_directories(${MATHUTILS_LIB} PUBLIC
     ${INCL_DIR}
-    # ${INCL_DIR}/${LINALG_DIR}
 )
-# include_directories(${MATHUTILS_LIB} PUBLIC
-#     ${INCL_DIR}
-# )
+
+# link gcov for debug
+target_link_libraries(${MATHUTILS_LIB} PRIVATE
+    "$<$<CONFIG:DEBUG>:--coverage>"
+)
 
 set_target_properties(${MATHUTILS_LIB} PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY ${MATHUTILS_LIB_OUTPUT_DIR}
