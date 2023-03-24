@@ -20,6 +20,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: 5monkeys/cobertura-action@v13
+        with:
+          path: "*/Coverage.xml"
+          minimum_coverage: 50
+          fail_below_threshold: false
       - name: Install deps
         run: |
           sudo apt update
@@ -36,4 +41,4 @@ jobs:
       - name: Run tests
         working-directory: build
         run: |
-          ctest --output-on-failure
+          ctest --output-on-failure -T Test -T Coverage
