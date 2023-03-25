@@ -1,8 +1,8 @@
 /**
  * @file conversions.h
  * @author Michael Wrona
- * @date 2023-03-04
- * @brief Unit conversion constants.
+ * @date 2023-03-25
+ * @brief Unit conversions.
  *
  * @ref https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
  */
@@ -14,43 +14,281 @@
 
 namespace MathUtils { namespace Conversions {
 
-// ANGLE
-static constexpr double RAD_TO_DEG = 180.0 / Constants::PI;  ///< Radians to degrees.
-static constexpr double DEG_TO_RAD = Constants::PI / 180.0;  ///< Degrees to radians.
-static constexpr double RPM_TO_RPS = Constants::PI / 30.0;  ///< Rotations per minute to radians per second.
-static constexpr double RPS_TO_RPM = 30.0 / Constants::PI;  ///< Rotations per minute to radians per second.
+namespace Internal {
 
-// DISTANCE
-static constexpr double FT_TO_M = 0.3048;  ///< Feet to meters.
-static constexpr double M_TO_FT = 1.0 / FT_TO_M;  ///< Meters to feet.
-static constexpr double IN_TO_CM = 2.54;  ///< Inches to centimeters.
-static constexpr double CM_TO_IN = 1.0 / IN_TO_CM;  ///< Centimeters to inches.
-static constexpr double IN_TO_MM = 254.0;  ///< Inches to millimeters.
-static constexpr double MM_TO_IN = 1.0 / IN_TO_MM;  ///< Millimeters to inches.
-static constexpr double NMI_TO_M = 1852.0;  ///< Nautical miles to meters.
-static constexpr double M_TO_NMI = 1.0 / NMI_TO_M;  ///< Meters to nautical miles.
-static constexpr double MI_TO_M = 1.609344e3;  ///< Statute miles to meters.
-static constexpr double M_TO_MI = 1.609344e-3;  ///< Meters to statute miles.
-static constexpr double MI_TO_KM = 1.609344;  ///< Statute miles to kilometers.
-static constexpr double KM_TO_MI = 1.0 / 1.609344;  ///< Kilometers to statute miles.
+constexpr double NIST_FT_TO_M {0.3048};
+constexpr double NIST_IN_TO_CM {2.54};
+constexpr double NIST_IN_TO_MM {254.0};
+constexpr double NIST_NMI_TO_M {1852.0};
+constexpr double NIST_MI_TO_M {1.609344e3};
+constexpr double NIST_MI_TO_KM {1.609344};
+constexpr double NIST_KTS_TO_MPS {NIST_NMI_TO_M / 3600.0};
+constexpr double NIST_LB_TO_N {4.448222};
+constexpr double NIST_BAR_TO_PA {1e5};
+constexpr double NIST_BAR_TO_HPA {1e3};
+constexpr double NIST_PA_TO_INHG_32F {3.386389e-3};
+constexpr double NIST_ATM_TO_PA {101325.0};
 
-// SPEED
-static constexpr double KNT_TO_MPS = 1852.0 / 3600.0;  ///< Knots to meters per second.
-static constexpr double MPS_TO_KNT = 1.0 / KNT_TO_MPS;  ///< Meters per second to knots.
+}  // namespace Internal
 
-// MASS, WEIGHT, FORCE
-static constexpr double LB_TO_N = 4.448222;  ///< Pound-force (lbf) to newtons.
-static constexpr double N_TO_LB = 1.0 / LB_TO_N;  ///< Newtons to pound-force (lbf)
+/**
+ * @brief Radians to degrees.
+ */
+inline double rad2deg(const double rad)
+{
+  return rad * (180.0 / Constants::PI);
+}
+
+/**
+ * @brief Radians to degrees.
+ */
+inline double deg2rad(const double deg)
+{
+  return deg * (Constants::PI / 180.0);
+}
+
+/**
+ * @brief Rotations per minute to radians per second.
+ */
+inline double rmp2rps(const double rpm)
+{
+  return rpm * (Constants::PI / 30.0);
+}
+
+/**
+ * @brief Radians per second to rotations per minute.
+ */
+inline double rps2rpm(const double rps)
+{
+  return rps * (30.0 / Constants::PI);
+}
+
+/**
+ * @brief Feet to meters.
+ */
+inline double ft2m(const double ft)
+{
+  return ft * Internal::NIST_FT_TO_M;
+}
+
+/**
+ * @brief Meters to feet.
+ */
+inline double m2ft(const double m)
+{
+  return m / Internal::NIST_FT_TO_M;
+}
+
+/**
+ * @brief Inches to centimeters.
+ */
+inline double in2cm(const double in)
+{
+  return in * Internal::NIST_IN_TO_CM;
+}
+
+/**
+ * @brief Centimeters to inches.
+ */
+inline double cm2in(const double cm)
+{
+  return cm / Internal::NIST_IN_TO_CM;
+}
+
+/**
+ * @brief Inches to millimeters.
+ */
+inline double in2mm(const double in)
+{
+  return in * Internal::NIST_IN_TO_MM;
+}
+
+/**
+ * @brief Millimeters to inches.
+ */
+inline double mm2in(const double mm)
+{
+  return mm / Internal::NIST_IN_TO_MM;
+}
+
+/**
+ * @brief Nautical miles to meters.
+ */
+inline double nmi2m(const double nmi)
+{
+  return nmi * Internal::NIST_NMI_TO_M;
+}
+
+/**
+ * @brief Meters to nautical miles.
+ */
+inline double m2nmi(const double m)
+{
+  return m / Internal::NIST_NMI_TO_M;
+}
+
+/**
+ * @brief Statute miles to meters.
+ */
+inline double mi2m(const double mi)
+{
+  return mi * Internal::NIST_MI_TO_M;
+}
+
+/**
+ * @brief Meters to statute miles.
+ */
+inline double m2mi(const double m)
+{
+  return m / Internal::NIST_MI_TO_M;
+}
+
+/**
+ * @brief Statute miles to kilometers.
+ */
+inline double mi2km(const double mi)
+{
+  return mi * Internal::NIST_MI_TO_KM;
+}
+
+/**
+ * @brief Kilometers to statute miles.
+ */
+inline double km2mi(const double km)
+{
+  return km / Internal::NIST_MI_TO_KM;
+}
+
+/**
+ * @brief Knots to meters per second.
+ */
+inline double kts2mps(const double kts)
+{
+  return kts * Internal::NIST_KTS_TO_MPS;
+}
+
+/**
+ * @brief Meters per second to knots.
+ */
+inline double mps2kts(const double mps)
+{
+  return mps / Internal::NIST_KTS_TO_MPS;
+}
+
+/**
+ * @brief Pound-force (lbf) to Newtons.
+ */
+inline double lb2n(const double lb)
+{
+  return lb * Internal::NIST_LB_TO_N;
+}
+
+/**
+ * @brief Newtons to pound-force (lbf).
+ */
+inline double n2lb(const double n)
+{
+  return n / Internal::NIST_LB_TO_N;
+}
 
 // PRESSURE
-static constexpr double BAR_TO_PA = 1e5;  ///< Bar to pascals.
-static constexpr double PA_TO_BAR = 1e-5;  ///< Pascals to bar.
-static constexpr double BAR_TO_HPA = 1e3;  ///< Bar to hectopascals.
-static constexpr double HPA_TO_BAR = 1e-3;  ///< Bar to hectopascals.
-static constexpr double PA_TO_INHG = 3.386389e-3;  ///< Pascals to inches of mercury (~32degF).
-static constexpr double INHG_TO_PA = 3.386389e3;  ///< Inches of mercury to pascals (~32degF).
-static constexpr double ATM_TO_PA = 101325.0;  ///< Atmospheres to pascals.
-static constexpr double PA_TO_ATM = 1.0 / ATM_TO_PA;  ///< Atmospheres to pascals.
+// static constexpr double BAR_TO_PA = 1e5;  ///< Bar to pascals.
+
+/**
+ * @brief Bar to Pascals.
+ */
+inline double bar2pa(const double bar)
+{
+  return bar * Internal::NIST_BAR_TO_PA;
+}
+
+/**
+ * @brief Pascals to bar.
+ */
+inline double pa2bar(const double pa)
+{
+  return pa / Internal::NIST_BAR_TO_PA;
+}
+
+/**
+ * @brief Bar to hectopascals.
+ */
+inline double bar2hpa(const double bar)
+{
+  return bar * Internal::NIST_BAR_TO_HPA;
+}
+
+/**
+ * @brief Hectopascals to bar.
+ */
+inline double hpa2bar(const double hpa)
+{
+  return hpa / Internal::NIST_BAR_TO_HPA;
+}
+
+/**
+ * @brief Pascals to inches of mercury (~32 degF).
+ */
+inline double pa2inhg(const double pa)
+{
+  return pa * Internal::NIST_PA_TO_INHG_32F;
+}
+
+/**
+ * @brief Inches of mercury to Pascals (~32 degF).
+ */
+inline double inhg2pa(const double inhg)
+{
+  return inhg / Internal::NIST_PA_TO_INHG_32F;
+}
+
+/**
+ * @brief Atmospheres to Pascals.
+ */
+inline double atm2pa(const double atm)
+{
+  return atm * Internal::NIST_ATM_TO_PA;
+}
+
+/**
+ * @brief Pascals to atmospheres.
+ */
+inline double pa2atm(const double pa)
+{
+  return pa / Internal::NIST_ATM_TO_PA;
+}
+
+/**
+ * @brief Degrees fahrenheit to celsius.
+ */
+inline double f2c(const double f)
+{
+  return (5.0 * (f - 32.0)) / 9.0;
+}
+
+/**
+ * @brief Degrees celsius to Fahrenheit.
+ */
+inline double c2f(const double c)
+{
+  return 32.0 + ((9.0 * c) / 5.0);
+}
+
+/**
+ * @brief Degrees celsius to Kelvin.
+ */
+inline double c2k(const double c)
+{
+  return c + 273.15;
+}
+
+/**
+ * @brief Degrees Kelvin to celsius.
+ */
+inline double k2c(const double k)
+{
+  return k - 273.15;
+}
 
 }  // namespace MathUtils
 }  // namespace Conversions
