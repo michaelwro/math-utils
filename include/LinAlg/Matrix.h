@@ -32,16 +32,16 @@ namespace MathUtils {
  *
  * @details Stores elements in row-major order.
  *
- * @tparam ROWS Number of rows.
- * @tparam COLS Number of columns.
+ * @tparam T_ROWS Number of rows.
+ * @tparam T_COLS Number of columns.
  */
-template<std::size_t ROWS, std::size_t COLS>
+template<std::size_t T_ROWS, std::size_t T_COLS>
 class Matrix
 {
 public:
-  static_assert(ROWS != 0, "Cannot have zero rows.");
-  static_assert(COLS != 0, "Cannot have zero columns.");
-  static_assert(ROWS != 1 && COLS != 1, "Cannot have one-element matrix.");
+  static_assert(T_ROWS != 0, "Cannot have zero rows.");
+  static_assert(T_COLS != 0, "Cannot have zero columns.");
+  static_assert(T_ROWS != 1 && T_COLS != 1, "Cannot have one-element matrix.");
 
   /**
    * @brief Create a matrix.
@@ -80,9 +80,9 @@ public:
 
     const std::size_t input_size = new_matrix.size();
 
-    if (input_size != (ROWS * COLS))
+    if (input_size != (T_ROWS * T_COLS))
     {
-      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, ROWS*COLS));
+      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, T_ROWS*T_COLS));
     }
 
     std::copy(new_matrix.begin(), new_matrix.end(), m_arr.begin());
@@ -111,9 +111,9 @@ public:
 
     const std::size_t input_rows = new_matrix.size();
 
-    if (input_rows != ROWS)
+    if (input_rows != T_ROWS)
     {
-      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_rows, ROWS));
+      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_rows, T_ROWS));
     }
 
     auto array_element = m_arr.begin();  // start at the beginning of the array
@@ -122,9 +122,9 @@ public:
     {
       const std::size_t input_cols = row.size();
 
-      if (input_cols != COLS)
+      if (input_cols != T_COLS)
       {
-        throw std::length_error(Internal::invalid_init_list_length_error_msg(input_cols, COLS));
+        throw std::length_error(Internal::invalid_init_list_length_error_msg(input_cols, T_COLS));
       }
 
       for (const auto& val : row)
@@ -233,9 +233,9 @@ public:
    */
   double& operator()(const std::size_t row, std::size_t col) noexcept
   {
-    assert(row < ROWS);
-    assert(col < COLS);
-    return m_arr[(row * COLS) + col];
+    assert(row < T_ROWS);
+    assert(col < T_COLS);
+    return m_arr[(row * T_COLS) + col];
   }
 
   /**
@@ -247,9 +247,9 @@ public:
    */
   const double& operator()(const std::size_t row, std::size_t col) const noexcept
   {
-    assert(row < ROWS);
-    assert(col < COLS);
-    return m_arr[(row * COLS) + col];
+    assert(row < T_ROWS);
+    assert(col < T_COLS);
+    return m_arr[(row * T_COLS) + col];
   }
 
   /**
@@ -259,7 +259,7 @@ public:
    */
   constexpr std::size_t rows() const noexcept
   {
-    return ROWS;
+    return T_ROWS;
   }
 
   /**
@@ -269,7 +269,7 @@ public:
    */
   constexpr std::size_t cols() const noexcept
   {
-    return COLS;
+    return T_COLS;
   }
 
   /**
@@ -303,7 +303,7 @@ public:
    */
   Matrix& operator+=(const Matrix& mat) noexcept
   {
-    for (std::size_t idx = 0; idx < ROWS*COLS; idx++)
+    for (std::size_t idx = 0; idx < T_ROWS*T_COLS; idx++)
     {
       m_arr[idx] += mat.m_arr[idx];
     }
@@ -342,7 +342,7 @@ public:
    */
   Matrix& operator-=(const Matrix& mat) noexcept
   {
-    for (std::size_t idx = 0; idx < ROWS*COLS; idx++)
+    for (std::size_t idx = 0; idx < T_ROWS*T_COLS; idx++)
     {
       m_arr[idx] -= mat.m_arr[idx];
     }
@@ -383,20 +383,20 @@ public:
    */
   Matrix& operator*=(const Matrix& mat) noexcept
   {
-    std::array<double, ROWS*COLS> new_arr = {0};
+    std::array<double, T_ROWS*T_COLS> new_arr = {0};
 
-    for (std::size_t ii = 0; ii < ROWS; ii++)
+    for (std::size_t ii = 0; ii < T_ROWS; ii++)
     {
-      for (std::size_t jj = 0; jj < COLS; jj++)
+      for (std::size_t jj = 0; jj < T_COLS; jj++)
       {
         double sum = 0.0;
 
-        for (std::size_t kk = 0; kk < ROWS; kk++)
+        for (std::size_t kk = 0; kk < T_ROWS; kk++)
         {
-          sum += m_arr[(ii * COLS) + kk] * mat.m_arr[(kk * COLS) + jj];
+          sum += m_arr[(ii * T_COLS) + kk] * mat.m_arr[(kk * T_COLS) + jj];
         }
 
-        new_arr[(ii * COLS) + jj] = sum;
+        new_arr[(ii * T_COLS) + jj] = sum;
       }
     }
 
@@ -421,10 +421,7 @@ public:
     // make sure denominator is not too small
     const double scalard = static_cast<double>(scalar);
 
-    if (float_equality(std::abs(scalard), 0.0))
-    {
-      throw std::overflow_error(Internal::divide_by_zero_error_msg());
-    }
+    assert(!float_equality(std::abs(scalard), 0.0));
 
     std::for_each(
       m_arr.begin(),
@@ -444,9 +441,9 @@ public:
   {
     Matrix eye;
 
-    for (std::size_t ii = 0; ii < ROWS; ii++)
+    for (std::size_t ii = 0; ii < T_ROWS; ii++)
     {
-      eye.m_arr[(ii * COLS) + ii] = 1.0;
+      eye.m_arr[(ii * T_COLS) + ii] = 1.0;
     }
 
     return eye;
@@ -496,7 +493,7 @@ public:
 
 protected:
 private:
-  std::array<double, ROWS * COLS> m_arr;  ///< Underlying array to store values (row-major order).
+  std::array<double, T_ROWS * T_COLS> m_arr;  ///< Underlying array to store values (row-major order).
 };
 
 

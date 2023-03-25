@@ -17,9 +17,9 @@ target_include_directories(${TEST_ATTITUDE_EXEC} PUBLIC
 )
 
 target_link_libraries(${TEST_ATTITUDE_EXEC} PUBLIC
+    "$<$<CONFIG:DEBUG>:--coverage>"
     ${MATHUTILS_LIB}
     GTest::gtest_main
-    "$<$<CONFIG:DEBUG>:--coverage>"
 )
 
 

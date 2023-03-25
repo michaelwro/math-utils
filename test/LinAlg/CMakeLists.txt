@@ -17,9 +17,9 @@ target_include_directories(${TEST_LINALG_EXEC} PUBLIC
 )
 
 target_link_libraries(${TEST_LINALG_EXEC} PUBLIC
+    "$<$<CONFIG:DEBUG>:--coverage>"
     ${MATHUTILS_LIB}
     GTest::gtest_main
-    "$<$<CONFIG:DEBUG>:--coverage>"
 )
 
 # ADD TESTS ===========================================================================================================

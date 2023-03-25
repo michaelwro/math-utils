@@ -16,8 +16,6 @@ link_directories(
     ${MATHUTILS_LIB_OUTPUT_DIR}
 )
 
-add_compile_options("$<$<CONFIG:DEBUG>:--coverage>")
-
 # test tools dir
 set(MATHUTILS_TEST_DIR ${CMAKE_SOURCE_DIR}/test/)
 
@@ -38,9 +36,9 @@ target_include_directories(${TEST_MATHUTILS_EXEC} PUBLIC
 )
 
 target_link_libraries(${TEST_MATHUTILS_EXEC} PUBLIC
+    "$<$<CONFIG:DEBUG>:--coverage>"
     ${MATHUTILS_LIB}
     GTest::gtest_main
-    "$<$<CONFIG:DEBUG>:--coverage>"
 )
 
 

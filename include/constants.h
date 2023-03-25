@@ -14,7 +14,7 @@
 
 namespace MathUtils { namespace Constants {
 
-static constexpr double PI = 3.14159265358979;  ///< Pi constant.
+static constexpr double PI = 3.141592653589793;  ///< Pi constant.
 static constexpr double TWO_PI = 2.0 * PI;  ///< Two time pi
 static constexpr double PI_DIV2 = 0.5 * PI;  ///< Pi divided by two, pi / 2
 

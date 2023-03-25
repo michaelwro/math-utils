@@ -80,13 +80,13 @@ TEST_F(VectorMathTest, Normalize)
 }
 
 // ====================================================================================================================
-TEST_F(VectorMathTest, NormalizeThrows)
+TEST_F(VectorMathTest, NormalizeAssertsDivZero)
 {
   Vector<2> vec;
 
-  EXPECT_THROW({
+  ASSERT_DEBUG_DEATH({
     vec.normalize();
-  }, std::overflow_error);
+  }, "");
 }
 
 // ====================================================================================================================
@@ -144,11 +144,11 @@ TEST_F(VectorMathTest, ScalarDivideInPlace)
 }
 
 // ====================================================================================================================
-TEST_F(VectorMathTest, ScalarDivideInPlaceThrows)
+TEST_F(VectorMathTest, ScalarDivideInPlaceAsserts)
 {
-  EXPECT_THROW({
+  ASSERT_DEBUG_DEATH({
     vec2 /= 0lu;
-  }, std::overflow_error);
+  }, "");
 }
 
 // ====================================================================================================================

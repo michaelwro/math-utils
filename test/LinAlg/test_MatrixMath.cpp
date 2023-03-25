@@ -133,11 +133,11 @@ TEST_F(MatrixMathTest, ScalarDivideInPlace)
 }
 
 // ====================================================================================================================
-TEST_F(MatrixMathTest, SmallScalarDivideInPlaceThrows)
+TEST_F(MatrixMathTest, SmallScalarDivideInPlaceAsserts)
 {
-  EXPECT_THROW({
+  ASSERT_DEBUG_DEATH({
     mat1 /= 0ul;
-  }, std::overflow_error);
+  }, "");
 }
 
 // ====================================================================================================================

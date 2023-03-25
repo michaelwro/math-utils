@@ -5,6 +5,8 @@
  */
 
 #include "Attitude/Quaternion.h"
+#include "LinAlg/Vector.h"
+#include "TestTools/VectorNear.h"
 
 #include <cmath>
 #include <gtest/gtest.h>
@@ -61,13 +63,13 @@ TEST(QuaternionTest, ListInitCtorNormalizes)
 }
 
 // ====================================================================================================================
-TEST(QuaternionDeathTest, CtorAssertsInvalidLengthInitializerList)
+TEST(QuaternionTest, CtorThrowsInvalidLengthInitializerList)
 {
   std::initializer_list<double> vals = {1, 2, 3};
 
-  EXPECT_DEBUG_DEATH({
+  EXPECT_THROW({
     Quaternion quat(vals);
-  }, "");
+  }, std::length_error);
 }
 
 // ====================================================================================================================
@@ -151,14 +153,14 @@ TEST(QuaternionDeathTest, InvalidIndexAsserts)
 }
 
 // ====================================================================================================================
-TEST(QuaternionDeathTest, ThreeElementAssignmentAsserts)
+TEST(QuaternionTest, InvalidLengthAssignmentThrows)
 {
   std::initializer_list<double> vals = {1, 2, 3};
 
-  EXPECT_DEBUG_DEATH({
+  EXPECT_THROW({
     Quaternion quat;
     quat = vals;
-  }, "");
+  }, std::length_error);
 }
 
 // ====================================================================================================================
@@ -207,6 +209,25 @@ TEST(QuaternionDeathTest, ZeroMagnitudeAsserts)
 {
   EXPECT_DEBUG_DEATH({
     Quaternion q(0,0,0,0);
+  }, "");
+}
+
+// ====================================================================================================================
+TEST(QuaternionTest, EigenAxis)
+{
+  const double sqrt_two = std::sqrt(2.0);
+
+  Quaternion q(1.0/sqrt_two, 1.0/sqrt_two, 0, 0);
+
+  EXPECT_TRUE(MathUtils::TestTools::VectorNear(q.eigen_axis(), MathUtils::Vector<3>{1, 0, 0}));
+}
+
+// ====================================================================================================================
+TEST(QuaternionDeathTest, AssertZeroAngleEigenAxis)
+{
+  EXPECT_DEBUG_DEATH({
+    Quaternion q(1, 0, 0, 0);
+    q.eigen_axis();
   }, "");
 }
 

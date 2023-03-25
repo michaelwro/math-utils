@@ -8,19 +8,12 @@
 #ifndef MATHUTILS_ATTITUDE_QUATERNION_H_
 #define MATHUTILS_ATTITUDE_QUATERNION_H_
 
-#include "float_equality.h"
-#include "Internal/error_msg_helpers.h"
+#include "LinAlg/Vector.h"
 
-#include <algorithm>
 #include <array>
-#include <cassert>
-#include <cmath>
 #include <functional>
 #include <initializer_list>
-#include <iomanip>
 #include <iostream>
-#include <stdexcept>
-#include <type_traits>
 
 namespace MathUtils {
 
@@ -54,26 +47,16 @@ public:
    * @param qy Y-component.
    * @param qz Z-component.
    */
-  Quaternion(const double qs, const double qx, const double qy, const double qz)
-    :m_arr{qs, qx, qy, qz}
-  {
-    this->normalize();
-  }
+  Quaternion(const double qs, const double qx, const double qy, const double qz);
 
   /**
    * @brief Create a quaternion from an initializer list. Normalizes input.
    *
    * @param quat_vals Quaternion values.
+   *
+   * @exception std::length_error Input was not 4 elements.
    */
-  explicit Quaternion(const std::initializer_list<double> quat_vals)
-  {
-    // assert since quaternions shall always have 4 elements.
-    assert(quat_vals.size() == 4);
-
-    std::copy(quat_vals.begin(), quat_vals.end(), m_arr.begin());
-
-    this->normalize();
-  }
+  explicit Quaternion(const std::initializer_list<double> quat_vals);
 
   /**
    * @brief Copy-construct quaternion.
@@ -99,16 +82,7 @@ public:
    * @param other Other quaternion.
    * @return Copied quaternion.
    */
-  Quaternion& operator=(const Quaternion& other)
-  {
-    if (&other == this)
-    {
-      return *this;
-    }
-
-    m_arr = other.m_arr;
-    return *this;
-  }
+  Quaternion& operator=(const Quaternion& other);
 
   /**
    * @brief Move-assign quaternion.
@@ -116,16 +90,7 @@ public:
    * @param other Other quaternion.
    * @return Copied quaternion.
    */
-  Quaternion& operator=(Quaternion&& other)
-  {
-    if (&other == this)
-    {
-      return *this;
-    }
-
-    m_arr.swap(other.m_arr);
-    return *this;
-  }
+  Quaternion& operator=(Quaternion&& other);
 
   /**
    * @brief Assign quaternion values from an initializer list. Normalizes input.
@@ -135,16 +100,7 @@ public:
    *
    * @exception std::length_error Input was not four elements.
    */
-  Quaternion& operator=(const std::initializer_list<double> quat_vals)
-  {
-    // assert since quaternions shall always have 4 elements.
-    assert(quat_vals.size() == 4);
-
-    std::copy(quat_vals.begin(), quat_vals.end(), m_arr.begin());
-    this->normalize();
-
-    return *this;
-  }
+  Quaternion& operator=(const std::initializer_list<double> quat_vals);
 
   /**
    * @brief Get quaternion element.
@@ -152,75 +108,38 @@ public:
    * @param idx Quaternion index.
    * @return Quaternion element at specified index.
    */
-  const double& operator()(const std::size_t idx) const noexcept
-  {
-    assert(idx < 4);
-    return m_arr[idx];
-  }
+  const double& operator()(const std::size_t idx) const noexcept;
 
   /**
    * @brief Return the conjugate (inverse) of the quaternion.
    *
    * @return Quaternion conjugate/inverse.
    */
-  Quaternion conjugate() const
-  {
-    return Quaternion(m_arr[0], -m_arr[1], -m_arr[2], -m_arr[3]);
-  }
+  Quaternion conjugate() const;
 
   /**
    * @brief Invert the quaternion.
    */
-  void invert() noexcept
-  {
-    m_arr[1] *= -1.0;
-    m_arr[2] *= -1.0;
-    m_arr[3] *= -1.0;
-  }
+  void invert() noexcept;
 
   /**
    * @brief Negate (*= -1) the quaternion if the scalar component is negative to force a positive rotation.
    *
    * @return Quaternion.
    */
-  void force_positive_rotation() noexcept
-  {
-    if (m_arr[0] < 0.0)
-    {
-      m_arr[0] *= -1.0;
-      m_arr[1] *= -1.0;
-      m_arr[2] *= -1.0;
-      m_arr[3] *= -1.0;
-    }
-  }
+  void force_positive_rotation() noexcept;
 
   /**
    * @brief Normalize the quaternion to have a magnitude of 1.
    */
-  void normalize() noexcept
-  {
-    // compute magnitude
-    const double magn = std::sqrt(
-      (m_arr[0] * m_arr[0]) +
-      (m_arr[1] * m_arr[1]) +
-      (m_arr[2] * m_arr[2]) +
-      (m_arr[3] * m_arr[3])
-    );
+  void normalize() noexcept;
 
-    /**
-     * Make sure its not too small before dividing.
-     * Assert instead of throwing, since it would never make logical sense that a quaternion would have zero
-     * magnitude. Also, throwing assumes that there'd be a corrective action for this scenario, which there
-     * really isn't.
-     */
-    assert(!float_equality(magn, 0.0));
-
-    // normalize each element
-    m_arr[0] /= magn;
-    m_arr[1] /= magn;
-    m_arr[2] /= magn;
-    m_arr[3] /= magn;
-  }
+  /**
+   * @brief Return the quaternion's eigen axis.
+   *
+   * @return Quaternion eigen axis.
+   */
+  Vector<3> eigen_axis() const;
 
   /**
    * @brief Print a quaternion to a stream. Comma-separates values. Does not add a newline at the end.
@@ -233,16 +152,9 @@ public:
    * std::cout << my_vequat << "\n";
    * @endcode
    */
-  friend std::ostream& operator<<(std::ostream& os, const Quaternion& quat)
-  {
-    os << quat.m_arr[0] << ", " <<
-      quat.m_arr[1] << ", " <<
-      quat.m_arr[2] << ", " <<
-      quat.m_arr[3];
+  friend std::ostream& operator<<(std::ostream& os, const Quaternion& quat);
 
-    return os;
-  }
-
+protected:
 private:
   std::array<double, 4> m_arr;  ///< Underlying array to store elements
 };

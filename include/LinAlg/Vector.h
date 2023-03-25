@@ -30,14 +30,14 @@ namespace MathUtils {
 /**
  * @brief N-length vector class.
  *
- * @tparam N Length of the vector.
+ * @tparam T_LEN Length of the vector.
  */
-template<std::size_t N>
+template<std::size_t T_LEN>
 class Vector
 {
 public:
 
-  static_assert(N > 1, "One-length or zero-length vectors are not allowed.");
+  static_assert(T_LEN > 1, "One-length or zero-length vectors are not allowed.");
 
   /**
    * @brief Create a Vector.
@@ -69,9 +69,9 @@ public:
 
     const std::size_t input_length = vector_vals.size();
 
-    if (input_length != N)
+    if (input_length != T_LEN)
     {
-      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_length, N));
+      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_length, T_LEN));
     }
 
     std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
@@ -142,9 +142,9 @@ public:
 
     const std::size_t input_length = vector_vals.size();
 
-    if (input_length != N)
+    if (input_length != T_LEN)
     {
-      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_length, N));
+      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_length, T_LEN));
     }
 
     std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
@@ -193,7 +193,7 @@ public:
    */
   double& operator()(const std::size_t idx) noexcept
   {
-    assert(idx < N);
+    assert(idx < T_LEN);
     return m_arr[idx];
   }
 
@@ -205,7 +205,7 @@ public:
    */
   const double& operator()(const std::size_t idx) const noexcept
   {
-    assert(idx < N);
+    assert(idx < T_LEN);
     return m_arr[idx];
   }
 
@@ -240,7 +240,7 @@ public:
    */
   Vector& operator+=(const Vector& vec) noexcept
   {
-    for (std::size_t idx = 0; idx < N; idx++)
+    for (std::size_t idx = 0; idx < T_LEN; idx++)
     {
       m_arr[idx] += vec.m_arr[idx];
     }
@@ -279,7 +279,7 @@ public:
    */
   Vector& operator-=(const Vector& vec) noexcept
   {
-    for (std::size_t idx = 0; idx < N; idx++)
+    for (std::size_t idx = 0; idx < T_LEN; idx++)
     {
       m_arr[idx] -= vec.m_arr[idx];
     }
@@ -316,8 +316,6 @@ public:
    * @tparam T Scalar type.
    * @param scalar Scalar to divide by.
    * @return Vector with scalar divided.
-   *
-   * @exception std::overflow_error Divisor would result in divide-by-zero.
    */
   template<typename T>
   Vector& operator/=(const T scalar)
@@ -326,11 +324,7 @@ public:
 
     // make sure denominator is not too small
     const double scalard = static_cast<double>(scalar);
-
-    if (float_equality(std::abs(scalard), 0.0))
-    {
-      throw std::overflow_error(Internal::divide_by_zero_error_msg());
-    }
+    assert(!float_equality(std::abs(scalard), 0.0));
 
     std::for_each(
       m_arr.begin(),
@@ -346,19 +340,14 @@ public:
    *
    * @param scalar Vector to divide by.
    * @return Vector divided by other vector.
-   *
-   * @exception std::overflow_error Divisor would result in divide-by-zero.
    */
-  Vector& operator/=(const Vector& vec)
+  Vector& operator/=(const Vector& vec) noexcept
   {
-    for (std::size_t idx = 0; idx < N; idx++)
+    for (std::size_t idx = 0; idx < T_LEN; idx++)
     {
       const double val = vec.m_arr[idx];
 
-      if (float_equality(std::abs(val), 0.0))
-      {
-        throw std::overflow_error(Internal::divide_by_zero_error_msg());
-      }
+      assert(!float_equality(std::abs(val), 0.0));
 
       m_arr[idx] /= vec.m_arr[idx];
     }
@@ -373,7 +362,7 @@ public:
    */
   constexpr std::size_t size() const noexcept
   {
-    return N;
+    return T_LEN;
   }
 
   /**
@@ -405,17 +394,12 @@ public:
 
   /**
    * @brief Normalize the vector.
-   *
-   * @exception std::overflow_error Divisor would result in divide-by-zero.
    */
   void normalize()
   {
     const double magn = magnitude();
 
-    if (float_equality(magn, 0.0))
-    {
-      throw std::overflow_error(Internal::divide_by_zero_error_msg());
-    }
+    assert(!float_equality(magn, 0.0));
 
     std::for_each(m_arr.begin(), m_arr.end(), [magn](double& val){val /= magn;});
   }
@@ -464,7 +448,7 @@ public:
 
 protected:
 private:
-  std::array<double, N> m_arr;  ///< Underlying array to store vector values.
+  std::array<double, T_LEN> m_arr;  ///< Underlying array to store vector values.
 };
 
 // ============================================================================

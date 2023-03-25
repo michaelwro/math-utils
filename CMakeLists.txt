@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.0)
 project(MathUtils LANGUAGES CXX)
 
 include(CTest)
@@ -14,22 +14,6 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules/)
 # compile with -DCMAKE_BUILD_TYPE=Release or -DCMAKE_BUILD_TYPE=Debug
 set(MATHUTILS_COMPILE_DEFINITIONS_DEBUG "")
 set(MATHUTILS_COMPILE_DEFINITIONS_RELEASE "NDEBUG")
-
-# include coverage module
-# include(CodeCoverage)
-# set(CODE_COVERAGE_VERBOSE true)
-# set(COVERAGE_EXCLUDES
-    # "/usr/*"
-    # # "*/gtest/*"
-    # "${PROJECT_SOURCE_DIR}/include/Internal/*"
-    # "${PROJECT_SOURCE_DIR}/test/TestTools/*"
-# )
-
-# set(CTEST_CUSTOM_COVERAGE_EXCLUDE ${CTEST_CUSTOM_COVERAGE_EXCLUDE} "gtest")
-# "usr"
-# "include/Internal/"
-# "test/TestTools/"
-
 
 set(MATHUTILS_COMPILE_OPTIONS "-Wall;-Wextra;-Wpedantic;-Wshadow;-Wconversion;-Wdouble-promotion;-Wfloat-equal;-Wundef;-Wformat=2;-fno-common")
 set(MATHUTILS_COMPILE_OPTIONS_DEBUG "${MATHUTILS_COMPILE_OPTIONS};-g3;-Werror;-O0;-Wduplicated-cond;-Wcast-align;-Wcast-qual;--coverage")
@@ -79,7 +63,6 @@ target_include_directories(${MATHUTILS_LIB} PUBLIC
     ${INCL_DIR}
 )
 
-# link gcov for debug
 target_link_libraries(${MATHUTILS_LIB} PRIVATE
     "$<$<CONFIG:DEBUG>:--coverage>"
 )
