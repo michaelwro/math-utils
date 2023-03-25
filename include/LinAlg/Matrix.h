@@ -303,7 +303,7 @@ public:
    */
   Matrix& operator+=(const Matrix& mat) noexcept
   {
-    for (std::size_t idx = 0; idx < T_ROWS*T_COLS; idx++)
+    for (std::size_t idx = 0; idx < (T_ROWS*T_COLS); idx++)
     {
       m_arr[idx] += mat.m_arr[idx];
     }
@@ -342,7 +342,7 @@ public:
    */
   Matrix& operator-=(const Matrix& mat) noexcept
   {
-    for (std::size_t idx = 0; idx < T_ROWS*T_COLS; idx++)
+    for (std::size_t idx = 0; idx < (T_ROWS*T_COLS); idx++)
     {
       m_arr[idx] -= mat.m_arr[idx];
     }
@@ -381,7 +381,7 @@ public:
    * @param mat Matrix to multiply by.
    * @return Matrix product.
    */
-  Matrix& operator*=(const Matrix& mat) noexcept
+  Matrix& operator*=(const Matrix& mat)
   {
     std::array<double, T_ROWS*T_COLS> new_arr = {0};
 
@@ -433,12 +433,14 @@ public:
   }
 
   /**
-   * @brief Get an identity matrix.
+   * @brief Get an identity matrix (square only).
    *
    * @return Identity matrix.
    */
   static Matrix identity()
   {
+    assert(T_ROWS == T_COLS);
+
     Matrix eye;
 
     for (std::size_t ii = 0; ii < T_ROWS; ii++)

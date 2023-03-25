@@ -360,7 +360,7 @@ public:
    *
    * @return Vector length.
    */
-  constexpr std::size_t size() const noexcept
+  constexpr std::size_t get_size() const noexcept
   {
     return T_LEN;
   }
@@ -380,7 +380,7 @@ public:
    *
    * @return Vector magnitude.
    */
-  double magnitude() const
+  double get_magnitude() const
   {
     const double magn = std::accumulate(
       m_arr.begin(), m_arr.end(), 0.0,
@@ -397,7 +397,7 @@ public:
    */
   void normalize()
   {
-    const double magn = magnitude();
+    const double magn = this->get_magnitude();
 
     assert(!float_equality(magn, 0.0));
 
@@ -409,7 +409,7 @@ public:
    *
    * @return Sum of all vector elements.
    */
-  double sum() const
+  double get_sum() const
   {
     return std::accumulate(m_arr.begin(), m_arr.end(), 0.0, std::plus<double>());
   }
@@ -584,7 +584,7 @@ Vector<N> operator*(const T scalar, const Vector<N>& vec)
   Vector<N> res(vec);
   const double scalard = static_cast<double>(scalar);
 
-  for (std::size_t idx = 0; idx < vec.size(); idx++)
+  for (std::size_t idx = 0; idx < vec.get_size(); idx++)
   {
     res(idx) *= scalard;
   }

@@ -115,7 +115,7 @@ public:
    *
    * @return Quaternion conjugate/inverse.
    */
-  Quaternion conjugate() const;
+  Quaternion get_conjugate() const;
 
   /**
    * @brief Invert the quaternion.
@@ -132,14 +132,21 @@ public:
   /**
    * @brief Normalize the quaternion to have a magnitude of 1.
    */
-  void normalize() noexcept;
+  void normalize();
 
   /**
    * @brief Return the quaternion's eigen axis.
    *
    * @return Quaternion eigen axis.
    */
-  Vector<3> eigen_axis() const;
+  Vector<3> get_eigen_axis() const;
+
+  /**
+   * @brief Return the quaternion's rotation angle.
+   *
+   * @return Quaternion rotation angle in [rad].
+   */
+  double get_angle() const;
 
   /**
    * @brief Print a quaternion to a stream. Comma-separates values. Does not add a newline at the end.

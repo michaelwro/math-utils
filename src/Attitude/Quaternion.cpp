@@ -88,7 +88,7 @@ const double& Quaternion::operator()(const std::size_t idx) const noexcept
 }
 
 
-Quaternion Quaternion::conjugate() const
+Quaternion Quaternion::get_conjugate() const
 {
   return Quaternion(m_arr[0], -m_arr[1], -m_arr[2], -m_arr[3]);
 }
@@ -114,7 +114,7 @@ void Quaternion::force_positive_rotation() noexcept
 }
 
 
-void Quaternion::normalize() noexcept
+void Quaternion::normalize()
 {
   // compute magnitude
   const double magn = std::sqrt(
@@ -140,7 +140,7 @@ void Quaternion::normalize() noexcept
 }
 
 
-Vector<3> Quaternion::eigen_axis() const
+Vector<3> Quaternion::get_eigen_axis() const
 {
   // rotation angle divided by 2
   const double angle_div_two = std::acos(m_arr[0]);
@@ -154,6 +154,13 @@ Vector<3> Quaternion::eigen_axis() const
     m_arr[2] / sin_angle_div_two,
     m_arr[3] / sin_angle_div_two
   };
+}
+
+
+double Quaternion::get_angle() const
+{
+  assert(std::abs(m_arr[0]) <= 1.0);
+  return 2.0 * std::acos(m_arr[0]);
 }
 
 

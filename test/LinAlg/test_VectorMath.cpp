@@ -66,7 +66,7 @@ protected:
 // ====================================================================================================================
 TEST_F(VectorMathTest, Magnitude)
 {
-  double mag = vec1.magnitude();
+  double mag = vec1.get_magnitude();
 
   EXPECT_DOUBLE_EQ(mag, vec1_magnitude);
 }
@@ -92,7 +92,7 @@ TEST_F(VectorMathTest, NormalizeAssertsDivZero)
 // ====================================================================================================================
 TEST_F(VectorMathTest, SumElements)
 {
-  EXPECT_DOUBLE_EQ(vec1.sum(), vec1_sum);
+  EXPECT_DOUBLE_EQ(vec1.get_sum(), vec1_sum);
 }
 
 // ====================================================================================================================

@@ -47,6 +47,7 @@ protected:
   Matrix<3,3> mat1_minus_scalar {{-1, 0, 1}, {2, 3, 4}, {5, 6, 7}};
   Matrix<3,3> mat1_times_scalar {{2, 4, 6}, {8, 10, 12}, {14, 16, 18}};
   Matrix<3,3> mat1_div_scalar {{0.5, 1.0, 1.5}, {2.0, 2.5, 3.0}, {3.5, 4.0, 4.5}};
+  Matrix<3,3> mat1_plus_eye {{2, 2, 3}, {4, 6, 6}, {7, 8, 10}};
 
   Matrix<3,3> mat2 {{9, 8, 7}, {6, 5, 4}, {3, 2, 1}};
   const double mat2_trace = 15;
@@ -64,16 +65,11 @@ TEST_F(MatrixMathTest, Trace)
 }
 
 // ====================================================================================================================
-TEST_F(MatrixMathTest, NonSquareIdentity)
+TEST_F(MatrixMathTest, IdentityAddition)
 {
-  Matrix<2,3> mat = Matrix<2,3>::identity();
+  Matrix<3,3> mat = Matrix<3,3>::identity() + mat1;
 
-  EXPECT_DOUBLE_EQ(mat(0, 0), 1.0);
-  EXPECT_DOUBLE_EQ(mat(0, 1), 0.0);
-  EXPECT_DOUBLE_EQ(mat(0, 2), 0.0);
-  EXPECT_DOUBLE_EQ(mat(1, 0), 0.0);
-  EXPECT_DOUBLE_EQ(mat(1, 1), 1.0);
-  EXPECT_DOUBLE_EQ(mat(1, 2), 0.0);
+  EXPECT_TRUE(MatrixNear(mat, mat1_plus_eye));
 }
 
 // ====================================================================================================================
