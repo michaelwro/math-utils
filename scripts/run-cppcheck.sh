@@ -9,7 +9,7 @@ find $REPO_DIR/src/ $REPO_DIR/include/ -type f \( -iname *.cpp -o -iname *.h \) 
     cppcheck --file-list=- \
         --enable=style,warning \
         --language=c++ \
-        --std=c++20 \
+        --std=c++17 \
         --platform=unix64 \
         -I $REPO_DIR/include/ \
         -i $REPO_DIR/build/ \
