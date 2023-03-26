@@ -111,7 +111,7 @@ inline double mm2in(const double mm)
 {
   return mm / Internal::NIST_IN_TO_MM;
 }
-  
+
 /**
  * @brief Meters to centimeters.
  */
@@ -119,7 +119,7 @@ inline double m2cm(const double m)
 {
   return m * Internal::NIST_M_TO_CM;
 }
-  
+
 /**
  * @brief Centimeters to meters.
  */
@@ -207,9 +207,6 @@ inline double n2lb(const double n)
 {
   return n / Internal::NIST_LB_TO_N;
 }
-
-// PRESSURE
-// static constexpr double BAR_TO_PA = 1e5;  ///< Bar to pascals.
 
 /**
  * @brief Bar to Pascals.
@@ -307,7 +304,7 @@ inline double k2c(const double k)
   return k - 273.15;
 }
 
-}  // namespace MathUtils
 }  // namespace Conversions
+}  // namespace MathUtils
 
 #endif  // MATHUTILS_CONVERSIONS_H_
