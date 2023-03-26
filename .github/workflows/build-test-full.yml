@@ -1,18 +1,18 @@
-name: Build & Test
+name: Full Build & Test Suite
 
 on:
-  push:
+  pull_request:
     branches: ["main"]
 
   workflow_dispatch:
 
 jobs:
-  build-and-test:
+  build-and-test-full:
     strategy:
       matrix:
-        os: [ubuntu-22.04]
-        build_type: [Debug]
-    name: ${{ matrix.build_type }} Build & Test
+        os: [ubuntu-20.04, ubuntu-22.04]
+        build_type: [Debug, Release]
+    name: ${{ matrix.os }} ${{ matrix.build_type }} Build & Test
     runs-on: ${{ matrix.os }}
     if: "!contains(github.event.head_commit.message, 'ci skip')"
 
