@@ -19,6 +19,7 @@ namespace Internal {
 constexpr double NIST_FT_TO_M {0.3048};
 constexpr double NIST_IN_TO_CM {2.54};
 constexpr double NIST_IN_TO_MM {254.0};
+constexpr double NIST_M_TO_CM {100.0};
 constexpr double NIST_NMI_TO_M {1852.0};
 constexpr double NIST_MI_TO_M {1.609344e3};
 constexpr double NIST_MI_TO_KM {1.609344};
@@ -109,6 +110,22 @@ inline double in2mm(const double in)
 inline double mm2in(const double mm)
 {
   return mm / Internal::NIST_IN_TO_MM;
+}
+  
+/**
+ * @brief Meters to centimeters.
+ */
+inline double m2cm(const double m)
+{
+  return m * Internal::NIST_M_TO_CM;
+}
+  
+/**
+ * @brief Centimeters to meters.
+ */
+inline double cm2m(const double cm)
+{
+  return cm / Internal::NIST_M_TO_CM;
 }
 
 /**
