@@ -4,14 +4,15 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/include/**",
-                "${workspaceFolder}/include/LinAlg/**",
-                "${workspaceFolder}/include/Attitude/**",
-                "${workspaceFolder}/include/Internal/**",
-                "${workspaceFolder}/test/**",
-                "${workspaceFolder}/build/_deps/googletest-src/googletest/include/**",
-                "${workspaceFolder}/build/_deps/googletest-src/googlemock/include/**"
+                "${workspaceFolder}/",
+                "${workspaceFolder}/build/_deps/googletest-src/googlemock/include/",
+                "${workspaceFolder}/build/_deps/googletest-src/googletest/include/",
+                "${workspaceFolder}/include/",
+                "${workspaceFolder}/include/Attitude/",
+                "${workspaceFolder}/include/Geodesy/",
+                "${workspaceFolder}/include/Internal/",
+                "${workspaceFolder}/include/LinAlg/",
+                "${workspaceFolder}/test/"
             ],
             "cppStandard": "c++20",
             "intelliSenseMode": "linux-gcc-x64",
