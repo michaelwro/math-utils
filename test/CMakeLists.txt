@@ -48,5 +48,6 @@ add_test(NAME ${TEST_MATHUTILS_EXEC}
 )
 
 # MAKE OTHER TESTS ====================================================================================================
-add_subdirectory("./LinAlg/")
 add_subdirectory("./Attitude/")
+add_subdirectory("./Geodesy/")
+add_subdirectory("./LinAlg/")

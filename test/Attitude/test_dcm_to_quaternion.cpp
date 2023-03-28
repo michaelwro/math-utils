@@ -19,7 +19,7 @@ using MathUtils::Matrix;
 
 namespace {
 
-const std::string test_reports_file = std::string("TESTRESULTS-dcm_to_quaternion_xml");
+const std::string test_reports_file = std::string("TESTRESULTS-dcm_to_quaternion.xml");
 
 // ====================================================================================================================
 TEST(DcmToQuaternionTest, SchaubTextbookExample)
