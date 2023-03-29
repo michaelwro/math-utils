@@ -28,10 +28,10 @@ constexpr double WGS84_F = 0.0033528106647475;  ///< WGS84 flattening.
 constexpr double WGS84_ECC2 = 0.0066943799901413;  ///< WGS84 eccentricity squared e^2.
 constexpr double WGS84_ECC = 0.0818191908426215;  ///< WGS84 eccentricity.
 constexpr double WGS84_B_M = 6356752.3142451792955399;  ///< WGS semiminor axis [m].
-constexpr double WGS84_RADIUS_M = 6371008.7714150594547391;  ///< IUGG earth arithmetic mean radius, (2a + b) / 3 [m].
-constexpr double WGS84_GRAV_MPS2 = 9.80665;  ///< WGS84 standard gravity [m/s/s].
 constexpr double WGS84_GM_M3PS2 = 3.986004418e14;  ///< WGS84 gravitational parameter [m^3 / s^2].
 constexpr double WGS84_RATE_RPS = 7.292115e-5;  ///< WGS84 mean angular velocity [rad/sec].
+constexpr double EARTH_GRAV_MPS2 = 9.80665;  ///< Earth standard gravity [m/s/s].
+constexpr double EARTH_RADIUS_M = 6371008.7714150594547391;  ///< IUGG earth arithmetic mean radius, (2a + b) / 3 [m].
 
 }  // namespace Constants
 }  // namespace MathUtils
