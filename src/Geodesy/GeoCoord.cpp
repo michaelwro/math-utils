@@ -9,7 +9,6 @@
 #include "Internal/error_msg_helpers.h"
 
 #include <cassert>
-#include <cmath>
 #include <cstddef>
 #include <stdexcept>
 
@@ -27,10 +26,7 @@ GeoCoord::GeoCoord(const double latitude_rad, const double longitude_rad, const 
   :m_lat_rad{latitude_rad},
   m_lon_rad{longitude_rad},
   m_alt_m{altitude_m}
-{
-  assert(std::abs(m_lat_rad) <= Constants::PI_DIV2);  // within [-90, 90] deg
-  assert(std::abs(m_lon_rad) <= Constants::PI);  // within [-180, 180] deg
-}
+{}
 
 
 GeoCoord::GeoCoord(const std::initializer_list<double> lla)
@@ -52,9 +48,6 @@ GeoCoord::GeoCoord(const std::initializer_list<double> lla)
 
   m_alt_m = *(vals++);
   assert(vals == lla.end());
-
-  assert(std::abs(m_lat_rad) <= Constants::PI_DIV2);  // within [-90, 90] deg
-  assert(std::abs(m_lon_rad) <= Constants::PI);  // within [-180, 180] deg
 }
 
 
@@ -91,9 +84,6 @@ GeoCoord& GeoCoord::operator=(const std::initializer_list<double> lla)
 
   m_alt_m = *(vals++);
   assert(vals == lla.end());
-
-  assert(std::abs(m_lat_rad) <= Constants::PI_DIV2);  // within [-90, 90] deg
-  assert(std::abs(m_lon_rad) <= Constants::PI);  // within [-180, 180] deg
 
   return *this;
 }

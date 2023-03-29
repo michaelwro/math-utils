@@ -15,8 +15,7 @@ namespace MathUtils {
 /**
  * @brief Geodetic coordinate (latitude, longitude, altitude).
  *
- * @details Uses WGS84 geoid. Latitude is [-90, 90] in [rad], longitude is [-180, 180] in [rad], and
- * altitude is MSL in [m].
+ * @details Latitude is in [rad], longitude is  [rad], and altitude is MSL in [m].
  */
 class GeoCoord
 {

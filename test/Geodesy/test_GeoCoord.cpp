@@ -60,22 +60,6 @@ TEST_F(GeoCoordTest, ThreeArgConstruct)
 }
 
 // ====================================================================================================================
-TEST(GeoCoordDeathTest, ThreeArgConstructAssertsInvalidLatitude)
-{
-  EXPECT_DEBUG_DEATH({
-    GeoCoord gc(-12, 0.3, 123);
-  }, "");
-}
-
-// ====================================================================================================================
-TEST(GeoCoordDeathTest, ThreeArgConstructAssertsInvalidLongitude)
-{
-  EXPECT_DEBUG_DEATH({
-    GeoCoord gc(0.3, 12, 123);
-  }, "");
-}
-
-// ====================================================================================================================
 TEST_F(GeoCoordTest, ListInitConstructor)
 {
   GeoCoord gc ({-0.2, -0.4, 68.0});
