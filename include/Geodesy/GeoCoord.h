@@ -15,8 +15,7 @@ namespace MathUtils {
 /**
  * @brief Geodetic coordinate (latitude, longitude, altitude).
  *
- * @details Latitude is [-90, 90] deg in [rad], longitude is [-180, 180] deg in [rad], and
- * altitude is MSL in [m]. East longitude is positive.
+ * @details Latitude is in [rad], longitude is  [rad], and altitude is MSL in [m].
  */
 class GeoCoord
 {
