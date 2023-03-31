@@ -91,14 +91,6 @@ Quaternion Quaternion::get_conjugate() const
 }
 
 
-void Quaternion::invert() noexcept
-{
-    m_arr[1] *= -1.0;
-    m_arr[2] *= -1.0;
-    m_arr[3] *= -1.0;
-}
-
-
 void Quaternion::force_positive_rotation() noexcept
 {
     if (m_arr[0] < 0.0) {
