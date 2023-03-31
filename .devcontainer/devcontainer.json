@@ -43,6 +43,9 @@
                 },
                 "[python]": {
                     "editor.tabSize": 4
+                },
+                "[cmake]": {
+                    "editor.tabSize": 4
                 }
             }
         }
