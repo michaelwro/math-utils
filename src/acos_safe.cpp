@@ -5,6 +5,7 @@
  */
 
 #include "acos_safe.h"
+
 #include "constants.h"
 
 #include <cmath>
@@ -14,18 +15,16 @@ namespace MathUtils {
 
 double acos_safe(const double val) noexcept
 {
-  assert(std::abs(val) <= 1.0);
+    assert(std::abs(val) <= 1.0);
 
-  if (val >= 1.0)
-  {
-    return 0.0;
-  }
-  else if (val <= -1.0)
-  {
-    return Constants::PI;
-  }
+    if (val >= 1.0) {
+        return 0.0;
+    }
+    else if (val <= -1.0) {
+        return Constants::PI;
+    }
 
-  return std::acos(val);
+    return std::acos(val);
 }
 
 }  // namespace MathUtils

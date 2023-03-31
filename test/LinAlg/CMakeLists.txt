@@ -1,5 +1,5 @@
 # BUILD TESTS =========================================================================================================
-set(TEST_LINALG_EXEC test_linalg)
+set(TEST_LINALG_EXEC linalg_test)
 
 # get sources
 file(GLOB TEST_LINALG_SRC

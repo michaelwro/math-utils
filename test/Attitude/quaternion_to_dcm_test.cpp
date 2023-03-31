@@ -20,25 +20,25 @@ namespace {
 
 const std::string test_reports_file = std::string("TESTRESULTS-quaternion_to_dcm.xml");
 
-// ====================================================================================================================
+// =================================================================================================
 TEST(QuaternionToDCMTest, UnityQuatIsIdentityMatrix)
 {
-  Quaternion q;
+    Quaternion q;
 
-  Matrix<3,3> dcm = MathUtils::quaternion_to_dcm(q);
+    Matrix<3,3> dcm = MathUtils::quaternion_to_dcm(q);
 
-  EXPECT_TRUE(MatrixNear(dcm, Matrix<3,3>::identity()));
+    EXPECT_TRUE(MatrixNear(dcm, Matrix<3,3>::identity()));
 
 }
 
-// ====================================================================================================================
+// =================================================================================================
 int main(int argc, char** argv)
 {
-  ::testing::GTEST_FLAG(output) = std::string("xml:") + test_reports_file;
-  ::testing::GTEST_FLAG(death_test_style) = "threadsafe";
+    ::testing::GTEST_FLAG(output) = std::string("xml:") + test_reports_file;
+    ::testing::GTEST_FLAG(death_test_style) = "threadsafe";
 
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
 
 }  // namespace

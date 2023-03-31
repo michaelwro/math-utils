@@ -47,18 +47,17 @@ double wrap_2pi(double angle_rad);
 template<typename T>
 double wrap_2pi(const T angle_rad)
 {
-  static_assert(std::numeric_limits<T>::is_integer, "Integer only.");
+    static_assert(std::numeric_limits<T>::is_integer, "Integer only.");
 
-  double d_angle_rad = std::fmod(static_cast<double>(angle_rad), Constants::TWO_PI);
+    double d_angle_rad = std::fmod(static_cast<double>(angle_rad), Constants::TWO_PI);
 
-  if (d_angle_rad < 0.0)
-  {
-    d_angle_rad += Constants::TWO_PI;
-  }
+    if (d_angle_rad < 0.0) {
+        d_angle_rad += Constants::TWO_PI;
+    }
 
-  return d_angle_rad;
+    return d_angle_rad;
 }
 
-}  // namespace MathUtils
+}    // namespace MathUtils
 
-#endif  // MATHUTILS_WRAP2PI_H_
+#endif    // MATHUTILS_WRAP2PI_H_

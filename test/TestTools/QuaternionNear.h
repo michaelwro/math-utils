@@ -30,29 +30,26 @@ namespace TestTools {
  */
 
 ::testing::AssertionResult QuaternionNear(const MathUtils::Quaternion& q1,
-  const MathUtils::Quaternion& q2,
-  const double tol=1e-14)
+    const MathUtils::Quaternion& q2,
+    const double tol=1e-14)
 {
-  bool success = true;
-  std::stringstream error_msgs;
+    bool success = true;
+    std::stringstream error_msgs;
 
-  for (std::size_t ii = 0; ii < 4; ii++)
-  {
-    const double diff = std::abs(q1(ii) - q2(ii));
+    for (std::size_t ii = 0; ii < 4; ii++) {
+        const double diff = std::abs(q1(ii) - q2(ii));
 
-    if (diff > tol)
-    {
-      success = false;
-      error_msgs << "\nElement (" << ii << ") differs by " <<  std::scientific << diff;
+        if (diff > tol) {
+            success = false;
+            error_msgs << "\nElement (" << ii << ") differs by " << std::scientific << diff;
+        }
     }
-  }
 
-  if (!success)
-  {
-    return ::testing::AssertionFailure() << "Quaternions are not equal." << error_msgs.str();
-  }
+    if (!success) {
+        return ::testing::AssertionFailure() << "Quaternions are not equal." << error_msgs.str();
+    }
 
-  return ::testing::AssertionSuccess();
+    return ::testing::AssertionSuccess();
 }
 
 }  // namespace TestTools
