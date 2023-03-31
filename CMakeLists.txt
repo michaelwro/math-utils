@@ -3,7 +3,7 @@ project(MathUtils LANGUAGES CXX)
 
 include(CTest)
 
-# PROJECT CONFIGURATION ===============================================================================================
+# PROJECT CONFIGURATION ============================================================================
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -33,7 +33,7 @@ set(LINALG_DIR "LinAlg/")
 set(GEODESY_DIR "Geodesy/")
 
 
-# BUILD PROJECT =======================================================================================================
+# BUILD PROJECT ====================================================================================
 
 # FIND SOURCE FILES
 file(GLOB SRC_DIR_SRC
@@ -78,6 +78,6 @@ set_target_properties(${MATHUTILS_LIB} PROPERTIES
 )
 
 
-# ADD TESTS ===========================================================================================================
+# ADD TESTS ========================================================================================
 enable_testing()
 add_subdirectory("./test/")
