@@ -7,6 +7,7 @@
         "vscode": {
             "extensions": [
                 "charliermarsh.ruff",
+                "christian-kohler.path-intellisense",
                 "cschlosser.doxdocgen",
                 "davidanson.vscode-markdownlint",
                 "eamodio.gitlens",
