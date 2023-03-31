@@ -3,5 +3,6 @@ cppcheck-junit
 isort
 numpy
 pre-commit
+pre-commit-update
 scipy
 sympy
