@@ -12,8 +12,8 @@
 
 #include "constants.h"
 
-namespace MathUtils { namespace Conversions {
-
+namespace MathUtils {
+namespace Conversions {
 namespace Internal {
 
 constexpr double NIST_FT_TO_M {0.3048};
@@ -32,12 +32,16 @@ constexpr double NIST_ATM_TO_PA {101325.0};
 
 }  // namespace Internal
 
+// =================================================================================================
+// ANGLES
+// =================================================================================================
+
 /**
  * @brief Radians to degrees.
  */
 inline double rad2deg(const double rad)
 {
-  return rad * (180.0 / Constants::PI);
+    return rad * (180.0 / Constants::PI);
 }
 
 /**
@@ -45,7 +49,7 @@ inline double rad2deg(const double rad)
  */
 inline double deg2rad(const double deg)
 {
-  return deg * (Constants::PI / 180.0);
+    return deg * (Constants::PI / 180.0);
 }
 
 /**
@@ -53,7 +57,7 @@ inline double deg2rad(const double deg)
  */
 inline double rmp2rps(const double rpm)
 {
-  return rpm * (Constants::PI / 30.0);
+    return rpm * (Constants::PI / 30.0);
 }
 
 /**
@@ -61,15 +65,19 @@ inline double rmp2rps(const double rpm)
  */
 inline double rps2rpm(const double rps)
 {
-  return rps * (30.0 / Constants::PI);
+    return rps * (30.0 / Constants::PI);
 }
+
+// =================================================================================================
+// DISTANCE
+// =================================================================================================
 
 /**
  * @brief Feet to meters.
  */
 inline double ft2m(const double ft)
 {
-  return ft * Internal::NIST_FT_TO_M;
+    return ft * Internal::NIST_FT_TO_M;
 }
 
 /**
@@ -77,7 +85,7 @@ inline double ft2m(const double ft)
  */
 inline double m2ft(const double m)
 {
-  return m / Internal::NIST_FT_TO_M;
+    return m / Internal::NIST_FT_TO_M;
 }
 
 /**
@@ -85,7 +93,7 @@ inline double m2ft(const double m)
  */
 inline double in2cm(const double in)
 {
-  return in * Internal::NIST_IN_TO_CM;
+    return in * Internal::NIST_IN_TO_CM;
 }
 
 /**
@@ -93,7 +101,7 @@ inline double in2cm(const double in)
  */
 inline double cm2in(const double cm)
 {
-  return cm / Internal::NIST_IN_TO_CM;
+    return cm / Internal::NIST_IN_TO_CM;
 }
 
 /**
@@ -101,7 +109,7 @@ inline double cm2in(const double cm)
  */
 inline double in2mm(const double in)
 {
-  return in * Internal::NIST_IN_TO_MM;
+    return in * Internal::NIST_IN_TO_MM;
 }
 
 /**
@@ -109,7 +117,7 @@ inline double in2mm(const double in)
  */
 inline double mm2in(const double mm)
 {
-  return mm / Internal::NIST_IN_TO_MM;
+    return mm / Internal::NIST_IN_TO_MM;
 }
 
 /**
@@ -117,7 +125,7 @@ inline double mm2in(const double mm)
  */
 inline double m2cm(const double m)
 {
-  return m * Internal::NIST_M_TO_CM;
+    return m * Internal::NIST_M_TO_CM;
 }
 
 /**
@@ -125,7 +133,7 @@ inline double m2cm(const double m)
  */
 inline double cm2m(const double cm)
 {
-  return cm / Internal::NIST_M_TO_CM;
+    return cm / Internal::NIST_M_TO_CM;
 }
 
 /**
@@ -133,7 +141,7 @@ inline double cm2m(const double cm)
  */
 inline double nmi2m(const double nmi)
 {
-  return nmi * Internal::NIST_NMI_TO_M;
+    return nmi * Internal::NIST_NMI_TO_M;
 }
 
 /**
@@ -141,7 +149,7 @@ inline double nmi2m(const double nmi)
  */
 inline double m2nmi(const double m)
 {
-  return m / Internal::NIST_NMI_TO_M;
+    return m / Internal::NIST_NMI_TO_M;
 }
 
 /**
@@ -149,7 +157,7 @@ inline double m2nmi(const double m)
  */
 inline double mi2m(const double mi)
 {
-  return mi * Internal::NIST_MI_TO_M;
+    return mi * Internal::NIST_MI_TO_M;
 }
 
 /**
@@ -157,7 +165,7 @@ inline double mi2m(const double mi)
  */
 inline double m2mi(const double m)
 {
-  return m / Internal::NIST_MI_TO_M;
+    return m / Internal::NIST_MI_TO_M;
 }
 
 /**
@@ -165,7 +173,7 @@ inline double m2mi(const double m)
  */
 inline double mi2km(const double mi)
 {
-  return mi * Internal::NIST_MI_TO_KM;
+    return mi * Internal::NIST_MI_TO_KM;
 }
 
 /**
@@ -173,15 +181,19 @@ inline double mi2km(const double mi)
  */
 inline double km2mi(const double km)
 {
-  return km / Internal::NIST_MI_TO_KM;
+    return km / Internal::NIST_MI_TO_KM;
 }
+
+// =================================================================================================
+// SPEED
+// =================================================================================================
 
 /**
  * @brief Knots to meters per second.
  */
 inline double kts2mps(const double kts)
 {
-  return kts * Internal::NIST_KTS_TO_MPS;
+    return kts * Internal::NIST_KTS_TO_MPS;
 }
 
 /**
@@ -189,15 +201,19 @@ inline double kts2mps(const double kts)
  */
 inline double mps2kts(const double mps)
 {
-  return mps / Internal::NIST_KTS_TO_MPS;
+    return mps / Internal::NIST_KTS_TO_MPS;
 }
+
+// =================================================================================================
+// FORCE
+// =================================================================================================
 
 /**
  * @brief Pound-force (lbf) to Newtons.
  */
 inline double lb2n(const double lb)
 {
-  return lb * Internal::NIST_LB_TO_N;
+    return lb * Internal::NIST_LB_TO_N;
 }
 
 /**
@@ -205,15 +221,19 @@ inline double lb2n(const double lb)
  */
 inline double n2lb(const double n)
 {
-  return n / Internal::NIST_LB_TO_N;
+    return n / Internal::NIST_LB_TO_N;
 }
+
+// =================================================================================================
+// PRESSURE
+// =================================================================================================
 
 /**
  * @brief Bar to Pascals.
  */
 inline double bar2pa(const double bar)
 {
-  return bar * Internal::NIST_BAR_TO_PA;
+    return bar * Internal::NIST_BAR_TO_PA;
 }
 
 /**
@@ -221,7 +241,7 @@ inline double bar2pa(const double bar)
  */
 inline double pa2bar(const double pa)
 {
-  return pa / Internal::NIST_BAR_TO_PA;
+    return pa / Internal::NIST_BAR_TO_PA;
 }
 
 /**
@@ -229,7 +249,7 @@ inline double pa2bar(const double pa)
  */
 inline double bar2hpa(const double bar)
 {
-  return bar * Internal::NIST_BAR_TO_HPA;
+    return bar * Internal::NIST_BAR_TO_HPA;
 }
 
 /**
@@ -237,7 +257,7 @@ inline double bar2hpa(const double bar)
  */
 inline double hpa2bar(const double hpa)
 {
-  return hpa / Internal::NIST_BAR_TO_HPA;
+    return hpa / Internal::NIST_BAR_TO_HPA;
 }
 
 /**
@@ -245,7 +265,7 @@ inline double hpa2bar(const double hpa)
  */
 inline double pa2inhg(const double pa)
 {
-  return pa * Internal::NIST_PA_TO_INHG_32F;
+    return pa * Internal::NIST_PA_TO_INHG_32F;
 }
 
 /**
@@ -253,7 +273,7 @@ inline double pa2inhg(const double pa)
  */
 inline double inhg2pa(const double inhg)
 {
-  return inhg / Internal::NIST_PA_TO_INHG_32F;
+    return inhg / Internal::NIST_PA_TO_INHG_32F;
 }
 
 /**
@@ -261,7 +281,7 @@ inline double inhg2pa(const double inhg)
  */
 inline double atm2pa(const double atm)
 {
-  return atm * Internal::NIST_ATM_TO_PA;
+    return atm * Internal::NIST_ATM_TO_PA;
 }
 
 /**
@@ -269,15 +289,19 @@ inline double atm2pa(const double atm)
  */
 inline double pa2atm(const double pa)
 {
-  return pa / Internal::NIST_ATM_TO_PA;
+    return pa / Internal::NIST_ATM_TO_PA;
 }
+
+// =================================================================================================
+// TEMPERATURE
+// =================================================================================================
 
 /**
  * @brief Degrees fahrenheit to celsius.
  */
 inline double f2c(const double f)
 {
-  return (5.0 * (f - 32.0)) / 9.0;
+    return (5.0 * (f - 32.0)) / 9.0;
 }
 
 /**
@@ -285,7 +309,7 @@ inline double f2c(const double f)
  */
 inline double c2f(const double c)
 {
-  return 32.0 + ((9.0 * c) / 5.0);
+    return 32.0 + ((9.0 * c) / 5.0);
 }
 
 /**
@@ -293,7 +317,7 @@ inline double c2f(const double c)
  */
 inline double c2k(const double c)
 {
-  return c + 273.15;
+    return c + 273.15;
 }
 
 /**
@@ -301,7 +325,7 @@ inline double c2k(const double c)
  */
 inline double k2c(const double k)
 {
-  return k - 273.15;
+    return k - 273.15;
 }
 
 }  // namespace Conversions

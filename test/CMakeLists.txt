@@ -20,7 +20,7 @@ link_directories(
 set(MATHUTILS_TEST_DIR ${CMAKE_SOURCE_DIR}/test/)
 
 # Make tests in this folder
-set(TEST_MATHUTILS_EXEC test_math_utils)
+set(TEST_MATHUTILS_EXEC math_utils_test)
 file(GLOB MATHUTILS_TEST_SRC
     ./*.cpp
     ${MATHUTILS_TEST_DIR}/TestTools/*.cpp

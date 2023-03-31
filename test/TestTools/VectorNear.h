@@ -31,29 +31,26 @@ namespace TestTools {
 
 template<std::size_t N>
 ::testing::AssertionResult VectorNear(const MathUtils::Vector<N>& v1,
-  const MathUtils::Vector<N>& v2,
-  const double tol=1e-14)
+    const MathUtils::Vector<N>& v2,
+    const double tol=1e-14)
 {
-  bool success = true;
-  std::stringstream error_msgs;
+    bool success = true;
+    std::stringstream error_msgs;
 
-  for (std::size_t ii = 0; ii < N; ii++)
-  {
-    const double diff = std::abs(v1(ii) - v2(ii));
+    for (std::size_t ii = 0; ii < N; ii++) {
+        const double diff = std::abs(v1(ii) - v2(ii));
 
-    if (diff > tol)
-    {
-      success = false;
-      error_msgs << "\nElement (" << ii << ") differs by " <<  std::scientific << diff;
+        if (diff > tol) {
+            success = false;
+            error_msgs << "\nElement (" << ii << ") differs by " << std::scientific << diff;
+        }
     }
-  }
 
-  if (!success)
-  {
-    return ::testing::AssertionFailure() << "Vectors are not equal." << error_msgs.str();
-  }
+    if (!success) {
+        return ::testing::AssertionFailure() << "Vectors are not equal." << error_msgs.str();
+    }
 
-  return ::testing::AssertionSuccess();
+    return ::testing::AssertionSuccess();
 }
 
 }  // namespace TestTools

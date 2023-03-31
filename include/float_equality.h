@@ -31,14 +31,14 @@ namespace MathUtils {
 template<typename T>
 inline bool float_equality(const T a, const T b)
 {
-  static_assert(std::is_floating_point<T>::value, "Must be floating-point type.");
+    static_assert(std::is_floating_point<T>::value, "Must be floating-point type.");
 
-  return std::abs(a - b) <= std::numeric_limits<T>::epsilon() * std::max(
-    {static_cast<T>(1.0), a, b},
-    [](const T val1, const T val2){return val1 < val2;}
-  );
+    return std::abs(a - b) <= std::numeric_limits<T>::epsilon() * std::max(
+        {static_cast<T>(1.0), a, b},
+        [](const T val1, const T val2){return val1 < val2;}
+    );
 }
 
-}  // namespace MathUtils
+}    // namespace MathUtils
 
-#endif  // MATHUTILS_FLOAT_EQUALITY_H_
+#endif    // MATHUTILS_FLOAT_EQUALITY_H_

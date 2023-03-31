@@ -26,7 +26,7 @@ namespace TestTools {
  * @returns Test assertion success or failure.
  */
 ::testing::AssertionResult GeoCoordNear(const MathUtils::GeoCoord& c1,
-  const MathUtils::GeoCoord& c2, const double tol=1e-14);
+    const MathUtils::GeoCoord& c2, const double tol=1e-14);
 
 }  // namespace TestTools
 }  // namespace MathUtils

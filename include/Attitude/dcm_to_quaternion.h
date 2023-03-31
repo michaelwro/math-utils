@@ -20,7 +20,8 @@ namespace MathUtils {
  * @param dcm DCM to convert to quaternion.
  * @return Quaternion corresponding to the DCM.
  *
- * @exception std::runtime_error If the DCM could not be converted (something weird happened internally).
+ * @exception std::runtime_error If the DCM could not be converted (something weird happened
+ * internally).
  */
 Quaternion dcm_to_quaternion(const Matrix<3,3>& dcm);
 

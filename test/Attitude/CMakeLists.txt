@@ -1,5 +1,5 @@
 # BUILD TESTS =========================================================================================================
-set(TEST_ATTITUDE_EXEC test_attitude)
+set(TEST_ATTITUDE_EXEC attitude_test)
 
 # get sources
 file(GLOB TEST_LINALG_SRC

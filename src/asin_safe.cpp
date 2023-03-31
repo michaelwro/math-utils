@@ -5,6 +5,7 @@
  */
 
 #include "asin_safe.h"
+
 #include "constants.h"
 
 #include <cmath>
@@ -14,18 +15,16 @@ namespace MathUtils {
 
 double asin_safe(const double val) noexcept
 {
-  assert(std::abs(val) <= 1.0);
+    assert(std::abs(val) <= 1.0);
 
-  if (val >= 1.0)
-  {
-    return Constants::PI_DIV2;
-  }
-  else if (val <= -1.0)
-  {
-    return -Constants::PI_DIV2;
-  }
+    if (val >= 1.0) {
+        return Constants::PI_DIV2;
+    }
+    else if (val <= -1.0) {
+        return -Constants::PI_DIV2;
+    }
 
-  return std::asin(val);
+    return std::asin(val);
 }
 
 }  // MathUtils

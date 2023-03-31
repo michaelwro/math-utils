@@ -31,8 +31,19 @@
                 "doxdocgen.generic.authorTag": "@author {author}",
                 "doxdocgen.generic.returnTemplate": "@return ",
                 "doxdocgen.generic.dateFormat": "YYYY-MM-DD",
-                "editor.tabSize": 2,
-                "editor.insertSpaces": true
+                "editor.insertSpaces": true,
+                "editor.rulers": [
+                    100
+                ],
+                "[c]": {
+                    "editor.tabSize": 4
+                },
+                "[cpp]": {
+                    "editor.tabSize": 4
+                },
+                "[python]": {
+                    "editor.tabSize": 4
+                }
             }
         }
     }

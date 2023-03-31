@@ -1,5 +1,5 @@
 # BUILD TESTS =========================================================================================================
-set(TEST_GEODESY_EXEC test_geodesy)
+set(TEST_GEODESY_EXEC geodesy_test)
 
 # get sources
 file(GLOB TEST_LINALG_SRC

@@ -30,31 +30,27 @@ namespace TestTools {
 
 template<std::size_t N, std::size_t M>
 ::testing::AssertionResult MatrixNear(const MathUtils::Matrix<N,M>& mat1,
-  const MathUtils::Matrix<N,M>& mat2, const double tol=1e-14)
+    const MathUtils::Matrix<N,M>& mat2, const double tol=1e-14)
 {
-  bool success = true;
-  std::stringstream error_msgs;
+    bool success = true;
+    std::stringstream error_msgs;
 
-  for (std::size_t ii = 0; ii < N; ii++)
-  {
-    for (std::size_t jj = 0; jj < M; jj++)
-    {
-      const double diff = std::abs(mat1(ii, jj) - mat2(ii, jj));
+    for (std::size_t ii = 0; ii < N; ii++) {
+        for (std::size_t jj = 0; jj < M; jj++) {
+            const double diff = std::abs(mat1(ii, jj) - mat2(ii, jj));
 
-      if (diff > tol)
-      {
-        success = false;
-        error_msgs << "\nElement (" << ii << "," << jj << ") differs by " <<  std::scientific << diff;
-      }
+            if (diff > tol) {
+                success = false;
+                error_msgs << "\nElement (" << ii << "," << jj << ") differs by " << std::scientific << diff;
+            }
+        }
     }
-  }
 
-  if (!success)
-  {
-    return ::testing::AssertionFailure() << "Matrices are not equal." << error_msgs.str();
-  }
+    if (!success) {
+        return ::testing::AssertionFailure() << "Matrices are not equal." << error_msgs.str();
+    }
 
-  return ::testing::AssertionSuccess();
+    return ::testing::AssertionSuccess();
 }
 
 }  // namespace TestTools

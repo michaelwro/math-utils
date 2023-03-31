@@ -33,427 +33,426 @@ namespace MathUtils {
  * @tparam T_LEN Length of the vector.
  */
 template<std::size_t T_LEN>
-class Vector
-{
+class Vector {
 public:
 
-  static_assert(T_LEN > 1, "One-length or zero-length vectors are not allowed.");
+    static_assert(T_LEN > 1, "One-length or zero-length vectors are not allowed.");
 
-  /**
-   * @brief Create a Vector.
-   *
-   * @details Default constructor sets all values to zero.
-   */
-  Vector()
-    :m_arr{0.0}
-  {}
+    /**
+     * @brief Create a Vector.
+     *
+     * @details Default constructor sets all values to zero.
+     */
+    Vector()
+        :m_arr{0.0}
+    {}
 
-  /**
-   * @brief Destroy the vector.
-   */
-  ~Vector() = default;
+    /**
+     * @brief Destroy the vector.
+     */
+    ~Vector() = default;
 
-  /**
-   * @brief Create a vector from an initializer list.
-   *
-   * @tparam T Initializer list data type.
-   * @param vector_vals Vector values.
-   *
-   * @exception std::length_error Initializer list length doesn't match vector size.
-   */
-  template<typename T>
-  explicit Vector(const std::initializer_list<T> vector_vals)
-    :m_arr{0.0}
-  {
-    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
-
-    const std::size_t input_length = vector_vals.size();
-
-    if (input_length != T_LEN)
+    /**
+     * @brief Create a vector from an initializer list.
+     *
+     * @tparam T Initializer list data type.
+     * @param vector_vals Vector values.
+     *
+     * @exception std::length_error Initializer list length doesn't match vector size.
+     */
+    template<typename T>
+    explicit Vector(const std::initializer_list<T> vector_vals)
+        :m_arr{0.0}
     {
-      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_length, T_LEN));
+        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+
+        const std::size_t input_length = vector_vals.size();
+
+        if (input_length != T_LEN) {
+            throw std::length_error(
+                Internal::invalid_init_list_length_error_msg(input_length, T_LEN)
+            );
+        }
+
+        std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
     }
 
-    std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
-  }
+    /**
+     * @brief Copy-construct vector.
+     *
+     * @param other Other vector.
+     */
+    Vector(const Vector& other)
+        :m_arr{other.m_arr}
+    {}
 
-  /**
-   * @brief Copy-construct vector.
-   *
-   * @param other Other vector.
-   */
-  Vector(const Vector& other)
-    :m_arr{other.m_arr}
-  {}
+    /**
+     * @brief Move construct vector.
+     *
+     * @param other Other vector.
+     */
+    Vector(Vector&& other) noexcept
+        :m_arr{std::move(other.m_arr)}
+    {}
 
-  /**
-   * @brief Move construct vector.
-   *
-   * @param other Other vector.
-   */
-  Vector(Vector&& other) noexcept
-    :m_arr{std::move(other.m_arr)}
-  {}
-
-  /**
-   * @brief Copy-assign vector.
-   * @param other Other vector.
-   * @return Copied vector.
-   */
-  Vector& operator=(const Vector& other)
-  {
-    if (&other == this)
+    /**
+     * @brief Copy-assign vector.
+     * @param other Other vector.
+     * @return Copied vector.
+     */
+    Vector& operator=(const Vector& other)
     {
-      return *this;
+        if (&other == this) {
+            return *this;
+        }
+
+        m_arr = other.m_arr;
+        return *this;
     }
 
-    m_arr = other.m_arr;
-    return *this;
-  }
-
-  /**
-   * @brief Move-assign vector.
-   * @param other Other vector.
-   * @return Copied vector.
-   */
-  Vector& operator=(Vector&& other)
-  {
-    if (&other == this)
+    /**
+     * @brief Move-assign vector.
+     * @param other Other vector.
+     * @return Copied vector.
+     */
+    Vector& operator=(Vector&& other)
     {
-      return *this;
+        if (&other == this) {
+            return *this;
+        }
+
+        m_arr.swap(other.m_arr);
+        return *this;
     }
 
-    m_arr.swap(other.m_arr);
-    return *this;
-  }
-
-  /**
-   * @brief Assign vector values from an initializer list.
-   *
-   * @tparam T Initializer list type.
-   * @param vector_vals New vector.
-   *
-   * @exception std::length_error Initializer list length doesn't match vector size.
-   */
-  template<typename T>
-  Vector& operator=(const std::initializer_list<T> vector_vals)
-  {
-    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
-
-    const std::size_t input_length = vector_vals.size();
-
-    if (input_length != T_LEN)
+    /**
+     * @brief Assign vector values from an initializer list.
+     *
+     * @tparam T Initializer list type.
+     * @param vector_vals New vector.
+     *
+     * @exception std::length_error Initializer list length doesn't match vector size.
+     */
+    template<typename T>
+    Vector& operator=(const std::initializer_list<T> vector_vals)
     {
-      throw std::length_error(Internal::invalid_init_list_length_error_msg(input_length, T_LEN));
+        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+
+        const std::size_t input_length = vector_vals.size();
+
+        if (input_length != T_LEN) {
+            throw std::length_error(
+                Internal::invalid_init_list_length_error_msg(input_length, T_LEN)
+            );
+        }
+
+        std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
+        return *this;
     }
 
-    std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
-    return *this;
-  }
-
-  /**
-   * @brief Lvalue negate unary operator.
-   *
-   * @return Negated vector.
-   *
-   * @ref https://stackoverflow.com/a/37737947
-   */
-  Vector operator-() const &
-  {
-    Vector vec;
-    vec.m_arr = this->m_arr;
-
-    std::for_each(vec.m_arr.begin(), vec.m_arr.end(), [](double& val){val *= -1.0;});
-
-    return vec;
-  }
-
-  /**
-   * @brief Rvalue negate unary operator.
-   *
-   * @return Negated vector.
-   *
-   * @ref https://stackoverflow.com/a/37737947
-   */
-  Vector operator-() const &&
-  {
-    Vector vec;
-    vec.m_arr = this->m_arr;
-
-    std::for_each(vec.m_arr.begin(), vec.m_arr.end(), [](double& val){val *= -1.0;});
-
-    return vec;
-  }
-
-  /**
-   * @brief Access vector element.
-   *
-   * @param idx Vector index.
-   * @return Vector element at specified index.
-   */
-  double& operator()(const std::size_t idx) noexcept
-  {
-    assert(idx < T_LEN);
-    return m_arr[idx];
-  }
-
-  /**
-   * @brief Get vector element.
-   *
-   * @param idx Vector index.
-   * @return Vector value at specified index.
-   */
-  const double& operator()(const std::size_t idx) const noexcept
-  {
-    assert(idx < T_LEN);
-    return m_arr[idx];
-  }
-
-  /**
-   * @brief Add scalar to all vector elements in-place (accumulate).
-   *
-   * @tparam T Scalar type.
-   * @param scalar Scalar to add.
-   * @return Vector with scalar added.
-   */
-  template<typename T>
-  Vector& operator+=(const T scalar)
-  {
-    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
-
-    const double scalard = static_cast<double>(scalar);
-
-    std::for_each(
-      m_arr.begin(),
-      m_arr.end(),
-      [scalard](double& element){element += scalard;}
-    );
-
-    return *this;
-  }
-
-  /**
-   * @brief Add vector in-place (accumulate).
-   *
-   * @param vec Vector to add.
-   * @return Vector with other vector added.
-   */
-  Vector& operator+=(const Vector& vec) noexcept
-  {
-    for (std::size_t idx = 0; idx < T_LEN; idx++)
+    /**
+     * @brief Lvalue negate unary operator.
+     *
+     * @return Negated vector.
+     *
+     * @ref https://stackoverflow.com/a/37737947
+     */
+    Vector operator-() const &
     {
-      m_arr[idx] += vec.m_arr[idx];
+        Vector vec;
+        vec.m_arr = this->m_arr;
+
+        std::for_each(vec.m_arr.begin(), vec.m_arr.end(), [](double& val){val *= -1.0;});
+
+        return vec;
     }
 
-    return *this;
-  }
-
-  /**
-   * @brief Subtract scalar from all vector elements in-place.
-   *
-   * @tparam T Scalar type.
-   * @param scalar Scalar to subtract.
-   * @return Vector with scalar subtracted.
-   */
-  template<typename T>
-  Vector& operator-=(const T scalar)
-  {
-    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
-
-    const double scalard = static_cast<double>(scalar);
-
-    std::for_each(
-      m_arr.begin(),
-      m_arr.end(),
-      [scalard](double& element){element -= scalard;}
-    );
-
-    return *this;
-  }
-
-  /**
-   * @brief Subtract vector in-place.
-   *
-   * @param vec Vector to subtract.
-   * @return Vector with other vector subtracted from it.
-   */
-  Vector& operator-=(const Vector& vec) noexcept
-  {
-    for (std::size_t idx = 0; idx < T_LEN; idx++)
+    /**
+     * @brief Rvalue negate unary operator.
+     *
+     * @return Negated vector.
+     *
+     * @ref https://stackoverflow.com/a/37737947
+     */
+    Vector operator-() const &&
     {
-      m_arr[idx] -= vec.m_arr[idx];
+        Vector vec;
+        vec.m_arr = this->m_arr;
+
+        std::for_each(vec.m_arr.begin(), vec.m_arr.end(), [](double& val){val *= -1.0;});
+
+        return vec;
     }
 
-    return *this;
-  }
-
-  /**
-   * @brief Multiply all elements by a scalar in-place.
-   *
-   * @tparam T Scalar type.
-   * @param scalar Scalar to multiply by.
-   * @return Vector with scalar multiplied.
-   */
-  template<typename T>
-  Vector& operator*=(const T scalar)
-  {
-    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
-
-    const double scalard = static_cast<double>(scalar);
-
-    std::for_each(
-      m_arr.begin(),
-      m_arr.end(),
-      [scalard](double& element){element *= scalard;}
-    );
-
-    return *this;
-  }
-
-  /**
-   * @brief Divide all elements by a scalar in-place.
-   *
-   * @tparam T Scalar type.
-   * @param scalar Scalar to divide by.
-   * @return Vector with scalar divided.
-   */
-  template<typename T>
-  Vector& operator/=(const T scalar)
-  {
-    static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
-
-    // make sure denominator is not too small
-    const double scalard = static_cast<double>(scalar);
-    assert(!float_equality(std::abs(scalard), 0.0));
-
-    std::for_each(
-      m_arr.begin(),
-      m_arr.end(),
-      [scalard](double& element){element /= scalard;}
-    );
-
-    return *this;
-  }
-
-  /**
-   * @brief Divide all elements by another vector in-place.
-   *
-   * @param scalar Vector to divide by.
-   * @return Vector divided by other vector.
-   */
-  Vector& operator/=(const Vector& vec) noexcept
-  {
-    for (std::size_t idx = 0; idx < T_LEN; idx++)
+    /**
+     * @brief Access vector element.
+     *
+     * @param idx Vector index.
+     * @return Vector element at specified index.
+     */
+    double& operator()(const std::size_t idx) noexcept
     {
-      const double val = vec.m_arr[idx];
-
-      assert(!float_equality(std::abs(val), 0.0));
-
-      m_arr[idx] /= vec.m_arr[idx];
+        assert(idx < T_LEN);
+        return m_arr[idx];
     }
 
-    return *this;
-  }
-
-  /**
-   * @brief Get the vector length (number of elements).
-   *
-   * @return Vector length.
-   */
-  constexpr std::size_t get_size() const noexcept
-  {
-    return T_LEN;
-  }
-
-  /**
-   * @brief Fill the entire vector with a value.
-   *
-   * @param val Value to fill the vector with.
-   */
-  void fill(const double val) noexcept
-  {
-    m_arr.fill(val);
-  }
-
-  /**
-   * @brief Return the magnitude/norm of the vector.
-   *
-   * @return Vector magnitude.
-   */
-  double get_magnitude() const
-  {
-    const double magn = std::accumulate(
-      m_arr.begin(), m_arr.end(), 0.0,
-      [](double accum, const double& val){return accum += val * val;}
-    );
-
-    // NOTE: Since all elements were squared in the above operation, this argument should never be negative
-    assert(magn >= 0.0);
-    return std::sqrt(magn);
-  }
-
-  /**
-   * @brief Normalize the vector.
-   */
-  void normalize()
-  {
-    const double magn = this->get_magnitude();
-
-    assert(!float_equality(magn, 0.0));
-
-    std::for_each(m_arr.begin(), m_arr.end(), [magn](double& val){val /= magn;});
-  }
-
-  /**
-   * @brief Return the sum of all elements in the vector.
-   *
-   * @return Sum of all vector elements.
-   */
-  double get_sum() const
-  {
-    return std::accumulate(m_arr.begin(), m_arr.end(), 0.0, std::plus<double>());
-  }
-
-  /**
-   * @brief Multiply all elements by -1.0. Flip the sign of all elements.
-   *
-   * @return Vector with signs flipped.
-   */
-  void negate()
-  {
-    std::for_each(m_arr.begin(), m_arr.end(), [](double& val){val *= -1.0;});
-  }
-
-  /**
-   * @brief Print a vector to a stream. Comma-separates values. Does not add a newline at the end.
-   *
-   * @param os Output stream.
-   * @param vec Vector to print.
-   * @return Output stream with vector.
-   *
-   * @code {.cpp}
-   * std::cout << my_vector << "\n";
-   * @endcode
-   */
-  friend std::ostream& operator<<(std::ostream& os, const Vector& vec)
-  {
-    for (std::size_t idx = 0; idx < vec.m_arr.size() - 1; idx++)
+    /**
+     * @brief Get vector element.
+     *
+     * @param idx Vector index.
+     * @return Vector value at specified index.
+     */
+    const double& operator()(const std::size_t idx) const noexcept
     {
-      os << vec.m_arr[idx] << ", ";
+        assert(idx < T_LEN);
+        return m_arr[idx];
     }
 
-    os << vec.m_arr[vec.m_arr.size() - 1];
-    return os;
-  }
+    /**
+     * @brief Add scalar to all vector elements in-place (accumulate).
+     *
+     * @tparam T Scalar type.
+     * @param scalar Scalar to add.
+     * @return Vector with scalar added.
+     */
+    template<typename T>
+    Vector& operator+=(const T scalar)
+    {
+        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+
+        const double scalard = static_cast<double>(scalar);
+
+        std::for_each(
+            m_arr.begin(),
+            m_arr.end(),
+            [scalard](double& element){element += scalard;}
+        );
+
+        return *this;
+    }
+
+    /**
+     * @brief Add vector in-place (accumulate).
+     *
+     * @param vec Vector to add.
+     * @return Vector with other vector added.
+     */
+    Vector& operator+=(const Vector& vec) noexcept
+    {
+        for (std::size_t idx = 0; idx < T_LEN; idx++) {
+            m_arr[idx] += vec.m_arr[idx];
+        }
+
+        return *this;
+    }
+
+    /**
+     * @brief Subtract scalar from all vector elements in-place.
+     *
+     * @tparam T Scalar type.
+     * @param scalar Scalar to subtract.
+     * @return Vector with scalar subtracted.
+     */
+    template<typename T>
+    Vector& operator-=(const T scalar)
+    {
+        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+
+        const double scalard = static_cast<double>(scalar);
+
+        std::for_each(
+            m_arr.begin(),
+            m_arr.end(),
+            [scalard](double& element){element -= scalard;}
+        );
+
+        return *this;
+    }
+
+    /**
+     * @brief Subtract vector in-place.
+     *
+     * @param vec Vector to subtract.
+     * @return Vector with other vector subtracted from it.
+     */
+    Vector& operator-=(const Vector& vec) noexcept
+    {
+        for (std::size_t idx = 0; idx < T_LEN; idx++)
+        {
+            m_arr[idx] -= vec.m_arr[idx];
+        }
+
+        return *this;
+    }
+
+    /**
+     * @brief Multiply all elements by a scalar in-place.
+     *
+     * @tparam T Scalar type.
+     * @param scalar Scalar to multiply by.
+     * @return Vector with scalar multiplied.
+     */
+    template<typename T>
+    Vector& operator*=(const T scalar)
+    {
+        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+
+        const double scalard = static_cast<double>(scalar);
+
+        std::for_each(
+            m_arr.begin(),
+            m_arr.end(),
+            [scalard](double& element){element *= scalard;}
+        );
+
+        return *this;
+    }
+
+    /**
+     * @brief Divide all elements by a scalar in-place.
+     *
+     * @tparam T Scalar type.
+     * @param scalar Scalar to divide by.
+     * @return Vector with scalar divided.
+     */
+    template<typename T>
+    Vector& operator/=(const T scalar)
+    {
+        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+
+        // make sure denominator is not too small
+        const double scalard = static_cast<double>(scalar);
+        assert(!float_equality(std::abs(scalard), 0.0));
+
+        std::for_each(
+            m_arr.begin(),
+            m_arr.end(),
+            [scalard](double& element){element /= scalard;}
+        );
+
+        return *this;
+    }
+
+    /**
+     * @brief Divide all elements by another vector in-place.
+     *
+     * @param scalar Vector to divide by.
+     * @return Vector divided by other vector.
+     */
+    Vector& operator/=(const Vector& vec) noexcept
+    {
+        for (std::size_t idx = 0; idx < T_LEN; idx++) {
+            const double val = vec.m_arr[idx];
+
+            assert(!float_equality(std::abs(val), 0.0));
+
+            m_arr[idx] /= vec.m_arr[idx];
+        }
+
+        return *this;
+    }
+
+    /**
+     * @brief Get the vector length (number of elements).
+     *
+     * @return Vector length.
+     */
+    constexpr std::size_t get_size() const noexcept
+    {
+        return T_LEN;
+    }
+
+    /**
+     * @brief Fill the entire vector with a value.
+     *
+     * @param val Value to fill the vector with.
+     */
+    void fill(const double val) noexcept
+    {
+        m_arr.fill(val);
+    }
+
+    /**
+     * @brief Return the magnitude/norm of the vector.
+     *
+     * @return Vector magnitude.
+     */
+    double get_magnitude() const
+    {
+        const double magn = std::accumulate(
+            m_arr.begin(), m_arr.end(), 0.0,
+            [](double accum, const double& val){return accum += val * val;}
+        );
+
+        /**
+         * NOTE: Since all elements were squared in the above operation, this argument should never
+         * be negative.
+         */
+        assert(magn >= 0.0);
+        return std::sqrt(magn);
+    }
+
+    /**
+     * @brief Normalize the vector.
+     */
+    void normalize()
+    {
+        const double magn = this->get_magnitude();
+
+        assert(!float_equality(magn, 0.0));
+
+        std::for_each(m_arr.begin(), m_arr.end(), [magn](double& val){val /= magn;});
+    }
+
+    /**
+     * @brief Return the sum of all elements in the vector.
+     *
+     * @return Sum of all vector elements.
+     */
+    double get_sum() const
+    {
+        return std::accumulate(m_arr.begin(), m_arr.end(), 0.0, std::plus<double>());
+    }
+
+    /**
+     * @brief Multiply all elements by -1.0. Flip the sign of all elements.
+     *
+     * @return Vector with signs flipped.
+     */
+    void negate()
+    {
+        std::for_each(m_arr.begin(), m_arr.end(), [](double& val){val *= -1.0;});
+    }
+
+    /**
+     * @brief Print a vector to a stream. Comma-separates values. Does not add a newline at the end.
+     *
+     * @param os Output stream.
+     * @param vec Vector to print.
+     * @return Output stream with vector.
+     *
+     * @code {.cpp}
+     * std::cout << my_vector << "\n";
+     * @endcode
+     */
+    friend std::ostream& operator<<(std::ostream& os, const Vector& vec)
+    {
+        for (std::size_t idx = 0; idx < vec.m_arr.size() - 1; idx++) {
+            os << vec.m_arr[idx] << ", ";
+        }
+
+        os << vec.m_arr[vec.m_arr.size() - 1];
+        return os;
+    }
 
 protected:
 private:
-  std::array<double, T_LEN> m_arr;  ///< Underlying array to store vector values.
+    std::array<double, T_LEN> m_arr;  ///< Underlying array to store vector values.
 };
 
-// ============================================================================
+// =================================================================================================
 // VECTOR-ONLY FUNCTIONS
-// ============================================================================
+// =================================================================================================
 
 /**
  * @brief 3D vector cross product of v1 x v2.
@@ -464,11 +463,11 @@ private:
  */
 inline Vector<3> cross(const Vector<3>& v1, const Vector<3>& v2)
 {
-  return Vector<3>{
-    (v1(1) * v2(2)) - (v1(2) * v2(1)),
-    (v1(2) * v2(0)) - (v1(0) * v2(2)),
-    (v1(0) * v2(1)) - (v1(1) * v2(0))
-  };
+    return Vector<3>{
+        (v1(1) * v2(2)) - (v1(2) * v2(1)),
+        (v1(2) * v2(0)) - (v1(0) * v2(2)),
+        (v1(0) * v2(1)) - (v1(1) * v2(0))
+    };
 }
 
 /**
@@ -482,7 +481,7 @@ inline Vector<3> cross(const Vector<3>& v1, const Vector<3>& v2)
  */
 inline double dot(const Vector<2>& v1, const Vector<2>& v2)
 {
-  return (v1(0) * v2(0)) + (v1(1) * v2(1));
+    return (v1(0) * v2(0)) + (v1(1) * v2(1));
 }
 
 /**
@@ -496,7 +495,7 @@ inline double dot(const Vector<2>& v1, const Vector<2>& v2)
  */
 inline double dot(const Vector<3>& v1, const Vector<3>& v2)
 {
-  return (v1(0) * v2(0)) + (v1(1) * v2(1)) + (v1(2) * v2(2));
+    return (v1(0) * v2(0)) + (v1(1) * v2(1)) + (v1(2) * v2(2));
 }
 
 /**
@@ -510,20 +509,19 @@ inline double dot(const Vector<3>& v1, const Vector<3>& v2)
 template<std::size_t N>
 double dot(const Vector<N>& v1, const Vector<N>& v2)
 {
-  double dot_prod = 0.0;
+    double dot_prod = 0.0;
 
-  for (std::size_t idx = 0; idx < N; idx++)
-  {
-    dot_prod += v1(idx) * v2(idx);
-  }
+    for (std::size_t idx = 0; idx < N; idx++) {
+        dot_prod += v1(idx) * v2(idx);
+    }
 
-  return dot_prod;
+    return dot_prod;
 }
 
 
-// ============================================================================
+// =================================================================================================
 // VECTOR <-> VECTOR OPERATOR OVERLOADS
-// ============================================================================
+// =================================================================================================
 
 /**
  * @brief Add two vectors.
@@ -536,14 +534,13 @@ double dot(const Vector<N>& v1, const Vector<N>& v2)
 template<std::size_t N>
 Vector<N> operator+(const Vector<N>& v1, const Vector<N>& v2)
 {
-  Vector<N> result(v1);
+    Vector<N> result(v1);
 
-  for (std::size_t idx = 0; idx < N; idx++)
-  {
-    result(idx) += v2(idx);
-  }
+    for (std::size_t idx = 0; idx < N; idx++) {
+        result(idx) += v2(idx);
+    }
 
-  return result;
+    return result;
 }
 
 /**
@@ -557,14 +554,13 @@ Vector<N> operator+(const Vector<N>& v1, const Vector<N>& v2)
 template<std::size_t N>
 Vector<N> operator-(const Vector<N>& v1, const Vector<N>& v2)
 {
-  Vector<N> result(v1);
+    Vector<N> result(v1);
 
-  for (std::size_t idx = 0; idx < N; idx++)
-  {
-    result(idx) -= v2(idx);
-  }
+    for (std::size_t idx = 0; idx < N; idx++) {
+        result(idx) -= v2(idx);
+    }
 
-  return result;
+    return result;
 }
 
 /**
@@ -579,17 +575,16 @@ Vector<N> operator-(const Vector<N>& v1, const Vector<N>& v2)
 template<std::size_t N, typename T>
 Vector<N> operator*(const T scalar, const Vector<N>& vec)
 {
-  static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
+    static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
 
-  Vector<N> res(vec);
-  const double scalard = static_cast<double>(scalar);
+    Vector<N> res(vec);
+    const double scalard = static_cast<double>(scalar);
 
-  for (std::size_t idx = 0; idx < vec.get_size(); idx++)
-  {
-    res(idx) *= scalard;
-  }
+    for (std::size_t idx = 0; idx < vec.get_size(); idx++) {
+        res(idx) *= scalard;
+    }
 
-  return res;
+    return res;
 }
 
 /**
@@ -604,8 +599,8 @@ Vector<N> operator*(const T scalar, const Vector<N>& vec)
 template<std::size_t N, typename T>
 Vector<N> operator*(const Vector<N>& vec, const T scalar)
 {
-  static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
-  return scalar * vec;
+    static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
+    return scalar * vec;
 }
 
 /**
@@ -619,16 +614,15 @@ Vector<N> operator*(const Vector<N>& vec, const T scalar)
 template<std::size_t N>
 Vector<N> operator*(const Vector<N>& v1, const Vector<N>& v2)
 {
-  Vector<N> result(v1);
+    Vector<N> result(v1);
 
-  for (std::size_t idx = 0; idx < N; idx++)
-  {
-    result(idx) *= v2(idx);
-  }
+    for (std::size_t idx = 0; idx < N; idx++) {
+        result(idx) *= v2(idx);
+    }
 
-  return result;
+    return result;
 }
 
-}  // namespace MathUtils
+}    // namespace MathUtils
 
-#endif  // MATHUTILS_LINALG_VECTOR_H_
+#endif    // MATHUTILS_LINALG_VECTOR_H_
