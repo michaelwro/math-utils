@@ -178,19 +178,6 @@ TEST(QuaternionTest, Conjugate)
 }
 
 // =================================================================================================
-TEST(QuaternionTest, Invert)
-{
-    Quaternion q(-0.5, -0.5, -0.5, 0.5);
-
-    q.invert();
-
-    EXPECT_DOUBLE_EQ(-0.5, q(0));
-    EXPECT_DOUBLE_EQ(0.5, q(1));
-    EXPECT_DOUBLE_EQ(0.5, q(2));
-    EXPECT_DOUBLE_EQ(-0.5, q(3));
-}
-
-// =================================================================================================
 TEST(QuaternionTest, ForcePositiveRotation)
 {
     const double val = 1.0;

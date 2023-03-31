@@ -117,11 +117,6 @@ public:
     Quaternion get_conjugate() const;
 
     /**
-     * @brief Invert the quaternion.
-     */
-    void invert() noexcept;
-
-    /**
      * @brief Negate (*= -1) the quaternion if the scalar component is negative to force a
      * positive rotation.
      *
