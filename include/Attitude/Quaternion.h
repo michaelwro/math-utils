@@ -11,7 +11,6 @@
 #include "LinAlg/Vector.h"
 
 #include <array>
-#include <functional>
 #include <initializer_list>
 #include <iostream>
 
@@ -104,6 +103,16 @@ public:
      * @return Quaternion element at specified index.
      */
     const double& operator()(const std::size_t idx) const noexcept;
+
+    /**
+     * @brief Get quaternion element. With bounds checking.
+     *
+     * @param idx Quaternion index.
+     * @return Value at index.
+     *
+     * @exception std::out_of_range Invalid quaternion index.
+     */
+    const double& at(const std::size_t idx) const;
 
     /**
      * @brief Return the inverse of the quaternion.
