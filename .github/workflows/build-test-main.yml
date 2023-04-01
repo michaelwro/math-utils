@@ -1,0 +1,16 @@
+name: Build & Test For Main
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+jobs:
+  build-and-test-main:
+    uses: ./.github/workflows/build-test.yml
+    with:
+      ubuntu_version: "22.04"
+      build_type: Debug

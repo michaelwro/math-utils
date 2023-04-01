@@ -11,18 +11,20 @@ on:
 jobs:
   static-analysis:
     name: CppCheck Static Analysis
-    runs-on: ubuntu-22.04
-    if: "!contains(github.event.head_commit.message, 'ci skip')"
+    runs-on: ubuntu-latest
+    if: "${{ !contains(github.event.head_commit.message, 'ci skip') }}"
 
     steps:
       - uses: actions/checkout@v3
-      - name: Install cppcheck
-        run: |
-          sudo apt update
-          DEBIAN_FRONTEND=noninteractive sudo apt install -y cppcheck
 
       - name: Check cppcheck version
-        run: cppcheck --version
+        uses: devcontainers/ci@v0.3
+        with:
+          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:22.04
+          runCmd: cppcheck --version
 
       - name: Run cppcheck
-        run: bash scripts/run-cppcheck.sh
+        uses: devcontainers/ci@v0.3
+        with:
+          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:22.04
+          runCmd: bash scripts/run-cppcheck.sh
