@@ -149,7 +149,7 @@ public:
     }
 
     /**
-     * @brief Access vector element.
+     * @brief Access vector element. No bounds checks.
      *
      * @param idx Vector index.
      * @return Vector element at specified index.
@@ -161,7 +161,7 @@ public:
     }
 
     /**
-     * @brief Get vector element.
+     * @brief Get vector element. No bounds checks.
      *
      * @param idx Vector index.
      * @return Vector value at specified index.
@@ -169,6 +169,40 @@ public:
     const double& operator()(const std::size_t idx) const noexcept
     {
         assert(idx < T_LEN);
+        return m_arr[idx];
+    }
+
+    /**
+     * @brief Access vector element. With bounds checks.
+     *
+     * @param idx Vector index.
+     * @return Vector element at specified index.
+     *
+     * @exception std::out_of_range Invalid vector index.
+     */
+    double& at(const std::size_t idx)
+    {
+        if (idx >= T_LEN) {
+            throw std::out_of_range(Internal::invalid_index_error_msg(idx, T_LEN));
+        }
+
+        return m_arr[idx];
+    }
+
+    /**
+     * @brief Get vector element. With bounds checks.
+     *
+     * @param idx Vector index.
+     * @return Vector element at specified index.
+     *
+     * @exception std::out_of_range Invalid vector index.
+     */
+    const double& at(const std::size_t idx) const
+    {
+        if (idx >= T_LEN) {
+            throw std::out_of_range(Internal::invalid_index_error_msg(idx, T_LEN));
+        }
+
         return m_arr[idx];
     }
 

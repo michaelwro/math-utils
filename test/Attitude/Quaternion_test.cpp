@@ -145,15 +145,6 @@ TEST(QuaternionTest, InitializerListAssign)
 }
 
 // =================================================================================================
-TEST(QuaternionDeathTest, InvalidIndexAsserts)
-{
-    EXPECT_DEBUG_DEATH({
-        Quaternion quat;
-        quat(4);
-    }, "");
-}
-
-// =================================================================================================
 TEST(QuaternionTest, InvalidLengthAssignmentThrows)
 {
     std::initializer_list<double> vals = {1, 2, 3};
@@ -162,6 +153,16 @@ TEST(QuaternionTest, InvalidLengthAssignmentThrows)
         Quaternion quat;
         quat = vals;
     }, std::length_error);
+}
+
+// =================================================================================================
+TEST(QuaternionTest, InvalidIndexThrows)
+{
+    Quaternion quat({1, 2, 3, 4});
+
+    EXPECT_THROW({
+        quat.at(4);
+    }, std::out_of_range);
 }
 
 // =================================================================================================

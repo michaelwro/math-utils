@@ -7,15 +7,16 @@
 #include "Attitude/Quaternion.h"
 
 #include "acos_safe.h"
-#include "constants.h"
 #include "float_equality.h"
 #include "Internal/error_msg_helpers.h"
 
 #include <algorithm>
 #include <cassert>
 #include <cmath>
+#include <functional>
 #include <initializer_list>
 #include <iomanip>
+#include <stdexcept>
 #include <type_traits>
 
 namespace MathUtils {
@@ -93,6 +94,16 @@ Quaternion& Quaternion::operator=(const std::initializer_list<double> quat_vals)
 const double& Quaternion::operator()(const std::size_t idx) const noexcept
 {
     assert(idx < 4);
+    return m_arr[idx];
+}
+
+
+const double& Quaternion::at(const std::size_t idx) const
+{
+    if (idx >= 4) {
+        throw std::out_of_range(Internal::invalid_index_error_msg(idx, 4));
+    }
+
     return m_arr[idx];
 }
 

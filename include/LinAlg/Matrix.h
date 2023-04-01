@@ -186,7 +186,7 @@ public:
     }
 
     /**
-     * @brief Access matrix element.
+     * @brief Access matrix element. No bounds checking.
      *
      * @param row Row index.
      * @param col Column index.
@@ -201,7 +201,7 @@ public:
     }
 
     /**
-     * @brief Get matrix element.
+     * @brief Get matrix element. No bounds checking.
      *
      * @param row Row index.
      * @param col Column index.
@@ -211,6 +211,42 @@ public:
     {
         assert(row < T_ROWS);
         assert(col < T_COLS);
+        return m_arr[(row * T_COLS) + col];
+    }
+
+    /**
+     * @brief Access matrix element. With bounds checking.
+     *
+     * @param row Row index.
+     * @param col Column index.
+     * @return Matrix element at specified index.
+     *
+     * @exception std::out_of_range Invalid matrix index.
+     */
+    double& at(const std::size_t row, std::size_t col)
+    {
+        if (row >= T_ROWS || col >= T_COLS) {
+            throw std::out_of_range(Internal::invalid_index_error_msg(row, col, T_ROWS, T_COLS));
+        }
+
+        return m_arr[(row * T_COLS) + col];
+    }
+
+    /**
+     * @brief Get matrix element.  With bounds checking.
+     *
+     * @param row Row index.
+     * @param col Column index.
+     * @return Matrix element at specified index.
+     *
+     * @exception std::out_of_range Invalid matrix index.
+     */
+    const double& at(const std::size_t row, std::size_t col) const
+    {
+        if (row >= T_ROWS || col >= T_COLS) {
+            throw std::out_of_range(Internal::invalid_index_error_msg(row, col, T_ROWS, T_COLS));
+        }
+
         return m_arr[(row * T_COLS) + col];
     }
 
