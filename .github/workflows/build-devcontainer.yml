@@ -1,0 +1,31 @@
+name: Build Devcontainer
+
+on:
+  push:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+jobs:
+  build-devcontainer:
+    name: Build & Push Devcontainer
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ubuntu_version: ["20.04", "22.04"]
+
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push Dev Container task
+        uses: devcontainers/ci@v0.3
+        with:
+          imageName: ghcr.io/${{ github.repository }}-devcontainer:${{ matrix.ubuntu_version }}
+          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ matrix.ubuntu_version }}
+          push: always

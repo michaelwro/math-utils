@@ -1,6 +1,7 @@
 # Dockerfile for developing math-utils
 
-FROM ubuntu:22.04
+ARG UBUNTU_VERSION
+FROM docker.io/library/ubuntu:$UBUNTU_VERSION
 
 LABEL AUTHOR="Michael Wrona"
 

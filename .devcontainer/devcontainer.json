@@ -1,7 +1,11 @@
 {
     "name": "math-utils",
     "build": {
-        "dockerfile": "Dockerfile"
+        "dockerfile": "Dockerfile",
+        "args": {
+            "UBUNTU_VERSION": "${localEnv:UBUNTU_VERSION:22.04}"
+        },
+        "cacheFrom": "ghcr.io/michaelwro/math-utils-devcontainer:${localEnv:UBUNTU_VERSION:22.04}"
     },
     "customizations": {
         "vscode": {
@@ -11,6 +15,7 @@
                 "cschlosser.doxdocgen",
                 "davidanson.vscode-markdownlint",
                 "eamodio.gitlens",
+                "github.vscode-github-actions",
                 "gruntfuggly.todo-tree",
                 "jeff-hykin.better-cpp-syntax",
                 "matepek.vscode-catch2-test-adapter",

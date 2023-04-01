@@ -1,39 +1,51 @@
 name: Build & Test
 
 on:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
-
-  workflow_dispatch:
+  workflow_call:
+    inputs:
+      ubuntu_version:
+        required: true
+        type: string
+      build_type:
+        required: true
+        type: string
 
 jobs:
   build-and-test:
-    strategy:
-      matrix:
-        os: [ubuntu-22.04]
-        build_type: [Debug]
-    name: ${{ matrix.build_type }} Build & Test
-    runs-on: ${{ matrix.os }}
-    if: "!contains(github.event.head_commit.message, 'ci skip')"
+    name: ${{ inputs.build_type }} Build & Test
+    runs-on: ubuntu-latest
+    if: "${{ !contains(github.event.head_commit.message, 'ci skip') }}"
 
     steps:
       - uses: actions/checkout@v3
-      - name: Install deps
-        run: |
-          sudo apt update
-          DEBIAN_FRONTEND=noninteractive sudo apt install -y cmake lcov
+
       - name: Check deps versions
-        run: |
-          cmake --version
-          ctest --version
-          g++ --version
+        uses: devcontainers/ci@v0.3
+        env:
+          UBUNTU_VERSION: ${{ inputs.ubuntu_version }}
+        with:
+          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
+          runCmd: |
+            cmake --version
+            ctest --version
+            g++ --version
+
       - name: Build
-        run: |
-          cmake -B build/ -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-          cmake --build build/ -j2
+        uses: devcontainers/ci@v0.3
+        env:
+          UBUNTU_VERSION: ${{ inputs.ubuntu_version }}
+        with:
+          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
+          runCmd: |
+            cmake -B build/ -DCMAKE_BUILD_TYPE=${{ inputs.build_type }}
+            cmake --build build/ -j
+
       - name: Run tests
-        working-directory: build
-        run: |
-          ctest --output-on-failure -T Test
+        uses: devcontainers/ci@v0.3
+        env:
+          UBUNTU_VERSION: ${{ inputs.ubuntu_version }}
+        with:
+          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
+          runCmd: |
+            cd build
+            ctest --output-on-failure -T Test
