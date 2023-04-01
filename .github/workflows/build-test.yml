@@ -47,5 +47,4 @@ jobs:
         with:
           cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
           runCmd: |
-            cd build
-            ctest --output-on-failure -T Test
+            ctest --test-dir ./build/ --output-on-failure -T Test

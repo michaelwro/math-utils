@@ -1,16 +1,8 @@
-name: Static Analysis
-
-on:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
-
-  workflow_dispatch:
+name: CppCheck Static Analysis
 
 jobs:
   static-analysis:
-    name: CppCheck Static Analysis
+    name: CppCheck
     runs-on: ubuntu-latest
     if: "${{ !contains(github.event.head_commit.message, 'ci skip') }}"
 

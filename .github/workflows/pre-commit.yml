@@ -1,13 +1,5 @@
 name: Pre-Commit
 
-on:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
-
-  workflow_dispatch:
-
 jobs:
   pre-commit:
     name: Pre-Commit Checks
