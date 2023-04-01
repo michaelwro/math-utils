@@ -3,6 +3,7 @@
     "build": {
         "dockerfile": "Dockerfile"
     },
+    "postAttachCommand": "git config --global core.editor \"nano\"",
     "customizations": {
         "vscode": {
             "extensions": [

@@ -15,6 +15,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     lcov \
     nano \
     pmccabe \
+    python-is-python3 \
     python3-pip \
     python3.10
 
@@ -23,5 +24,3 @@ COPY ./requirements.txt /opt/
 RUN python3 -m pip install --disable-pip-version-check --no-cache-dir -r /opt/requirements.txt && \
     rm -rf /opt/requirements.txt
 
-# set nano to default
-RUN git config --global core.editor "nano"
