@@ -16,6 +16,8 @@ jobs:
         ubuntu_version: ["20.04", "22.04"]
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
