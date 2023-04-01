@@ -15,14 +15,12 @@
 #include <array>
 #include <cassert>
 #include <cmath>
-#include <cstddef>
-#include <functional>
 #include <initializer_list>
 #include <iomanip>
-#include <limits>
+#include <numeric>
 #include <ostream>
-#include <sstream>
 #include <stdexcept>
+#include <string>
 #include <type_traits>
 
 namespace MathUtils {
@@ -75,7 +73,7 @@ public:
     template<typename T>
     explicit Matrix(const std::initializer_list<T> new_matrix)
     {
-        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
         const std::size_t input_size = new_matrix.size();
 
@@ -107,7 +105,7 @@ public:
     template<typename T>
     explicit Matrix(const std::initializer_list<std::initializer_list<T>> new_matrix)
     {
-        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only..");
 
         const std::size_t input_rows = new_matrix.size();
 
@@ -187,40 +185,6 @@ public:
         return *this;
     }
 
-    // /**
-    //    * @brief Lvalue negate unary operator.
-    //    *
-    //    * @return Negated matrix.
-    //    *
-    //    * @ref https://stackoverflow.com/a/37737947
-    //    */
-    // Matrix operator-() const &
-    // {
-    //     Matrix mat;
-    //     mat.m_arr = this->m_arr;
-
-    //     std::for_each(mat.m_arr.begin(), mat.m_arr.end(), [](double& val){val *= -1.0;});
-
-    //     return mat;
-    // }
-
-    // /**
-    //    * @brief Rvalue negate unary operator.
-    //    *
-    //    * @return Negated matrix.
-    //    *
-    //    * @ref https://stackoverflow.com/a/37737947
-    //    */
-    // Matrix operator-() const &&
-    // {
-    //     Matrix mat;
-    //     mat.m_arr = this->m_arr;
-
-    //     std::for_each(mat.m_arr.begin(), mat.m_arr.end(), [](double& val){val *= -1.0;});
-
-    //     return mat;
-    // }
-
     /**
      * @brief Access matrix element.
      *
@@ -280,7 +244,7 @@ public:
     template<typename T>
     Matrix& operator+=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed");
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
         const double scalard = static_cast<double>(scalar);
 
@@ -318,7 +282,7 @@ public:
     template<typename T>
     Matrix& operator-=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed");
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
         const double scalard = static_cast<double>(scalar);
 
@@ -356,7 +320,7 @@ public:
     template<typename T>
     Matrix& operator*=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed");
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
         const double scalard = static_cast<double>(scalar);
 
@@ -400,21 +364,19 @@ public:
     /**
      * @brief Divide matrix by scalar in-place.
      *
+     * @details No divide-by-zero checks.
+     *
      * @tparam T Scalar type.
      * @param scalar Scalar to divide.
      * @return Matrix divided by scalar.
-     *
-     * @exception std::overlow_error Divisor would result in divide-by-zero.
      */
     template<typename T>
     Matrix& operator/=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed");
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
         // make sure denominator is not too small
         const double scalard = static_cast<double>(scalar);
-
-        assert(!float_equality(std::abs(scalard), 0.0));
 
         std::for_each(
             m_arr.begin(),
@@ -429,10 +391,14 @@ public:
      * @brief Get an identity matrix (square only).
      *
      * @return Identity matrix.
+     *
+     * @exception std::domain_error Non-square matrix.
      */
     static Matrix identity()
     {
-        assert(T_ROWS == T_COLS);
+        if (T_ROWS != T_COLS) {
+            throw std::domain_error("Identity matrices are for square matrices only.");
+        }
 
         Matrix eye;
 

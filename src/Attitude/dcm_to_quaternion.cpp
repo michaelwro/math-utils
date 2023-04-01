@@ -6,8 +6,6 @@
 
 #include "Attitude/dcm_to_quaternion.h"
 
-#include "float_equality.h"
-
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -36,10 +34,9 @@ Quaternion dcm_to_quaternion(const Matrix<3,3>& dcm)
         q_squared_terms.cbegin(), largest_q_squared_term
     );
 
-    // double check results
-    assert(!float_equality(*largest_q_squared_term, 0.0));
+    // std::distance can return neg. if inputs are std::distance(end,begin)
     assert(*largest_q_squared_term >= 0);
-    assert(largest_element <= 3);  // std::distance can return neg. if inputs are std::distance(end,begin)
+    assert(largest_element <= 3);
 
     const double largest_q_term = std::sqrt(*largest_q_squared_term);
 

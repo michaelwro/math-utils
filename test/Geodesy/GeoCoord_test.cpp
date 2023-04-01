@@ -8,6 +8,7 @@
 #include "TestTools/GeoCoordNear.h"
 
 #include <gtest/gtest.h>
+#include <sstream>
 #include <string>
 
 using MathUtils::GeoCoord;
@@ -133,6 +134,19 @@ TEST_F(GeoCoordTest, MoveAssign)
     EXPECT_DOUBLE_EQ(gc_new.latitude(), 0.1);
     EXPECT_DOUBLE_EQ(gc_new.longitude(), 0.2);
     EXPECT_DOUBLE_EQ(gc_new.altitude(), 345.0);
+}
+
+// =================================================================================================
+TEST_F(GeoCoordTest, PrintToStream)
+{
+    GeoCoord coord {0.12, 0.34, 567.0};
+
+    std::stringstream ss;
+    ss << coord << "\n";
+
+    EXPECT_TRUE(ss.str().find(".12") != std::string::npos);
+    EXPECT_TRUE(ss.str().find(".34") != std::string::npos);
+    EXPECT_TRUE(ss.str().find("567") != std::string::npos);
 }
 
 // =================================================================================================

@@ -128,14 +128,6 @@ TEST_F(MatrixMathTest, ScalarDivideInPlace)
 }
 
 // =================================================================================================
-TEST_F(MatrixMathTest, SmallScalarDivideInPlaceAsserts)
-{
-    ASSERT_DEBUG_DEATH({
-        mat1 /= 0ul;
-    }, "");
-}
-
-// =================================================================================================
 TEST_F(MatrixMathTest, ScalarMatrixMultiply)
 {
     Matrix<3,3> res = scalar * mat1;

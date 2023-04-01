@@ -62,18 +62,14 @@ public:
      *
      * @param other Other quaternion.
      */
-    Quaternion(const Quaternion& other)
-        :m_arr{other.m_arr}
-    {}
+    Quaternion(const Quaternion& other);
 
     /**
      * @brief Move construct quaternion.
      *
      * @param other Other quaternion.
      */
-    Quaternion(Quaternion&& other) noexcept
-        :m_arr{std::move(other.m_arr)}
-    {}
+    Quaternion(Quaternion&& other) noexcept;
 
     /**
      * @brief Copy-assign quaternion.
@@ -110,15 +106,17 @@ public:
     const double& operator()(const std::size_t idx) const noexcept;
 
     /**
-     * @brief Return the conjugate (inverse) of the quaternion.
+     * @brief Return the inverse of the quaternion.
      *
-     * @return Quaternion conjugate/inverse.
+     * @details q^-1 = [qs, -qx, -qy, -qz] / ||q||
+     *
+     * @return Quaternion inverse.
      */
-    Quaternion get_conjugate() const;
+    Quaternion inverse() const;
 
     /**
-     * @brief Negate (*= -1) the quaternion if the scalar component is negative to force a
-     * positive rotation.
+     * @brief If the scalar part is negative, negate (*= -1) the quaternion elements to enforce a
+     * positive rotation angle [0, 180].
      *
      * @return Quaternion.
      */
@@ -131,6 +129,8 @@ public:
 
     /**
      * @brief Return the quaternion's eigen axis.
+     *
+     * @details No divide-by-zero checks are performed.
      *
      * @return Quaternion eigen axis.
      */

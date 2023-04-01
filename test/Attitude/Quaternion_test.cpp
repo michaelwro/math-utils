@@ -165,11 +165,11 @@ TEST(QuaternionTest, InvalidLengthAssignmentThrows)
 }
 
 // =================================================================================================
-TEST(QuaternionTest, Conjugate)
+TEST(QuaternionTest, Inverse)
 {
     Quaternion q(0.5, 0.5, -0.5, -0.5);
 
-    Quaternion qt = q.get_conjugate();
+    Quaternion qt = q.inverse();
 
     EXPECT_DOUBLE_EQ(0.5, qt(0));
     EXPECT_DOUBLE_EQ(-0.5, qt(1));
@@ -208,15 +208,6 @@ TEST(QuaternionTest, EigenAxis)
     Quaternion q(1.0/sqrt_two, 1.0/sqrt_two, 0, 0);
 
     EXPECT_TRUE(MathUtils::TestTools::VectorNear(q.get_eigen_axis(), MathUtils::Vector<3>{1, 0, 0}));
-}
-
-// =================================================================================================
-TEST(QuaternionDeathTest, AssertZeroAngleEigenAxis)
-{
-    EXPECT_DEBUG_DEATH({
-        Quaternion q(1, 0, 0, 0);
-        q.get_eigen_axis();
-    }, "");
 }
 
 // =================================================================================================

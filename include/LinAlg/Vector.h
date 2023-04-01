@@ -15,10 +15,8 @@
 #include <array>
 #include <cassert>
 #include <cmath>
-#include <functional>
 #include <initializer_list>
 #include <iomanip>
-#include <limits>
 #include <numeric>
 #include <ostream>
 #include <stdexcept>
@@ -64,7 +62,7 @@ public:
     explicit Vector(const std::initializer_list<T> vector_vals)
         :m_arr{0.0}
     {
-        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
         const std::size_t input_length = vector_vals.size();
 
@@ -136,7 +134,7 @@ public:
     template<typename T>
     Vector& operator=(const std::initializer_list<T> vector_vals)
     {
-        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
         const std::size_t input_length = vector_vals.size();
 
@@ -148,40 +146,6 @@ public:
 
         std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
         return *this;
-    }
-
-    /**
-     * @brief Lvalue negate unary operator.
-     *
-     * @return Negated vector.
-     *
-     * @ref https://stackoverflow.com/a/37737947
-     */
-    Vector operator-() const &
-    {
-        Vector vec;
-        vec.m_arr = this->m_arr;
-
-        std::for_each(vec.m_arr.begin(), vec.m_arr.end(), [](double& val){val *= -1.0;});
-
-        return vec;
-    }
-
-    /**
-     * @brief Rvalue negate unary operator.
-     *
-     * @return Negated vector.
-     *
-     * @ref https://stackoverflow.com/a/37737947
-     */
-    Vector operator-() const &&
-    {
-        Vector vec;
-        vec.m_arr = this->m_arr;
-
-        std::for_each(vec.m_arr.begin(), vec.m_arr.end(), [](double& val){val *= -1.0;});
-
-        return vec;
     }
 
     /**
@@ -218,7 +182,7 @@ public:
     template<typename T>
     Vector& operator+=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
         const double scalard = static_cast<double>(scalar);
 
@@ -256,7 +220,7 @@ public:
     template<typename T>
     Vector& operator-=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
         const double scalard = static_cast<double>(scalar);
 
@@ -295,7 +259,7 @@ public:
     template<typename T>
     Vector& operator*=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
         const double scalard = static_cast<double>(scalar);
 
@@ -311,6 +275,8 @@ public:
     /**
      * @brief Divide all elements by a scalar in-place.
      *
+     * @details No divide-by-zero checks.
+     *
      * @tparam T Scalar type.
      * @param scalar Scalar to divide by.
      * @return Vector with scalar divided.
@@ -318,11 +284,9 @@ public:
     template<typename T>
     Vector& operator/=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Only fundamental types allowed.");
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
-        // make sure denominator is not too small
         const double scalard = static_cast<double>(scalar);
-        assert(!float_equality(std::abs(scalard), 0.0));
 
         std::for_each(
             m_arr.begin(),
@@ -336,16 +300,14 @@ public:
     /**
      * @brief Divide all elements by another vector in-place.
      *
+     * @details No divide-by-zero checks.
+     *
      * @param scalar Vector to divide by.
      * @return Vector divided by other vector.
      */
     Vector& operator/=(const Vector& vec) noexcept
     {
         for (std::size_t idx = 0; idx < T_LEN; idx++) {
-            const double val = vec.m_arr[idx];
-
-            assert(!float_equality(std::abs(val), 0.0));
-
             m_arr[idx] /= vec.m_arr[idx];
         }
 
@@ -387,6 +349,7 @@ public:
         /**
          * NOTE: Since all elements were squared in the above operation, this argument should never
          * be negative.
+         * TODO: Use safe_sqrt
          */
         assert(magn >= 0.0);
         return std::sqrt(magn);
@@ -394,12 +357,12 @@ public:
 
     /**
      * @brief Normalize the vector.
+     *
+     * @details No divide-by-zero checks.
      */
     void normalize()
     {
         const double magn = this->get_magnitude();
-
-        assert(!float_equality(magn, 0.0));
 
         std::for_each(m_arr.begin(), m_arr.end(), [magn](double& val){val /= magn;});
     }
@@ -575,7 +538,7 @@ Vector<N> operator-(const Vector<N>& v1, const Vector<N>& v2)
 template<std::size_t N, typename T>
 Vector<N> operator*(const T scalar, const Vector<N>& vec)
 {
-    static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
+    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
     Vector<N> res(vec);
     const double scalard = static_cast<double>(scalar);
@@ -599,7 +562,7 @@ Vector<N> operator*(const T scalar, const Vector<N>& vec)
 template<std::size_t N, typename T>
 Vector<N> operator*(const Vector<N>& vec, const T scalar)
 {
-    static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
+    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
     return scalar * vec;
 }
 
