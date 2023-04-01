@@ -7,6 +7,12 @@
 #ifndef MATHUTILS_ACOS_SAFE_H_
 #define MATHUTILS_ACOS_SAFE_H_
 
+#include "constants.h"
+
+#include <cmath>
+#include <cassert>
+#include <type_traits>
+
 namespace MathUtils {
 
 /**
@@ -15,11 +21,28 @@ namespace MathUtils {
  * @details If the input is greater than 1, 0 is returned. If the input is less than -1, pi
  * is returned.
  *
+ * @tparam T Input type.
  * @param val Value to take the arccosine of, in [rad].
  * @return Arccosine of `val`.
  */
-double acos_safe(const double val) noexcept;
+template<typename T>
+double acos_safe(const T val) noexcept
+{
+    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+    assert(std::abs(val) <= 1.0);
 
-}  // MathUtils
+    const double dval = static_cast<double>(val);
+
+    if (dval >= 1.0) {
+        return 0.0;
+    }
+    else if (dval <= -1.0) {
+        return Constants::PI;
+    }
+
+    return std::acos(dval);
+}
+
+}  // namespace MathUtils
 
 #endif  // MATHUTILS_ACOS_SAFE_H_

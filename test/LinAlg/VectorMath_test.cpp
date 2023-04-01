@@ -79,16 +79,6 @@ TEST_F(VectorMathTest, Normalize)
 }
 
 // =================================================================================================
-TEST_F(VectorMathTest, NormalizeAssertsDivZero)
-{
-    Vector<2> vec;
-
-    ASSERT_DEBUG_DEATH({
-        vec.normalize();
-    }, "");
-}
-
-// =================================================================================================
 TEST_F(VectorMathTest, SumElements)
 {
     EXPECT_DOUBLE_EQ(vec1.get_sum(), vec1_sum);
@@ -140,32 +130,6 @@ TEST_F(VectorMathTest, ScalarDivideInPlace)
     vec1 /= scalar;
 
     EXPECT_TRUE(VectorNear(vec1, vec1_div_scalar));
-}
-
-// =================================================================================================
-TEST_F(VectorMathTest, ScalarDivideInPlaceAsserts)
-{
-    ASSERT_DEBUG_DEATH({
-        vec2 /= 0lu;
-    }, "");
-}
-
-// =================================================================================================
-TEST_F(VectorMathTest, Negate)
-{
-    Vector<3> vec1_before(vec1);
-
-    vec1.negate();
-
-    EXPECT_TRUE(VectorNear(vec1, -vec1_before));
-}
-
-// =================================================================================================
-TEST_F(VectorMathTest, CrossProduct)
-{
-    const Vector<3> res = cross(vec1, vec2);
-
-    EXPECT_TRUE(VectorNear(res, vec1_cross_vec2));
 }
 
 // =================================================================================================

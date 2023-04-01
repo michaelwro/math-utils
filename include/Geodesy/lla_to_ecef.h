@@ -19,7 +19,7 @@ namespace MathUtils {
  * Uses WGS84 semi-major axis.
  *
  * @param lla Latitude [rad], longitude [rad], altitude [m].
- * @return ECEF position.
+ * @return ECEF position [m].
  */
 Vector<3> lla_to_ecef(const GeoCoord& lla);
 

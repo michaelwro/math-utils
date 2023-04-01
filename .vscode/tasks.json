@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-"tasks": [
+  "tasks": [
     {
       "label": "Build (Debug)",
       "type": "shell",
@@ -18,7 +18,7 @@
       "label": "Build (Release)",
       "type": "shell",
       "group": {
-          "kind": "build"
+        "kind": "build"
       },
       "linux": {
         "command": "cmake -B build/ -DCMAKE_BUILD_TYPE=Release && cmake --build build/ -j"
@@ -31,7 +31,9 @@
       "label": "Run Tests",
       "type": "shell",
       "group": "test",
-      "dependsOn": ["Build (Debug)"],
+      "dependsOn": [
+        "Build (Debug)"
+      ],
       "presentation": {
         "reveal": "always",
         "panel": "shared"
@@ -47,10 +49,24 @@
       "label": "Static Analysis",
       "type": "shell",
       "group": {
-          "kind": "none"
+        "kind": "none"
       },
       "linux": {
         "command": "./scripts/run-cppcheck.sh"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run pre-commit",
+      "type": "shell",
+      "group": {
+        "kind": "none"
+      },
+      "linux": {
+        "command": "pre-commit run --all-files"
       },
       "options": {
         "cwd": "${workspaceFolder}"

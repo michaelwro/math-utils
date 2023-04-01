@@ -11,29 +11,9 @@
 
 #include <cassert>
 #include <cmath>
-#include <numeric>
+#include <type_traits>
 
 namespace MathUtils {
-
-/**
- * @brief Wrap an angle within [0, 2pi) radians (360 deg).
- *
- * @param angle_rad Angle in [rad].
- * @return Angle in [rad].
- *
- * @ref https://stackoverflow.com/a/11498248
- */
-float wrap_2pi(float angle_rad);
-
-/**
- * @brief Wrap an angle within [0, 2pi) radians (360 deg).
- *
- * @param angle_rad Angle in [rad].
- * @return Angle in [rad].
- *
- * @ref https://stackoverflow.com/a/11498248
- */
-double wrap_2pi(double angle_rad);
 
 /**
  * @brief Wrap an angle within [0, 2pi) radians (360 deg).
@@ -47,15 +27,15 @@ double wrap_2pi(double angle_rad);
 template<typename T>
 double wrap_2pi(const T angle_rad)
 {
-    static_assert(std::numeric_limits<T>::is_integer, "Integer only.");
+    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
-    double d_angle_rad = std::fmod(static_cast<double>(angle_rad), Constants::TWO_PI);
+    double dangle_rad = std::fmod(static_cast<double>(angle_rad), Constants::TWO_PI);
 
-    if (d_angle_rad < 0.0) {
-        d_angle_rad += Constants::TWO_PI;
+    if (dangle_rad < 0.0) {
+        dangle_rad += Constants::TWO_PI;
     }
 
-    return d_angle_rad;
+    return dangle_rad;
 }
 
 }    // namespace MathUtils

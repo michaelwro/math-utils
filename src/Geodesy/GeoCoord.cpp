@@ -6,12 +6,7 @@
 
 #include "Geodesy/GeoCoord.h"
 
-#include "constants.h"
-#include "Internal/error_msg_helpers.h"
-
-#include <cassert>
-#include <cstddef>
-#include <stdexcept>
+#include <utility>
 
 namespace MathUtils {
 
@@ -29,27 +24,6 @@ GeoCoord::GeoCoord(const double latitude_rad, const double longitude_rad, const 
 {}
 
 
-GeoCoord::GeoCoord(const std::initializer_list<double> lla)
-{
-    const std::size_t input_size = lla.size();
-
-    if (input_size != 3) {
-        throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 3));
-    }
-
-    auto vals = lla.begin();
-
-    m_lat_rad = *(vals++);
-    assert(vals != lla.end());
-
-    m_lon_rad = *(vals++);
-    assert(vals != lla.end());
-
-    m_alt_m = *(vals++);
-    assert(vals == lla.end());
-}
-
-
 GeoCoord::GeoCoord(const GeoCoord& other)
     :m_lat_rad{other.m_lat_rad},
     m_lon_rad{other.m_lon_rad},
@@ -62,29 +36,6 @@ GeoCoord::GeoCoord(GeoCoord&& other) noexcept
     m_lon_rad{std::exchange(other.m_lon_rad, 0.0)},
     m_alt_m{std::exchange(other.m_alt_m, 0.0)}
 {}
-
-
-GeoCoord& GeoCoord::operator=(const std::initializer_list<double> lla)
-{
-    const std::size_t input_size = lla.size();
-
-    if (input_size != 3) {
-        throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 3));
-    }
-
-    auto vals = lla.begin();
-
-    m_lat_rad = *(vals++);
-    assert(vals != lla.end());
-
-    m_lon_rad = *(vals++);
-    assert(vals != lla.end());
-
-    m_alt_m = *(vals++);
-    assert(vals == lla.end());
-
-    return *this;
-}
 
 
 GeoCoord& GeoCoord::operator=(const GeoCoord& other)
@@ -110,6 +61,52 @@ GeoCoord& GeoCoord::operator=(GeoCoord&& other) noexcept
     m_lon_rad = std::exchange(other.m_lon_rad, 0.0);
     m_alt_m = std::exchange(other.m_alt_m, 0.0);
     return *this;
+}
+
+
+double& GeoCoord::latitude() noexcept
+{
+    return m_lat_rad;
+}
+
+
+const double& GeoCoord::latitude() const noexcept
+{
+    return m_lat_rad;
+}
+
+
+double& GeoCoord::longitude() noexcept
+{
+    return m_lon_rad;
+}
+
+
+const double& GeoCoord::longitude() const noexcept
+{
+    return m_lon_rad;
+}
+
+
+double& GeoCoord::altitude() noexcept
+{
+    return m_alt_m;
+}
+
+
+const double& GeoCoord::altitude() const noexcept
+{
+    return m_alt_m;
+}
+
+
+std::ostream& operator<<(std::ostream& os, const GeoCoord& coord)
+{
+    os << coord.m_lat_rad << ", "
+        << coord.m_lon_rad << ", "
+        << coord.m_alt_m;
+
+    return os;
 }
 
 }  // namespace MathUtils
