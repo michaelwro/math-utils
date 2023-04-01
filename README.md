@@ -1,6 +1,6 @@
 # Math Utilities
 
-[![Test Suite](https://github.com/michaelwro/math-utils/actions/workflows/build-test.yml/badge.svg?branch=main)](https://github.com/michaelwro/math-utils/actions/workflows/build-test.yml) [![Static Analysis](https://github.com/michaelwro/math-utils/actions/workflows/static-analysis.yml/badge.svg?branch=main)](https://github.com/michaelwro/math-utils/actions/workflows/static-analysis.yml) [![Linting & Style](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml/badge.svg?branch=main)](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml)
+[![Development Build](https://github.com/michaelwro/math-utils/actions/workflows/build-test-main.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/build-test-main.yml) [![Release Build](https://github.com/michaelwro/math-utils/actions/workflows/build-test-release.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/build-test-release.yml) [![Static Analysis](https://github.com/michaelwro/math-utils/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/static-analysis.yml) [![Pre-Commit](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml)
 
 **Created By:** Michael Wrona
 
