@@ -28,6 +28,7 @@ jobs:
       - name: Build and Push Dev Container task
         uses: devcontainers/ci@v0.3
         with:
-          imageName: ghcr.io/${{ github.repository }}-devcontainer:${{ matrix.ubuntu_version }}
+          imageName: ghcr.io/${{ github.repository }}-devcontainer
+          imageTag: ${{ matrix.ubuntu_version }}
           cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ matrix.ubuntu_version }}
           push: always
