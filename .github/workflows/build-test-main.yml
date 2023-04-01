@@ -1,4 +1,4 @@
-name: Development Build
+name: Build & Test For Main
 
 on:
   push:
@@ -10,14 +10,7 @@ on:
 
 jobs:
   build-and-test-main:
-    name: Build and Test
     uses: ./.github/workflows/build-test.yml
     with:
       ubuntu_version: "22.04"
       build_type: Debug
-  static-analysis:
-    name: Static Analysis
-    uses: ./.github/workflows/static-analysis.yml
-  pre-commit:
-    name: Pre-Commit Checks
-    uses: ./.github/workflows/pre-commit.yml

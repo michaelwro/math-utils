@@ -1,4 +1,4 @@
-name: Release Build
+name: Full Build & Test Suite
 
 on:
   pull_request:
@@ -12,14 +12,7 @@ jobs:
       matrix:
         ubuntu_version: ["20.04", "22.04"]
         build_type: [Debug, Release]
-    name: Build and Test
     uses: ./.github/workflows/build-test.yml
     with:
       ubuntu_version: ${{ matrix.ubuntu_version }}
       build_type: ${{ matrix.build_type }}
-  static-analysis:
-    name: Static Analysis
-    uses: ./.github/workflows/static-analysis.yml
-  pre-commit:
-    name: Pre-Commit Checks
-    uses: ./.github/workflows/pre-commit.yml
