@@ -1,4 +1,4 @@
-name: Full Build & Test Suite
+name: Release Build
 
 on:
   pull_request:
