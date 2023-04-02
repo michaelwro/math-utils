@@ -15,7 +15,8 @@ namespace MathUtils {
 /**
  * @brief Convert a direction cosine matrix to 321 Euler angles.
  *
- * @details Equations from "Analytical Mechanics of Aerospace Systems" (Schaub).
+ * @details No pitch singularity checks.
+ * Equations from "Analytical Mechanics of Aerospace Systems" (Schaub).
  *
  * @param dcm DCM to convert.
  * @return Corresponding 321 Euler angles.

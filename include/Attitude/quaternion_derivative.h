@@ -20,6 +20,8 @@ namespace MathUtils {
  * @param q Quaternion.
  * @param w_rps Angular rates in [rad/sec]
  * @return Q-dot (time derivative).
+ *
+ * @ref https://repositories.lib.utexas.edu/bitstream/handle/2152/74954/Hans-JoachimWuensche.pdf?sequence=2&isAllowed=y
  */
 Vector<4> quaternion_derivative(const Quaternion& q, Vector<3> w_rps);
 
