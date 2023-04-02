@@ -19,6 +19,8 @@ namespace MathUtils {
  *
  * @param q Quaternion.
  * @return Corresponding DCM.
+ *
+ * @ref https://repositories.lib.utexas.edu/bitstream/handle/2152/74954/Hans-JoachimWuensche.pdf?sequence=2&isAllowed=y
  */
 Matrix<3,3> quaternion_to_dcm(const Quaternion& q);
 
