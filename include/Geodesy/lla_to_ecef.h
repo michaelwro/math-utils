@@ -13,7 +13,7 @@
 namespace MathUtils {
 
 /**
- * @brief Convert geodetic latitude, longitude, and altitude to ECEF position.
+ * @brief Convert geodetic latitude, longitude, and WGS84 ellipsoid altitude to ECEF position.
  *
  * @details Equation 3.14 from "Fundamentals of Astrodynamics and Applications" (Vallado).
  * Uses WGS84 semi-major axis.
