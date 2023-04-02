@@ -30,8 +30,8 @@ namespace TestTools {
  */
 
 template<std::size_t N>
-::testing::AssertionResult VectorNear(const MathUtils::Vector<N>& v1,
-    const MathUtils::Vector<N>& v2,
+::testing::AssertionResult VectorNear(const Vector<N>& v1,
+    const Vector<N>& v2,
     const double tol=1e-14)
 {
     bool success = true;

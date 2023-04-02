@@ -9,10 +9,7 @@
 
 #include "Geodesy/GeoCoord.h"
 
-#include <cmath>
 #include <gtest/gtest.h>
-#include <iomanip>
-#include <sstream>
 
 namespace MathUtils {
 namespace TestTools {
