@@ -1,4 +1,8 @@
 #!/bin/bash
+# Run pmccabe cyclomatic complexity tool on project
+#
+# Code By: Michael Wrona
+# Created: 17 March 2023
 
 # get repo base directory
 # https://stackoverflow.com/a/4774063

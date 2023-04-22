@@ -8,7 +8,7 @@
         "kind": "build"
       },
       "linux": {
-        "command": "cmake -B build/ -DCMAKE_BUILD_TYPE=Debug && cmake --build build/ -j"
+        "command": "bash scripts/debug-build.sh"
       },
       "options": {
         "cwd": "${workspaceFolder}"
@@ -21,7 +21,7 @@
         "kind": "build"
       },
       "linux": {
-        "command": "cmake -B build/ -DCMAKE_BUILD_TYPE=Release && cmake --build build/ -j"
+        "command": "bash scripts/release-build.sh"
       },
       "options": {
         "cwd": "${workspaceFolder}"
@@ -52,7 +52,7 @@
         "kind": "none"
       },
       "linux": {
-        "command": "./scripts/run-cppcheck.sh"
+        "command": "bash scripts/run-cppcheck.sh"
       },
       "options": {
         "cwd": "${workspaceFolder}"
@@ -67,6 +67,20 @@
       },
       "linux": {
         "command": "pre-commit run --all-files"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run clang-tidy",
+      "type": "shell",
+      "group": {
+        "kind": "none"
+      },
+      "linux": {
+        "command": "bash scripts/run-clang-tidy.sh"
       },
       "options": {
         "cwd": "${workspaceFolder}"

@@ -14,3 +14,5 @@ Testing/
 *.pyc
 
 .vscode/settings.json
+
+.ruff_cache/

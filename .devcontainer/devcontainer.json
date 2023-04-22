@@ -28,6 +28,11 @@
                 "ue.alphabetical-sorter"
             ],
             "settings": {
+                "C_Cpp.codeAnalysis.exclude": {
+                    "${workspaceFolder}/test/": true
+                },
+                "C_Cpp.codeAnalysis.clangTidy.enabled": true,
+                "C_Cpp.codeAnalysis.runAutomatically": true,
                 "doxdocgen.c.getterText": "Get {name}",
                 "doxdocgen.c.setterText": "Set {name}",
                 "doxdocgen.cpp.ctorText": "Create a {name}",

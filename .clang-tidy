@@ -1,0 +1,9 @@
+Checks:
+  -*,
+  performance-*,
+  portability-*,
+  clang-analyzer-*,
+  cppcoreguidelines-*,
+  cppcoreguidelines-avoid-magic-numbers
+WarningsAsErrors: true
+AnalyzeTemporaryDtors: false
