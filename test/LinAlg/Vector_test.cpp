@@ -33,7 +33,6 @@ TEST(VectorTest, DefaultConstructorZerosElements)
 TEST(VectorTest, InitListConstruction)
 {
     Vector<4> vec {1, 2, 3, 4};
-
     EXPECT_DOUBLE_EQ(vec(0), 1);
     EXPECT_DOUBLE_EQ(vec(1), 2);
     EXPECT_DOUBLE_EQ(vec(2), 3);
@@ -162,7 +161,7 @@ TEST(VectorTest, SizeGetterReturnsCorrectLength)
 {
     Vector<4> vec {1, 2, 3, 4};
 
-    EXPECT_EQ(vec.get_size(), 4);
+    EXPECT_EQ(vec.size(), 4);
 }
 
 // =================================================================================================

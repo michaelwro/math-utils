@@ -65,7 +65,7 @@ protected:
 // =================================================================================================
 TEST_F(VectorMathTest, Magnitude)
 {
-    double mag = vec1.get_magnitude();
+    double mag = vec1.magnitude();
 
     EXPECT_DOUBLE_EQ(mag, vec1_magnitude);
 }
