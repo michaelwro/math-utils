@@ -112,14 +112,6 @@ TEST_F(MatrixMathTest, ScalarMultiplyInPlace)
 }
 
 // =================================================================================================
-TEST_F(MatrixMathTest, MatrixMultiplyInPlace)
-{
-    mat1 *= mat2;
-
-    EXPECT_TRUE(MatrixNear(mat1, mat1_times_mat2));
-}
-
-// =================================================================================================
 TEST_F(MatrixMathTest, ScalarDivideInPlace)
 {
     mat1 /= scalar;

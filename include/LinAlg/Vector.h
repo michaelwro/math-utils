@@ -42,12 +42,10 @@ public:
      */
     Vector() = default;
 
-
     /**
      * @brief Destroy Vector.
      */
     ~Vector() = default;
-
 
     /**
      * @brief Create a vector from an initializer list.
@@ -60,7 +58,6 @@ public:
     template<typename T>
     explicit Vector(const std::initializer_list<T> vector_vals);
 
-
     /**
      * @brief Copy-construct vector.
      *
@@ -69,7 +66,6 @@ public:
     Vector(const Vector& other)
         :m_arr{other.m_arr}
     {}
-
 
     /**
      * @brief Move construct vector.
@@ -80,7 +76,6 @@ public:
         :m_arr{std::move(other.m_arr)}
     {}
 
-
     /**
      * @brief Copy-assign vector.
      * @param other Other vector.
@@ -88,14 +83,12 @@ public:
      */
     Vector& operator=(const Vector& other);
 
-
     /**
      * @brief Move-assign vector.
      * @param other Other vector.
      * @return Copied vector.
      */
     Vector& operator=(Vector&& other) noexcept;
-
 
     /**
      * @brief Assign vector values from an initializer list.
@@ -108,7 +101,6 @@ public:
     template<typename T>
     Vector& operator=(const std::initializer_list<T> vector_vals);
 
-
     /**
      * @brief Access vector element.
      *
@@ -117,7 +109,6 @@ public:
      */
     [[nodiscard]] vector_type& operator()(const size_type idx);
 
-
     /**
      * @brief Get vector element. No bounds checks.
      *
@@ -125,7 +116,6 @@ public:
      * @return Vector value at specified index.
      */
     [[nodiscard]] const vector_type& operator()(const size_type idx) const;
-
 
     /**
      * @brief Access vector element. With bounds checks.
@@ -137,7 +127,6 @@ public:
      */
     [[nodiscard]] vector_type& at(const size_type idx);
 
-
     /**
      * @brief Get vector element. With bounds checks.
      *
@@ -148,14 +137,12 @@ public:
      */
     [[nodiscard]] const vector_type& at(const size_type idx) const;
 
-
     /**
      * @brief Get the vector length (number of elements).
      *
      * @return Vector length.
      */
     [[nodiscard]] constexpr size_type size() const noexcept;
-
 
     /**
      * @brief Fill the entire vector with a value.
@@ -164,14 +151,12 @@ public:
      */
     void fill(const vector_type val) noexcept;
 
-
     /**
      * @brief Return the magnitude/norm of the vector.
      *
      * @return Vector magnitude.
      */
     [[nodiscard]] vector_type magnitude() const;
-
 
     /**
      * @brief Normalize the vector.
@@ -180,14 +165,12 @@ public:
      */
     void normalize();
 
-
     /**
      * @brief Return the sum of all elements in the vector.
      *
      * @return Sum of all vector elements.
      */
     [[nodiscard]] vector_type get_sum() const;
-
 
     /**
      * @brief Multiply all elements by -1.0. Flip the sign of all elements.
@@ -210,7 +193,6 @@ public:
     template<typename T>
     Vector& operator+=(const T scalar);
 
-
     /**
      * @brief Add vector in-place (accumulate).
      *
@@ -232,7 +214,6 @@ public:
      */
     template<typename T>
     Vector& operator-=(const T scalar);
-
 
     /**
      * @brief Subtract vector in-place.
@@ -272,8 +253,6 @@ public:
     template<typename T>
     Vector& operator/=(const T scalar);
 
-
-
 protected:
 private:
     std::array<vector_type, T_LEN> m_arr {0.0};  ///< Underlying array to store vector values.
@@ -300,7 +279,6 @@ Vector<N>::Vector(const std::initializer_list<T> vector_vals)
     std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
 }
 
-
 template<std::size_t N>
 Vector<N>& Vector<N>::operator=(const Vector& other)
 {
@@ -312,7 +290,6 @@ Vector<N>& Vector<N>::operator=(const Vector& other)
     return *this;
 }
 
-
 template<std::size_t N>
 Vector<N>& Vector<N>::operator=(Vector&& other) noexcept
 {
@@ -323,7 +300,6 @@ Vector<N>& Vector<N>::operator=(Vector&& other) noexcept
     m_arr.swap(other.m_arr);
     return *this;
 }
-
 
 template<std::size_t N>
 template<typename T>
@@ -343,13 +319,11 @@ Vector<N>& Vector<N>::operator=(const std::initializer_list<T> vector_vals)
     return *this;
 }
 
-
 template<std::size_t N>
 [[nodiscard]] double& Vector<N>::operator()(const size_type idx)
 {
     return m_arr.at(idx);
 }
-
 
 template<std::size_t N>
 [[nodiscard]] const double& Vector<N>::operator()(const std::size_t idx) const
@@ -357,13 +331,11 @@ template<std::size_t N>
     return m_arr.at(idx);
 }
 
-
 template<std::size_t N>
 [[nodiscard]] double& Vector<N>::at(const std::size_t idx)
 {
     return m_arr.at(idx);
 }
-
 
 template<std::size_t N>
 [[nodiscard]] const double& Vector<N>::at(const std::size_t idx) const
@@ -371,20 +343,17 @@ template<std::size_t N>
     return m_arr.at(idx);
 }
 
-
 template<std::size_t N>
 [[nodiscard]] constexpr std::size_t Vector<N>::size() const noexcept
 {
     return N;
 }
 
-
 template<std::size_t N>
 void Vector<N>::fill(const double val) noexcept
 {
     m_arr.fill(val);
 }
-
 
 template<std::size_t N>
 [[nodiscard]] double Vector<N>::magnitude() const
@@ -403,7 +372,6 @@ template<std::size_t N>
     return std::sqrt(magn);
 }
 
-
 template<std::size_t N>
 void Vector<N>::normalize()
 {
@@ -412,20 +380,17 @@ void Vector<N>::normalize()
     std::for_each(m_arr.begin(), m_arr.end(), [magn](double& val){val /= magn;});
 }
 
-
 template<std::size_t N>
 [[nodiscard]] double Vector<N>::get_sum() const
 {
     return std::accumulate(m_arr.begin(), m_arr.end(), 0.0, std::plus<>());
 }
 
-
 template<std::size_t N>
 void Vector<N>::negate()
 {
     std::for_each(m_arr.begin(), m_arr.end(), [](double& val){val *= -1.0;});
 }
-
 
 // =================================================================================================
 // ADDITION OPERATORS
@@ -448,7 +413,6 @@ Vector<N>& Vector<N>::operator+=(const T scalar)
     return *this;
 }
 
-
 template<std::size_t N>
 Vector<N>& Vector<N>::operator+=(const Vector& vec) noexcept
 {
@@ -458,7 +422,6 @@ Vector<N>& Vector<N>::operator+=(const Vector& vec) noexcept
 
     return *this;
 }
-
 
 /**
  * @brief Add two vectors.
@@ -479,7 +442,6 @@ Vector<N> operator+(const Vector<N>& v1, const Vector<N>& v2)
 
     return result;
 }
-
 
 // =================================================================================================
 // SUBTRACTION OPERATORS
@@ -502,7 +464,6 @@ Vector<N>& Vector<N>::operator-=(const T scalar)
     return *this;
 }
 
-
 template<std::size_t N>
 Vector<N>& Vector<N>::operator-=(const Vector& vec) noexcept
 {
@@ -513,7 +474,6 @@ Vector<N>& Vector<N>::operator-=(const Vector& vec) noexcept
 
     return *this;
 }
-
 
 /**
  * @brief Subtract two vectors.
@@ -556,7 +516,6 @@ Vector<N>& Vector<N>::operator*=(const T scalar)
     return *this;
 }
 
-
 /**
  * @brief Scalar-vector multiplication.
  *
@@ -581,7 +540,6 @@ Vector<N> operator*(const T scalar, const Vector<N>& vec)
     return res;
 }
 
-
 /**
  * @brief Vector-scalar multiplication.
  *
@@ -597,7 +555,6 @@ Vector<N> operator*(const Vector<N>& vec, const T scalar)
     static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
     return scalar * vec;
 }
-
 
 /**
  * @brief Multiply two vectors.
@@ -666,7 +623,6 @@ std::ostream& operator<<(std::ostream& os, const Vector<N>& vec)
     return os;
 }
 
-
 // =================================================================================================
 // VECTOR-ONLY FUNCTIONS
 // =================================================================================================
@@ -687,7 +643,6 @@ inline Vector<3> cross(const Vector<3>& v1, const Vector<3>& v2)
     };
 }
 
-
 /**
  * @brief Compute the vector dot product.
  *
@@ -702,7 +657,6 @@ inline double dot(const Vector<2>& v1, const Vector<2>& v2)
     return (v1(0) * v2(0)) + (v1(1) * v2(1));
 }
 
-
 /**
  * @brief Compute the vector dot product.
  *
@@ -716,7 +670,6 @@ inline double dot(const Vector<3>& v1, const Vector<3>& v2)
 {
     return (v1(0) * v2(0)) + (v1(1) * v2(1)) + (v1(2) * v2(2));
 }
-
 
 /**
  * @brief Compute the vector dot product.
@@ -737,6 +690,5 @@ double dot(const Vector<N>& v1, const Vector<N>& v2)
 
     return dot_prod;
 }
-
 
 }  // namespace MathUtils
