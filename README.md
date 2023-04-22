@@ -4,7 +4,7 @@
 
 **Created By:** Michael Wrona
 
-A collection of C++17 math utilities for MicWro Engineering projects. The primary application for this code is my quadcopter flight computer project. These will be used by both the flight software and simulation. I add new utilities on an "as-required" basis.
+A collection of C++17 math utilities for MicWro Engineering projects. I add new utilities on an "as-required" basis.
 
 ## Getting Started
 
@@ -82,11 +82,14 @@ pre-commit install
 
 ### Static Analysis
 
-I use [cppcheck](https://cppcheck.sourceforge.io/) for static analysis. I require pull requests to pass cppcheck `style` and `warning` checks.
+I use [cppcheck](https://cppcheck.sourceforge.io/) and [clang-tidy](https://clang.llvm.org/extra/clang-tidy/) for static analysis. I require pull requests to pass cppcheck `style` and `warning` checks and clang-tidy `performance`, `portability`, `clang-analyzer`, and `cppcoreguidelines` checks.
 
 ```shell
-# run cppcheck static analysis
-bash ./scripts/run-cppcheck.sh
+# run cppcheck
+bash scripts/run-cppcheck.sh
+
+# run clang-tidy
+bash scripts/run-clang-tidy.sh
 ```
 
 ### Complexity
@@ -95,7 +98,7 @@ I use [pmccabe](https://manpages.ubuntu.com/manpages/focal/man1/pmccabe.1.html) 
 
 ```shell
 # run pmccabe
-bash ./scripts/run-pmccabe.sh
+bash scripts/run-pmccabe.sh
 ```
 
 ## Repository

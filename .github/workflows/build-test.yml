@@ -48,3 +48,21 @@ jobs:
           cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
           runCmd: |
             ctest --test-dir ./build/ --output-on-failure -T Test
+
+      - name: Run CppCheck
+        uses: devcontainers/ci@v0.3
+        env:
+          UBUNTU_VERSION: ${{ inputs.ubuntu_version }}
+        with:
+          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
+          runCmd: |
+            bash scripts/run-cppcheck.sh
+
+      - name: Run clang-tidy
+        uses: devcontainers/ci@v0.3
+        env:
+          UBUNTU_VERSION: ${{ inputs.ubuntu_version }}
+        with:
+          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
+          runCmd: |
+            bash scripts/run-clang-tidy.sh
