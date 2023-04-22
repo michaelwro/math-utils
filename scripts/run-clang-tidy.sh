@@ -15,8 +15,6 @@ if [ ! -d "$BUILD_DIR" ]; then
 fi
 
 # run analysis
-TIDY_CHECKS="-*,performance-*,portability-*,clang-analyzer-*"
-
-clang-tidy -checks=$TIDY_CHECKS \
+clang-tidy --config="$(cat $REPO_DIR/.clang-tidy)" \
     -p $BUILD_DIR --quiet \
     $(find $REPO_DIR/src/ $REPO_DIR/include/ -type f \( -iname *.cpp -o -iname *.h \))

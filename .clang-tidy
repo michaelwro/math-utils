@@ -4,6 +4,6 @@ Checks:
   portability-*,
   clang-analyzer-*,
   cppcoreguidelines-*,
-  cppcoreguidelines-avoid-magic-numbers
+  -cppcoreguidelines-avoid-magic-numbers
 WarningsAsErrors: true
 AnalyzeTemporaryDtors: false
