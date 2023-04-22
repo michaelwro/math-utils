@@ -60,6 +60,7 @@ jobs:
 
       - name: Run clang-tidy
         uses: devcontainers/ci@v0.3
+        if: ${{ inputs.build_type == 'Release' }}
         env:
           UBUNTU_VERSION: ${{ inputs.ubuntu_version }}
         with:
