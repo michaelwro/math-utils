@@ -6,7 +6,6 @@
 
 #include "Attitude/quaternion_to_euler.h"
 
-#include "asin_safe.h"
 #include "constants.h"
 
 #include <cmath>
@@ -33,7 +32,7 @@ Euler321 quaternion_to_euler(const Quaternion& q)
      */
     return Euler321 {
         std::atan2((q1*q2) + (q0*q3), 0.5 - q22 - q33),
-        asin_safe(2.0 * ((q0*q2) - (q1*q3))),
+        std::asin(2.0 * ((q0*q2) - (q1*q3))),
         std::atan2((q2*q3) + (q0*q1), 0.5 - q22 - q11)
     };
 }
