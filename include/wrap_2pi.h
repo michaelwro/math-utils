@@ -4,8 +4,7 @@
  * @date 2023-03-29
  */
 
-#ifndef MATHUTILS_WRAP2PI_H_
-#define MATHUTILS_WRAP2PI_H_
+#pragma once
 
 #include "constants.h"
 
@@ -39,5 +38,3 @@ double wrap_2pi(const T angle_rad)
 }
 
 }    // namespace MathUtils
-
-#endif    // MATHUTILS_WRAP2PI_H_

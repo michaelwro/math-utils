@@ -4,9 +4,7 @@
  * @date 2023-03-22
  */
 
-#ifndef MATHUTILS_INTERNAL_ERROR_MESSAGE_HELPERS_H_
-#define MATHUTILS_INTERNAL_ERROR_MESSAGE_HELPERS_H_
-
+#pragma once
 #include <cstddef>
 #include <string>
 
@@ -134,6 +132,3 @@ inline std::string invalid_index_error_msg(const std::size_t input_row,
 
 }    // namespace Internal
 }    // namespace MathUtils
-
-
-#endif    // MATHUTILS_INTERNAL_ERROR_MESSAGE_HELPERS_H_

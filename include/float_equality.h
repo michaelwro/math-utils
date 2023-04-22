@@ -4,8 +4,7 @@
  * @date 2023-03-17
  */
 
-#ifndef MATHUTILS_FLOAT_EQUALITY_H_
-#define MATHUTILS_FLOAT_EQUALITY_H_
+#pragma once
 
 #include <algorithm>
 #include <cassert>
@@ -40,5 +39,3 @@ inline bool float_equality(const T a, const T b)
 }
 
 }    // namespace MathUtils
-
-#endif    // MATHUTILS_FLOAT_EQUALITY_H_

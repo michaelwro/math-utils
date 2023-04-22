@@ -12,8 +12,7 @@
  * @ref https://www.britannica.com/science/pi-mathematics
  */
 
-#ifndef MATHUTILS_CONSTANTS_H_
-#define MATHUTILS_CONSTANTS_H_
+#pragma once
 
 namespace MathUtils { namespace Constants {
 
@@ -35,5 +34,3 @@ constexpr double EARTH_RADIUS_M = 6371008.7714150594547391;  ///< IUGG earth ari
 
 }  // namespace Constants
 }  // namespace MathUtils
-
-#endif  // MATHUTILS_CONSTANTS_H_

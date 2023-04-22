@@ -4,8 +4,7 @@
  * @date 2023-04-02
  */
 
-#ifndef MATHUTILS_EULER_TO_DCM_H_
-#define MATHUTILS_EULER_TO_DCM_H_
+#pragma once
 
 #include "Attitude/Euler321.h"
 #include "LinAlg/Matrix.h"
@@ -25,5 +24,3 @@ namespace MathUtils {
 Matrix<3,3> euler_to_dcm(const Euler321& euler);
 
 }  // namespace MathUtils
-
-#endif  // MATHUTILS_EULER_TO_DCM_H_

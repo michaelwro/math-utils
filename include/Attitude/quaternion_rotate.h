@@ -4,8 +4,7 @@
  * @date 2023-03-15
  */
 
-#ifndef MATHUTILS_ATTITUDE_QUATERNION_ROTATE_H_
-#define MATHUTILS_ATTITUDE_QUATERNION_ROTATE_H_
+#pragma once
 
 #include "Attitude/Quaternion.h"
 #include "LinAlg/Vector.h"
@@ -26,5 +25,3 @@ namespace MathUtils {
 Vector<3> quaternion_rotate(const Quaternion& q_a_b, const Vector<3>& v_b);
 
 }  // namespace MathUtils
-
-#endif  // MATHUTILS_ATTITUDE_QUATERNION_ROTATE_H_

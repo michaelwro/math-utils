@@ -8,7 +8,7 @@
         "kind": "build"
       },
       "linux": {
-        "command": "bash scripts/debug-build.sh"
+        "command": "bash scripts/build-debug.sh"
       },
       "options": {
         "cwd": "${workspaceFolder}"
@@ -21,7 +21,7 @@
         "kind": "build"
       },
       "linux": {
-        "command": "bash scripts/release-build.sh"
+        "command": "bash scripts/build-release.sh"
       },
       "options": {
         "cwd": "${workspaceFolder}"

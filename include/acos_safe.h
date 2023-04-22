@@ -4,8 +4,7 @@
  * @date 2023-03-25
  */
 
-#ifndef MATHUTILS_ACOS_SAFE_H_
-#define MATHUTILS_ACOS_SAFE_H_
+#pragma once
 
 #include "constants.h"
 
@@ -44,5 +43,3 @@ double acos_safe(const T val) noexcept
 }
 
 }  // namespace MathUtils
-
-#endif  // MATHUTILS_ACOS_SAFE_H_

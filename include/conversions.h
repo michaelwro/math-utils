@@ -7,8 +7,7 @@
  * @ref https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
  */
 
-#ifndef MATHUTILS_CONVERSIONS_H_
-#define MATHUTILS_CONVERSIONS_H_
+#pragma once
 
 #include "constants.h"
 
@@ -330,5 +329,3 @@ inline double k2c(const double k)
 
 }  // namespace Conversions
 }  // namespace MathUtils
-
-#endif  // MATHUTILS_CONVERSIONS_H_

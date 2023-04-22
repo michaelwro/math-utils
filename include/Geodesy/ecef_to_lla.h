@@ -4,8 +4,7 @@
  * @date 2023-04-04
  */
 
-#ifndef MATHUTILS_ECEF_TO_LLA_H_
-#define MATHUTILS_ECEF_TO_LLA_H_
+#pragma once
 
 #include "Geodesy/GeoCoord.h"
 #include "LinAlg/Vector.h"
@@ -26,5 +25,3 @@ namespace MathUtils {
 GeoCoord ecef_to_lla(const Vector<3>& pos_ecef_m);
 
 }  // namespace MathUtils
-
-#endif  // MATHUTILS_ECEF_TO_LLA_H_

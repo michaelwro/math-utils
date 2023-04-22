@@ -4,8 +4,7 @@
  * @date 2023-03-26
  */
 
-#ifndef MATHUTILS_DCM_TO_QUATERNION_H_
-#define MATHUTILS_DCM_TO_QUATERNION_H_
+#pragma once
 
 #include "LinAlg/Matrix.h"
 #include "Attitude/Quaternion.h"
@@ -26,5 +25,3 @@ namespace MathUtils {
 Quaternion dcm_to_quaternion(const Matrix<3,3>& dcm);
 
 }  // namespace MathUtils
-
-#endif  // MATHUTILS_DCM_TO_QUATERNION_H_

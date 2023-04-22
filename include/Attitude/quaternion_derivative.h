@@ -4,8 +4,7 @@
  * @date 2023-03-15
  */
 
-#ifndef MATHUTILS_ATTITUDE_QUATERNION_DERIVATIVE_H_
-#define MATHUTILS_ATTITUDE_QUATERNION_DERIVATIVE_H_
+#pragma once
 
 #include "Attitude/Quaternion.h"
 #include "LinAlg/Vector.h"
@@ -26,5 +25,3 @@ namespace MathUtils {
 Vector<4> quaternion_derivative(const Quaternion& q, Vector<3> w_rps);
 
 }  // namespace MathUtils
-
-#endif  // MATHUTILS_ATTITUDE_QUATERNION_DERIVATIVE_H_

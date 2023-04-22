@@ -4,8 +4,7 @@
  * @date 2023-03-25
  */
 
-#ifndef MATHUTILS_ASIN_SAFE_H_
-#define MATHUTILS_ASIN_SAFE_H_
+#pragma once
 
 #include "constants.h"
 
@@ -44,5 +43,3 @@ double asin_safe(const T val) noexcept
 }
 
 }  // MathUtils
-
-#endif  // MATHUTILS_ASIN_SAFE_H_

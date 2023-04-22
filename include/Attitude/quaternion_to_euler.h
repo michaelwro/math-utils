@@ -4,8 +4,7 @@
  * @date 2023-04-02
  */
 
-#ifndef MATHUTILS_QUATERNION_TO_EULER_H_
-#define MATHUTILS_QUATERNION_TO_EULER_H_
+#pragma once
 
 #include "Attitude/Euler321.h"
 #include "Attitude/Quaternion.h"
@@ -25,5 +24,3 @@ namespace MathUtils {
 Euler321 quaternion_to_euler(const Quaternion& q);
 
 }  // namespace MathUtils
-
-#endif  // MATHUTILS_QUATERNION_TO_EULER_H_
