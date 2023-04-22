@@ -26,7 +26,7 @@ pre-commit install
 
 ```shell
 sudo apt update
-sudo apt install -y build-essential cmake git python3 python3-pip cppcheck
+sudo apt install -y build-essential cmake git python3 python3-pip cppcheck clang-tidy
 python3 -m pip install -r .devcontainer/requirements.txt
 pre-commit install
 ```
@@ -82,7 +82,7 @@ pre-commit install
 
 ### Static Analysis
 
-I use [cppcheck](https://cppcheck.sourceforge.io/) and [clang-tidy](https://clang.llvm.org/extra/clang-tidy/) for static analysis. I require pull requests to pass cppcheck `style` and `warning` checks and clang-tidy `performance`, `portability`, `clang-analyzer`, and `cppcoreguidelines` checks.
+I use [cppcheck](https://cppcheck.sourceforge.io/) and [clang-tidy](https://clang.llvm.org/extra/clang-tidy/) for static analysis. I require pull requests to pass cppcheck `style` and `warning` checks. Releases must pass clang-tidy checks. See `.clang-tidy` for the list of checks.
 
 ```shell
 # run cppcheck
