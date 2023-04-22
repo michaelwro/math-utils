@@ -5,8 +5,7 @@
  * @brief Quaternion class.
  */
 
-#ifndef MATHUTILS_ATTITUDE_QUATERNION_H_
-#define MATHUTILS_ATTITUDE_QUATERNION_H_
+#pragma once
 
 #include "LinAlg/Vector.h"
 
@@ -23,14 +22,16 @@ namespace MathUtils {
  */
 class Quaternion {
 public:
+
+    using quat_type = double;
+    using size_type = std::size_t;
+
     /**
      * @brief Create a quaternion.
      *
      * @details Sets to unity [1, 0, 0, 0]
      */
-    Quaternion()
-        :m_arr{1.0, 0.0, 0.0, 0.0}
-    {}
+    Quaternion() = default;
 
     /**
      * @brief Destroy the quaternion.
@@ -45,7 +46,7 @@ public:
      * @param qy Y-component.
      * @param qz Z-component.
      */
-    Quaternion(const double qs, const double qx, const double qy, const double qz);
+    Quaternion(const quat_type qs, const quat_type qx, const quat_type qy, const quat_type qz);
 
     /**
      * @brief Create a quaternion from an initializer list. Normalizes input.
@@ -54,7 +55,7 @@ public:
      *
      * @exception std::length_error Input was not 4 elements.
      */
-    explicit Quaternion(const std::initializer_list<double> quat_vals);
+    explicit Quaternion(const std::initializer_list<quat_type> quat_vals);
 
     /**
      * @brief Copy-construct quaternion.
@@ -84,7 +85,7 @@ public:
      * @param other Other quaternion.
      * @return Copied quaternion.
      */
-    Quaternion& operator=(Quaternion&& other);
+    Quaternion& operator=(Quaternion&& other) noexcept;
 
     /**
      * @brief Assign quaternion values from an initializer list. Normalizes input.
@@ -94,7 +95,7 @@ public:
      *
      * @exception std::length_error Input was not four elements.
      */
-    Quaternion& operator=(const std::initializer_list<double> quat_vals);
+    Quaternion& operator=(const std::initializer_list<quat_type> quat_vals);
 
     /**
      * @brief Get quaternion element.
@@ -102,7 +103,7 @@ public:
      * @param idx Quaternion index.
      * @return Quaternion element at specified index.
      */
-    const double& operator()(const std::size_t idx) const noexcept;
+    [[nodiscard]] const quat_type& operator()(const std::size_t idx) const;
 
     /**
      * @brief Get quaternion element. With bounds checking.
@@ -112,7 +113,7 @@ public:
      *
      * @exception std::out_of_range Invalid quaternion index.
      */
-    const double& at(const std::size_t idx) const;
+    [[nodiscard]] const quat_type& at(const std::size_t idx) const;
 
     /**
      * @brief Return the inverse of the quaternion.
@@ -121,7 +122,7 @@ public:
      *
      * @return Quaternion inverse.
      */
-    Quaternion inverse() const;
+    [[nodiscard]] Quaternion inverse() const;
 
     /**
      * @brief If the scalar part is negative, negate (*= -1) the quaternion elements to enforce a
@@ -143,14 +144,14 @@ public:
      *
      * @return Quaternion eigen axis.
      */
-    Vector<3> get_eigen_axis() const;
+    [[nodiscard]] Vector<3> eigen_axis() const;
 
     /**
      * @brief Return the quaternion's rotation angle.
      *
      * @return Quaternion rotation angle in [rad].
      */
-    double get_angle() const;
+    [[nodiscard]] quat_type angle() const;
 
     /**
      * @brief Print a quaternion to a stream. Comma-separates values. Does not add a newline at the end.
@@ -167,7 +168,7 @@ public:
 
 protected:
 private:
-    std::array<double, 4> m_arr;  ///< Underlying array to store elements
+    std::array<quat_type, 4> m_arr {1, 0, 0, 0};  ///< Underlying array to store elements
 };
 
 // ============================================================================
@@ -197,5 +198,3 @@ inline Quaternion operator*(const Quaternion& q_b, const Quaternion& q_c)
 }
 
 }    // namespace MathUtils
-
-#endif    // MATHUTILS_ATTITUDE_QUATERNION_H_

@@ -6,7 +6,6 @@
 
 #include "Attitude/Quaternion.h"
 
-#include "acos_safe.h"
 #include "float_equality.h"
 #include "Internal/error_msg_helpers.h"
 
@@ -21,17 +20,16 @@
 
 namespace MathUtils {
 
-Quaternion::Quaternion(const double qs, const double qx, const double qy, const double qz)
+Quaternion::Quaternion(const quat_type qs, const quat_type qx, const quat_type qy, const quat_type qz)
     :m_arr{qs, qx, qy, qz}
 {
     this->normalize();
 }
 
-
-Quaternion::Quaternion(const std::initializer_list<double> quat_vals)
+Quaternion::Quaternion(const std::initializer_list<quat_type> quat_vals)
 {
     // quaternions shall always have 4 elements.
-    const std::size_t num_vals = quat_vals.size();
+    const size_type num_vals = quat_vals.size();
 
     if (num_vals != 4) {
         throw std::length_error(Internal::invalid_init_list_length_error_msg(num_vals, 4));
@@ -42,16 +40,13 @@ Quaternion::Quaternion(const std::initializer_list<double> quat_vals)
     this->normalize();
 }
 
-
 Quaternion::Quaternion(const Quaternion& other)
     :m_arr{other.m_arr}
 {}
 
-
 Quaternion::Quaternion(Quaternion&& other) noexcept
-    :m_arr{std::move(other.m_arr)}
+    :m_arr{other.m_arr}
 {}
-
 
 Quaternion& Quaternion::operator=(const Quaternion& other)
 {
@@ -63,8 +58,7 @@ Quaternion& Quaternion::operator=(const Quaternion& other)
     return *this;
 }
 
-
-Quaternion& Quaternion::operator=(Quaternion&& other)
+Quaternion& Quaternion::operator=(Quaternion&& other) noexcept
 {
     if (&other == this) {
         return *this;
@@ -74,11 +68,10 @@ Quaternion& Quaternion::operator=(Quaternion&& other)
     return *this;
 }
 
-
-Quaternion& Quaternion::operator=(const std::initializer_list<double> quat_vals)
+Quaternion& Quaternion::operator=(const std::initializer_list<quat_type> quat_vals)
 {
     // quaternions shall always have 4 elements.
-    const std::size_t num_vals = quat_vals.size();
+    const size_type num_vals = quat_vals.size();
 
     if (num_vals != 4) {
         throw std::length_error(Internal::invalid_init_list_length_error_msg(num_vals, 4));
@@ -90,29 +83,20 @@ Quaternion& Quaternion::operator=(const std::initializer_list<double> quat_vals)
     return *this;
 }
 
-
-const double& Quaternion::operator()(const std::size_t idx) const noexcept
+[[nodiscard]] const double& Quaternion::operator()(const size_type idx) const
 {
-    assert(idx < 4);
-    return m_arr[idx];
+    return m_arr.at(idx);
 }
 
-
-const double& Quaternion::at(const std::size_t idx) const
+[[nodiscard]] const double& Quaternion::at(const size_type idx) const
 {
-    if (idx >= 4) {
-        throw std::out_of_range(Internal::invalid_index_error_msg(idx, 4));
-    }
-
-    return m_arr[idx];
+    return m_arr.at(idx);
 }
 
-
-Quaternion Quaternion::inverse() const
+[[nodiscard]] Quaternion Quaternion::inverse() const
 {
     return Quaternion(m_arr[0], -m_arr[1], -m_arr[2], -m_arr[3]);
 }
-
 
 void Quaternion::force_positive_rotation() noexcept
 {
@@ -124,11 +108,10 @@ void Quaternion::force_positive_rotation() noexcept
     }
 }
 
-
 void Quaternion::normalize()
 {
     // compute magnitude
-    const double magn = std::sqrt(
+    const quat_type magn = std::sqrt(
         (m_arr[0] * m_arr[0]) +
         (m_arr[1] * m_arr[1]) +
         (m_arr[2] * m_arr[2]) +
@@ -148,12 +131,11 @@ void Quaternion::normalize()
     m_arr[3] /= magn;
 }
 
-
-Vector<3> Quaternion::get_eigen_axis() const
+[[nodiscard]] Vector<3> Quaternion::eigen_axis() const
 {
     // rotation angle divided by 2
-    const double angle_div_two = acos_safe(m_arr[0]);
-    const double sin_angle_div_two = std::sin(angle_div_two);
+    const quat_type angle_div_two = std::acos(m_arr[0]);
+    const quat_type sin_angle_div_two = std::sin(angle_div_two);
 
     // NOTE: Could be div-by-zero for small or zero rotation angles.
     // Could maybe return zero vector?
@@ -164,12 +146,10 @@ Vector<3> Quaternion::get_eigen_axis() const
     };
 }
 
-
-double Quaternion::get_angle() const
+[[nodiscard]] double Quaternion::angle() const
 {
-    return 2.0 * acos_safe(m_arr[0]);
+    return 2.0 * std::acos(m_arr[0]);
 }
-
 
 std::ostream& operator<<(std::ostream& os, const Quaternion& quat)
 {

@@ -161,7 +161,7 @@ TEST(QuaternionTest, InvalidIndexThrows)
     Quaternion quat({1, 2, 3, 4});
 
     EXPECT_THROW({
-        quat.at(4);
+        double a = quat.at(4);
     }, std::out_of_range);
 }
 
@@ -208,7 +208,7 @@ TEST(QuaternionTest, EigenAxis)
 
     Quaternion q(1.0/sqrt_two, 1.0/sqrt_two, 0, 0);
 
-    EXPECT_TRUE(MathUtils::TestTools::VectorNear(q.get_eigen_axis(), MathUtils::Vector<3>{1, 0, 0}));
+    EXPECT_TRUE(MathUtils::TestTools::VectorNear(q.eigen_axis(), MathUtils::Vector<3>{1, 0, 0}));
 }
 
 // =================================================================================================
@@ -218,7 +218,7 @@ TEST(QuaternionTest, Angle)
 
     Quaternion q(1.0/sqrt_two, 1.0/sqrt_two, 0, 0);
 
-    EXPECT_DOUBLE_EQ(q.get_angle(), MathUtils::Constants::PI_DIV2);
+    EXPECT_DOUBLE_EQ(q.angle(), MathUtils::Constants::PI_DIV2);
 }
 
 // =================================================================================================
