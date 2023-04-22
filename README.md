@@ -39,27 +39,18 @@ This project gets compiled into a shared library `build/lib/libmathutils.so`.
 
 VS Code build tasks are configured for this project. They can be run with `CTRL+SHIFT+B`. Select between debug and release builds.
 
-### Manual Build
+### Build Scripts
 
 ```shell
-# Create a build folder at the top-level of the repo.
-mkdir build/
-cd build/
-
-# Here are a few cmake build commands for the project
-cmake ..  # automatically builds in debug mode
-cmake .. -DCMAKE_BUILD_TYPE=Debug  # explicitly debug build
-cmake .. -DCMAKE_BUILD_TYPE=Release  # release build
-
-# compile
-make -j
+bash scripts/build-debug.sh
+bash scripts/build-release.sh
 ```
 
 ## Dev Workflow
 
 ### Unit Tests
 
-Unit tests created with [Google Test](https://github.com/google/googletest) are included in the project. In the context of math utilities, tests are useful for verifying functions produce correct results. Creating unit tests also ensure changes "here" don't affect things "over there." Try to make at least one test for every utility.
+Unit tests created with [Google Test](https://github.com/google/googletest) are included in the project. In the context of math utilities, tests are useful for verifying functions produce correct results. Unit tests also ensure changes "here" don't affect things "over there." Try to make at least one test for every utility.
 
 I require pull requests to pass all tests.
 

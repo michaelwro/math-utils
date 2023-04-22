@@ -19,7 +19,7 @@ set(MATHUTILS_COMPILE_DEFINITIONS_DEBUG "")
 set(MATHUTILS_COMPILE_DEFINITIONS_RELEASE "NDEBUG")
 
 set(MATHUTILS_COMPILE_OPTIONS "-Wall;-Wextra;-Wpedantic;-Wshadow;-Wconversion;-Wdouble-promotion;-Wfloat-equal;-Wundef;-Wformat=2")
-set(MATHUTILS_COMPILE_OPTIONS_DEBUG "${MATHUTILS_COMPILE_OPTIONS};-g3;-Werror;-O0;-Wcast-align;-Wcast-qual;--coverage")
+set(MATHUTILS_COMPILE_OPTIONS_DEBUG "${MATHUTILS_COMPILE_OPTIONS};-Werror;-g3;-O0;-Wcast-align;-Wcast-qual;--coverage")
 set(MATHUTILS_COMPILE_OPTIONS_RELEASE "${MATHUTILS_COMPILE_OPTIONS};-O1")
 
 # library name
