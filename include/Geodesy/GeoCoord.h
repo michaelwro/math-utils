@@ -56,7 +56,7 @@ public:
      * @exception std::length_error Did not pass three-value list.
      */
     template<typename T>
-    explicit GeoCoord(const std::initializer_list<T> lla);
+    GeoCoord(const std::initializer_list<T> lla);
 
     /**
      * @brief Copy construct GeoCoord.

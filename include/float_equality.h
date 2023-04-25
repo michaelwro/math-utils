@@ -28,7 +28,7 @@ namespace MathUtils {
  * @ref https://floating-point-gui.de/errors/comparison/
  */
 template<typename T>
-inline bool float_equality(const T a, const T b)
+[[nodiscard]] inline bool float_equality(const T a, const T b)
 {
     static_assert(std::is_floating_point<T>::value, "Must be floating-point type.");
 

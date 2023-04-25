@@ -56,7 +56,7 @@ public:
      * @exception std::length_error Initializer list length doesn't match vector size.
      */
     template<typename T>
-    explicit Vector(const std::initializer_list<T> vector_vals);
+    Vector(const std::initializer_list<T> vector_vals);
 
     /**
      * @brief Copy-construct vector.
@@ -255,7 +255,7 @@ public:
 
 protected:
 private:
-    std::array<vector_type, T_LEN> m_arr {0.0};  ///< Underlying array to store vector values.
+    std::array<vector_type, T_LEN> m_arr {0};  ///< Underlying array to store vector values.
 };
 
 // =================================================================================================

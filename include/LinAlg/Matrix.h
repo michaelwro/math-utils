@@ -70,7 +70,7 @@ public:
      * @exception std::length_error Invalid init. list size.
      */
     template<typename T>
-    explicit Matrix(const std::initializer_list<T> new_matrix);
+    Matrix(const std::initializer_list<T> new_matrix);
 
     /**
      * @brief Create a matrix from an initializer list of lists.
@@ -89,7 +89,7 @@ public:
      * @exception std::length_error Invalid init. list size.
      */
     template<typename T>
-    explicit Matrix(const std::initializer_list<std::initializer_list<T>> new_matrix);
+    Matrix(const std::initializer_list<std::initializer_list<T>> new_matrix);
 
     /**
      * @brief Copy construct matrix.
@@ -271,7 +271,7 @@ public:
 
 protected:
 private:
-    std::array<matrix_type, T_ROWS * T_COLS> m_arr {0.0};  ///< Underlying array to store values (row-major order).
+    std::array<matrix_type, T_ROWS * T_COLS> m_arr {0};  ///< Underlying array to store values (row-major order).
 };
 
 // =================================================================================================
@@ -401,7 +401,7 @@ Matrix<R,C>& Matrix<R,C>::operator+=(const T scalar)
 {
     static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
-    const double scalard = static_cast<double>(scalar);
+    const auto scalard = static_cast<double>(scalar);
 
     std::for_each(
         m_arr.begin(),

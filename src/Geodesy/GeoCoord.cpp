@@ -6,8 +6,6 @@
 
 #include "Geodesy/GeoCoord.h"
 
-#include <utility>
-
 namespace MathUtils {
 
 GeoCoord::GeoCoord(const coord_type latitude_rad,

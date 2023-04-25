@@ -25,12 +25,12 @@ namespace MathUtils {
  * @return Arccosine of `val`.
  */
 template<typename T>
-double acos_safe(const T val) noexcept
+[[nodiscard]] double acos_safe(const T val) noexcept
 {
     static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
     assert(std::abs(val) <= 1.0);
 
-    const double dval = static_cast<double>(val);
+    const auto dval = static_cast<double>(val);
 
     if (dval >= 1.0) {
         return 0.0;

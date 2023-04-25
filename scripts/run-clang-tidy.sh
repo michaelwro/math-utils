@@ -11,7 +11,7 @@ BUILD_DIR=$REPO_DIR/build/
 
 if [ ! -d "$BUILD_DIR" ]; then
     echo "Build directory does not exist, building."
-    bash $REPO_DIR/scripts/debug-build.sh
+    bash $REPO_DIR/scripts/build-debug.sh
 fi
 
 # run analysis

@@ -55,14 +55,14 @@ public:
      *
      * @exception std::length_error Input was not 4 elements.
      */
-    explicit Quaternion(const std::initializer_list<quat_type> quat_vals);
+    Quaternion(const std::initializer_list<quat_type> quat_vals);
 
     /**
      * @brief Copy-construct quaternion.
      *
      * @param other Other quaternion.
      */
-    Quaternion(const Quaternion& other);
+    Quaternion(const Quaternion& other) = default;
 
     /**
      * @brief Move construct quaternion.

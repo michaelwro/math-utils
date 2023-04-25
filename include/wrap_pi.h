@@ -24,7 +24,7 @@ namespace MathUtils {
  * @ref https://stackoverflow.com/a/11498248
  */
 template<typename T>
-double wrap_pi(const T angle_rad)
+[[nodiscard]] double wrap_pi(const T angle_rad)
 {
     static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 

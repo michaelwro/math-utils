@@ -40,10 +40,6 @@ Quaternion::Quaternion(const std::initializer_list<quat_type> quat_vals)
     this->normalize();
 }
 
-Quaternion::Quaternion(const Quaternion& other)
-    :m_arr{other.m_arr}
-{}
-
 Quaternion::Quaternion(Quaternion&& other) noexcept
     :m_arr{other.m_arr}
 {}

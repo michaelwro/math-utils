@@ -55,7 +55,7 @@ public:
      * @exception std::length_error Did not pass three-value list.
      */
     template<typename T>
-    explicit Euler321(const std::initializer_list<T> angles);
+    Euler321(const std::initializer_list<T> angles);
 
     /**
      * @brief Copy construct Euler321.
@@ -152,9 +152,9 @@ public:
 
 protected:
 private:
-    angle_type m_yaw_rad {0.0};  ///< Yaw angle in [rad].
-    angle_type m_pitch_rad {0.0};  ///< Pitch angle in [rad].
-    angle_type m_roll_rad {0.0};  ///< Roll angle in [rad].
+    angle_type m_yaw_rad {0};  ///< Yaw angle in [rad].
+    angle_type m_pitch_rad {0};  ///< Pitch angle in [rad].
+    angle_type m_roll_rad {0};  ///< Roll angle in [rad].
 };
 
 // =================================================================================================
