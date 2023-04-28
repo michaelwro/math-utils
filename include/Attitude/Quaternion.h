@@ -55,7 +55,7 @@ public:
      *
      * @exception std::length_error Input was not 4 elements.
      */
-    Quaternion(const std::initializer_list<quat_type> quat_vals);
+    Quaternion(const std::initializer_list<quat_type> quat_vals);  //  cppcheck-suppress noExplicitConstructor
 
     /**
      * @brief Copy-construct quaternion.
