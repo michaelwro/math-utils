@@ -1,4 +1,4 @@
-c#!/bin/bash
+#!/bin/bash
 # Run cppcheck static analyzer on project
 #
 # Code By: Michael Wrona
