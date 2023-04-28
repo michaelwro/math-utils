@@ -55,7 +55,7 @@ public:
      * @exception std::length_error Did not pass three-value list.
      */
     template<typename T>
-    Euler321(const std::initializer_list<T> angles);
+    Euler321(const std::initializer_list<T> angles);  //  cppcheck-suppress noExplicitConstructor
 
     /**
      * @brief Copy construct Euler321.

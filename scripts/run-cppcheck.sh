@@ -15,6 +15,7 @@ find $REPO_DIR/src/ $REPO_DIR/include/ -type f \( -iname *.cpp -o -iname *.h \) 
         --language=c++ \
         --std=c++17 \
         --platform=unix64 \
+        --inline-suppr \
         -I $REPO_DIR/include/ \
         -i $REPO_DIR/build/ \
         -i $REPO_DIR/test/

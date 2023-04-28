@@ -70,7 +70,7 @@ public:
      * @exception std::length_error Invalid init. list size.
      */
     template<typename T>
-    Matrix(const std::initializer_list<T> new_matrix);
+    Matrix(const std::initializer_list<T> new_matrix);  //  cppcheck-suppress noExplicitConstructor
 
     /**
      * @brief Create a matrix from an initializer list of lists.
@@ -89,7 +89,7 @@ public:
      * @exception std::length_error Invalid init. list size.
      */
     template<typename T>
-    Matrix(const std::initializer_list<std::initializer_list<T>> new_matrix);
+    Matrix(const std::initializer_list<std::initializer_list<T>> new_matrix);  //  cppcheck-suppress noExplicitConstructor
 
     /**
      * @brief Copy construct matrix.
