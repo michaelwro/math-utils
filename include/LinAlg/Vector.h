@@ -32,9 +32,6 @@ template<std::size_t T_LEN>
 class Vector {
 public:
 
-    using size_type = std::size_t;
-    using vector_type = double;
-
     static_assert(T_LEN > 1, "One-length or zero-length vectors are not allowed.");
 
     /**
@@ -107,7 +104,7 @@ public:
      * @param idx Vector index.
      * @return Vector element at specified index.
      */
-    [[nodiscard]] vector_type& operator()(const size_type idx);
+    [[nodiscard]] double& operator()(const std::size_t idx);
 
     /**
      * @brief Get vector element. No bounds checks.
@@ -115,7 +112,7 @@ public:
      * @param idx Vector index.
      * @return Vector value at specified index.
      */
-    [[nodiscard]] const vector_type& operator()(const size_type idx) const;
+    [[nodiscard]] const double& operator()(const std::size_t idx) const;
 
     /**
      * @brief Access vector element. With bounds checks.
@@ -125,7 +122,7 @@ public:
      *
      * @exception std::out_of_range Invalid vector index.
      */
-    [[nodiscard]] vector_type& at(const size_type idx);
+    [[nodiscard]] double& at(const std::size_t idx);
 
     /**
      * @brief Get vector element. With bounds checks.
@@ -135,28 +132,28 @@ public:
      *
      * @exception std::out_of_range Invalid vector index.
      */
-    [[nodiscard]] const vector_type& at(const size_type idx) const;
+    [[nodiscard]] const double& at(const std::size_t idx) const;
 
     /**
      * @brief Get the vector length (number of elements).
      *
      * @return Vector length.
      */
-    [[nodiscard]] constexpr size_type size() const noexcept;
+    [[nodiscard]] constexpr std::size_t size() const noexcept;
 
     /**
      * @brief Fill the entire vector with a value.
      *
      * @param val Value to fill the vector with.
      */
-    void fill(const vector_type val) noexcept;
+    void fill(const double val) noexcept;
 
     /**
      * @brief Return the magnitude/norm of the vector.
      *
      * @return Vector magnitude.
      */
-    [[nodiscard]] vector_type magnitude() const;
+    [[nodiscard]] double magnitude() const;
 
     /**
      * @brief Normalize the vector.
@@ -170,7 +167,7 @@ public:
      *
      * @return Sum of all vector elements.
      */
-    [[nodiscard]] vector_type get_sum() const;
+    [[nodiscard]] double get_sum() const;
 
     /**
      * @brief Multiply all elements by -1.0. Flip the sign of all elements.
@@ -255,7 +252,7 @@ public:
 
 protected:
 private:
-    std::array<vector_type, T_LEN> m_arr {0};  ///< Underlying array to store vector values.
+    std::array<double, T_LEN> m_arr {0};  ///< Underlying array to store vector values.
 };
 
 // =================================================================================================
@@ -320,7 +317,7 @@ Vector<N>& Vector<N>::operator=(const std::initializer_list<T> vector_vals)
 }
 
 template<std::size_t N>
-[[nodiscard]] double& Vector<N>::operator()(const size_type idx)
+[[nodiscard]] double& Vector<N>::operator()(const std::size_t idx)
 {
     return m_arr.at(idx);
 }

@@ -22,6 +22,6 @@ namespace MathUtils {
  *
  * @ref https://repositories.lib.utexas.edu/bitstream/handle/2152/74954/Hans-JoachimWuensche.pdf?sequence=2&isAllowed=y
  */
-Vector<4> quaternion_derivative(const Quaternion& q, Vector<3> w_rps);
+Vector<4> quaternion_derivative(const Quaternion& q, const Vector<3>& w_rps);
 
 }  // namespace MathUtils

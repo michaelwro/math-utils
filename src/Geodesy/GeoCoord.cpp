@@ -8,9 +8,9 @@
 
 namespace MathUtils {
 
-GeoCoord::GeoCoord(const coord_type latitude_rad,
-    const coord_type longitude_rad,
-    const coord_type altitude_m
+GeoCoord::GeoCoord(const double latitude_rad,
+    const double longitude_rad,
+    const double altitude_m
 )
     :m_lat_rad{latitude_rad},
     m_lon_rad{longitude_rad},

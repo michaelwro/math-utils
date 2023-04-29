@@ -1,7 +1,5 @@
 Checks:
   -*,
-  cert-*,
-  clang-analyzer-*,
   cppcoreguidelines-*,
   -cppcoreguidelines-avoid-magic-numbers,
   hicpp-*,

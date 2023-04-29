@@ -23,9 +23,6 @@ namespace MathUtils {
 class GeoCoord {
 public:
 
-    using size_type = std::size_t;
-    using coord_type = double;
-
     /**
      * @brief Create a GeoCoord.
      */
@@ -43,9 +40,9 @@ public:
      * @param longitude_rad Longitude in [rad].
      * @param altitude_m Altitude in [m].
      */
-    GeoCoord(const coord_type latitude_rad,
-        const coord_type longitude_rad,
-        const coord_type altitude_m);
+    GeoCoord(const double latitude_rad,
+        const double longitude_rad,
+        const double altitude_m);
 
     /**
      * @brief Create a GeoCoord.
@@ -105,42 +102,42 @@ public:
      *
      * @return Latitude [rad].
      */
-    [[nodiscard]] coord_type& latitude() noexcept;
+    [[nodiscard]] double& latitude() noexcept;
 
     /**
      * @brief Get latitude.
      *
      * @return Latitude [rad].
      */
-    [[nodiscard]] const coord_type& latitude() const noexcept;
+    [[nodiscard]] const double& latitude() const noexcept;
 
     /**
      * @brief Access longitude.
      *
      * @return Longitude [rad].
      */
-    [[nodiscard]] coord_type& longitude() noexcept;
+    [[nodiscard]] double& longitude() noexcept;
 
     /**
      * @brief Get longitude.
      *
      * @return Longitude [rad].
      */
-    [[nodiscard]] const coord_type& longitude() const noexcept;
+    [[nodiscard]] const double& longitude() const noexcept;
 
     /**
      * @brief Access altitude.
      *
      * @return Altitude [m].
      */
-    [[nodiscard]] coord_type& altitude() noexcept;
+    [[nodiscard]] double& altitude() noexcept;
 
     /**
      * @brief Access altitude.
      *
      * @return Altitude [m].
      */
-    [[nodiscard]] const coord_type& altitude() const noexcept;
+    [[nodiscard]] const double& altitude() const noexcept;
 
     /**
      * @brief Print a GeoCoord to a stream. Comma-separates values. No newline at the end.
@@ -153,9 +150,9 @@ public:
 
 protected:
 private:
-    coord_type m_lat_rad {0};  ///< Latitude in [rad].
-    coord_type m_lon_rad {0};  ///< Longitude in [rad].
-    coord_type m_alt_m {0};  ///< Altitude in [m].
+    double m_lat_rad {0};  ///< Latitude in [rad].
+    double m_lon_rad {0};  ///< Longitude in [rad].
+    double m_alt_m {0};  ///< Altitude in [m].
 };
 
 // =================================================================================================
@@ -166,7 +163,7 @@ template<typename T>
 GeoCoord::GeoCoord(const std::initializer_list<T> lla)
 {
     static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-    const size_type input_size = lla.size();
+    const std::size_t input_size = lla.size();
 
     if (input_size != 3) {
         throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 3));
@@ -181,7 +178,7 @@ template<typename T>
 GeoCoord& GeoCoord::operator=(const std::initializer_list<T> lla)
 {
     static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-    const size_type input_size = lla.size();
+    const std::size_t input_size = lla.size();
 
     if (input_size != 3) {
         throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 3));

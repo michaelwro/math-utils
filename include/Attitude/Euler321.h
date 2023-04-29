@@ -23,9 +23,6 @@ namespace MathUtils {
 class Euler321 {
 public:
 
-    using angle_type = double;
-    using size_type = std::size_t;
-
     /**
      * @brief Create a Euler321.
      */
@@ -43,7 +40,7 @@ public:
      * @param pitch_rad Pitch angle in [rad].
      * @param roll_rad Roll angle in [rad].
      */
-    Euler321(const angle_type yaw_rad, const angle_type pitch_rad, const angle_type roll_rad);
+    Euler321(const double yaw_rad, const double pitch_rad, const double roll_rad);
 
     /**
      * @brief Create a Euler321.
@@ -104,42 +101,42 @@ public:
      *
      * @return Yaw angle [rad].
      */
-    [[nodiscard]] angle_type& yaw() noexcept;
+    [[nodiscard]] double& yaw() noexcept;
 
     /**
      * @brief Get yaw angle.
      *
      * @return Yaw angle [rad].
      */
-    [[nodiscard]] const angle_type& yaw() const noexcept;
+    [[nodiscard]] const double& yaw() const noexcept;
 
     /**
      * @brief Access pitch angle.
      *
      * @return Pitch angle [rad].
      */
-    [[nodiscard]] angle_type& pitch() noexcept;
+    [[nodiscard]] double& pitch() noexcept;
 
     /**
      * @brief Get pitch angle.
      *
      * @return Pitch angle [rad].
      */
-    [[nodiscard]] const angle_type& pitch() const noexcept;
+    [[nodiscard]] const double& pitch() const noexcept;
 
     /**
      * @brief Access roll angle.
      *
      * @return Roll roll [rad].
      */
-    [[nodiscard]] angle_type& roll() noexcept;
+    [[nodiscard]] double& roll() noexcept;
 
     /**
      * @brief Get roll angle.
      *
      * @return Roll angle [rad].
      */
-    [[nodiscard]] const angle_type& roll() const noexcept;
+    [[nodiscard]] const double& roll() const noexcept;
 
     /**
      * @brief Print a Euler321 to a stream. Comma-separates values. No newline at the end.
@@ -152,9 +149,9 @@ public:
 
 protected:
 private:
-    angle_type m_yaw_rad {0};  ///< Yaw angle in [rad].
-    angle_type m_pitch_rad {0};  ///< Pitch angle in [rad].
-    angle_type m_roll_rad {0};  ///< Roll angle in [rad].
+    double m_yaw_rad {0};  ///< Yaw angle in [rad].
+    double m_pitch_rad {0};  ///< Pitch angle in [rad].
+    double m_roll_rad {0};  ///< Roll angle in [rad].
 };
 
 // =================================================================================================
@@ -165,7 +162,7 @@ template<typename T>
 Euler321::Euler321(const std::initializer_list<T> angles)
 {
     static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-    const size_type input_size = angles.size();
+    const std::size_t input_size = angles.size();
 
     if (input_size != 3) {
         throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 3));
@@ -180,7 +177,7 @@ template<typename T>
 Euler321& Euler321::operator=(const std::initializer_list<T> angles)
 {
     static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-    const size_type input_size = angles.size();
+    const std::size_t input_size = angles.size();
 
     if (input_size != 3) {
         throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 3));

@@ -22,10 +22,6 @@ namespace MathUtils {
  */
 class Quaternion {
 public:
-
-    using quat_type = double;
-    using size_type = std::size_t;
-
     /**
      * @brief Create a quaternion.
      *
@@ -46,7 +42,7 @@ public:
      * @param qy Y-component.
      * @param qz Z-component.
      */
-    Quaternion(const quat_type qs, const quat_type qx, const quat_type qy, const quat_type qz);
+    Quaternion(const double qs, const double qx, const double qy, const double qz);
 
     /**
      * @brief Create a quaternion from an initializer list. Normalizes input.
@@ -55,7 +51,7 @@ public:
      *
      * @exception std::length_error Input was not 4 elements.
      */
-    Quaternion(const std::initializer_list<quat_type> quat_vals);  //  cppcheck-suppress noExplicitConstructor
+    Quaternion(const std::initializer_list<double> quat_vals);  //  cppcheck-suppress noExplicitConstructor
 
     /**
      * @brief Copy-construct quaternion.
@@ -95,7 +91,7 @@ public:
      *
      * @exception std::length_error Input was not four elements.
      */
-    Quaternion& operator=(const std::initializer_list<quat_type> quat_vals);
+    Quaternion& operator=(const std::initializer_list<double> quat_vals);
 
     /**
      * @brief Get quaternion element.
@@ -103,7 +99,7 @@ public:
      * @param idx Quaternion index.
      * @return Quaternion element at specified index.
      */
-    [[nodiscard]] const quat_type& operator()(const std::size_t idx) const;
+    [[nodiscard]] const double& operator()(const std::size_t idx) const;
 
     /**
      * @brief Get quaternion element. With bounds checking.
@@ -113,7 +109,7 @@ public:
      *
      * @exception std::out_of_range Invalid quaternion index.
      */
-    [[nodiscard]] const quat_type& at(const std::size_t idx) const;
+    [[nodiscard]] const double& at(const std::size_t idx) const;
 
     /**
      * @brief Return the inverse of the quaternion.
@@ -151,7 +147,7 @@ public:
      *
      * @return Quaternion rotation angle in [rad].
      */
-    [[nodiscard]] quat_type angle() const;
+    [[nodiscard]] double angle() const;
 
     /**
      * @brief Print a quaternion to a stream. Comma-separates values. Does not add a newline at the end.
@@ -168,7 +164,7 @@ public:
 
 protected:
 private:
-    std::array<quat_type, 4> m_arr {1, 0, 0, 0};  ///< Underlying array to store elements
+    std::array<double, 4> m_arr {1, 0, 0, 0};  ///< Underlying array to store elements
 };
 
 // ============================================================================

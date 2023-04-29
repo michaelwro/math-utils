@@ -34,8 +34,6 @@ namespace MathUtils {
 template<std::size_t T_ROWS, std::size_t T_COLS>
 class Matrix {
 public:
-    using size_type = std::size_t;
-    using matrix_type = double;
 
     static_assert(T_ROWS != 0, "Cannot have zero rows.");
     static_assert(T_COLS != 0, "Cannot have zero columns.");
@@ -171,7 +169,7 @@ public:
      *
      * @return Matrix rows.
      */
-    [[nodiscard]] constexpr size_type rows() const noexcept
+    [[nodiscard]] constexpr std::size_t rows() const noexcept
     {
         return T_ROWS;
     }
@@ -181,7 +179,7 @@ public:
      *
      * @return Matrix columns.
      */
-    [[nodiscard]] constexpr size_type cols() const noexcept
+    [[nodiscard]] constexpr std::size_t cols() const noexcept
     {
         return T_COLS;
     }
@@ -271,7 +269,7 @@ public:
 
 protected:
 private:
-    std::array<matrix_type, T_ROWS * T_COLS> m_arr {0};  ///< Underlying array to store values (row-major order).
+    std::array<double, T_ROWS * T_COLS> m_arr {0};  ///< Underlying array to store values (row-major order).
 };
 
 // =================================================================================================
@@ -284,7 +282,7 @@ Matrix<R,C>::Matrix(const std::initializer_list<T> new_matrix)
 {
     static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
-    const size_type input_size = new_matrix.size();
+    const std::size_t input_size = new_matrix.size();
 
     if (input_size != (R * C)) {
         throw std::length_error(
@@ -301,7 +299,7 @@ Matrix<R,C>::Matrix(const std::initializer_list<std::initializer_list<T>> new_ma
 {
     static_assert(std::is_fundamental<T>::value, "Fundamental types only..");
 
-    const size_type input_rows = new_matrix.size();
+    const std::size_t input_rows = new_matrix.size();
 
     if (input_rows != R) {
         throw std::length_error(
@@ -312,7 +310,7 @@ Matrix<R,C>::Matrix(const std::initializer_list<std::initializer_list<T>> new_ma
     auto array_element = m_arr.begin();  // start at the beginning of the array
 
     for (const auto& row : new_matrix) {
-        const size_type input_cols = row.size();
+        const std::size_t input_cols = row.size();
 
         if (input_cols != C) {
             throw std::length_error(
@@ -322,7 +320,7 @@ Matrix<R,C>::Matrix(const std::initializer_list<std::initializer_list<T>> new_ma
 
         for (const auto& val : row) {
             assert(array_element != m_arr.end());  // make sure we're not at the end
-            *(array_element++) = static_cast<matrix_type>(val);  // assign value to array
+            *(array_element++) = static_cast<double>(val);  // assign value to array
         }
     }
 
@@ -502,12 +500,12 @@ Matrix<R,C>& Matrix<R,C>::operator-=(const T scalar)
 {
     static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
-    const auto scalard = static_cast<matrix_type>(scalar);
+    const auto scalard = static_cast<double>(scalar);
 
     std::for_each(
         m_arr.begin(),
         m_arr.end(),
-        [scalard](matrix_type& element){element -= scalard;}
+        [scalard](double& element){element -= scalard;}
     );
 
     return *this;
@@ -603,12 +601,12 @@ Matrix<R,C>& Matrix<R,C>::operator*=(const T scalar)
 {
     static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
-    const auto scalard = static_cast<matrix_type>(scalar);
+    const auto scalard = static_cast<double>(scalar);
 
     std::for_each(
         m_arr.begin(),
         m_arr.end(),
-        [scalard](matrix_type& element){element *= scalard;}
+        [scalard](double& element){element *= scalard;}
     );
 
     return *this;
@@ -832,12 +830,12 @@ Matrix<R,C>& Matrix<R,C>::operator/=(const T scalar)
     static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
     // make sure denominator is not too small
-    const auto scalard = static_cast<matrix_type>(scalar);
+    const auto scalard = static_cast<double>(scalar);
 
     std::for_each(
         m_arr.begin(),
         m_arr.end(),
-        [scalard](matrix_type& element){element /= scalard;}
+        [scalard](double& element){element /= scalard;}
     );
 
     return *this;

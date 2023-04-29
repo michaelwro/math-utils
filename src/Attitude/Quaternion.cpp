@@ -20,16 +20,16 @@
 
 namespace MathUtils {
 
-Quaternion::Quaternion(const quat_type qs, const quat_type qx, const quat_type qy, const quat_type qz)
+Quaternion::Quaternion(const double qs, const double qx, const double qy, const double qz)
     :m_arr{qs, qx, qy, qz}
 {
     this->normalize();
 }
 
-Quaternion::Quaternion(const std::initializer_list<quat_type> quat_vals)
+Quaternion::Quaternion(const std::initializer_list<double> quat_vals)
 {
     // quaternions shall always have 4 elements.
-    const size_type num_vals = quat_vals.size();
+    const std::size_t num_vals = quat_vals.size();
 
     if (num_vals != 4) {
         throw std::length_error(Internal::invalid_init_list_length_error_msg(num_vals, 4));
@@ -64,10 +64,10 @@ Quaternion& Quaternion::operator=(Quaternion&& other) noexcept
     return *this;
 }
 
-Quaternion& Quaternion::operator=(const std::initializer_list<quat_type> quat_vals)
+Quaternion& Quaternion::operator=(const std::initializer_list<double> quat_vals)
 {
     // quaternions shall always have 4 elements.
-    const size_type num_vals = quat_vals.size();
+    const std::size_t num_vals = quat_vals.size();
 
     if (num_vals != 4) {
         throw std::length_error(Internal::invalid_init_list_length_error_msg(num_vals, 4));
@@ -79,12 +79,12 @@ Quaternion& Quaternion::operator=(const std::initializer_list<quat_type> quat_va
     return *this;
 }
 
-[[nodiscard]] const double& Quaternion::operator()(const size_type idx) const
+[[nodiscard]] const double& Quaternion::operator()(const std::size_t idx) const
 {
     return m_arr.at(idx);
 }
 
-[[nodiscard]] const double& Quaternion::at(const size_type idx) const
+[[nodiscard]] const double& Quaternion::at(const std::size_t idx) const
 {
     return m_arr.at(idx);
 }
@@ -107,7 +107,7 @@ void Quaternion::force_positive_rotation() noexcept
 void Quaternion::normalize()
 {
     // compute magnitude
-    const quat_type magn = std::sqrt(
+    const double magn = std::sqrt(
         (m_arr[0] * m_arr[0]) +
         (m_arr[1] * m_arr[1]) +
         (m_arr[2] * m_arr[2]) +
@@ -130,8 +130,8 @@ void Quaternion::normalize()
 [[nodiscard]] Vector<3> Quaternion::eigen_axis() const
 {
     // rotation angle divided by 2
-    const quat_type angle_div_two = std::acos(m_arr[0]);
-    const quat_type sin_angle_div_two = std::sin(angle_div_two);
+    const double angle_div_two = std::acos(m_arr[0]);
+    const double sin_angle_div_two = std::sin(angle_div_two);
 
     // NOTE: Could be div-by-zero for small or zero rotation angles.
     // Could maybe return zero vector?
