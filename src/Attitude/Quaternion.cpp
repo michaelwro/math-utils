@@ -31,37 +31,14 @@ Quaternion::Quaternion(const std::initializer_list<double> quat_vals)
     // quaternions shall always have 4 elements.
     const std::size_t num_vals = quat_vals.size();
 
-    if (num_vals != 4) {
+    if (num_vals != 4)
+    {
         throw std::length_error(Internal::invalid_init_list_length_error_msg(num_vals, 4));
     }
 
     std::copy(quat_vals.begin(), quat_vals.end(), m_arr.begin());
 
     this->normalize();
-}
-
-Quaternion::Quaternion(Quaternion&& other) noexcept
-    :m_arr{other.m_arr}
-{}
-
-Quaternion& Quaternion::operator=(const Quaternion& other)
-{
-    if (&other == this) {
-        return *this;
-    }
-
-    m_arr = other.m_arr;
-    return *this;
-}
-
-Quaternion& Quaternion::operator=(Quaternion&& other) noexcept
-{
-    if (&other == this) {
-        return *this;
-    }
-
-    m_arr.swap(other.m_arr);
-    return *this;
 }
 
 Quaternion& Quaternion::operator=(const std::initializer_list<double> quat_vals)
@@ -69,7 +46,8 @@ Quaternion& Quaternion::operator=(const std::initializer_list<double> quat_vals)
     // quaternions shall always have 4 elements.
     const std::size_t num_vals = quat_vals.size();
 
-    if (num_vals != 4) {
+    if (num_vals != 4)
+    {
         throw std::length_error(Internal::invalid_init_list_length_error_msg(num_vals, 4));
     }
 
@@ -77,16 +55,6 @@ Quaternion& Quaternion::operator=(const std::initializer_list<double> quat_vals)
     this->normalize();
 
     return *this;
-}
-
-[[nodiscard]] const double& Quaternion::operator()(const std::size_t idx) const
-{
-    return m_arr.at(idx);
-}
-
-[[nodiscard]] const double& Quaternion::at(const std::size_t idx) const
-{
-    return m_arr.at(idx);
 }
 
 [[nodiscard]] Quaternion Quaternion::inverse() const
@@ -96,7 +64,8 @@ Quaternion& Quaternion::operator=(const std::initializer_list<double> quat_vals)
 
 void Quaternion::force_positive_rotation() noexcept
 {
-    if (m_arr[0] < 0.0) {
+    if (m_arr[0] < 0.0)
+    {
         m_arr[0] *= -1.0;
         m_arr[1] *= -1.0;
         m_arr[2] *= -1.0;
@@ -149,10 +118,10 @@ void Quaternion::normalize()
 
 std::ostream& operator<<(std::ostream& os, const Quaternion& quat)
 {
-    os << quat.m_arr[0] << ", "
-        << quat.m_arr[1] << ", "
-        << quat.m_arr[2] << ", "
-        << quat.m_arr[3];
+    os << quat(0) << ", "
+        << quat(1) << ", "
+        << quat(2) << ", "
+        << quat(3);
 
     return os;
 }

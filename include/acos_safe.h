@@ -27,19 +27,19 @@ namespace MathUtils {
 template<typename T>
 [[nodiscard]] double acos_safe(const T val) noexcept
 {
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+    static_assert(std::is_floating_point<T>::value, "Fundamental types only.");
     assert(std::abs(val) <= 1.0);
 
-    const auto dval = static_cast<double>(val);
-
-    if (dval >= 1.0) {
+    if (val >= 1.0)
+    {
         return 0.0;
     }
-    else if (dval <= -1.0) {
+    else if (val <= -1.0)
+    {
         return Constants::PI;
     }
 
-    return std::acos(dval);
+    return std::acos(val);
 }
 
 }  // namespace MathUtils

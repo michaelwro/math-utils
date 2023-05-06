@@ -65,7 +65,7 @@ public:
      *
      * @param other Other quaternion.
      */
-    Quaternion(Quaternion&& other) noexcept;
+    Quaternion(Quaternion&& other) noexcept = default;
 
     /**
      * @brief Copy-assign quaternion.
@@ -73,7 +73,7 @@ public:
      * @param other Other quaternion.
      * @return Copied quaternion.
      */
-    Quaternion& operator=(const Quaternion& other);
+    Quaternion& operator=(const Quaternion& other) = default;
 
     /**
      * @brief Move-assign quaternion.
@@ -81,7 +81,7 @@ public:
      * @param other Other quaternion.
      * @return Copied quaternion.
      */
-    Quaternion& operator=(Quaternion&& other) noexcept;
+    Quaternion& operator=(Quaternion&& other) noexcept = default;
 
     /**
      * @brief Assign quaternion values from an initializer list. Normalizes input.
@@ -99,17 +99,23 @@ public:
      * @param idx Quaternion index.
      * @return Quaternion element at specified index.
      */
-    [[nodiscard]] const double& operator()(const std::size_t idx) const;
+    [[nodiscard]] const double& operator()(const std::size_t idx) const
+    {
+       return m_arr.at(idx);
+    }
 
     /**
-     * @brief Get quaternion element. With bounds checking.
+     * @brief Get quaternion element.
      *
      * @param idx Quaternion index.
      * @return Value at index.
      *
      * @exception std::out_of_range Invalid quaternion index.
      */
-    [[nodiscard]] const double& at(const std::size_t idx) const;
+    [[nodiscard]] const double& at(const std::size_t idx) const
+    {
+       return m_arr.at(idx);
+    }
 
     /**
      * @brief Return the inverse of the quaternion.
@@ -149,27 +155,14 @@ public:
      */
     [[nodiscard]] double angle() const;
 
-    /**
-     * @brief Print a quaternion to a stream. Comma-separates values. Does not add a newline at the end.
-     *
-     * @param os Output stream.
-     * @param vec Quaternion to print.
-     * @return Output stream with quaternion.
-     *
-     * @code {.cpp}
-     * std::cout << my_vequat << "\n";
-     * @endcode
-     */
-    friend std::ostream& operator<<(std::ostream& os, const Quaternion& quat);
-
 protected:
 private:
     std::array<double, 4> m_arr {1, 0, 0, 0};  ///< Underlying array to store elements
 };
 
-// ============================================================================
+// =================================================================================================
 // QUATERNION-ONLY OPERATOR OVERLOADS
-// ============================================================================
+// =================================================================================================
 
 /**
  * @brief Compute the quaternion product. Normalizes result.
@@ -192,5 +185,22 @@ inline Quaternion operator*(const Quaternion& q_b, const Quaternion& q_c)
         (q_c(3) * q_b(0)) + (q_c(2) * q_b(1)) - (q_c(1) * q_b(2)) + (q_c(0) * q_b(3))
     );
 }
+
+// =================================================================================================
+// OTHER FUNCTIONS
+// =================================================================================================
+
+/**
+ * @brief Print a quaternion to a stream. Comma-separates values. Does not add a newline at the end.
+ *
+ * @param os Output stream.
+ * @param vec Quaternion to print.
+ * @return Output stream with quaternion.
+ *
+ * @code {.cpp}
+ * std::cout << my_vequat << "\n";
+ * @endcode
+ */
+std::ostream& operator<<(std::ostream& os, const Quaternion& quat);
 
 }    // namespace MathUtils

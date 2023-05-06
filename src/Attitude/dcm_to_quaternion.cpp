@@ -41,7 +41,8 @@ Quaternion dcm_to_quaternion(const Matrix<3,3>& dcm)
     const double largest_q_term = std::sqrt(*largest_q_squared_term);
 
     // compute the quaternion depending on the largest element
-    switch (largest_element) {
+    switch (largest_element)
+    {
         case 0:
             return Quaternion {
                 largest_q_term,

@@ -49,13 +49,15 @@ GeoCoord ecef_to_lla(const Vector<3>& pos_ecef_m)
     double latitude_rad{};
 
     // TODO: figure out what 0.3 means
-    if (c2 > 0.3) {
+    if (c2 > 0.3)
+    {
         s = (zp/r) * (1.0 + c2*(a1 + u + s2*v)/r);
         latitude_rad = std::asin(s);
         ss = s * s;
         c = std::sqrt(1.0 - ss);
     }
-    else {
+    else
+    {
         c = (w/r) * (1.0 - s2*(a5 - u - c2*v)/r);
         latitude_rad = std::acos(c);
         ss = 1.0 - c*c;
@@ -76,7 +78,8 @@ GeoCoord ecef_to_lla(const Vector<3>& pos_ecef_m)
     latitude_rad += p;
     const double altitude_m = f + m*p*0.5;  // final altitude [m]
 
-    if (z < 0.0) {
+    if (z < 0.0)
+    {
         latitude_rad *= -1.0;  // final latitude
     }
 

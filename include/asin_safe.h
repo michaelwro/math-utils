@@ -25,21 +25,21 @@ namespace MathUtils {
  * @return Arcsine of `val`.
  */
 template<typename T>
-[[nodiscard]] double asin_safe(const T val) noexcept
+[[nodiscard]] T asin_safe(const T val) noexcept
 {
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+    static_assert(std::is_floating_point<T>::value, "Fundamental types only.");
     assert(std::abs(val) <= 1.0);
 
-    const auto dval = static_cast<double>(val);
-
-    if (dval >= 1.0) {
+    if (val >= 1.0)
+    {
         return Constants::PI_DIV2;
     }
-    else if (dval <= -1.0) {
+    else if (val <= -1.0)
+    {
         return -Constants::PI_DIV2;
     }
 
-    return std::asin(dval);
+    return std::asin(val);
 }
 
 }  // MathUtils

@@ -14,7 +14,8 @@
 
 #pragma once
 
-namespace MathUtils { namespace Constants {
+namespace MathUtils {
+namespace Constants {
 
 constexpr double PI = 3.1415926535897931;  ///< Pi constant.
 constexpr double TWO_PI = 6.2831853071795862;  ///< Two time pi

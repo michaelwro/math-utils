@@ -53,7 +53,20 @@ public:
      * @exception std::length_error Did not pass three-value list.
      */
     template<typename T>
-    GeoCoord(const std::initializer_list<T> lla);  //  cppcheck-suppress noExplicitConstructor
+    GeoCoord(const std::initializer_list<T> lla)  //  cppcheck-suppress noExplicitConstructor
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+        const std::size_t input_size = lla.size();
+
+        if (input_size != 3)
+        {
+            throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 3));
+        }
+
+        m_lat_rad = *(lla.begin());
+        m_lon_rad = *(lla.begin() + 1);
+        m_alt_m = *(lla.begin() + 2);
+    }
 
     /**
      * @brief Copy construct GeoCoord.
@@ -79,7 +92,22 @@ public:
      * @exception std::length_error Did not pass three-value list.
      */
     template<typename T>
-    GeoCoord& operator=(const std::initializer_list<T> lla);
+    GeoCoord& operator=(const std::initializer_list<T> lla)
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+        const std::size_t input_size = lla.size();
+
+        if (input_size != 3)
+        {
+            throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 3));
+        }
+
+        m_lat_rad = *(lla.begin());
+        m_lon_rad = *(lla.begin() + 1);
+        m_alt_m = *(lla.begin() + 2);
+
+        return *this;
+    }
 
     /**
      * @brief Copy assign GeoCoord.
@@ -102,51 +130,60 @@ public:
      *
      * @return Latitude [rad].
      */
-    [[nodiscard]] double& latitude() noexcept;
+    [[nodiscard]] double& latitude() noexcept
+    {
+        return m_lat_rad;
+    }
 
     /**
      * @brief Get latitude.
      *
      * @return Latitude [rad].
      */
-    [[nodiscard]] const double& latitude() const noexcept;
+    [[nodiscard]] const double& latitude() const noexcept
+    {
+        return m_lat_rad;
+    }
 
     /**
      * @brief Access longitude.
      *
      * @return Longitude [rad].
      */
-    [[nodiscard]] double& longitude() noexcept;
+    [[nodiscard]] double& longitude() noexcept
+    {
+        return m_lon_rad;
+    }
 
     /**
      * @brief Get longitude.
      *
      * @return Longitude [rad].
      */
-    [[nodiscard]] const double& longitude() const noexcept;
+    [[nodiscard]] const double& longitude() const noexcept
+    {
+        return m_lon_rad;
+    }
 
     /**
      * @brief Access altitude.
      *
      * @return Altitude [m].
      */
-    [[nodiscard]] double& altitude() noexcept;
+    [[nodiscard]] double& altitude() noexcept
+    {
+        return m_alt_m;
+    }
 
     /**
      * @brief Access altitude.
      *
      * @return Altitude [m].
      */
-    [[nodiscard]] const double& altitude() const noexcept;
-
-    /**
-     * @brief Print a GeoCoord to a stream. Comma-separates values. No newline at the end.
-     *
-     * @param os Output stream.
-     * @param coord GeoCoord to print.
-     * @return Output stream with GeoCoord.
-     */
-    friend std::ostream& operator<<(std::ostream& os, const GeoCoord& coord);
+    [[nodiscard]] const double& altitude() const noexcept
+    {
+        return m_alt_m;
+    }
 
 protected:
 private:
@@ -156,39 +193,16 @@ private:
 };
 
 // =================================================================================================
-// CLASS MEMBER FUNCTIONS
+// OTHER FUNCTIONS
 // =================================================================================================
 
-template<typename T>
-GeoCoord::GeoCoord(const std::initializer_list<T> lla)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-    const std::size_t input_size = lla.size();
-
-    if (input_size != 3) {
-        throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 3));
-    }
-
-    m_lat_rad = *(lla.begin());
-    m_lon_rad = *(lla.begin() + 1);
-    m_alt_m = *(lla.begin() + 2);
-}
-
-template<typename T>
-GeoCoord& GeoCoord::operator=(const std::initializer_list<T> lla)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-    const std::size_t input_size = lla.size();
-
-    if (input_size != 3) {
-        throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 3));
-    }
-
-    m_lat_rad = *(lla.begin());
-    m_lon_rad = *(lla.begin() + 1);
-    m_alt_m = *(lla.begin() + 2);
-
-    return *this;
-}
+/**
+ * @brief Print a GeoCoord to a stream. Comma-separates values. No newline at the end.
+ *
+ * @param os Output stream.
+ * @param coord GeoCoord to print.
+ * @return Output stream with GeoCoord.
+ */
+std::ostream& operator<<(std::ostream& os, const GeoCoord& coord);
 
 }    // namespace MathUtils

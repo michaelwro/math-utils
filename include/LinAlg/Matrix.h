@@ -68,7 +68,21 @@ public:
      * @exception std::length_error Invalid init. list size.
      */
     template<typename T>
-    Matrix(const std::initializer_list<T> new_matrix);  //  cppcheck-suppress noExplicitConstructor
+    Matrix(const std::initializer_list<T> new_matrix)  //  cppcheck-suppress noExplicitConstructor
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+
+        const std::size_t input_size = new_matrix.size();
+
+        if (input_size != (T_ROWS * T_COLS))
+        {
+            throw std::length_error(
+                Internal::invalid_init_list_length_error_msg(input_size, T_ROWS * T_COLS)
+            );
+        }
+
+        std::copy(new_matrix.begin(), new_matrix.end(), m_arr.begin());
+    }
 
     /**
      * @brief Create a matrix from an initializer list of lists.
@@ -87,25 +101,55 @@ public:
      * @exception std::length_error Invalid init. list size.
      */
     template<typename T>
-    Matrix(const std::initializer_list<std::initializer_list<T>> new_matrix);  //  cppcheck-suppress noExplicitConstructor
+    Matrix(const std::initializer_list<std::initializer_list<T>> new_matrix)  //  cppcheck-suppress noExplicitConstructor
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only..");
+
+        const std::size_t input_rows = new_matrix.size();
+
+        if (input_rows != T_ROWS)
+        {
+            throw std::length_error(
+                Internal::invalid_init_list_length_error_msg(input_rows, T_ROWS)
+            );
+        }
+
+        auto array_element = m_arr.begin();  // start at the beginning of the array
+
+        for (const auto& row : new_matrix)
+        {
+            const std::size_t input_cols = row.size();
+
+            if (input_cols != T_COLS)
+            {
+                throw std::length_error(
+                    Internal::invalid_init_list_length_error_msg(input_cols, T_COLS)
+                );
+            }
+
+            for (const auto& val : row)
+            {
+                assert(array_element != m_arr.end());  // make sure we're not at the end
+                *(array_element++) = static_cast<double>(val);  // assign value to array
+            }
+        }
+
+        assert(array_element == m_arr.end());  // make sure we reached the end
+    }
 
     /**
      * @brief Copy construct matrix.
      *
      * @param other Other matrix.
      */
-    Matrix(const Matrix& other)
-        :m_arr{other.m_arr}
-    {}
+    Matrix(const Matrix& other) = default;
 
     /**
      * @brief Move construct matrix.
      *
      * @param other Other matrix.
      */
-    Matrix(Matrix&& other) noexcept
-        :m_arr{std::move(other.m_arr)}
-    {}
+    Matrix(Matrix&& other) noexcept = default;
 
     /**
      * @brief Copy-assign matrix.
@@ -113,7 +157,7 @@ public:
      * @param other Other matrix.
      * @return Matrix.
      */
-    Matrix& operator=(const Matrix& other);
+    Matrix& operator=(const Matrix& other) = default;
 
     /**
      * @brief Move assign matrix.
@@ -121,40 +165,35 @@ public:
      * @param other Other matrix.
      * @return Matrix.
      */
-    Matrix& operator=(Matrix&& other) noexcept;
+    Matrix& operator=(Matrix&& other) noexcept = default;
 
     /**
-     * @brief Access matrix element. No bounds checking.
+     * @brief Access matrix element.
      *
      * @param row Row index.
      * @param col Column index.
      * @return Matrix element at specified index.
      *
      */
-    [[nodiscard]] double& operator()(const std::size_t row, std::size_t col);
+    [[nodiscard]] double& operator()(const std::size_t row, std::size_t col)
+    {
+        return m_arr.at((row * T_COLS) + col);
+    }
 
     /**
-     * @brief Get matrix element. No bounds checking.
+     * @brief Get matrix element.
      *
      * @param row Row index.
      * @param col Column index.
      * @return Matrix element at specified index.
      */
-    [[nodiscard]] const double& operator()(const std::size_t row, std::size_t col) const;
+    [[nodiscard]] const double& operator()(const std::size_t row, std::size_t col) const
+    {
+        return m_arr.at((row * T_COLS) + col);
+    }
 
     /**
-     * @brief Access matrix element. With bounds checking.
-     *
-     * @param row Row index.
-     * @param col Column index.
-     * @return Matrix element at specified index.
-     *
-     * @exception std::out_of_range Invalid matrix index.
-     */
-    [[nodiscard]] double& at(const std::size_t row, std::size_t col);
-
-    /**
-     * @brief Get matrix element.  With bounds checking.
+     * @brief Access matrix element.
      *
      * @param row Row index.
      * @param col Column index.
@@ -162,7 +201,24 @@ public:
      *
      * @exception std::out_of_range Invalid matrix index.
      */
-    [[nodiscard]] const double& at(const std::size_t row, std::size_t col) const;
+    [[nodiscard]] double& at(const std::size_t row, std::size_t col)
+    {
+        return m_arr.at((row * T_COLS) + col);
+    }
+
+    /**
+     * @brief Get matrix element.
+     *
+     * @param row Row index.
+     * @param col Column index.
+     * @return Matrix element at specified index.
+     *
+     * @exception std::out_of_range Invalid matrix index.
+     */
+    [[nodiscard]] const double& at(const std::size_t row, std::size_t col) const
+    {
+        return m_arr.at((row * T_COLS) + col);
+    }
 
     /**
      * @brief Get the number of rows in the matrix.
@@ -184,6 +240,18 @@ public:
         return T_COLS;
     }
 
+    /**
+     * @brief Get the total number of elements in the matrix.
+     *
+     * @details `Matrix<3,3>::num_elements()` would be 9.
+     *
+     * @return Number of elements in the matrix.
+     */
+    [[nodiscard]] constexpr std::size_t num_elements() const noexcept
+    {
+        return T_ROWS * T_COLS;
+    }
+
     // =============================================================================================
     // ADDITION OPERATORS
     // =============================================================================================
@@ -196,7 +264,20 @@ public:
      * @return Matrix with scalar added.
      */
     template<typename T>
-    Matrix& operator+=(const T scalar);
+    Matrix& operator+=(const T scalar)
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+
+        const auto scalard = static_cast<double>(scalar);
+
+        std::for_each(
+            m_arr.begin(),
+            m_arr.end(),
+            [scalard](double& element){element += scalard;}
+        );
+
+        return *this;
+    }
 
     /**
      * @brief Add matrix in-place.
@@ -204,7 +285,15 @@ public:
      * @param mat Matrix to add.
      * @return Matrix.
      */
-    Matrix& operator+=(const Matrix& mat);
+    Matrix& operator+=(const Matrix& mat)
+    {
+        for (std::size_t idx = 0; idx < m_arr.size(); idx++)
+        {
+            m_arr.at(idx) += mat.m_arr.at(idx);
+        }
+
+        return *this;
+    }
 
     // =============================================================================================
     // SUBTRACTION OPERATORS
@@ -218,7 +307,20 @@ public:
      * @return Matrix with scalar subtracted.
      */
     template<typename T>
-    Matrix& operator-=(const T scalar);
+    Matrix& operator-=(const T scalar)
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+
+        const auto scalard = static_cast<double>(scalar);
+
+        std::for_each(
+            m_arr.begin(),
+            m_arr.end(),
+            [scalard](double& element){element -= scalard;}
+        );
+
+        return *this;
+    }
 
     /**
      * @brief Subtract matrix in-place.
@@ -226,7 +328,15 @@ public:
      * @param mat Matrix to subtract.
      * @return Matrix.
      */
-    Matrix& operator-=(const Matrix& mat);
+    Matrix& operator-=(const Matrix& mat)
+    {
+        for (std::size_t idx = 0; idx < (T_ROWS * T_COLS); idx++)
+        {
+            m_arr.at(idx) -= mat.m_arr.at(idx);
+        }
+
+        return *this;
+    }
 
     // =============================================================================================
     // MULTIPLICATION OPERATORS
@@ -240,7 +350,20 @@ public:
      * @return Matrix with scalar multiplied.
      */
     template<typename T>
-    Matrix& operator*=(const T scalar);
+    Matrix& operator*=(const T scalar)
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+
+        const auto scalard = static_cast<double>(scalar);
+
+        std::for_each(
+            m_arr.begin(),
+            m_arr.end(),
+            [scalard](double& element){element *= scalard;}
+        );
+
+        return *this;
+    }
 
     // =============================================================================================
     // DIVISION OPERATORS
@@ -256,7 +379,21 @@ public:
      * @return Matrix divided by scalar.
      */
     template<typename T>
-    Matrix& operator/=(const T scalar);
+    Matrix& operator/=(const T scalar)
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+
+        // make sure denominator is not too small
+        const auto scalard = static_cast<double>(scalar);
+
+        std::for_each(
+            m_arr.begin(),
+            m_arr.end(),
+            [scalard](double& element){element /= scalard;}
+        );
+
+        return *this;
+    }
 
     /**
      * @brief Get an identity matrix (square only).
@@ -265,7 +402,22 @@ public:
      *
      * @exception std::domain_error Non-square matrix.
      */
-    static Matrix identity();
+    static Matrix identity()
+    {
+        if (T_ROWS != T_COLS)
+        {
+            throw std::domain_error("Identity matrices are for square matrices only.");
+        }
+
+        Matrix eye;
+
+        for (std::size_t ii = 0; ii < T_ROWS; ii++)
+        {
+            eye.m_arr.at((ii * T_COLS) + ii) = 1.0;
+        }
+
+        return eye;
+    }
 
 protected:
 private:
@@ -273,152 +425,8 @@ private:
 };
 
 // =================================================================================================
-// CLASS MEMBER FUNCTIONS
-// =================================================================================================
-
-template<std::size_t R, std::size_t C>
-template<typename T>
-Matrix<R,C>::Matrix(const std::initializer_list<T> new_matrix)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
-    const std::size_t input_size = new_matrix.size();
-
-    if (input_size != (R * C)) {
-        throw std::length_error(
-            Internal::invalid_init_list_length_error_msg(input_size, R*C)
-        );
-    }
-
-    std::copy(new_matrix.begin(), new_matrix.end(), m_arr.begin());
-}
-
-template<std::size_t R, std::size_t C>
-template<typename T>
-Matrix<R,C>::Matrix(const std::initializer_list<std::initializer_list<T>> new_matrix)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only..");
-
-    const std::size_t input_rows = new_matrix.size();
-
-    if (input_rows != R) {
-        throw std::length_error(
-            Internal::invalid_init_list_length_error_msg(input_rows, R)
-        );
-    }
-
-    auto array_element = m_arr.begin();  // start at the beginning of the array
-
-    for (const auto& row : new_matrix) {
-        const std::size_t input_cols = row.size();
-
-        if (input_cols != C) {
-            throw std::length_error(
-                Internal::invalid_init_list_length_error_msg(input_cols, C)
-            );
-        }
-
-        for (const auto& val : row) {
-            assert(array_element != m_arr.end());  // make sure we're not at the end
-            *(array_element++) = static_cast<double>(val);  // assign value to array
-        }
-    }
-
-    assert(array_element == m_arr.end());  // make sure we reached the end
-}
-
-template<std::size_t R, std::size_t C>
-Matrix<R,C>& Matrix<R,C>::operator=(const Matrix& other)
-{
-    if (&other == this) {
-        return *this;
-    }
-
-    m_arr = other.m_arr;
-    return *this;
-}
-
-template<std::size_t R, std::size_t C>
-Matrix<R,C>& Matrix<R,C>::operator=(Matrix&& other) noexcept
-{
-    if (&other == this) {
-        return *this;
-    }
-
-    m_arr.swap(other.m_arr);
-    return *this;
-}
-
-template<std::size_t R, std::size_t C>
-[[nodiscard]] double& Matrix<R,C>::operator()(const std::size_t row, std::size_t col)
-{
-    return m_arr.at((row * C) + col);
-}
-
-template<std::size_t R, std::size_t C>
-[[nodiscard]] const double& Matrix<R,C>::operator()(const std::size_t row, std::size_t col) const
-{
-    return m_arr.at((row * C) + col);
-}
-
-template<std::size_t R, std::size_t C>
-[[nodiscard]] double& Matrix<R,C>::at(const std::size_t row, std::size_t col)
-{
-    return m_arr.at((row * C) + col);
-}
-
-template<std::size_t R, std::size_t C>
-[[nodiscard]] const double& Matrix<R,C>::at(const std::size_t row, std::size_t col) const
-{
-    return m_arr.at((row * C) + col);
-}
-
-template<std::size_t R, std::size_t C>
-Matrix<R,C> Matrix<R,C>::identity()
-{
-    if (R != C) {
-        throw std::domain_error("Identity matrices are for square matrices only.");
-    }
-
-    Matrix eye;
-
-    for (std::size_t ii = 0; ii < R; ii++) {
-        eye.m_arr.at((ii * C) + ii) = 1.0;
-    }
-
-    return eye;
-}
-
-// =================================================================================================
 // ADDITION OPERATORS
 // =================================================================================================
-
-template<std::size_t R, std::size_t C>
-template<typename T>
-Matrix<R,C>& Matrix<R,C>::operator+=(const T scalar)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
-    const auto scalard = static_cast<double>(scalar);
-
-    std::for_each(
-        m_arr.begin(),
-        m_arr.end(),
-        [scalard](double& element){element += scalard;}
-    );
-
-    return *this;
-}
-
-template<std::size_t R, std::size_t C>
-Matrix<R,C>& Matrix<R,C>::operator+=(const Matrix& mat)
-{
-    for (std::size_t idx = 0; idx < m_arr.size(); idx++) {
-        m_arr.at(idx) += mat.m_arr.at(idx);
-    }
-
-    return *this;
-}
 
 /**
  * @brief 2x2 matrix-matrix addition A + B.
@@ -481,8 +489,10 @@ Matrix<N,M> operator+(const Matrix<N,M>& a, const Matrix<N,M>& b)
 {
     Matrix<N,M> c(a);
 
-    for (std::size_t ii = 0; ii < N; ii++) {
-        for (std::size_t jj = 0; jj < M; jj++) {
+    for (std::size_t ii = 0; ii < N; ii++)
+    {
+        for (std::size_t jj = 0; jj < M; jj++)
+        {
             c(ii, jj) += b(ii, jj);
         }
     }
@@ -493,33 +503,6 @@ Matrix<N,M> operator+(const Matrix<N,M>& a, const Matrix<N,M>& b)
 // =================================================================================================
 // SUBTRACTION OPERATORS
 // =================================================================================================
-
-template<std::size_t R, std::size_t C>
-template<typename T>
-Matrix<R,C>& Matrix<R,C>::operator-=(const T scalar)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
-    const auto scalard = static_cast<double>(scalar);
-
-    std::for_each(
-        m_arr.begin(),
-        m_arr.end(),
-        [scalard](double& element){element -= scalard;}
-    );
-
-    return *this;
-}
-
-template<std::size_t R, std::size_t C>
-Matrix<R,C>& Matrix<R,C>::operator-=(const Matrix& mat)
-{
-    for (std::size_t idx = 0; idx < (R*C); idx++) {
-        m_arr.at(idx) -= mat.m_arr.at(idx);
-    }
-
-    return *this;
-}
 
 /**
  * @brief 2x2 matrix-matrix subtraction A - B.
@@ -582,8 +565,10 @@ Matrix<N,M> operator-(const Matrix<N,M>& a, const Matrix<N,M>& b)
 {
     Matrix<N,M> c(a);
 
-    for (std::size_t ii = 0; ii < N; ii++) {
-        for (std::size_t jj = 0; jj < M; jj++) {
+    for (std::size_t ii = 0; ii < N; ii++)
+    {
+        for (std::size_t jj = 0; jj < M; jj++)
+        {
             c(ii, jj) -= b(ii, jj);
         }
     }
@@ -594,23 +579,6 @@ Matrix<N,M> operator-(const Matrix<N,M>& a, const Matrix<N,M>& b)
 // =================================================================================================
 // MULTIPLICATION OPERATORS
 // =================================================================================================
-
-template<std::size_t R, std::size_t C>
-template<typename T>
-Matrix<R,C>& Matrix<R,C>::operator*=(const T scalar)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
-    const auto scalard = static_cast<double>(scalar);
-
-    std::for_each(
-        m_arr.begin(),
-        m_arr.end(),
-        [scalard](double& element){element *= scalard;}
-    );
-
-    return *this;
-}
 
 /**
  * @brief Scalar-matrix multiplication.
@@ -630,8 +598,10 @@ Matrix<N,M> operator*(const T scalar, const Matrix<N,M>& mat)
     Matrix<N,M> out_mat(mat);
     const auto scalard = static_cast<double>(scalar);
 
-    for (std::size_t ii = 0; ii < N; ii++) {
-        for (std::size_t jj = 0; jj < M; jj++) {
+    for (std::size_t ii = 0; ii < N; ii++)
+    {
+        for (std::size_t jj = 0; jj < M; jj++)
+        {
             out_mat(ii, jj) *= scalard;
         }
     }
@@ -728,11 +698,14 @@ Matrix<N,P> operator*(const Matrix<N,M>& a, const Matrix<M,P>& b)
 {
     Matrix<N,P> c;
 
-    for (std::size_t ii = 0; ii < N; ii++) {
-        for (std::size_t jj = 0; jj < P; jj++) {
+    for (std::size_t ii = 0; ii < N; ii++)
+    {
+        for (std::size_t jj = 0; jj < P; jj++)
+        {
             double sum = 0.0;
 
-            for (std::size_t kk = 0; kk < M; kk++) {
+            for (std::size_t kk = 0; kk < M; kk++)
+            {
                 sum += a(ii, kk) * b(kk, jj);
             }
 
@@ -806,10 +779,12 @@ Vector<N> operator*(const Matrix<N,M>& mat, const Vector<M>& vec)
 {
     Vector<N> res;
 
-    for (std::size_t ii = 0; ii < N; ii++) {
+    for (std::size_t ii = 0; ii < N; ii++)
+    {
         double sum = 0.0;
 
-        for (std::size_t jj = 0; jj < M; jj++) {
+        for (std::size_t jj = 0; jj < M; jj++)
+        {
             sum += mat(ii, jj) * vec(jj);
         }
 
@@ -817,28 +792,6 @@ Vector<N> operator*(const Matrix<N,M>& mat, const Vector<M>& vec)
     }
 
     return res;
-}
-
-// =================================================================================================
-// DIVISION OPERATORS
-// =================================================================================================
-
-template<std::size_t R, std::size_t C>
-template<typename T>
-Matrix<R,C>& Matrix<R,C>::operator/=(const T scalar)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
-    // make sure denominator is not too small
-    const auto scalard = static_cast<double>(scalar);
-
-    std::for_each(
-        m_arr.begin(),
-        m_arr.end(),
-        [scalard](double& element){element /= scalard;}
-    );
-
-    return *this;
 }
 
 // =================================================================================================
@@ -864,8 +817,10 @@ std::ostream& operator<<(std::ostream& os, const Matrix<R,C>& mat)
 
     // loop through array and find the longest number
     std::size_t most_chars = 1;
-    for (std::size_t ii = 0; ii < mat.rows(); ii++) {
-        for (std::size_t jj = 0; jj < mat.cols(); jj++) {
+    for (std::size_t ii = 0; ii < mat.rows(); ii++)
+    {
+        for (std::size_t jj = 0; jj < mat.cols(); jj++)
+        {
             const std::size_t chars = num_str_chars(mat(ii, jj));
             most_chars = chars > most_chars ? chars : most_chars;
         }
@@ -874,8 +829,10 @@ std::ostream& operator<<(std::ostream& os, const Matrix<R,C>& mat)
      * Print the matrix.
      * https://cplusplus.com/forum/beginner/275937/#msg1194918
      */
-    for (std::size_t ii = 0; ii < mat.rows(); ii++) {
-        for (std::size_t jj = 0; jj < mat.cols(); jj++) {
+    for (std::size_t ii = 0; ii < mat.rows(); ii++)
+    {
+        for (std::size_t jj = 0; jj < mat.cols(); jj++)
+        {
             std::string prefix = jj == 0 ? "\n" : "";  // put a newline or no char before the value
             std::string suffix = jj == mat.cols()-1 ? "" : ", ";  // put a comma or no char after the value
 
@@ -902,7 +859,8 @@ template<std::size_t N>
 {
     double tr = 0.0;
 
-    for (std::size_t idx = 0; idx < N; idx++) {
+    for (std::size_t idx = 0; idx < N; idx++)
+    {
         tr += mat(idx, idx);
     }
 

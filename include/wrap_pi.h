@@ -24,12 +24,12 @@ namespace MathUtils {
  * @ref https://stackoverflow.com/a/11498248
  */
 template<typename T>
-[[nodiscard]] double wrap_pi(const T angle_rad)
+[[nodiscard]] T wrap_pi(const T angle_rad)
 {
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+    static_assert(std::is_floating_point<T>::value, "Floating-point types only.");
 
-    double dangle_rad = std::fmod(
-        static_cast<double>(angle_rad) + Constants::PI, Constants::TWO_PI
+    T dangle_rad = std::fmod(
+        static_cast<T>(angle_rad) + Constants::PI, Constants::TWO_PI
     );
 
     if (dangle_rad < 0.0) {

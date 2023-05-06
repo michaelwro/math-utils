@@ -46,13 +46,26 @@ public:
      * @brief Create a Euler321.
      *
      * @tparam T Input type.
-     * @param lla New yaw [rad], pitch [rad], and roll [rad].
+     * @param angles New yaw [rad], pitch [rad], and roll [rad].
      * @return Euler321.
      *
      * @exception std::length_error Did not pass three-value list.
      */
     template<typename T>
-    Euler321(const std::initializer_list<T> angles);  //  cppcheck-suppress noExplicitConstructor
+    Euler321(const std::initializer_list<T> angles)  //  cppcheck-suppress noExplicitConstructor
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+        const std::size_t input_size = angles.size();
+
+        if (input_size != 3)
+        {
+            throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 3));
+        }
+
+        m_yaw_rad = *(angles.begin());
+        m_pitch_rad = *(angles.begin() + 1);
+        m_roll_rad = *(angles.begin() + 2);
+    }
 
     /**
      * @brief Copy construct Euler321.
@@ -72,13 +85,28 @@ public:
      * @brief Assing Euler321 values from an initializer list.
      *
      * @tparam T Input type.
-     * @param lla New yaw [rad], pitch [rad], and roll [rad].
+     * @param angles New yaw [rad], pitch [rad], and roll [rad].
      * @return Euler321.
      *
      * @exception std::length_error Did not pass three-value list.
      */
     template<typename T>
-    Euler321& operator=(const std::initializer_list<T> angles);
+    Euler321& operator=(const std::initializer_list<T> angles)
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+        const std::size_t input_size = angles.size();
+
+        if (input_size != 3)
+        {
+            throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 3));
+        }
+
+        m_yaw_rad = *(angles.begin());
+        m_pitch_rad = *(angles.begin() + 1);
+        m_roll_rad = *(angles.begin() + 2);
+
+        return *this;
+    }
 
     /**
      * @brief Copy assign Euler321.
@@ -86,7 +114,7 @@ public:
      * @param other Other Euler321.
      * @return Euler321.
      */
-    Euler321& operator=(const Euler321& other);
+    Euler321& operator=(const Euler321& other) = default;
 
     /**
      * @brief Move assign Euler321.
@@ -94,58 +122,67 @@ public:
      * @param other Other Euler321.
      * @return Euler321.
      */
-    Euler321& operator=(Euler321&& other) noexcept;
+    Euler321& operator=(Euler321&& other) noexcept = default;
 
     /**
      * @brief Access yaw angle.
      *
      * @return Yaw angle [rad].
      */
-    [[nodiscard]] double& yaw() noexcept;
+    [[nodiscard]] double& yaw() noexcept
+    {
+        return m_yaw_rad;
+    }
 
     /**
      * @brief Get yaw angle.
      *
      * @return Yaw angle [rad].
      */
-    [[nodiscard]] const double& yaw() const noexcept;
+    [[nodiscard]] const double& yaw() const noexcept
+    {
+        return m_yaw_rad;
+    }
 
     /**
      * @brief Access pitch angle.
      *
      * @return Pitch angle [rad].
      */
-    [[nodiscard]] double& pitch() noexcept;
+    [[nodiscard]] double& pitch() noexcept
+    {
+        return m_pitch_rad;
+    }
 
     /**
      * @brief Get pitch angle.
      *
      * @return Pitch angle [rad].
      */
-    [[nodiscard]] const double& pitch() const noexcept;
+    [[nodiscard]] const double& pitch() const noexcept
+    {
+        return m_pitch_rad;
+    }
 
     /**
      * @brief Access roll angle.
      *
      * @return Roll roll [rad].
      */
-    [[nodiscard]] double& roll() noexcept;
+    [[nodiscard]] double& roll() noexcept
+    {
+        return m_roll_rad;
+    }
 
     /**
      * @brief Get roll angle.
      *
      * @return Roll angle [rad].
      */
-    [[nodiscard]] const double& roll() const noexcept;
-
-    /**
-     * @brief Print a Euler321 to a stream. Comma-separates values. No newline at the end.
-     *
-     * @param os Output stream.
-     * @param coord Euler321 to print.
-     * @return Output stream with Euler321.
-     */
-    friend std::ostream& operator<<(std::ostream& os, const Euler321& angles);
+    [[nodiscard]] const double& roll() const noexcept
+    {
+        return m_roll_rad;
+    }
 
 protected:
 private:
@@ -155,39 +192,16 @@ private:
 };
 
 // =================================================================================================
-// CLASS MEMBER FUNCTIONS
+// OTHER FUNCTIONS
 // =================================================================================================
 
-template<typename T>
-Euler321::Euler321(const std::initializer_list<T> angles)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-    const std::size_t input_size = angles.size();
-
-    if (input_size != 3) {
-        throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 3));
-    }
-
-    m_yaw_rad = *(angles.begin());
-    m_pitch_rad = *(angles.begin() + 1);
-    m_roll_rad = *(angles.begin() + 2);
-}
-
-template<typename T>
-Euler321& Euler321::operator=(const std::initializer_list<T> angles)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-    const std::size_t input_size = angles.size();
-
-    if (input_size != 3) {
-        throw std::length_error(Internal::invalid_init_list_length_error_msg(input_size, 3));
-    }
-
-    m_yaw_rad = *(angles.begin());
-    m_pitch_rad = *(angles.begin() + 1);
-    m_roll_rad = *(angles.begin() + 2);
-
-    return *this;
-}
+/**
+ * @brief Print a Euler321 to a stream. Comma-separates values. No newline at the end.
+ *
+ * @param os Output stream.
+ * @param coord Euler321 to print.
+ * @return Output stream with Euler321.
+ */
+std::ostream& operator<<(std::ostream& os, const Euler321& angles);
 
 }    // namespace MathUtils

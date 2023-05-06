@@ -53,39 +53,49 @@ public:
      * @exception std::length_error Initializer list length doesn't match vector size.
      */
     template<typename T>
-    Vector(const std::initializer_list<T> vector_vals);  //  cppcheck-suppress noExplicitConstructor
+    Vector(const std::initializer_list<T> vector_vals)  //  cppcheck-suppress noExplicitConstructor
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+
+        const std::size_t input_length = vector_vals.size();
+
+        if (input_length != T_LEN)
+        {
+            throw std::length_error(
+                Internal::invalid_init_list_length_error_msg(input_length, T_LEN)
+            );
+        }
+
+        std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
+    }
 
     /**
      * @brief Copy-construct vector.
      *
      * @param other Other vector.
      */
-    Vector(const Vector& other)
-        :m_arr{other.m_arr}
-    {}
+    Vector(const Vector& other) = default;
 
     /**
      * @brief Move construct vector.
      *
      * @param other Other vector.
      */
-    Vector(Vector&& other) noexcept
-        :m_arr{std::move(other.m_arr)}
-    {}
+    Vector(Vector&& other) noexcept = default;
 
     /**
      * @brief Copy-assign vector.
      * @param other Other vector.
      * @return Copied vector.
      */
-    Vector& operator=(const Vector& other);
+    Vector& operator=(const Vector& other) = default;
 
     /**
      * @brief Move-assign vector.
      * @param other Other vector.
      * @return Copied vector.
      */
-    Vector& operator=(Vector&& other) noexcept;
+    Vector& operator=(Vector&& other) noexcept = default;
 
     /**
      * @brief Assign vector values from an initializer list.
@@ -96,7 +106,22 @@ public:
      * @exception std::length_error Initializer list length doesn't match vector size.
      */
     template<typename T>
-    Vector& operator=(const std::initializer_list<T> vector_vals);
+    Vector& operator=(const std::initializer_list<T> vector_vals)
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+
+        const std::size_t input_length = vector_vals.size();
+
+        if (input_length != T_LEN)
+        {
+            throw std::length_error(
+                Internal::invalid_init_list_length_error_msg(input_length, T_LEN)
+            );
+        }
+
+        std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
+        return *this;
+    }
 
     /**
      * @brief Access vector element.
@@ -104,15 +129,21 @@ public:
      * @param idx Vector index.
      * @return Vector element at specified index.
      */
-    [[nodiscard]] double& operator()(const std::size_t idx);
+    [[nodiscard]] double& operator()(const std::size_t idx)
+    {
+        return m_arr.at(idx);
+    }
 
     /**
-     * @brief Get vector element. No bounds checks.
+     * @brief Get vector element.
      *
      * @param idx Vector index.
      * @return Vector value at specified index.
      */
-    [[nodiscard]] const double& operator()(const std::size_t idx) const;
+    [[nodiscard]] const double& operator()(const std::size_t idx) const
+    {
+        return m_arr.at(idx);
+    }
 
     /**
      * @brief Access vector element. With bounds checks.
@@ -122,7 +153,10 @@ public:
      *
      * @exception std::out_of_range Invalid vector index.
      */
-    [[nodiscard]] double& at(const std::size_t idx);
+    [[nodiscard]] double& at(const std::size_t idx)
+    {
+        return m_arr.at(idx);
+    }
 
     /**
      * @brief Get vector element. With bounds checks.
@@ -132,49 +166,82 @@ public:
      *
      * @exception std::out_of_range Invalid vector index.
      */
-    [[nodiscard]] const double& at(const std::size_t idx) const;
+    [[nodiscard]] const double& at(const std::size_t idx) const
+    {
+        return m_arr.at(idx);
+    }
 
     /**
      * @brief Get the vector length (number of elements).
      *
      * @return Vector length.
      */
-    [[nodiscard]] constexpr std::size_t size() const noexcept;
+    [[nodiscard]] constexpr std::size_t size() const noexcept
+    {
+        return T_LEN;
+    }
 
     /**
      * @brief Fill the entire vector with a value.
      *
      * @param val Value to fill the vector with.
      */
-    void fill(const double val) noexcept;
+    void fill(const double val) noexcept
+    {
+        m_arr.fill(val);
+    }
 
     /**
      * @brief Return the magnitude/norm of the vector.
      *
      * @return Vector magnitude.
      */
-    [[nodiscard]] double magnitude() const;
+    [[nodiscard]] double magnitude() const
+    {
+        const double magn = std::accumulate(
+            m_arr.begin(), m_arr.end(), 0.0,
+            [](double accum, const double& val){return accum += val * val;}
+        );
+
+        /**
+         * NOTE: Since all elements were squared in the above operation, this argument should never
+         * be negative.
+         */
+        assert(magn >= 0.0);
+        return std::sqrt(magn);
+    }
 
     /**
      * @brief Normalize the vector.
      *
      * @details No divide-by-zero checks.
      */
-    void normalize();
+    void normalize()
+    {
+        const double magn = this->magnitude();
+
+        std::for_each(m_arr.begin(), m_arr.end(), [magn](double& val){val /= magn;});
+    }
 
     /**
      * @brief Return the sum of all elements in the vector.
      *
      * @return Sum of all vector elements.
      */
-    [[nodiscard]] double get_sum() const;
+    [[nodiscard]] double get_sum() const
+    {
+        return std::accumulate(m_arr.begin(), m_arr.end(), 0.0, std::plus<>());
+    }
 
     /**
      * @brief Multiply all elements by -1.0. Flip the sign of all elements.
      *
      * @return Vector with signs flipped.
      */
-    void negate();
+    void negate()
+    {
+        std::for_each(m_arr.begin(), m_arr.end(), [](double& val){val *= -1.0;});
+    }
 
     // =============================================================================================
     // ADDITION OPERATORS
@@ -188,7 +255,20 @@ public:
      * @return Vector with scalar added.
      */
     template<typename T>
-    Vector& operator+=(const T scalar);
+    Vector& operator+=(const T scalar)
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+
+        const auto scalard = static_cast<double>(scalar);
+
+        std::for_each(
+            m_arr.begin(),
+            m_arr.end(),
+            [scalard](double& element){element += scalard;}
+        );
+
+        return *this;
+    }
 
     /**
      * @brief Add vector in-place (accumulate).
@@ -196,7 +276,15 @@ public:
      * @param vec Vector to add.
      * @return Vector with other vector added.
      */
-    Vector& operator+=(const Vector& vec) noexcept;
+    Vector& operator+=(const Vector& vec) noexcept
+    {
+        for (std::size_t idx = 0; idx < T_LEN; idx++)
+        {
+            m_arr[idx] += vec.m_arr[idx];
+        }
+
+        return *this;
+    }
 
     // =============================================================================================
     // SUBTRACTION OPERATORS
@@ -210,7 +298,20 @@ public:
      * @return Vector with scalar subtracted.
      */
     template<typename T>
-    Vector& operator-=(const T scalar);
+    Vector& operator-=(const T scalar)
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+
+        const auto scalard = static_cast<double>(scalar);
+
+        std::for_each(
+            m_arr.begin(),
+            m_arr.end(),
+            [scalard](double& element){element -= scalard;}
+        );
+
+        return *this;
+    }
 
     /**
      * @brief Subtract vector in-place.
@@ -218,7 +319,15 @@ public:
      * @param vec Vector to subtract.
      * @return Vector with other vector subtracted from it.
      */
-    Vector& operator-=(const Vector& vec) noexcept;
+    Vector& operator-=(const Vector& vec) noexcept
+    {
+        for (std::size_t idx = 0; idx < T_LEN; idx++)
+        {
+            m_arr[idx] -= vec.m_arr[idx];
+        }
+
+        return *this;
+    }
 
     // =============================================================================================
     // MULTIPLICATION OPERATORS
@@ -232,7 +341,20 @@ public:
      * @return Vector with scalar multiplied.
      */
     template<typename T>
-    Vector& operator*=(const T scalar);
+    Vector& operator*=(const T scalar)
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+
+        const auto scalard = static_cast<double>(scalar);
+
+        std::for_each(
+            m_arr.begin(),
+            m_arr.end(),
+            [scalard](double& element){element *= scalard;}
+        );
+
+        return *this;
+    }
 
     // =============================================================================================
     // DIVISION OPERATORS
@@ -248,7 +370,20 @@ public:
      * @return Vector with scalar divided.
      */
     template<typename T>
-    Vector& operator/=(const T scalar);
+    Vector& operator/=(const T scalar)
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+
+        const auto scalard = static_cast<double>(scalar);
+
+        std::for_each(
+            m_arr.begin(),
+            m_arr.end(),
+            [scalard](double& element){element /= scalard;}
+        );
+
+        return *this;
+    }
 
 protected:
 private:
@@ -256,169 +391,8 @@ private:
 };
 
 // =================================================================================================
-// CLASS MEMBER FUNCTIONS
-// =================================================================================================
-
-template<std::size_t N>
-template<typename T>
-Vector<N>::Vector(const std::initializer_list<T> vector_vals)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
-    const std::size_t input_length = vector_vals.size();
-
-    if (input_length != N) {
-        throw std::length_error(
-            Internal::invalid_init_list_length_error_msg(input_length, N)
-        );
-    }
-
-    std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
-}
-
-template<std::size_t N>
-Vector<N>& Vector<N>::operator=(const Vector& other)
-{
-    if (&other == this) {
-        return *this;
-    }
-
-    m_arr = other.m_arr;
-    return *this;
-}
-
-template<std::size_t N>
-Vector<N>& Vector<N>::operator=(Vector&& other) noexcept
-{
-    if (&other == this) {
-        return *this;
-    }
-
-    m_arr.swap(other.m_arr);
-    return *this;
-}
-
-template<std::size_t N>
-template<typename T>
-Vector<N>& Vector<N>::operator=(const std::initializer_list<T> vector_vals)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
-    const std::size_t input_length = vector_vals.size();
-
-    if (input_length != N) {
-        throw std::length_error(
-            Internal::invalid_init_list_length_error_msg(input_length, N)
-        );
-    }
-
-    std::copy(vector_vals.begin(), vector_vals.end(), m_arr.begin());
-    return *this;
-}
-
-template<std::size_t N>
-[[nodiscard]] double& Vector<N>::operator()(const std::size_t idx)
-{
-    return m_arr.at(idx);
-}
-
-template<std::size_t N>
-[[nodiscard]] const double& Vector<N>::operator()(const std::size_t idx) const
-{
-    return m_arr.at(idx);
-}
-
-template<std::size_t N>
-[[nodiscard]] double& Vector<N>::at(const std::size_t idx)
-{
-    return m_arr.at(idx);
-}
-
-template<std::size_t N>
-[[nodiscard]] const double& Vector<N>::at(const std::size_t idx) const
-{
-    return m_arr.at(idx);
-}
-
-template<std::size_t N>
-[[nodiscard]] constexpr std::size_t Vector<N>::size() const noexcept
-{
-    return N;
-}
-
-template<std::size_t N>
-void Vector<N>::fill(const double val) noexcept
-{
-    m_arr.fill(val);
-}
-
-template<std::size_t N>
-[[nodiscard]] double Vector<N>::magnitude() const
-{
-    const double magn = std::accumulate(
-        m_arr.begin(), m_arr.end(), 0.0,
-        [](double accum, const double& val){return accum += val * val;}
-    );
-
-    /**
-     * NOTE: Since all elements were squared in the above operation, this argument should never
-     * be negative.
-     * TODO: Use safe_sqrt
-     */
-    assert(magn >= 0.0);
-    return std::sqrt(magn);
-}
-
-template<std::size_t N>
-void Vector<N>::normalize()
-{
-    const double magn = this->magnitude();
-
-    std::for_each(m_arr.begin(), m_arr.end(), [magn](double& val){val /= magn;});
-}
-
-template<std::size_t N>
-[[nodiscard]] double Vector<N>::get_sum() const
-{
-    return std::accumulate(m_arr.begin(), m_arr.end(), 0.0, std::plus<>());
-}
-
-template<std::size_t N>
-void Vector<N>::negate()
-{
-    std::for_each(m_arr.begin(), m_arr.end(), [](double& val){val *= -1.0;});
-}
-
-// =================================================================================================
 // ADDITION OPERATORS
 // =================================================================================================
-
-template<std::size_t N>
-template<typename T>
-Vector<N>& Vector<N>::operator+=(const T scalar)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
-    const auto scalard = static_cast<double>(scalar);
-
-    std::for_each(
-        m_arr.begin(),
-        m_arr.end(),
-        [scalard](double& element){element += scalard;}
-    );
-
-    return *this;
-}
-
-template<std::size_t N>
-Vector<N>& Vector<N>::operator+=(const Vector& vec) noexcept
-{
-    for (std::size_t idx = 0; idx < N; idx++) {
-        m_arr[idx] += vec.m_arr[idx];
-    }
-
-    return *this;
-}
 
 /**
  * @brief Add two vectors.
@@ -433,7 +407,8 @@ Vector<N> operator+(const Vector<N>& v1, const Vector<N>& v2)
 {
     Vector<N> result(v1);
 
-    for (std::size_t idx = 0; idx < N; idx++) {
+    for (std::size_t idx = 0; idx < N; idx++)
+    {
         result(idx) += v2(idx);
     }
 
@@ -443,34 +418,6 @@ Vector<N> operator+(const Vector<N>& v1, const Vector<N>& v2)
 // =================================================================================================
 // SUBTRACTION OPERATORS
 // =================================================================================================
-
-template<std::size_t N>
-template<typename T>
-Vector<N>& Vector<N>::operator-=(const T scalar)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
-    const auto scalard = static_cast<double>(scalar);
-
-    std::for_each(
-        m_arr.begin(),
-        m_arr.end(),
-        [scalard](double& element){element -= scalard;}
-    );
-
-    return *this;
-}
-
-template<std::size_t N>
-Vector<N>& Vector<N>::operator-=(const Vector& vec) noexcept
-{
-    for (std::size_t idx = 0; idx < N; idx++)
-    {
-        m_arr[idx] -= vec.m_arr[idx];
-    }
-
-    return *this;
-}
 
 /**
  * @brief Subtract two vectors.
@@ -485,7 +432,8 @@ Vector<N> operator-(const Vector<N>& v1, const Vector<N>& v2)
 {
     Vector<N> result(v1);
 
-    for (std::size_t idx = 0; idx < N; idx++) {
+    for (std::size_t idx = 0; idx < N; idx++)
+    {
         result(idx) -= v2(idx);
     }
 
@@ -495,23 +443,6 @@ Vector<N> operator-(const Vector<N>& v1, const Vector<N>& v2)
 // =================================================================================================
 // MULTIPLICATION OPERATORS
 // =================================================================================================
-
-template<std::size_t N>
-template<typename T>
-Vector<N>& Vector<N>::operator*=(const T scalar)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
-    const auto scalard = static_cast<double>(scalar);
-
-    std::for_each(
-        m_arr.begin(),
-        m_arr.end(),
-        [scalard](double& element){element *= scalard;}
-    );
-
-    return *this;
-}
 
 /**
  * @brief Scalar-vector multiplication.
@@ -530,7 +461,8 @@ Vector<N> operator*(const T scalar, const Vector<N>& vec)
     Vector<N> res(vec);
     const auto scalard = static_cast<double>(scalar);
 
-    for (std::size_t idx = 0; idx < vec.size(); idx++) {
+    for (std::size_t idx = 0; idx < vec.size(); idx++)
+    {
         res(idx) *= scalard;
     }
 
@@ -566,32 +498,12 @@ Vector<N> operator*(const Vector<N>& v1, const Vector<N>& v2)
 {
     Vector<N> result(v1);
 
-    for (std::size_t idx = 0; idx < N; idx++) {
+    for (std::size_t idx = 0; idx < N; idx++)
+    {
         result(idx) *= v2(idx);
     }
 
     return result;
-}
-
-// =================================================================================================
-// DIVISION OPERATORS
-// =================================================================================================
-
-template<std::size_t N>
-template<typename T>
-Vector<N>& Vector<N>::operator/=(const T scalar)
-{
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
-    const auto scalard = static_cast<double>(scalar);
-
-    std::for_each(
-        m_arr.begin(),
-        m_arr.end(),
-        [scalard](double& element){element /= scalard;}
-    );
-
-    return *this;
 }
 
 // =================================================================================================
@@ -612,7 +524,8 @@ Vector<N>& Vector<N>::operator/=(const T scalar)
 template<std::size_t N>
 std::ostream& operator<<(std::ostream& os, const Vector<N>& vec)
 {
-    for (std::size_t idx = 0; idx < vec.size() - 1; idx++) {
+    for (std::size_t idx = 0; idx < vec.size() - 1; idx++)
+    {
         os << vec(idx) << ", ";
     }
 
@@ -681,7 +594,8 @@ double dot(const Vector<N>& v1, const Vector<N>& v2)
 {
     double dot_prod = 0.0;
 
-    for (std::size_t idx = 0; idx < N; idx++) {
+    for (std::size_t idx = 0; idx < N; idx++)
+    {
         dot_prod += v1(idx) * v2(idx);
     }
 
