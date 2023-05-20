@@ -24,10 +24,9 @@ namespace MathUtils {
  * @param val Value to take the arccosine of, in [rad].
  * @return Arccosine of `val`.
  */
-template<typename T>
-[[nodiscard]] double acos_safe(const T val) noexcept
+template<typename T, std::enable_if_t<std::is_floating_point<T>::value, bool> = true>
+[[nodiscard]] T acos_safe(const T val) noexcept
 {
-    static_assert(std::is_floating_point<T>::value, "Fundamental types only.");
     assert(std::abs(val) <= 1.0);
 
     if (val >= 1.0)

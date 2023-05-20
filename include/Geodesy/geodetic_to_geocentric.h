@@ -27,6 +27,8 @@ std::pair<double, double> geodetic_to_geocentric(const double lat_gd_rad, const 
  * @brief Convert WGS84 geodetic latitude, longitude, and altitude to geocentric latitude and
  * radius.
  *
+ * @details Uses `geodetic_to_geocentric(double, double)`.
+ *
  * @param lla_gd WGS84 geodetic LLA in [rad, rad, m].
  * @return {geocentric latitude [rad]}, {geocentric radius in [m]}.
  *

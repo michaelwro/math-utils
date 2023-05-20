@@ -42,7 +42,11 @@ public:
      */
     GeoCoord(const double latitude_rad,
         const double longitude_rad,
-        const double altitude_m);
+        const double altitude_m)
+        :m_lat_rad{latitude_rad},
+        m_lon_rad{longitude_rad},
+        m_alt_m{altitude_m}
+    {}
 
     /**
      * @brief Create a GeoCoord.
@@ -52,10 +56,9 @@ public:
      *
      * @exception std::length_error Did not pass three-value list.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     GeoCoord(const std::initializer_list<T> lla)  //  cppcheck-suppress noExplicitConstructor
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
         const std::size_t input_size = lla.size();
 
         if (input_size != 3)
@@ -91,10 +94,9 @@ public:
      *
      * @exception std::length_error Did not pass three-value list.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     GeoCoord& operator=(const std::initializer_list<T> lla)
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
         const std::size_t input_size = lla.size();
 
         if (input_size != 3)

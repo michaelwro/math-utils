@@ -20,11 +20,9 @@ namespace MathUtils {
  * @param upper Upper limit.
  * @return `val` constrained to be within [lower, upper].
  */
-template<typename T>
+template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
 [[nodiscard]] T range_constrain(const T val, const T lower, const T upper) noexcept
 {
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
     if (val < lower)
     {
         return lower;

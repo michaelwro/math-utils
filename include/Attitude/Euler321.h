@@ -55,10 +55,9 @@ public:
      *
      * @exception std::length_error Did not pass three-value list.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     Euler321(const std::initializer_list<T> angles)  //  cppcheck-suppress noExplicitConstructor
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
         const std::size_t input_size = angles.size();
 
         if (input_size != 3)
@@ -94,10 +93,9 @@ public:
      *
      * @exception std::length_error Did not pass three-value list.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     Euler321& operator=(const std::initializer_list<T> angles)
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
         const std::size_t input_size = angles.size();
 
         if (input_size != 3)
