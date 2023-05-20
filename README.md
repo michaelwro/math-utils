@@ -4,7 +4,7 @@
 
 **Created By:** Michael Wrona
 
-A collection of C++17 math utilities for MicWro Engineering projects. I add new utilities on an "as-required" basis.
+A collection of C++20 math utilities for MicWro Engineering projects. I add new utilities on an "as-required" basis.
 
 ## Getting Started
 
