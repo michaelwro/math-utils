@@ -264,7 +264,7 @@ public:
         std::for_each(
             m_arr.begin(),
             m_arr.end(),
-            [scalard](double& element){element += scalard;}
+            [scalard](auto& element){element += scalard;}
         );
 
         return *this;
@@ -284,6 +284,38 @@ public:
         }
 
         return *this;
+    }
+
+    /**
+     * @brief Add a vector and scalar.
+     *
+     * @details Calls operator+=(T).
+     *
+     * @tparam T Scalar type.
+     * @param scalar Scalar to add.
+     * @return Vector plus scalar.
+     */
+    template<typename T>
+    Vector operator+(const T scalar)
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+
+        Vector result(*this);
+        return result += scalar;
+    }
+
+    /**
+     * @brief Add two vectors.
+     *
+     * @details Calls operator+=(Vector).
+     *
+     * @param vec Other vector.
+     * @return Vector sum, v1 + v2.
+     */
+    Vector operator+(const Vector& vec)
+    {
+        Vector result(*this);
+        return result += vec;
     }
 
     // =============================================================================================
@@ -307,7 +339,7 @@ public:
         std::for_each(
             m_arr.begin(),
             m_arr.end(),
-            [scalard](double& element){element -= scalard;}
+            [scalard](auto& element){element -= scalard;}
         );
 
         return *this;
@@ -327,6 +359,39 @@ public:
         }
 
         return *this;
+    }
+
+    /**
+     * @brief Subtract a scalar from a vector.
+     *
+     * @details Calls operator-=(T).
+     *
+     * @tparam T Scalar type.
+     * @param scalar Scalar to subtract.
+     * @return Vector minus scalar.
+     */
+    template<typename T>
+    Vector operator-(const T scalar)
+    {
+        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
+
+        Vector result(*this);
+        return result -= scalar;
+    }
+
+    /**
+     * @brief Subtract two vectors.
+     *
+     * @details Calls operator-=(Vector).
+     *
+     * @param vec Vector to subtract.
+     * @return Vector difference, v1 - v2.
+     */
+    Vector operator-(const Vector& vec)
+    {
+        Vector result(*this);
+        result -= vec;
+        return result;
     }
 
     // =============================================================================================
@@ -350,10 +415,49 @@ public:
         std::for_each(
             m_arr.begin(),
             m_arr.end(),
-            [scalard](double& element){element *= scalard;}
+            [scalard](auto& element){element *= scalard;}
         );
 
         return *this;
+    }
+
+    /**
+     * @brief Multiply two vectors in-place.
+     *
+     * @param vec Other vector to multiply by.
+     * @return vec1 *= vec2.
+     */
+    Vector& operator*=(const Vector& vec) noexcept
+    {
+        for (std::size_t idx = 0; idx < T_LEN; idx++)
+        {
+            m_arr[idx] *= vec.m_arr[idx];
+        }
+
+        return *this;
+    }
+
+    /**
+     * @brief Multiply two vectors.
+     *
+     * @details Calls operator*=(Vector).
+     *
+     * @param vec Other vector.
+     * @return vec1 * vec2.
+     */
+    Vector operator*(const Vector& vec)
+    {
+        Vector result(*this);
+        result *= vec;
+        return result;
+
+    // //
+    //     for (std::size_t idx = 0; idx < N; idx++)
+    //     {
+    //         result(idx) *= v2(idx);
+    //     }
+
+        return result;
     }
 
     // =============================================================================================
@@ -379,7 +483,7 @@ public:
         std::for_each(
             m_arr.begin(),
             m_arr.end(),
-            [scalard](double& element){element /= scalard;}
+            [scalard](auto& element){element /= scalard;}
         );
 
         return *this;
@@ -390,120 +494,48 @@ private:
     std::array<double, T_LEN> m_arr {0};  ///< Underlying array to store vector values.
 };
 
-// =================================================================================================
-// ADDITION OPERATORS
-// =================================================================================================
-
-/**
- * @brief Add two vectors.
- *
- * @tparam N Vector length.
- * @param v1 First vector.
- * @param v2 Second vector.
- * @return Vector sum, v1 + v2.
- */
-template<std::size_t N>
-Vector<N> operator+(const Vector<N>& v1, const Vector<N>& v2)
-{
-    Vector<N> result(v1);
-
-    for (std::size_t idx = 0; idx < N; idx++)
-    {
-        result(idx) += v2(idx);
-    }
-
-    return result;
-}
-
-// =================================================================================================
-// SUBTRACTION OPERATORS
-// =================================================================================================
-
-/**
- * @brief Subtract two vectors.
- *
- * @tparam N Vector length.
- * @param v1 First vector.
- * @param v2 Second vector.
- * @return Vector difference, v1 - v2.
- */
-template<std::size_t N>
-Vector<N> operator-(const Vector<N>& v1, const Vector<N>& v2)
-{
-    Vector<N> result(v1);
-
-    for (std::size_t idx = 0; idx < N; idx++)
-    {
-        result(idx) -= v2(idx);
-    }
-
-    return result;
-}
 
 // =================================================================================================
 // MULTIPLICATION OPERATORS
 // =================================================================================================
 
 /**
- * @brief Scalar-vector multiplication.
+ * @brief Multiply a vector by a scalar (scalar * vector).
  *
- * @tparam N Length of the vector.
+ * @details Calls operator*=(T).
+ *
+ * @tparam N Vector length.
  * @tparam T Scalar type.
- * @param scalar Scalar to multiply the vector by.
- * @param vec Vector to be multiplied by the scalar.
- * @return Scalar-vector multiplication result.
+ * @param scalar Scalar to multiply by.
+ * @param vec Vector operand.
+ * @return Vector times scalar.
  */
 template<std::size_t N, typename T>
 Vector<N> operator*(const T scalar, const Vector<N>& vec)
 {
     static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
 
-    Vector<N> res(vec);
-    const auto scalard = static_cast<double>(scalar);
-
-    for (std::size_t idx = 0; idx < vec.size(); idx++)
-    {
-        res(idx) *= scalard;
-    }
-
-    return res;
+    Vector<N> result(vec);
+    result *= scalar;
+    return result;
 }
 
 /**
- * @brief Vector-scalar multiplication.
+ * @brief Multiply a vector by a scalar (vector * scalar).
  *
- * @tparam N Length of the vector.
+ * @details Calls operator(Vector, T).
+ *
+ * @tparam N Vector length.
  * @tparam T Scalar type.
- * @param vec Vector to be multiplied by the scalar.
- * @param scalar Scalar to multiply the vector by.
- * @return Vector-scalar multiplication result.
+ * @param scalar Scalar to multiply by.
+ * @param vec Vector operand.
+ * @return Vector times scalar.
  */
 template<std::size_t N, typename T>
 Vector<N> operator*(const Vector<N>& vec, const T scalar)
 {
     static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
     return scalar * vec;
-}
-
-/**
- * @brief Multiply two vectors.
- *
- * @tparam N Vector length.
- * @param v1 First vector.
- * @param v2 Second vector.
- * @return Vector product, v1 * v2.
- */
-template<std::size_t N>
-Vector<N> operator*(const Vector<N>& v1, const Vector<N>& v2)
-{
-    Vector<N> result(v1);
-
-    for (std::size_t idx = 0; idx < N; idx++)
-    {
-        result(idx) *= v2(idx);
-    }
-
-    return result;
 }
 
 // =================================================================================================
