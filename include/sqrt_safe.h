@@ -18,7 +18,7 @@ namespace MathUtils {
  *
  * @tparam T Input type.
  * @param val Operand.
- * @return Result constrained to [ 0, sqrt(val) ).
+ * @return Result constrained to [ 0, inf ).
  */
 template<typename T>
 [[nodiscard]] auto sqrt_safe(const T val) noexcept
