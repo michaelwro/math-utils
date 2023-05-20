@@ -24,26 +24,30 @@ class Euler321 {
 public:
 
     /**
-     * @brief Create a Euler321.
+     * @brief Create an Euler321.
      */
     Euler321() = default;
 
     /**
-     * @brief Destroy a Euler321.
+     * @brief Destroy an Euler321.
      */
     ~Euler321() = default;
 
     /**
-     * @brief Create a Euler 321.
+     * @brief Create an Euler321.
      *
      * @param yaw_rad Yaw angle in [rad].
      * @param pitch_rad Pitch angle in [rad].
      * @param roll_rad Roll angle in [rad].
      */
-    Euler321(const double yaw_rad, const double pitch_rad, const double roll_rad);
+    Euler321(const double yaw_rad, const double pitch_rad, const double roll_rad)
+        :m_yaw_rad(yaw_rad),
+        m_pitch_rad(pitch_rad),
+        m_roll_rad(roll_rad)
+    {}
 
     /**
-     * @brief Create a Euler321.
+     * @brief Create an Euler321.
      *
      * @tparam T Input type.
      * @param angles New yaw [rad], pitch [rad], and roll [rad].
@@ -197,6 +201,8 @@ private:
 
 /**
  * @brief Print a Euler321 to a stream. Comma-separates values. No newline at the end.
+ *
+ * @details "{yaw}, {pitch}, {roll}".
  *
  * @param os Output stream.
  * @param coord Euler321 to print.

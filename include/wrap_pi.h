@@ -32,7 +32,8 @@ template<typename T>
         static_cast<T>(angle_rad) + Constants::PI, Constants::TWO_PI
     );
 
-    if (dangle_rad < 0.0) {
+    if (dangle_rad < 0.0)
+    {
         dangle_rad += Constants::TWO_PI;
     }
 

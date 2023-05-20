@@ -30,7 +30,8 @@ template<typename T>
 
     T dangle_rad = std::fmod(static_cast<T>(angle_rad), Constants::TWO_PI);
 
-    if (dangle_rad < 0.0) {
+    if (dangle_rad < 0.0)
+    {
         dangle_rad += Constants::TWO_PI;
     }
 

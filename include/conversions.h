@@ -38,7 +38,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Radians to degrees.
  */
-[[nodiscard]] inline double rad2deg(const double rad)
+[[nodiscard]] inline double rad2deg(const double rad) noexcept
 {
     return rad * (180.0 / Constants::PI);
 }
@@ -46,7 +46,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Radians to degrees.
  */
-[[nodiscard]] inline double deg2rad(const double deg)
+[[nodiscard]] inline double deg2rad(const double deg) noexcept
 {
     return deg * (Constants::PI / 180.0);
 }
@@ -54,7 +54,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Rotations per minute to radians per second.
  */
-[[nodiscard]] inline double rmp2rps(const double rpm)
+[[nodiscard]] inline double rmp2rps(const double rpm) noexcept
 {
     return rpm * (Constants::PI / 30.0);
 }
@@ -62,7 +62,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Radians per second to rotations per minute.
  */
-[[nodiscard]] inline double rps2rpm(const double rps)
+[[nodiscard]] inline double rps2rpm(const double rps) noexcept
 {
     return rps * (30.0 / Constants::PI);
 }
@@ -74,7 +74,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Feet to meters.
  */
-[[nodiscard]] inline double ft2m(const double ft)
+[[nodiscard]] inline double ft2m(const double ft) noexcept
 {
     return ft * Internal::NIST_FT_TO_M;
 }
@@ -82,7 +82,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Meters to feet.
  */
-[[nodiscard]] inline double m2ft(const double m)
+[[nodiscard]] inline double m2ft(const double m) noexcept
 {
     return m / Internal::NIST_FT_TO_M;
 }
@@ -90,7 +90,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Inches to centimeters.
  */
-[[nodiscard]] inline double in2cm(const double in)
+[[nodiscard]] inline double in2cm(const double in) noexcept
 {
     return in * Internal::NIST_IN_TO_CM;
 }
@@ -98,7 +98,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Centimeters to inches.
  */
-[[nodiscard]] inline double cm2in(const double cm)
+[[nodiscard]] inline double cm2in(const double cm) noexcept
 {
     return cm / Internal::NIST_IN_TO_CM;
 }
@@ -106,7 +106,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Inches to millimeters.
  */
-[[nodiscard]] inline double in2mm(const double in)
+[[nodiscard]] inline double in2mm(const double in) noexcept
 {
     return in * Internal::NIST_IN_TO_MM;
 }
@@ -114,7 +114,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Millimeters to inches.
  */
-[[nodiscard]] inline double mm2in(const double mm)
+[[nodiscard]] inline double mm2in(const double mm) noexcept
 {
     return mm / Internal::NIST_IN_TO_MM;
 }
@@ -122,7 +122,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Meters to centimeters.
  */
-[[nodiscard]] inline double m2cm(const double m)
+[[nodiscard]] inline double m2cm(const double m) noexcept
 {
     return m * Internal::NIST_M_TO_CM;
 }
@@ -130,7 +130,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Centimeters to meters.
  */
-[[nodiscard]] inline double cm2m(const double cm)
+[[nodiscard]] inline double cm2m(const double cm) noexcept
 {
     return cm / Internal::NIST_M_TO_CM;
 }
@@ -138,7 +138,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Nautical miles to meters.
  */
-[[nodiscard]] inline double nmi2m(const double nmi)
+[[nodiscard]] inline double nmi2m(const double nmi) noexcept
 {
     return nmi * Internal::NIST_NMI_TO_M;
 }
@@ -146,7 +146,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Meters to nautical miles.
  */
-[[nodiscard]] inline double m2nmi(const double m)
+[[nodiscard]] inline double m2nmi(const double m) noexcept
 {
     return m / Internal::NIST_NMI_TO_M;
 }
@@ -154,7 +154,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Statute miles to meters.
  */
-[[nodiscard]] inline double mi2m(const double mi)
+[[nodiscard]] inline double mi2m(const double mi) noexcept
 {
     return mi * Internal::NIST_MI_TO_M;
 }
@@ -162,7 +162,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Meters to statute miles.
  */
-[[nodiscard]] inline double m2mi(const double m)
+[[nodiscard]] inline double m2mi(const double m) noexcept
 {
     return m / Internal::NIST_MI_TO_M;
 }
@@ -170,7 +170,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Statute miles to kilometers.
  */
-[[nodiscard]] inline double mi2km(const double mi)
+[[nodiscard]] inline double mi2km(const double mi) noexcept
 {
     return mi * Internal::NIST_MI_TO_KM;
 }
@@ -178,7 +178,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Kilometers to statute miles.
  */
-[[nodiscard]] inline double km2mi(const double km)
+[[nodiscard]] inline double km2mi(const double km) noexcept
 {
     return km / Internal::NIST_MI_TO_KM;
 }
@@ -190,7 +190,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Knots to meters per second.
  */
-[[nodiscard]] inline double kts2mps(const double kts)
+[[nodiscard]] inline double kts2mps(const double kts) noexcept
 {
     return kts * Internal::NIST_KTS_TO_MPS;
 }
@@ -198,7 +198,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Meters per second to knots.
  */
-[[nodiscard]] inline double mps2kts(const double mps)
+[[nodiscard]] inline double mps2kts(const double mps) noexcept
 {
     return mps / Internal::NIST_KTS_TO_MPS;
 }
@@ -210,7 +210,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Pound-force (lbf) to Newtons.
  */
-[[nodiscard]] inline double lb2n(const double lb)
+[[nodiscard]] inline double lb2n(const double lb) noexcept
 {
     return lb * Internal::NIST_LB_TO_N;
 }
@@ -218,7 +218,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Newtons to pound-force (lbf).
  */
-[[nodiscard]] inline double n2lb(const double n)
+[[nodiscard]] inline double n2lb(const double n) noexcept
 {
     return n / Internal::NIST_LB_TO_N;
 }
@@ -230,7 +230,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Bar to Pascals.
  */
-[[nodiscard]] inline double bar2pa(const double bar)
+[[nodiscard]] inline double bar2pa(const double bar) noexcept
 {
     return bar * Internal::NIST_BAR_TO_PA;
 }
@@ -238,7 +238,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Pascals to bar.
  */
-[[nodiscard]] inline double pa2bar(const double pa)
+[[nodiscard]] inline double pa2bar(const double pa) noexcept
 {
     return pa / Internal::NIST_BAR_TO_PA;
 }
@@ -246,7 +246,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Bar to hectopascals.
  */
-[[nodiscard]] inline double bar2hpa(const double bar)
+[[nodiscard]] inline double bar2hpa(const double bar) noexcept
 {
     return bar * Internal::NIST_BAR_TO_HPA;
 }
@@ -254,7 +254,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Hectopascals to bar.
  */
-[[nodiscard]] inline double hpa2bar(const double hpa)
+[[nodiscard]] inline double hpa2bar(const double hpa) noexcept
 {
     return hpa / Internal::NIST_BAR_TO_HPA;
 }
@@ -262,7 +262,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Pascals to inches of mercury (~32 degF).
  */
-[[nodiscard]] inline double pa2inhg(const double pa)
+[[nodiscard]] inline double pa2inhg(const double pa) noexcept
 {
     return pa * Internal::NIST_PA_TO_INHG_32F;
 }
@@ -270,7 +270,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Inches of mercury to Pascals (~32 degF).
  */
-[[nodiscard]] inline double inhg2pa(const double inhg)
+[[nodiscard]] inline double inhg2pa(const double inhg) noexcept
 {
     return inhg / Internal::NIST_PA_TO_INHG_32F;
 }
@@ -278,7 +278,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Atmospheres to Pascals.
  */
-[[nodiscard]] inline double atm2pa(const double atm)
+[[nodiscard]] inline double atm2pa(const double atm) noexcept
 {
     return atm * Internal::NIST_ATM_TO_PA;
 }
@@ -286,7 +286,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Pascals to atmospheres.
  */
-[[nodiscard]] inline double pa2atm(const double pa)
+[[nodiscard]] inline double pa2atm(const double pa) noexcept
 {
     return pa / Internal::NIST_ATM_TO_PA;
 }
@@ -298,7 +298,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Degrees fahrenheit to celsius.
  */
-[[nodiscard]] inline double f2c(const double f)
+[[nodiscard]] inline double f2c(const double f) noexcept
 {
     return (5.0 * (f - 32.0)) / 9.0;
 }
@@ -306,7 +306,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Degrees celsius to Fahrenheit.
  */
-[[nodiscard]] inline double c2f(const double c)
+[[nodiscard]] inline double c2f(const double c) noexcept
 {
     return 32.0 + ((9.0 * c) / 5.0);
 }
@@ -314,7 +314,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Degrees celsius to Kelvin.
  */
-[[nodiscard]] inline double c2k(const double c)
+[[nodiscard]] inline double c2k(const double c) noexcept
 {
     return c + 273.15;
 }
@@ -322,7 +322,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
 /**
  * @brief Degrees Kelvin to celsius.
  */
-[[nodiscard]] inline double k2c(const double k)
+[[nodiscard]] inline double k2c(const double k) noexcept
 {
     return k - 273.15;
 }
