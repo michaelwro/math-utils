@@ -12,7 +12,7 @@
 namespace MathUtils {
 
 /**
- * @brief Convert a quaternion to DCM.
+ * @brief Convert a DCM to a quaternion.
  *
  * @details "Analytical Mechanics of Aerospace Systems" (Schaub et. al.) Stanley method.
  *

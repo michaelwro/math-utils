@@ -175,20 +175,7 @@ private:
  * @param q_c Second quaternion.
  * @return Quaternion product q_b * q_c.
  */
-inline Quaternion operator*(const Quaternion& q_b, const Quaternion& q_c)
-{
-    // NOTE: Constructor normalizes result.
-    return Quaternion(
-        (q_c(0) * q_b(0)) - (q_c(1) * q_b(1)) - (q_c(2) * q_b(2)) - (q_c(3) * q_b(3)),
-        (q_c(1) * q_b(0)) + (q_c(0) * q_b(1)) + (q_c(3) * q_b(2)) - (q_c(2) * q_b(3)),
-        (q_c(2) * q_b(0)) - (q_c(3) * q_b(1)) + (q_c(0) * q_b(2)) + (q_c(1) * q_b(3)),
-        (q_c(3) * q_b(0)) + (q_c(2) * q_b(1)) - (q_c(1) * q_b(2)) + (q_c(0) * q_b(3))
-    );
-}
-
-// =================================================================================================
-// OTHER FUNCTIONS
-// =================================================================================================
+Quaternion operator*(const Quaternion& q_b, const Quaternion& q_c);
 
 /**
  * @brief Print a quaternion to a stream. Comma-separates values. Does not add a newline at the end.

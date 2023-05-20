@@ -48,7 +48,7 @@ GeoCoord ecef_to_lla(const Vector<3>& pos_ecef_m)
     double c{};
     double latitude_rad{};
 
-    // TODO: figure out what 0.3 means
+    // TODO: figure out wtf 0.3 means
     if (c2 > 0.3)
     {
         s = (zp/r) * (1.0 + c2*(a1 + u + s2*v)/r);

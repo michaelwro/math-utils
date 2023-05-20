@@ -30,7 +30,7 @@ Quaternion dcm_to_quaternion(const Matrix<3,3>& dcm)
         q_squared_terms.cbegin(), q_squared_terms.cend()
     );
 
-    const std::ptrdiff_t largest_element = std::distance(
+    const auto largest_element = std::distance(
         q_squared_terms.cbegin(), largest_q_squared_term
     );
 

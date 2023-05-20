@@ -116,6 +116,17 @@ void Quaternion::normalize()
     return 2.0 * std::acos(m_arr[0]);
 }
 
+Quaternion operator*(const Quaternion& q_b, const Quaternion& q_c)
+{
+    // NOTE: Constructor normalizes result.
+    return Quaternion(
+        (q_c(0) * q_b(0)) - (q_c(1) * q_b(1)) - (q_c(2) * q_b(2)) - (q_c(3) * q_b(3)),
+        (q_c(1) * q_b(0)) + (q_c(0) * q_b(1)) + (q_c(3) * q_b(2)) - (q_c(2) * q_b(3)),
+        (q_c(2) * q_b(0)) - (q_c(3) * q_b(1)) + (q_c(0) * q_b(2)) + (q_c(1) * q_b(3)),
+        (q_c(3) * q_b(0)) + (q_c(2) * q_b(1)) - (q_c(1) * q_b(2)) + (q_c(0) * q_b(3))
+    );
+}
+
 std::ostream& operator<<(std::ostream& os, const Quaternion& quat)
 {
     os << quat(0) << ", "
