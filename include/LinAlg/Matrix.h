@@ -84,7 +84,7 @@ public:
 
     /**
      * @brief Create a matrix from an initializer list of lists.
-     * 
+     *
      * @details Row-major order.
      *
      * @code {.cpp}
@@ -295,7 +295,7 @@ public:
      * @brief Matrix-matrix addition A + B.
      *
      * @details Uses operator+=(Matrix).
-     * 
+     *
      * @param MAT Other matrix.
      * @return Matrix-matrix sum.
      */
@@ -348,9 +348,9 @@ public:
 
     /**
      * @brief Subtract two matrices.
-     * 
+     *
      * @details Uses operator-=(Matrix).
-     * 
+     *
      * @param mat Other matrix.
      * @return Matrix difference, m1 - m2.
      */
@@ -414,7 +414,7 @@ public:
 
     /**
      * @brief Get an identity matrix (square only).
-     * 
+     *
      * @tparam N Row dimension.
      * @tparam M Column dimension.
      * @return Identity matrix.
@@ -435,9 +435,9 @@ public:
 private:
     /**
      * @brief Get 1-dimensional `m_arr` index corresponding to (row, col) indices.
-     * 
+     *
      * @details Row-major order.
-     * 
+     *
      * @param row Row index.
      * @param col Column index.
      * @return corresponding `m_arr` index.
@@ -480,7 +480,7 @@ Matrix<N,M> operator*(const T scalar, const Matrix<N,M>& mat)
 
 /**
  * @brief Matrix-scalar multiplication.
- * 
+ *
  * @details Uses operator*(T).
  *
  * @tparam N Rows.
