@@ -67,11 +67,9 @@ public:
      *
      * @exception std::length_error Invalid init. list size.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     Matrix(const std::initializer_list<T> new_matrix)  //  cppcheck-suppress noExplicitConstructor
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
         const std::size_t input_size = new_matrix.size();
 
         if (input_size != (T_ROWS * T_COLS))
@@ -86,6 +84,8 @@ public:
 
     /**
      * @brief Create a matrix from an initializer list of lists.
+     * 
+     * @details Row-major order.
      *
      * @code {.cpp}
      * Matrix<3,2> my_mat({
@@ -100,11 +100,9 @@ public:
      *
      * @exception std::length_error Invalid init. list size.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     Matrix(const std::initializer_list<std::initializer_list<T>> new_matrix)  //  cppcheck-suppress noExplicitConstructor
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only..");
-
         const std::size_t input_rows = new_matrix.size();
 
         if (input_rows != T_ROWS)
@@ -177,7 +175,7 @@ public:
      */
     [[nodiscard]] double& operator()(const std::size_t row, std::size_t col)
     {
-        return m_arr.at((row * T_COLS) + col);
+        return m_arr.at(get_array_index(row, col));
     }
 
     /**
@@ -189,7 +187,7 @@ public:
      */
     [[nodiscard]] const double& operator()(const std::size_t row, std::size_t col) const
     {
-        return m_arr.at((row * T_COLS) + col);
+        return m_arr.at(get_array_index(row, col));
     }
 
     /**
@@ -203,7 +201,7 @@ public:
      */
     [[nodiscard]] double& at(const std::size_t row, std::size_t col)
     {
-        return m_arr.at((row * T_COLS) + col);
+        return m_arr.at(get_array_index(row, col));
     }
 
     /**
@@ -217,7 +215,7 @@ public:
      */
     [[nodiscard]] const double& at(const std::size_t row, std::size_t col) const
     {
-        return m_arr.at((row * T_COLS) + col);
+        return m_arr.at(get_array_index(row, col));
     }
 
     /**
@@ -263,11 +261,9 @@ public:
      * @param scalar Scalar to add.
      * @return Matrix with scalar added.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     Matrix& operator+=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
         const auto scalard = static_cast<double>(scalar);
 
         std::for_each(
@@ -295,6 +291,20 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Matrix-matrix addition A + B.
+     *
+     * @details Uses operator+=(Matrix).
+     * 
+     * @param MAT Other matrix.
+     * @return Matrix-matrix sum.
+     */
+    Matrix operator+(const Matrix& mat) const
+    {
+        Matrix result(*this);
+        return result += mat;
+    }
+
     // =============================================================================================
     // SUBTRACTION OPERATORS
     // =============================================================================================
@@ -306,11 +316,9 @@ public:
      * @param scalar Scalar to subtract.
      * @return Matrix with scalar subtracted.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     Matrix& operator-=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
         const auto scalard = static_cast<double>(scalar);
 
         std::for_each(
@@ -338,6 +346,20 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Subtract two matrices.
+     * 
+     * @details Uses operator-=(Matrix).
+     * 
+     * @param mat Other matrix.
+     * @return Matrix difference, m1 - m2.
+     */
+    Matrix operator-(const Matrix& mat) const
+    {
+        Matrix result(*this);
+        return result -= mat;
+    }
+
     // =============================================================================================
     // MULTIPLICATION OPERATORS
     // =============================================================================================
@@ -349,11 +371,9 @@ public:
      * @param scalar Scalar to multiply.
      * @return Matrix with scalar multiplied.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     Matrix& operator*=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
         const auto scalard = static_cast<double>(scalar);
 
         std::for_each(
@@ -378,12 +398,9 @@ public:
      * @param scalar Scalar to divide.
      * @return Matrix divided by scalar.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     Matrix& operator/=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
-        // make sure denominator is not too small
         const auto scalard = static_cast<double>(scalar);
 
         std::for_each(
@@ -397,184 +414,43 @@ public:
 
     /**
      * @brief Get an identity matrix (square only).
-     *
+     * 
+     * @tparam N Row dimension.
+     * @tparam M Column dimension.
      * @return Identity matrix.
-     *
-     * @exception std::domain_error Non-square matrix.
      */
-    static Matrix identity()
+    template<std::size_t N = T_ROWS, std::size_t M = T_COLS>
+    static std::enable_if_t<N == M, Matrix> identity()
     {
-        if (T_ROWS != T_COLS)
-        {
-            throw std::domain_error("Identity matrices are for square matrices only.");
-        }
-
         Matrix eye;
 
         for (std::size_t ii = 0; ii < T_ROWS; ii++)
         {
-            eye.m_arr.at((ii * T_COLS) + ii) = 1.0;
+            eye.m_arr.at((ii * T_COLS) + ii) = 1.0;  // UPDATE THIS IF SWAPPING ROW/COL MAJOR ORDER.
         }
 
         return eye;
     }
 
-protected:
 private:
-    std::array<double, T_ROWS * T_COLS> m_arr {0};  ///< Underlying array to store values (row-major order).
+    /**
+     * @brief Get 1-dimensional `m_arr` index corresponding to (row, col) indices.
+     * 
+     * @details Row-major order.
+     * 
+     * @param row Row index.
+     * @param col Column index.
+     * @return corresponding `m_arr` index.
+     */
+    std::size_t get_array_index(const std::size_t row, const std::size_t col) const noexcept
+    {
+        return (row * T_COLS) + col;
+    }
+
+private:
+    std::array<double, T_ROWS * T_COLS> m_arr {0};  ///< Underlying array to store values.
 };
 
-// =================================================================================================
-// ADDITION OPERATORS
-// =================================================================================================
-
-/**
- * @brief 2x2 matrix-matrix addition A + B.
- *
- * @details Expanded multiplication operations with SymPy.
- *
- * @code {.py}
- * a = sympy.MatrixSymbol('a', 2, 2)
- * b = sympy.MatrixSymbol('b', 2, 2)
- * numpy.add(a, b)
- * @endcode
- *
- * @param a Matrix A.
- * @param b Matrix B.
- * @return Matrix sum.
- */
-inline Matrix<2,2> operator+(const Matrix<2,2>& a, const Matrix<2,2>& b)
-{
-    return Matrix<2,2>({
-        {a(0,0) + b(0,0), a(0,1) + b(0,1)},
-        {a(1,0) + b(1,0), a(1,1) + b(1,1)}
-    });
-}
-
-/**
- * @brief 3x3 matrix-matrix addition A + B.
- *
- * @details Expanded multiplication operations with SymPy.
- *
- * @code {.py}
- * a = sympy.MatrixSymbol('a', 3, 3)
- * b = sympy.MatrixSymbol('b', 3, 3)
- * numpy.add(a, b)
- * @endcode
- *
- * @param a Matrix A.
- * @param b Matrix B.
- * @return Matrix sum.
- */
-inline Matrix<3,3> operator+(const Matrix<3,3>& a, const Matrix<3,3>& b)
-{
-    return Matrix<3,3>({
-        {a(0,0) + b(0,0), a(0,1) + b(0,1), a(0,2) + b(0,2)},
-        {a(1,0) + b(1,0), a(1,1) + b(1,1), a(1,2) + b(1,2)},
-        {a(2,0) + b(2,0), a(2,1) + b(2,1), a(2,2) + b(2,2)}
-    });
-}
-
-/**
- * @brief Matrix-matrix addition A + B.
- *
- * @tparam N Matrix rows.
- * @tparam M Matrix columns.
- * @param a Matrix A.
- * @param b Matrix B.
- * @return Matrix-matrix sum.
- */
-template<std::size_t N, std::size_t M>
-Matrix<N,M> operator+(const Matrix<N,M>& a, const Matrix<N,M>& b)
-{
-    Matrix<N,M> c(a);
-
-    for (std::size_t ii = 0; ii < N; ii++)
-    {
-        for (std::size_t jj = 0; jj < M; jj++)
-        {
-            c(ii, jj) += b(ii, jj);
-        }
-    }
-
-    return c;
-}
-
-// =================================================================================================
-// SUBTRACTION OPERATORS
-// =================================================================================================
-
-/**
- * @brief 2x2 matrix-matrix subtraction A - B.
- *
- * @details Expanded multiplication operations with SymPy.
- *
- * @code {.py}
- * a = sympy.MatrixSymbol('a', 2, 2)
- * b = sympy.MatrixSymbol('b', 2, 2)
- * numpy.subtract(a, b)
- * @endcode
- *
- * @param a Matrix A.
- * @param b Matrix B.
- * @return Matrix difference.
- */
-inline Matrix<2,2> operator-(const Matrix<2,2>& a, const Matrix<2,2>& b)
-{
-    return Matrix<2,2>({
-        {a(0,0) - b(0,0), a(0,1) - b(0,1)},
-        {a(1,0) - b(1,0), a(1,1) - b(1,1)}
-    });
-}
-
-/**
- * @brief 3x3 matrix-matrix subtraction A - B.
- *
- * @details Expanded multiplication operations with SymPy.
- *
- * @code {.py}
- * a = sympy.MatrixSymbol('a', 3, 3)
- * b = sympy.MatrixSymbol('b', 3, 3)
- * numpy.subtract(a, b)
- * @endcode
- *
- * @param a Matrix A.
- * @param b Matrix B.
- * @return Matrix difference.
- */
-inline Matrix<3,3> operator-(const Matrix<3,3>& a, const Matrix<3,3>& b)
-{
-    return Matrix<3,3>({
-        {a(0,0) - b(0,0), a(0,1) - b(0,1), a(0,2) - b(0,2)},
-        {a(1,0) - b(1,0), a(1,1) - b(1,1), a(1,2) - b(1,2)},
-        {a(2,0) - b(2,0), a(2,1) - b(2,1), a(2,2) - b(2,2)}
-    });
-}
-
-/**
- * @brief Matrix-matrix subtraction A - B.
- *
- * @tparam N Matrix rows.
- * @tparam M Matrix columns.
- * @param a Matrix A.
- * @param b Matrix B.
- * @return Matrix-matrix difference.
- */
-template<std::size_t N, std::size_t M>
-Matrix<N,M> operator-(const Matrix<N,M>& a, const Matrix<N,M>& b)
-{
-    Matrix<N,M> c(a);
-
-    for (std::size_t ii = 0; ii < N; ii++)
-    {
-        for (std::size_t jj = 0; jj < M; jj++)
-        {
-            c(ii, jj) -= b(ii, jj);
-        }
-    }
-
-    return c;
-}
 
 // =================================================================================================
 // MULTIPLICATION OPERATORS
@@ -582,6 +458,8 @@ Matrix<N,M> operator-(const Matrix<N,M>& a, const Matrix<N,M>& b)
 
 /**
  * @brief Scalar-matrix multiplication.
+ *
+ * @details Uses operator*=(T).
  *
  * @tparam N Rows.
  * @tparam M Columns.
@@ -595,22 +473,15 @@ Matrix<N,M> operator*(const T scalar, const Matrix<N,M>& mat)
 {
     static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
 
-    Matrix<N,M> out_mat(mat);
+    Matrix<N,M> result(mat);
     const auto scalard = static_cast<double>(scalar);
-
-    for (std::size_t ii = 0; ii < N; ii++)
-    {
-        for (std::size_t jj = 0; jj < M; jj++)
-        {
-            out_mat(ii, jj) *= scalard;
-        }
-    }
-
-    return out_mat;
+    return result *= scalard;
 }
 
 /**
  * @brief Matrix-scalar multiplication.
+ * 
+ * @details Uses operator*(T).
  *
  * @tparam N Rows.
  * @tparam M Columns.

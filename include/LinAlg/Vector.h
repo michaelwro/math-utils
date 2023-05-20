@@ -52,11 +52,9 @@ public:
      *
      * @exception std::length_error Initializer list length doesn't match vector size.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     Vector(const std::initializer_list<T> vector_vals)  //  cppcheck-suppress noExplicitConstructor
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
         const std::size_t input_length = vector_vals.size();
 
         if (input_length != T_LEN)
@@ -105,11 +103,9 @@ public:
      *
      * @exception std::length_error Initializer list length doesn't match vector size.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     Vector& operator=(const std::initializer_list<T> vector_vals)
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
         const std::size_t input_length = vector_vals.size();
 
         if (input_length != T_LEN)
@@ -254,11 +250,9 @@ public:
      * @param scalar Scalar to add.
      * @return Vector with scalar added.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     Vector& operator+=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
         const auto scalard = static_cast<double>(scalar);
 
         std::for_each(
@@ -295,11 +289,9 @@ public:
      * @param scalar Scalar to add.
      * @return Vector plus scalar.
      */
-    template<typename T>
-    Vector operator+(const T scalar)
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    Vector operator+(const T scalar) const
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
         Vector result(*this);
         return result += scalar;
     }
@@ -312,7 +304,7 @@ public:
      * @param vec Other vector.
      * @return Vector sum, v1 + v2.
      */
-    Vector operator+(const Vector& vec)
+    Vector operator+(const Vector& vec) const
     {
         Vector result(*this);
         return result += vec;
@@ -329,11 +321,9 @@ public:
      * @param scalar Scalar to subtract.
      * @return Vector with scalar subtracted.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     Vector& operator-=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
         const auto scalard = static_cast<double>(scalar);
 
         std::for_each(
@@ -370,11 +360,9 @@ public:
      * @param scalar Scalar to subtract.
      * @return Vector minus scalar.
      */
-    template<typename T>
-    Vector operator-(const T scalar)
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    Vector operator-(const T scalar) const
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
         Vector result(*this);
         return result -= scalar;
     }
@@ -387,11 +375,10 @@ public:
      * @param vec Vector to subtract.
      * @return Vector difference, v1 - v2.
      */
-    Vector operator-(const Vector& vec)
+    Vector operator-(const Vector& vec) const
     {
         Vector result(*this);
-        result -= vec;
-        return result;
+        return result -= vec;
     }
 
     // =============================================================================================
@@ -405,11 +392,9 @@ public:
      * @param scalar Scalar to multiply by.
      * @return Vector with scalar multiplied.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     Vector& operator*=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
         const auto scalard = static_cast<double>(scalar);
 
         std::for_each(
@@ -445,19 +430,10 @@ public:
      * @param vec Other vector.
      * @return vec1 * vec2.
      */
-    Vector operator*(const Vector& vec)
+    Vector operator*(const Vector& vec) const
     {
         Vector result(*this);
-        result *= vec;
-        return result;
-
-    // //
-    //     for (std::size_t idx = 0; idx < N; idx++)
-    //     {
-    //         result(idx) *= v2(idx);
-    //     }
-
-        return result;
+        return result *= vec;
     }
 
     // =============================================================================================
@@ -473,11 +449,9 @@ public:
      * @param scalar Scalar to divide by.
      * @return Vector with scalar divided.
      */
-    template<typename T>
+    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
     Vector& operator/=(const T scalar)
     {
-        static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
         const auto scalard = static_cast<double>(scalar);
 
         std::for_each(
