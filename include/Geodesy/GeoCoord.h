@@ -178,7 +178,7 @@ public:
     }
 
     /**
-     * @brief Access altitude.
+     * @brief Get altitude.
      *
      * @return Altitude [m].
      */

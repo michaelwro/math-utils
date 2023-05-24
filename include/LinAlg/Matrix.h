@@ -269,7 +269,7 @@ public:
         std::for_each(
             m_arr.begin(),
             m_arr.end(),
-            [scalard](double& element){element += scalard;}
+            [scalard](auto& element){element += scalard;}
         );
 
         return *this;
@@ -324,7 +324,7 @@ public:
         std::for_each(
             m_arr.begin(),
             m_arr.end(),
-            [scalard](double& element){element -= scalard;}
+            [scalard](auto& element){element -= scalard;}
         );
 
         return *this;
@@ -379,7 +379,7 @@ public:
         std::for_each(
             m_arr.begin(),
             m_arr.end(),
-            [scalard](double& element){element *= scalard;}
+            [scalard](auto& element){element *= scalard;}
         );
 
         return *this;
@@ -406,7 +406,7 @@ public:
         std::for_each(
             m_arr.begin(),
             m_arr.end(),
-            [scalard](double& element){element /= scalard;}
+            [scalard](auto& element){element /= scalard;}
         );
 
         return *this;
@@ -422,11 +422,15 @@ public:
     template<std::size_t N = T_ROWS, std::size_t M = T_COLS>
     static std::enable_if_t<N == M, Matrix> identity()
     {
-        Matrix eye;
+        Matrix eye;  // zero-init
 
         for (std::size_t ii = 0; ii < T_ROWS; ii++)
         {
-            eye.m_arr.at((ii * T_COLS) + ii) = 1.0;  // UPDATE THIS IF SWAPPING ROW/COL MAJOR ORDER.
+            /**
+             * NOTE: UPDATE THIS WHEN SWAPPING ROW/COL MAJOR ORDER.
+             * This cannot use get_array_index() since it is a static function.
+             */
+            eye.m_arr.at((ii * T_COLS) + ii) = 1.0;
         }
 
         return eye;
@@ -468,11 +472,12 @@ private:
  * @param mat Matrix to multiply.
  * @return Product.
  */
-template<std::size_t N, std::size_t M, typename T>
+template<std::size_t N, std::size_t M,
+    typename T,
+    std::enable_if_t<std::is_fundamental<T>::value, bool> = true
+>
 Matrix<N,M> operator*(const T scalar, const Matrix<N,M>& mat)
 {
-    static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
-
     Matrix<N,M> result(mat);
     const auto scalard = static_cast<double>(scalar);
     return result *= scalard;
@@ -490,10 +495,12 @@ Matrix<N,M> operator*(const T scalar, const Matrix<N,M>& mat)
  * @param scalar Scalar to multiply.
  * @return Product.
  */
-template<std::size_t N, std::size_t M, typename T>
+template<std::size_t N, std::size_t M,
+    typename T,
+    std::enable_if_t<std::is_fundamental<T>::value, bool> = true
+>
 Matrix<N,M> operator*(const Matrix<N,M>& mat, const T scalar)
 {
-    static_assert(std::is_fundamental<T>::value, "Must be fundamental type.");
     return scalar * mat;
 }
 
@@ -693,7 +700,7 @@ std::ostream& operator<<(std::ostream& os, const Matrix<R,C>& mat)
         for (std::size_t jj = 0; jj < mat.cols(); jj++)
         {
             const std::size_t chars = num_str_chars(mat(ii, jj));
-            most_chars = chars > most_chars ? chars : most_chars;
+            most_chars = (chars > most_chars) ? chars : most_chars;
         }
     }
     /**
@@ -704,8 +711,8 @@ std::ostream& operator<<(std::ostream& os, const Matrix<R,C>& mat)
     {
         for (std::size_t jj = 0; jj < mat.cols(); jj++)
         {
-            std::string prefix = jj == 0 ? "\n" : "";  // put a newline or no char before the value
-            std::string suffix = jj == mat.cols()-1 ? "" : ", ";  // put a comma or no char after the value
+            std::string prefix = (jj == 0) ? "\n" : "";  // put a newline or no char before the value
+            std::string suffix = (jj == mat.cols()-1) ? "" : ", ";  // put a comma or no char after the value
 
             os << prefix << std::setw(static_cast<int>(most_chars)) << std::left << mat(ii, jj) << suffix;
         }

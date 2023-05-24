@@ -14,7 +14,6 @@ namespace MathUtils {
 
 Vector<3> lla_to_ecef(const GeoCoord& lla)
 {
-    // pre-compute terms
     const double sin_lat_rad = std::sin(lla.latitude());
     const double cos_lat_rad = std::cos(lla.latitude());
 
@@ -24,7 +23,6 @@ Vector<3> lla_to_ecef(const GeoCoord& lla)
 
     const double s_term = c_term * (1.0 - Constants::WGS84_ECC2);
 
-    // in [m]
     return Vector<3> {
         (c_term + lla.altitude()) * cos_lat_rad * std::cos(lla.longitude()),
         (c_term + lla.altitude()) * cos_lat_rad * std::sin(lla.longitude()),

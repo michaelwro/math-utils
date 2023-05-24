@@ -185,7 +185,7 @@ Quaternion operator*(const Quaternion& q_b, const Quaternion& q_c);
  * @return Output stream with quaternion.
  *
  * @code {.cpp}
- * std::cout << my_vequat << "\n";
+ * std::cout << my_quat << "\n";
  * @endcode
  */
 std::ostream& operator<<(std::ostream& os, const Quaternion& quat);

@@ -25,23 +25,22 @@ Quaternion dcm_to_quaternion(const Matrix<3,3>& dcm)
         0.25 * (1.0 + (2.0 * dcm(2,2)) - dcm_trace)
     };
 
-    // find largest element and its index
     const auto largest_q_squared_term = std::max_element(
         q_squared_terms.cbegin(), q_squared_terms.cend()
     );
 
-    const auto largest_element = std::distance(
+    const auto largest_element_idx = std::distance(
         q_squared_terms.cbegin(), largest_q_squared_term
     );
 
     // std::distance can return neg. if inputs are std::distance(end,begin)
     assert(*largest_q_squared_term >= 0);
-    assert(largest_element <= 3);
+    assert(largest_element_idx <= 3);
 
     const double largest_q_term = std::sqrt(*largest_q_squared_term);
 
     // compute the quaternion depending on the largest element
-    switch (largest_element)
+    switch (largest_element_idx)
     {
         case 0:
             return Quaternion {

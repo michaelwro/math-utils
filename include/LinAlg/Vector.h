@@ -196,13 +196,9 @@ public:
     {
         const double magn = std::accumulate(
             m_arr.begin(), m_arr.end(), 0.0,
-            [](double accum, const double& val){return accum += val * val;}
+            [](auto accum, const auto& val){return accum += val * val;}
         );
 
-        /**
-         * NOTE: Since all elements were squared in the above operation, this argument should never
-         * be negative.
-         */
         assert(magn >= 0.0);
         return std::sqrt(magn);
     }
@@ -216,7 +212,7 @@ public:
     {
         const double magn = this->magnitude();
 
-        std::for_each(m_arr.begin(), m_arr.end(), [magn](double& val){val /= magn;});
+        std::for_each(m_arr.begin(), m_arr.end(), [magn](auto& val){val /= magn;});
     }
 
     /**
@@ -226,7 +222,7 @@ public:
      */
     [[nodiscard]] double get_sum() const
     {
-        return std::accumulate(m_arr.begin(), m_arr.end(), 0.0, std::plus<>());
+        return std::accumulate(m_arr.begin(), m_arr.end(), 0.0, std::plus<double>());
     }
 
     /**
@@ -236,7 +232,7 @@ public:
      */
     void negate()
     {
-        std::for_each(m_arr.begin(), m_arr.end(), [](double& val){val *= -1.0;});
+        std::for_each(m_arr.begin(), m_arr.end(), [](auto& val){val *= -1.0;});
     }
 
     // =============================================================================================
@@ -484,11 +480,9 @@ private:
  * @param vec Vector operand.
  * @return Vector times scalar.
  */
-template<std::size_t N, typename T>
+template<std::size_t N, typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
 Vector<N> operator*(const T scalar, const Vector<N>& vec)
 {
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
-
     Vector<N> result(vec);
     result *= scalar;
     return result;
@@ -505,10 +499,9 @@ Vector<N> operator*(const T scalar, const Vector<N>& vec)
  * @param vec Vector operand.
  * @return Vector times scalar.
  */
-template<std::size_t N, typename T>
+template<std::size_t N, typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
 Vector<N> operator*(const Vector<N>& vec, const T scalar)
 {
-    static_assert(std::is_fundamental<T>::value, "Fundamental types only.");
     return scalar * vec;
 }
 
