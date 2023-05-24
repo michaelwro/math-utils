@@ -16,3 +16,7 @@ Testing/
 .vscode/settings.json
 
 .ruff_cache/
+
+# ignore doxygen stuff except the Doxyfile
+docs/
+!docs/Doxyfile

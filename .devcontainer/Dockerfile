@@ -15,6 +15,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     doxygen \
     gdb \
     git \
+    graphviz \
     lcov \
     nano \
     pmccabe \

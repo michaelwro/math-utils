@@ -1,0 +1,32 @@
+name: Doxygen
+
+on:
+  push:
+    branches: ["main", "release"]
+
+  workflow_dispatch:
+
+jobs:
+  doxygen-site:
+    name: Doxygen
+    runs-on: ubuntu-latest
+    if: "${{ !contains(github.event.head_commit.message, 'docs skip') }}"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate docs
+        uses: devcontainers/ci@v0.3
+        env:
+          UBUNTU_VERSION: 22.04
+        with:
+          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:22.04
+          runCmd: |
+            bash ./scripts/gen-doxygen.sh
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./docs/html/
