@@ -14,7 +14,7 @@
 namespace MathUtils {
 
 /**
- * @brief Wrap an angle within [-pi/2, pi/2) radians (180 deg).
+ * @brief Wrap an angle within [-pi, pi) radians (180 deg).
  *
  * @tparam T Data type.
  * @param angle_rad Angle in [rad].
