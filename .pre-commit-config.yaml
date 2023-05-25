@@ -1,4 +1,4 @@
-exclude: "cmake"
+exclude: ""
 
 repos:
     - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -12,12 +12,12 @@ repos:
           - id: trailing-whitespace
 
     - repo: https://github.com/psf/black
-      rev: 23.1.0
+      rev: 23.3.0
       hooks:
           - id: black
 
     - repo: https://github.com/charliermarsh/ruff-pre-commit
-      rev: "v0.0.257"
+      rev: "v0.0.270"
       hooks:
           - id: ruff
             args: [--fix]
