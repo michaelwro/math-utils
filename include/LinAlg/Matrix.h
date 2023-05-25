@@ -13,6 +13,7 @@
 #include <array>
 #include <cassert>
 #include <cmath>
+#include <concepts>
 #include <initializer_list>
 #include <iomanip>
 #include <numeric>
@@ -24,20 +25,34 @@
 namespace MathUtils {
 
 /**
+ * @brief Criteria to define valid MathUtils::Matrix dimensions.
+ * 
+ * @tparam ROWS Matrix rows.
+ * @tparam COLS Matrix cols.
+ */
+template<std::size_t ROWS, std::size_t COLS>
+concept valid_matrix_dims = (ROWS != 0) && (COLS != 0) && (ROWS != 1 && COLS != 1);
+
+/**
+ * @brief Criteria for a valid MathUtils::Matrix element.
+ * 
+ * @tparam T Element type.
+ */
+template<typename T>
+concept valid_matrix_element = std::integral<T> || std::floating_point<T>;
+
+/**
  * @brief 2D matrix class.
  *
  * @details Stores elements in row-major order.
  *
- * @tparam T_ROWS Number of rows.
- * @tparam T_COLS Number of columns.
+ * @tparam ROWS Number of rows.
+ * @tparam COLS Number of columns.
  */
-template<std::size_t T_ROWS, std::size_t T_COLS>
+template<std::size_t ROWS, std::size_t COLS>
+requires valid_matrix_dims<ROWS, COLS>
 class Matrix {
 public:
-
-    static_assert(T_ROWS != 0, "Cannot have zero rows.");
-    static_assert(T_COLS != 0, "Cannot have zero columns.");
-    static_assert(T_ROWS != 1 && T_COLS != 1, "Cannot have one-element matrix.");
 
     /**
      * @brief Create a matrix.
@@ -67,15 +82,16 @@ public:
      *
      * @exception std::length_error Invalid init. list size.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_matrix_element<T>
     Matrix(const std::initializer_list<T> new_matrix)  //  cppcheck-suppress noExplicitConstructor
     {
         const std::size_t input_size = new_matrix.size();
 
-        if (input_size != (T_ROWS * T_COLS))
+        if (input_size != (ROWS * COLS))
         {
             throw std::length_error(
-                Internal::invalid_init_list_length_error_msg(input_size, T_ROWS * T_COLS)
+                Internal::invalid_init_list_length_error_msg(input_size, ROWS * COLS)
             );
         }
 
@@ -100,15 +116,16 @@ public:
      *
      * @exception std::length_error Invalid init. list size.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_matrix_element<T>
     Matrix(const std::initializer_list<std::initializer_list<T>> new_matrix)  //  cppcheck-suppress noExplicitConstructor
     {
         const std::size_t input_rows = new_matrix.size();
 
-        if (input_rows != T_ROWS)
+        if (input_rows != ROWS)
         {
             throw std::length_error(
-                Internal::invalid_init_list_length_error_msg(input_rows, T_ROWS)
+                Internal::invalid_init_list_length_error_msg(input_rows, ROWS)
             );
         }
 
@@ -118,10 +135,10 @@ public:
         {
             const std::size_t input_cols = row.size();
 
-            if (input_cols != T_COLS)
+            if (input_cols != COLS)
             {
                 throw std::length_error(
-                    Internal::invalid_init_list_length_error_msg(input_cols, T_COLS)
+                    Internal::invalid_init_list_length_error_msg(input_cols, COLS)
                 );
             }
 
@@ -225,7 +242,7 @@ public:
      */
     [[nodiscard]] constexpr std::size_t rows() const noexcept
     {
-        return T_ROWS;
+        return ROWS;
     }
 
     /**
@@ -235,7 +252,7 @@ public:
      */
     [[nodiscard]] constexpr std::size_t cols() const noexcept
     {
-        return T_COLS;
+        return COLS;
     }
 
     /**
@@ -247,7 +264,7 @@ public:
      */
     [[nodiscard]] constexpr std::size_t num_elements() const noexcept
     {
-        return T_ROWS * T_COLS;
+        return ROWS * COLS;
     }
 
     // =============================================================================================
@@ -261,7 +278,8 @@ public:
      * @param scalar Scalar to add.
      * @return Matrix with scalar added.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_matrix_element<T>
     Matrix& operator+=(const T scalar)
     {
         const auto scalard = static_cast<double>(scalar);
@@ -316,7 +334,8 @@ public:
      * @param scalar Scalar to subtract.
      * @return Matrix with scalar subtracted.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_matrix_element<T>
     Matrix& operator-=(const T scalar)
     {
         const auto scalard = static_cast<double>(scalar);
@@ -338,7 +357,7 @@ public:
      */
     Matrix& operator-=(const Matrix& mat)
     {
-        for (std::size_t idx = 0; idx < (T_ROWS * T_COLS); idx++)
+        for (std::size_t idx = 0; idx < (ROWS * COLS); idx++)
         {
             m_arr.at(idx) -= mat.m_arr.at(idx);
         }
@@ -371,7 +390,8 @@ public:
      * @param scalar Scalar to multiply.
      * @return Matrix with scalar multiplied.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_matrix_element<T>
     Matrix& operator*=(const T scalar)
     {
         const auto scalard = static_cast<double>(scalar);
@@ -398,7 +418,8 @@ public:
      * @param scalar Scalar to divide.
      * @return Matrix divided by scalar.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_matrix_element<T>
     Matrix& operator/=(const T scalar)
     {
         const auto scalard = static_cast<double>(scalar);
@@ -419,18 +440,18 @@ public:
      * @tparam M Column dimension.
      * @return Identity matrix.
      */
-    template<std::size_t N = T_ROWS, std::size_t M = T_COLS>
+    template<std::size_t N = ROWS, std::size_t M = COLS>
     static std::enable_if_t<N == M, Matrix> identity()
     {
         Matrix eye;  // zero-init
 
-        for (std::size_t ii = 0; ii < T_ROWS; ii++)
+        for (std::size_t ii = 0; ii < ROWS; ii++)
         {
             /**
              * NOTE: UPDATE THIS WHEN SWAPPING ROW/COL MAJOR ORDER.
              * This cannot use get_array_index() since it is a static function.
              */
-            eye.m_arr.at((ii * T_COLS) + ii) = 1.0;
+            eye.m_arr.at((ii * COLS) + ii) = 1.0;
         }
 
         return eye;
@@ -448,11 +469,11 @@ private:
      */
     std::size_t get_array_index(const std::size_t row, const std::size_t col) const noexcept
     {
-        return (row * T_COLS) + col;
+        return (row * COLS) + col;
     }
 
 private:
-    std::array<double, T_ROWS * T_COLS> m_arr {0};  ///< Underlying array to store values.
+    std::array<double, ROWS * COLS> m_arr {0};  ///< Underlying array to store values.
 };
 
 
@@ -472,10 +493,8 @@ private:
  * @param mat Matrix to multiply.
  * @return Product.
  */
-template<std::size_t N, std::size_t M,
-    typename T,
-    std::enable_if_t<std::is_fundamental<T>::value, bool> = true
->
+template<std::size_t N, std::size_t M, typename T>
+requires valid_matrix_element<T>
 Matrix<N,M> operator*(const T scalar, const Matrix<N,M>& mat)
 {
     Matrix<N,M> result(mat);
@@ -495,10 +514,8 @@ Matrix<N,M> operator*(const T scalar, const Matrix<N,M>& mat)
  * @param scalar Scalar to multiply.
  * @return Product.
  */
-template<std::size_t N, std::size_t M,
-    typename T,
-    std::enable_if_t<std::is_fundamental<T>::value, bool> = true
->
+template<std::size_t N, std::size_t M, typename T>
+requires valid_matrix_element<T>
 Matrix<N,M> operator*(const Matrix<N,M>& mat, const T scalar)
 {
     return scalar * mat;
