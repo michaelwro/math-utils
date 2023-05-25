@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build (Debug)",
+      "label": "Build (debug)",
       "type": "shell",
       "group": {
         "kind": "build"
@@ -15,7 +15,7 @@
       }
     },
     {
-      "label": "Build (Release)",
+      "label": "Build (release)",
       "type": "shell",
       "group": {
         "kind": "build"
@@ -28,7 +28,7 @@
       }
     },
     {
-      "label": "Run Tests",
+      "label": "Test",
       "type": "shell",
       "group": "test",
       "dependsOn": [
@@ -60,7 +60,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Run pre-commit",
+      "label": "pre-commit",
       "type": "shell",
       "group": {
         "kind": "none"
@@ -74,13 +74,27 @@
       "problemMatcher": []
     },
     {
-      "label": "Run clang-tidy",
+      "label": "clang-tidy",
       "type": "shell",
       "group": {
         "kind": "none"
       },
       "linux": {
         "command": "bash scripts/run-clang-tidy.sh"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Doxygen",
+      "type": "shell",
+      "group": {
+        "kind": "none"
+      },
+      "linux": {
+        "command": "bash scripts/gen-doxygen.sh"
       },
       "options": {
         "cwd": "${workspaceFolder}"
