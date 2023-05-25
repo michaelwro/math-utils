@@ -56,7 +56,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
  */
 [[nodiscard]] inline double rmp2rps(const double rpm) noexcept
 {
-    return rpm * (Constants::PI / 30.0);
+    return rpm * (2.0 * Constants::PI / 60.0);
 }
 
 /**
@@ -64,7 +64,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
  */
 [[nodiscard]] inline double rps2rpm(const double rps) noexcept
 {
-    return rps * (30.0 / Constants::PI);
+    return rps * (0.5 * 60.0 / Constants::PI);
 }
 
 // =================================================================================================
@@ -300,7 +300,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
  */
 [[nodiscard]] inline double f2c(const double f) noexcept
 {
-    return (5.0 * (f - 32.0)) / 9.0;
+    return (5.0 / 9.0) * (f - 32.0);
 }
 
 /**
@@ -308,7 +308,7 @@ constexpr double NIST_ATM_TO_PA = 101325.0;
  */
 [[nodiscard]] inline double c2f(const double c) noexcept
 {
-    return 32.0 + ((9.0 * c) / 5.0);
+    return 32.0 + ((9.0 / 5.0) * c);
 }
 
 /**
