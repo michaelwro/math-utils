@@ -1,3 +1,6 @@
+# cppcoreguidelines-avoid-magic-numbers has too many false positives, so I disabled this warning.
+# I know not to have these in code.
+
 Checks:
   -*,
   cppcoreguidelines-*,

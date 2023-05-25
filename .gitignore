@@ -10,6 +10,9 @@ Testing/
 
 *.csv
 
+*.png
+*.jpg
+
 **/__pycache__/
 *.pyc
 
