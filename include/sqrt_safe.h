@@ -6,8 +6,8 @@
 
 #pragma once
 
+#include <cassert>
 #include <cmath>
-#include <type_traits>
 
 namespace MathUtils {
 
@@ -23,7 +23,11 @@ namespace MathUtils {
 template<typename T>
 [[nodiscard]] auto sqrt_safe(const T val) noexcept
 {
-    return val >= static_cast<T>(0.0) ? std::sqrt(val) : static_cast<T>(0.0);
+    constexpr auto zero = static_cast<T>(0.0);
+
+    assert(val >= zero);
+
+    return val >= zero ? std::sqrt(val) : zero;
 }
 
 }  // namespace MathUtils

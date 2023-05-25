@@ -13,27 +13,41 @@
 #include <array>
 #include <cassert>
 #include <cmath>
+#include <concepts>
 #include <initializer_list>
 #include <iomanip>
 #include <numeric>
 #include <ostream>
 #include <stdexcept>
 #include <string>
-#include <type_traits>
 
 namespace MathUtils {
 
 /**
+ * @brief Criteria for a valid MathUtils::Vector dimension.
+ *
+ * @tparam N Vector length.
+ */
+template<std::size_t N>
+concept valid_vector_dim = N > 1;
+
+/**
+ * @brief Criteria for a valid MathUtils::Vector element.
+ *
+ * @tparam T Element type.
+ */
+template<typename T>
+concept valid_vector_element = std::integral<T> || std::floating_point<T>;
+
+/**
  * @brief N-length vector class.
  *
- * @tparam T_LEN Length of the vector.
+ * @tparam LEN Length of the vector.
  */
-template<std::size_t T_LEN>
+template<std::size_t LEN>
+requires valid_vector_dim<LEN>
 class Vector {
 public:
-
-    static_assert(T_LEN > 1, "One-length or zero-length vectors are not allowed.");
-
     /**
      * @brief Create a Vector.
      */
@@ -52,15 +66,16 @@ public:
      *
      * @exception std::length_error Initializer list length doesn't match vector size.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_vector_element<T>
     Vector(const std::initializer_list<T> vector_vals)  //  cppcheck-suppress noExplicitConstructor
     {
         const std::size_t input_length = vector_vals.size();
 
-        if (input_length != T_LEN)
+        if (input_length != LEN)
         {
             throw std::length_error(
-                Internal::invalid_init_list_length_error_msg(input_length, T_LEN)
+                Internal::invalid_init_list_length_error_msg(input_length, LEN)
             );
         }
 
@@ -103,15 +118,16 @@ public:
      *
      * @exception std::length_error Initializer list length doesn't match vector size.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_vector_element<T>
     Vector& operator=(const std::initializer_list<T> vector_vals)
     {
         const std::size_t input_length = vector_vals.size();
 
-        if (input_length != T_LEN)
+        if (input_length != LEN)
         {
             throw std::length_error(
-                Internal::invalid_init_list_length_error_msg(input_length, T_LEN)
+                Internal::invalid_init_list_length_error_msg(input_length, LEN)
             );
         }
 
@@ -174,7 +190,7 @@ public:
      */
     [[nodiscard]] constexpr std::size_t size() const noexcept
     {
-        return T_LEN;
+        return LEN;
     }
 
     /**
@@ -246,7 +262,8 @@ public:
      * @param scalar Scalar to add.
      * @return Vector with scalar added.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_vector_element<T>
     Vector& operator+=(const T scalar)
     {
         const auto scalard = static_cast<double>(scalar);
@@ -268,7 +285,7 @@ public:
      */
     Vector& operator+=(const Vector& vec) noexcept
     {
-        for (std::size_t idx = 0; idx < T_LEN; idx++)
+        for (std::size_t idx = 0; idx < LEN; idx++)
         {
             m_arr[idx] += vec.m_arr[idx];
         }
@@ -285,7 +302,8 @@ public:
      * @param scalar Scalar to add.
      * @return Vector plus scalar.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_vector_element<T>
     Vector operator+(const T scalar) const
     {
         Vector result(*this);
@@ -317,7 +335,8 @@ public:
      * @param scalar Scalar to subtract.
      * @return Vector with scalar subtracted.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_vector_element<T>
     Vector& operator-=(const T scalar)
     {
         const auto scalard = static_cast<double>(scalar);
@@ -339,7 +358,7 @@ public:
      */
     Vector& operator-=(const Vector& vec) noexcept
     {
-        for (std::size_t idx = 0; idx < T_LEN; idx++)
+        for (std::size_t idx = 0; idx < LEN; idx++)
         {
             m_arr[idx] -= vec.m_arr[idx];
         }
@@ -356,7 +375,8 @@ public:
      * @param scalar Scalar to subtract.
      * @return Vector minus scalar.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_vector_element<T>
     Vector operator-(const T scalar) const
     {
         Vector result(*this);
@@ -388,7 +408,8 @@ public:
      * @param scalar Scalar to multiply by.
      * @return Vector with scalar multiplied.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_vector_element<T>
     Vector& operator*=(const T scalar)
     {
         const auto scalard = static_cast<double>(scalar);
@@ -410,7 +431,7 @@ public:
      */
     Vector& operator*=(const Vector& vec) noexcept
     {
-        for (std::size_t idx = 0; idx < T_LEN; idx++)
+        for (std::size_t idx = 0; idx < LEN; idx++)
         {
             m_arr[idx] *= vec.m_arr[idx];
         }
@@ -445,7 +466,8 @@ public:
      * @param scalar Scalar to divide by.
      * @return Vector with scalar divided.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_vector_element<T>
     Vector& operator/=(const T scalar)
     {
         const auto scalard = static_cast<double>(scalar);
@@ -461,7 +483,7 @@ public:
 
 protected:
 private:
-    std::array<double, T_LEN> m_arr {0};  ///< Underlying array to store vector values.
+    std::array<double, LEN> m_arr {0};  ///< Underlying array to store vector values.
 };
 
 
@@ -480,7 +502,8 @@ private:
  * @param vec Vector operand.
  * @return Vector times scalar.
  */
-template<std::size_t N, typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+template<std::size_t N, typename T>
+requires valid_vector_element<T>
 Vector<N> operator*(const T scalar, const Vector<N>& vec)
 {
     Vector<N> result(vec);
@@ -499,7 +522,8 @@ Vector<N> operator*(const T scalar, const Vector<N>& vec)
  * @param vec Vector operand.
  * @return Vector times scalar.
  */
-template<std::size_t N, typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+template<std::size_t N, typename T>
+requires valid_vector_element<T>
 Vector<N> operator*(const Vector<N>& vec, const T scalar)
 {
     return scalar * vec;

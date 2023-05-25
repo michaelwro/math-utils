@@ -9,36 +9,36 @@
 #include "constants.h"
 
 #include <cmath>
+#include <concepts>
 #include <cassert>
-#include <type_traits>
 
 namespace MathUtils {
 
 /**
  * @brief Compute arcsine with bounds checks. Limits output to [-pi/2, pi/2].
  *
- * @details If the input is greater than 1, pi/2 is returned. If the input is less than -1, -pi/2
- * is returned.
- *
  * @tparam T Input type.
  * @param val Value to take the arcsine of, in [rad].
  * @return Arcsine of `val`.
  */
-template<typename T, std::enable_if_t<std::is_floating_point<T>::value, bool> = true>
+template<typename T>
+requires std::floating_point<T>
 [[nodiscard]] T asin_safe(const T val) noexcept
 {
     assert(std::abs(val) <= 1.0);
 
+    constexpr auto pidiv2 = static_cast<T>(Constants::PI_DIV2);
+
     if (val >= 1.0)
     {
-        return Constants::PI_DIV2;
+        return pidiv2;
     }
     else if (val <= -1.0)
     {
-        return -Constants::PI_DIV2;
+        return -pidiv2;
     }
 
     return std::asin(val);
 }
 
-}  // MathUtils
+}  // namespace MathUtils

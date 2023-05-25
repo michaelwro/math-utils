@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <cassert>
 #include <type_traits>
 
 namespace MathUtils {
@@ -20,7 +19,8 @@ namespace MathUtils {
  * @param upper Upper limit.
  * @return `val` constrained to be within [lower, upper].
  */
-template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+template<typename T>
+requires std::is_fundamental_v<T>
 [[nodiscard]] T range_constrain(const T val, const T lower, const T upper) noexcept
 {
     if (val < lower)

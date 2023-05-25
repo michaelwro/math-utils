@@ -8,9 +8,8 @@
 
 #include "constants.h"
 
-#include <cassert>
 #include <cmath>
-#include <type_traits>
+#include <concepts>
 
 namespace MathUtils {
 
@@ -24,20 +23,20 @@ namespace MathUtils {
  * @ref https://stackoverflow.com/a/11498248
  */
 template<typename T>
+requires std::floating_point<T>
 [[nodiscard]] T wrap_pi(const T angle_rad)
 {
-    static_assert(std::is_floating_point<T>::value, "Floating-point types only.");
+    constexpr auto pi = static_cast<T>(Constants::PI);
+    constexpr auto two_pi = static_cast<T>(Constants::TWO_PI);
 
-    T dangle_rad = std::fmod(
-        static_cast<T>(angle_rad) + Constants::PI, Constants::TWO_PI
-    );
+    T dangle_rad = std::fmod(angle_rad + pi, two_pi);
 
     if (dangle_rad < 0.0)
     {
-        dangle_rad += Constants::TWO_PI;
+        dangle_rad += two_pi;
     }
 
-    return dangle_rad - Constants::PI;
+    return dangle_rad - pi;
 }
 
 }    // namespace MathUtils

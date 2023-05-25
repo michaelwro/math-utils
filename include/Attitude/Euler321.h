@@ -8,12 +8,20 @@
 
 #include "Internal/error_msg_helpers.h"
 
+#include <concepts>
 #include <initializer_list>
 #include <ostream>
 #include <stdexcept>
-#include <type_traits>
 
 namespace MathUtils {
+
+/**
+ * @brief Criteria for a valid MathUtils::Euler321 element.
+ *
+ * @tparam T Element type.
+ */
+template<typename T>
+concept valid_euler321_element = std::integral<T> || std::floating_point<T>;
 
 /**
  * @brief Euler 321 (yaw, pitch, roll) attitude angles.
@@ -22,7 +30,6 @@ namespace MathUtils {
  */
 class Euler321 {
 public:
-
     /**
      * @brief Create an Euler321.
      */
@@ -55,7 +62,8 @@ public:
      *
      * @exception std::length_error Did not pass three-value list.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_euler321_element<T>
     Euler321(const std::initializer_list<T> angles)  //  cppcheck-suppress noExplicitConstructor
     {
         const std::size_t input_size = angles.size();
@@ -93,7 +101,8 @@ public:
      *
      * @exception std::length_error Did not pass three-value list.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_euler321_element<T>
     Euler321& operator=(const std::initializer_list<T> angles)
     {
         const std::size_t input_size = angles.size();

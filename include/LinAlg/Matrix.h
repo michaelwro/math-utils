@@ -20,12 +20,11 @@
 #include <ostream>
 #include <stdexcept>
 #include <string>
-#include <type_traits>
 
 namespace MathUtils {
 
 /**
- * @brief Criteria to define valid MathUtils::Matrix dimensions.
+ * @brief Criteria for valid MathUtils::Matrix dimensions.
  *
  * @tparam ROWS Matrix rows.
  * @tparam COLS Matrix cols.
@@ -53,7 +52,6 @@ template<std::size_t ROWS, std::size_t COLS>
 requires valid_matrix_dims<ROWS, COLS>
 class Matrix {
 public:
-
     /**
      * @brief Create a matrix.
      *

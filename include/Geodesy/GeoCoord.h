@@ -8,12 +8,20 @@
 
 #include "Internal/error_msg_helpers.h"
 
+#include <concepts>
 #include <initializer_list>
 #include <ostream>
 #include <stdexcept>
-#include <type_traits>
 
 namespace MathUtils {
+
+/**
+ * @brief Criteria for a valid MathUtils::GeoCoord element.
+ *
+ * @tparam T Element type.
+ */
+template<typename T>
+concept valid_geocoord_element = std::integral<T> || std::floating_point<T>;
 
 /**
  * @brief Geodetic coordinate (latitude, longitude, altitude).
@@ -56,7 +64,8 @@ public:
      *
      * @exception std::length_error Did not pass three-value list.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_geocoord_element<T>
     GeoCoord(const std::initializer_list<T> lla)  //  cppcheck-suppress noExplicitConstructor
     {
         const std::size_t input_size = lla.size();
@@ -94,7 +103,8 @@ public:
      *
      * @exception std::length_error Did not pass three-value list.
      */
-    template<typename T, std::enable_if_t<std::is_fundamental<T>::value, bool> = true>
+    template<typename T>
+    requires valid_geocoord_element<T>
     GeoCoord& operator=(const std::initializer_list<T> lla)
     {
         const std::size_t input_size = lla.size();

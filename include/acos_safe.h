@@ -9,33 +9,31 @@
 #include "constants.h"
 
 #include <cmath>
+#include <concepts>
 #include <cassert>
-#include <type_traits>
 
 namespace MathUtils {
 
 /**
  * @brief Compute arcosine with bounds checks. Limits output to [pi, 0].
  *
- * @details If the input is greater than 1, 0 is returned. If the input is less than -1, pi
- * is returned.
- *
  * @tparam T Input type.
  * @param val Value to take the arccosine of, in [rad].
  * @return Arccosine of `val`.
  */
-template<typename T, std::enable_if_t<std::is_floating_point<T>::value, bool> = true>
+template<typename T>
+requires std::floating_point<T>
 [[nodiscard]] T acos_safe(const T val) noexcept
 {
     assert(std::abs(val) <= 1.0);
 
     if (val >= 1.0)
     {
-        return 0.0;
+        return static_cast<T>(0.0);
     }
     else if (val <= -1.0)
     {
-        return Constants::PI;
+        return static_cast<T>(Constants::PI);
     }
 
     return std::acos(val);
