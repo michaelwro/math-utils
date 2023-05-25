@@ -74,13 +74,13 @@ $(function() {
 <a href="range__constrain_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;cassert&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;type_traits&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span>MathUtils {</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;template&lt;typename T, std::enable_if_t&lt;std::is_fundamental&lt;T&gt;::value, <span class="keywordtype">bool</span>&gt; = <span class="keyword">true</span>&gt;</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="range__constrain_8h.html#a5790d5af654eafddfc8699d3727c2900">   24</a></span>&#160;[[nodiscard]] T <a class="code" href="range__constrain_8h.html#a5790d5af654eafddfc8699d3727c2900">range_constrain</a>(<span class="keyword">const</span> T val, <span class="keyword">const</span> T lower, <span class="keyword">const</span> T upper) noexcept</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;type_traits&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span>MathUtils {</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;requires std::is_fundamental_v&lt;T&gt;</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="range__constrain_8h.html#a7226ae594a2a163d76edfeb6685ecb96">   24</a></span>&#160;[[nodiscard]] T <a class="code" href="range__constrain_8h.html#a7226ae594a2a163d76edfeb6685ecb96">range_constrain</a>(<span class="keyword">const</span> T val, <span class="keyword">const</span> T lower, <span class="keyword">const</span> T upper) noexcept</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordflow">if</span> (val &lt; lower)</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    {</div>
@@ -96,11 +96,11 @@ $(function() {
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}  <span class="comment">// namespace MathUtils</span></div>
-<div class="ttc" id="arange__constrain_8h_html_a5790d5af654eafddfc8699d3727c2900"><div class="ttname"><a href="range__constrain_8h.html#a5790d5af654eafddfc8699d3727c2900">MathUtils::range_constrain</a></div><div class="ttdeci">T range_constrain(const T val, const T lower, const T upper) noexcept</div><div class="ttdoc">Constrain number to be within a range.</div><div class="ttdef"><b>Definition:</b> range_constrain.h:24</div></div>
+<div class="ttc" id="arange__constrain_8h_html_a7226ae594a2a163d76edfeb6685ecb96"><div class="ttname"><a href="range__constrain_8h.html#a7226ae594a2a163d76edfeb6685ecb96">MathUtils::range_constrain</a></div><div class="ttdeci">requires std::is_fundamental_v&lt; T &gt; T range_constrain(const T val, const T lower, const T upper) noexcept</div><div class="ttdoc">Constrain number to be within a range.</div><div class="ttdef"><b>Definition:</b> range_constrain.h:24</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 25 2023 06:50:18 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Thu May 25 2023 17:09:22 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

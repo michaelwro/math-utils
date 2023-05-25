@@ -74,19 +74,17 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="constants_8h_source.html">constants.h</a>&quot;</code><br />
-<code>#include &lt;cassert&gt;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
-<code>#include &lt;type_traits&gt;</code><br />
+<code>#include &lt;concepts&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for wrap_pi.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="wrap__pi_8h__incl.png" border="0" usemap="#ainclude_2wrap__pi_8h" alt=""/></div>
 <map name="ainclude_2wrap__pi_8h" id="ainclude_2wrap__pi_8h">
-<area shape="rect" title=" " alt="" coords="109,5,245,32"/>
+<area shape="rect" title=" " alt="" coords="90,5,226,32"/>
 <area shape="rect" href="constants_8h.html" title="Commonly used constants." alt="" coords="5,80,103,107"/>
-<area shape="rect" title=" " alt="" coords="65,155,128,181"/>
-<area shape="rect" title=" " alt="" coords="178,80,247,107"/>
-<area shape="rect" title=" " alt="" coords="272,80,364,107"/>
+<area shape="rect" title=" " alt="" coords="127,80,189,107"/>
+<area shape="rect" title=" " alt="" coords="214,80,294,107"/>
 </map>
 </div>
 </div>
@@ -94,17 +92,17 @@ Include dependency graph for wrap_pi.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a394c4c675a84b3f6be423a85f70b2bac"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a394c4c675a84b3f6be423a85f70b2bac"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="wrap__pi_8h.html#a394c4c675a84b3f6be423a85f70b2bac">MathUtils::wrap_pi</a> (const T angle_rad)</td></tr>
-<tr class="memdesc:a394c4c675a84b3f6be423a85f70b2bac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap an angle within [-pi/2, pi/2) radians (180 deg).  <a href="wrap__pi_8h.html#a394c4c675a84b3f6be423a85f70b2bac">More...</a><br /></td></tr>
-<tr class="separator:a394c4c675a84b3f6be423a85f70b2bac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a409b1c3e85aab68bbe65a4ddc18490c6"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a409b1c3e85aab68bbe65a4ddc18490c6"><td class="memTemplItemLeft" align="right" valign="top">requires std::floating_point&lt; T &gt; T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="wrap__pi_8h.html#a409b1c3e85aab68bbe65a4ddc18490c6">MathUtils::wrap_pi</a> (const T angle_rad)</td></tr>
+<tr class="memdesc:a409b1c3e85aab68bbe65a4ddc18490c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap an angle within [-pi/2, pi/2) radians (180 deg).  <a href="wrap__pi_8h.html#a409b1c3e85aab68bbe65a4ddc18490c6">More...</a><br /></td></tr>
+<tr class="separator:a409b1c3e85aab68bbe65a4ddc18490c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Michael Wrona </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2023-03-29 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a394c4c675a84b3f6be423a85f70b2bac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a394c4c675a84b3f6be423a85f70b2bac">&#9670;&nbsp;</a></span>wrap_pi()</h2>
+<a id="a409b1c3e85aab68bbe65a4ddc18490c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a409b1c3e85aab68bbe65a4ddc18490c6">&#9670;&nbsp;</a></span>wrap_pi()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -112,7 +110,7 @@ Functions</h2></td></tr>
 template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">T MathUtils::wrap_pi </td>
+          <td class="memname">requires std::floating_point&lt;T&gt; T MathUtils::wrap_pi </td>
           <td>(</td>
           <td class="paramtype">const T&#160;</td>
           <td class="paramname"><em>angle_rad</em></td><td>)</td>
@@ -142,7 +140,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 25 2023 06:50:18 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Thu May 25 2023 17:09:22 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

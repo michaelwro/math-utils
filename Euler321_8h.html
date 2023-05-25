@@ -69,27 +69,28 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Euler321.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="error__msg__helpers_8h_source.html">Internal/error_msg_helpers.h</a>&quot;</code><br />
+<code>#include &lt;concepts&gt;</code><br />
 <code>#include &lt;initializer_list&gt;</code><br />
 <code>#include &lt;ostream&gt;</code><br />
 <code>#include &lt;stdexcept&gt;</code><br />
-<code>#include &lt;type_traits&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Euler321.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="Euler321_8h__incl.png" border="0" usemap="#ainclude_2Attitude_2Euler321_8h" alt=""/></div>
 <map name="ainclude_2Attitude_2Euler321_8h" id="ainclude_2Attitude_2Euler321_8h">
-<area shape="rect" title=" " alt="" coords="253,5,452,32"/>
+<area shape="rect" title=" " alt="" coords="241,5,440,32"/>
 <area shape="rect" href="error__msg__helpers_8h.html" title=" " alt="" coords="13,80,156,121"/>
-<area shape="rect" title=" " alt="" coords="180,87,291,114"/>
-<area shape="rect" title=" " alt="" coords="315,87,391,114"/>
-<area shape="rect" title=" " alt="" coords="415,87,501,114"/>
-<area shape="rect" title=" " alt="" coords="525,87,617,114"/>
+<area shape="rect" title=" " alt="" coords="181,87,261,114"/>
+<area shape="rect" title=" " alt="" coords="285,87,396,114"/>
+<area shape="rect" title=" " alt="" coords="420,87,496,114"/>
+<area shape="rect" title=" " alt="" coords="520,87,607,114"/>
 <area shape="rect" title=" " alt="" coords="5,169,76,196"/>
 <area shape="rect" title=" " alt="" coords="101,169,159,196"/>
 </map>
@@ -123,6 +124,13 @@ Functions</h2></td></tr>
 <tr class="memitem:aa96d4669fc1c9715f7943105340b42fa"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Euler321_8cpp.html#aa96d4669fc1c9715f7943105340b42fa">MathUtils::operator&lt;&lt;</a> (std::ostream &amp;os, const Euler321 &amp;angles)</td></tr>
 <tr class="memdesc:aa96d4669fc1c9715f7943105340b42fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print a <a class="el" href="classMathUtils_1_1Euler321.html" title="Euler 321 (yaw, pitch, roll) attitude angles.">Euler321</a> to a stream. Comma-separates values. No newline at the end.  <a href="Euler321_8cpp.html#aa96d4669fc1c9715f7943105340b42fa">More...</a><br /></td></tr>
 <tr class="separator:aa96d4669fc1c9715f7943105340b42fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a113e4820069833f92191fea81ad6e28f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a113e4820069833f92191fea81ad6e28f"><td class="memTemplItemLeft" align="right" valign="top">concept&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Euler321_8h.html#a113e4820069833f92191fea81ad6e28f">MathUtils::valid_euler321_element</a> = std::integral&lt;T&gt; || std::floating_point&lt;T&gt;</td></tr>
+<tr class="memdesc:a113e4820069833f92191fea81ad6e28f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Criteria for a valid <a class="el" href="classMathUtils_1_1Euler321.html" title="Euler 321 (yaw, pitch, roll) attitude angles.">MathUtils::Euler321</a> element.  <a href="Euler321_8h.html#a113e4820069833f92191fea81ad6e28f">More...</a><br /></td></tr>
+<tr class="separator:a113e4820069833f92191fea81ad6e28f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Michael Wrona </dd></dl>
@@ -167,10 +175,35 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a113e4820069833f92191fea81ad6e28f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a113e4820069833f92191fea81ad6e28f">&#9670;&nbsp;</a></span>valid_euler321_element</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">concept MathUtils::valid_euler321_element = std::integral&lt;T&gt; || std::floating_point&lt;T&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Criteria for a valid <a class="el" href="classMathUtils_1_1Euler321.html" title="Euler 321 (yaw, pitch, roll) attitude angles.">MathUtils::Euler321</a> element. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Element type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 25 2023 06:50:18 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Thu May 25 2023 17:09:22 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

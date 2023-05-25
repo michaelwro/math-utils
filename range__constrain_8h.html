@@ -73,16 +73,14 @@ $(function() {
 <div class="title">range_constrain.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;cassert&gt;</code><br />
-<code>#include &lt;type_traits&gt;</code><br />
+<div class="textblock"><code>#include &lt;type_traits&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for range_constrain.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="range__constrain_8h__incl.png" border="0" usemap="#ainclude_2range__constrain_8h" alt=""/></div>
 <map name="ainclude_2range__constrain_8h" id="ainclude_2range__constrain_8h">
 <area shape="rect" title=" " alt="" coords="5,5,195,32"/>
-<area shape="rect" title=" " alt="" coords="13,80,83,107"/>
-<area shape="rect" title=" " alt="" coords="107,80,199,107"/>
+<area shape="rect" title=" " alt="" coords="54,80,146,107"/>
 </map>
 </div>
 </div>
@@ -90,28 +88,28 @@ Include dependency graph for range_constrain.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5790d5af654eafddfc8699d3727c2900"><td class="memTemplParams" colspan="2">template&lt;typename T , std::enable_if_t&lt; std::is_fundamental&lt; T &gt;::value, bool &gt;  = true&gt; </td></tr>
-<tr class="memitem:a5790d5af654eafddfc8699d3727c2900"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="range__constrain_8h.html#a5790d5af654eafddfc8699d3727c2900">MathUtils::range_constrain</a> (const T val, const T lower, const T upper) noexcept</td></tr>
-<tr class="memdesc:a5790d5af654eafddfc8699d3727c2900"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrain number to be within a range.  <a href="range__constrain_8h.html#a5790d5af654eafddfc8699d3727c2900">More...</a><br /></td></tr>
-<tr class="separator:a5790d5af654eafddfc8699d3727c2900"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7226ae594a2a163d76edfeb6685ecb96"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a7226ae594a2a163d76edfeb6685ecb96"><td class="memTemplItemLeft" align="right" valign="top">requires std::is_fundamental_v&lt; T &gt; T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="range__constrain_8h.html#a7226ae594a2a163d76edfeb6685ecb96">MathUtils::range_constrain</a> (const T val, const T lower, const T upper) noexcept</td></tr>
+<tr class="memdesc:a7226ae594a2a163d76edfeb6685ecb96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrain number to be within a range.  <a href="range__constrain_8h.html#a7226ae594a2a163d76edfeb6685ecb96">More...</a><br /></td></tr>
+<tr class="separator:a7226ae594a2a163d76edfeb6685ecb96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Michael Wrona </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2023-05-20 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a5790d5af654eafddfc8699d3727c2900"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5790d5af654eafddfc8699d3727c2900">&#9670;&nbsp;</a></span>range_constrain()</h2>
+<a id="a7226ae594a2a163d76edfeb6685ecb96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7226ae594a2a163d76edfeb6685ecb96">&#9670;&nbsp;</a></span>range_constrain()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , std::enable_if_t&lt; std::is_fundamental&lt; T &gt;::value, bool &gt;  = true&gt; </div>
+template&lt;typename T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">T MathUtils::range_constrain </td>
+          <td class="memname">requires std::is_fundamental_v&lt;T&gt; T MathUtils::range_constrain </td>
           <td>(</td>
           <td class="paramtype">const T&#160;</td>
           <td class="paramname"><em>val</em>, </td>
@@ -163,7 +161,7 @@ template&lt;typename T , std::enable_if_t&lt; std::is_fundamental&lt; T &gt;::va
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 25 2023 06:50:18 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Thu May 25 2023 17:09:22 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

@@ -69,7 +69,8 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Vector.h File Reference</div>  </div>
 </div><!--header-->
@@ -82,31 +83,31 @@ $(function() {
 <code>#include &lt;array&gt;</code><br />
 <code>#include &lt;cassert&gt;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;concepts&gt;</code><br />
 <code>#include &lt;initializer_list&gt;</code><br />
 <code>#include &lt;iomanip&gt;</code><br />
 <code>#include &lt;numeric&gt;</code><br />
 <code>#include &lt;ostream&gt;</code><br />
 <code>#include &lt;stdexcept&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
-<code>#include &lt;type_traits&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Vector.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="Vector_8h__incl.png" border="0" usemap="#ainclude_2LinAlg_2Vector_8h" alt=""/></div>
 <map name="ainclude_2LinAlg_2Vector_8h" id="ainclude_2LinAlg_2Vector_8h">
-<area shape="rect" title="Vector template class &amp; functions." alt="" coords="508,5,677,32"/>
+<area shape="rect" title="Vector template class &amp; functions." alt="" coords="501,5,671,32"/>
 <area shape="rect" href="error__msg__helpers_8h.html" title=" " alt="" coords="5,80,148,121"/>
 <area shape="rect" title=" " alt="" coords="146,169,205,196"/>
 <area shape="rect" title=" " alt="" coords="223,87,309,114"/>
 <area shape="rect" title=" " alt="" coords="333,87,389,114"/>
 <area shape="rect" title=" " alt="" coords="413,87,482,114"/>
 <area shape="rect" title=" " alt="" coords="507,87,569,114"/>
-<area shape="rect" title=" " alt="" coords="593,87,704,114"/>
-<area shape="rect" title=" " alt="" coords="729,87,803,114"/>
-<area shape="rect" title=" " alt="" coords="827,87,902,114"/>
-<area shape="rect" title=" " alt="" coords="927,87,1003,114"/>
-<area shape="rect" title=" " alt="" coords="1027,87,1113,114"/>
-<area shape="rect" title=" " alt="" coords="1137,87,1229,114"/>
+<area shape="rect" title=" " alt="" coords="594,87,674,114"/>
+<area shape="rect" title=" " alt="" coords="699,87,809,114"/>
+<area shape="rect" title=" " alt="" coords="834,87,909,114"/>
+<area shape="rect" title=" " alt="" coords="933,87,1007,114"/>
+<area shape="rect" title=" " alt="" coords="1032,87,1108,114"/>
+<area shape="rect" title=" " alt="" coords="1132,87,1219,114"/>
 <area shape="rect" title=" " alt="" coords="41,169,112,196"/>
 </map>
 </div>
@@ -144,20 +145,20 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMathUtils_1_1Vector.html">MathUtils::Vector&lt; T_LEN &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMathUtils_1_1Vector.html">MathUtils::Vector&lt; LEN &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">N-length vector class.  <a href="classMathUtils_1_1Vector.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a9ad4d1deb754b9043b3b427fc64b8fc8"><td class="memTemplParams" colspan="2">template&lt;std::size_t N, typename T , std::enable_if_t&lt; std::is_fundamental&lt; T &gt;::value, bool &gt;  = true&gt; </td></tr>
-<tr class="memitem:a9ad4d1deb754b9043b3b427fc64b8fc8"><td class="memTemplItemLeft" align="right" valign="top">Vector&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Vector_8h.html#a9ad4d1deb754b9043b3b427fc64b8fc8">MathUtils::operator*</a> (const T scalar, const Vector&lt; N &gt; &amp;vec)</td></tr>
-<tr class="memdesc:a9ad4d1deb754b9043b3b427fc64b8fc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply a vector by a scalar (scalar * vector).  <a href="Vector_8h.html#a9ad4d1deb754b9043b3b427fc64b8fc8">More...</a><br /></td></tr>
-<tr class="separator:a9ad4d1deb754b9043b3b427fc64b8fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02adcc44de7038b68c27defc3fc0a6ee"><td class="memTemplParams" colspan="2">template&lt;std::size_t N, typename T , std::enable_if_t&lt; std::is_fundamental&lt; T &gt;::value, bool &gt;  = true&gt; </td></tr>
-<tr class="memitem:a02adcc44de7038b68c27defc3fc0a6ee"><td class="memTemplItemLeft" align="right" valign="top">Vector&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Vector_8h.html#a02adcc44de7038b68c27defc3fc0a6ee">MathUtils::operator*</a> (const Vector&lt; N &gt; &amp;vec, const T scalar)</td></tr>
-<tr class="memdesc:a02adcc44de7038b68c27defc3fc0a6ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply a vector by a scalar (vector * scalar).  <a href="Vector_8h.html#a02adcc44de7038b68c27defc3fc0a6ee">More...</a><br /></td></tr>
-<tr class="separator:a02adcc44de7038b68c27defc3fc0a6ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1281c7ca80ed384856187071d8411f7"><td class="memTemplParams" colspan="2">template&lt;std::size_t N, typename T &gt; </td></tr>
+<tr class="memitem:ad1281c7ca80ed384856187071d8411f7"><td class="memTemplItemLeft" align="right" valign="top">requires valid_vector_element&lt; T &gt; Vector&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Vector_8h.html#ad1281c7ca80ed384856187071d8411f7">MathUtils::operator*</a> (const T scalar, const Vector&lt; N &gt; &amp;vec)</td></tr>
+<tr class="memdesc:ad1281c7ca80ed384856187071d8411f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply a vector by a scalar (scalar * vector).  <a href="Vector_8h.html#ad1281c7ca80ed384856187071d8411f7">More...</a><br /></td></tr>
+<tr class="separator:ad1281c7ca80ed384856187071d8411f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfc7a95a7723b899fef83776a1e1e13e"><td class="memTemplParams" colspan="2">template&lt;std::size_t N, typename T &gt; </td></tr>
+<tr class="memitem:acfc7a95a7723b899fef83776a1e1e13e"><td class="memTemplItemLeft" align="right" valign="top">requires valid_vector_element&lt; T &gt; Vector&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Vector_8h.html#acfc7a95a7723b899fef83776a1e1e13e">MathUtils::operator*</a> (const Vector&lt; N &gt; &amp;vec, const T scalar)</td></tr>
+<tr class="memdesc:acfc7a95a7723b899fef83776a1e1e13e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply a vector by a scalar (vector * scalar).  <a href="Vector_8h.html#acfc7a95a7723b899fef83776a1e1e13e">More...</a><br /></td></tr>
+<tr class="separator:acfc7a95a7723b899fef83776a1e1e13e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6300872b3c6d6f2b8c5b7d259637c5f2"><td class="memTemplParams" colspan="2">template&lt;std::size_t N&gt; </td></tr>
 <tr class="memitem:a6300872b3c6d6f2b8c5b7d259637c5f2"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Vector_8h.html#a6300872b3c6d6f2b8c5b7d259637c5f2">MathUtils::operator&lt;&lt;</a> (std::ostream &amp;os, const Vector&lt; N &gt; &amp;vec)</td></tr>
 <tr class="memdesc:a6300872b3c6d6f2b8c5b7d259637c5f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print a vector to a stream. Comma-separates values. Does not add a newline at the end.  <a href="Vector_8h.html#a6300872b3c6d6f2b8c5b7d259637c5f2">More...</a><br /></td></tr>
@@ -175,6 +176,17 @@ Functions</h2></td></tr>
 <tr class="memitem:ae7035b2b0a45f3dea3f719d87038005a"><td class="memTemplItemLeft" align="right" valign="top">double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Vector_8h.html#ae7035b2b0a45f3dea3f719d87038005a">MathUtils::dot</a> (const Vector&lt; N &gt; &amp;v1, const Vector&lt; N &gt; &amp;v2)</td></tr>
 <tr class="memdesc:ae7035b2b0a45f3dea3f719d87038005a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the vector dot product.  <a href="Vector_8h.html#ae7035b2b0a45f3dea3f719d87038005a">More...</a><br /></td></tr>
 <tr class="separator:ae7035b2b0a45f3dea3f719d87038005a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ae05208c1ae4976c24ff1d3c9492303e0"><td class="memTemplParams" colspan="2">template&lt;std::size_t N&gt; </td></tr>
+<tr class="memitem:ae05208c1ae4976c24ff1d3c9492303e0"><td class="memTemplItemLeft" align="right" valign="top">concept&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Vector_8h.html#ae05208c1ae4976c24ff1d3c9492303e0">MathUtils::valid_vector_dim</a> = N &gt; 1</td></tr>
+<tr class="memdesc:ae05208c1ae4976c24ff1d3c9492303e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Criteria for a valid <a class="el" href="classMathUtils_1_1Vector.html" title="N-length vector class.">MathUtils::Vector</a> dimension.  <a href="Vector_8h.html#ae05208c1ae4976c24ff1d3c9492303e0">More...</a><br /></td></tr>
+<tr class="separator:ae05208c1ae4976c24ff1d3c9492303e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9590928a1a025aa0689128e84f8b5aa"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ab9590928a1a025aa0689128e84f8b5aa"><td class="memTemplItemLeft" align="right" valign="top">concept&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Vector_8h.html#ab9590928a1a025aa0689128e84f8b5aa">MathUtils::valid_vector_element</a> = std::integral&lt;T&gt; || std::floating_point&lt;T&gt;</td></tr>
+<tr class="memdesc:ab9590928a1a025aa0689128e84f8b5aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Criteria for a valid <a class="el" href="classMathUtils_1_1Vector.html" title="N-length vector class.">MathUtils::Vector</a> element.  <a href="Vector_8h.html#ab9590928a1a025aa0689128e84f8b5aa">More...</a><br /></td></tr>
+<tr class="separator:ab9590928a1a025aa0689128e84f8b5aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Vector template class &amp; functions. </p>
@@ -367,16 +379,16 @@ template&lt;std::size_t N&gt; </div>
 
 </div>
 </div>
-<a id="a9ad4d1deb754b9043b3b427fc64b8fc8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ad4d1deb754b9043b3b427fc64b8fc8">&#9670;&nbsp;</a></span>operator*() <span class="overload">[1/2]</span></h2>
+<a id="ad1281c7ca80ed384856187071d8411f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1281c7ca80ed384856187071d8411f7">&#9670;&nbsp;</a></span>operator*() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t N, typename T , std::enable_if_t&lt; std::is_fundamental&lt; T &gt;::value, bool &gt;  = true&gt; </div>
+template&lt;std::size_t N, typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Vector&lt;N&gt; MathUtils::operator* </td>
+          <td class="memname">requires valid_vector_element&lt;T&gt; Vector&lt;N&gt; MathUtils::operator* </td>
           <td>(</td>
           <td class="paramtype">const T&#160;</td>
           <td class="paramname"><em>scalar</em>, </td>
@@ -415,16 +427,16 @@ template&lt;std::size_t N, typename T , std::enable_if_t&lt; std::is_fundamental
 
 </div>
 </div>
-<a id="a02adcc44de7038b68c27defc3fc0a6ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02adcc44de7038b68c27defc3fc0a6ee">&#9670;&nbsp;</a></span>operator*() <span class="overload">[2/2]</span></h2>
+<a id="acfc7a95a7723b899fef83776a1e1e13e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfc7a95a7723b899fef83776a1e1e13e">&#9670;&nbsp;</a></span>operator*() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t N, typename T , std::enable_if_t&lt; std::is_fundamental&lt; T &gt;::value, bool &gt;  = true&gt; </div>
+template&lt;std::size_t N, typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Vector&lt;N&gt; MathUtils::operator* </td>
+          <td class="memname">requires valid_vector_element&lt;T&gt; Vector&lt;N&gt; MathUtils::operator* </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classMathUtils_1_1Vector.html">Vector</a>&lt; N &gt; &amp;&#160;</td>
           <td class="paramname"><em>vec</em>, </td>
@@ -504,10 +516,59 @@ template&lt;std::size_t N&gt; </div>
 </div><!-- fragment --> 
 </div>
 </div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="ae05208c1ae4976c24ff1d3c9492303e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae05208c1ae4976c24ff1d3c9492303e0">&#9670;&nbsp;</a></span>valid_vector_dim</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::size_t N&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">concept MathUtils::valid_vector_dim = N &gt; 1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Criteria for a valid <a class="el" href="classMathUtils_1_1Vector.html" title="N-length vector class.">MathUtils::Vector</a> dimension. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">N</td><td>Vector length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab9590928a1a025aa0689128e84f8b5aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9590928a1a025aa0689128e84f8b5aa">&#9670;&nbsp;</a></span>valid_vector_element</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">concept MathUtils::valid_vector_element = std::integral&lt;T&gt; || std::floating_point&lt;T&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Criteria for a valid <a class="el" href="classMathUtils_1_1Vector.html" title="N-length vector class.">MathUtils::Vector</a> element. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Element type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 25 2023 06:50:18 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Thu May 25 2023 17:09:22 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>
