@@ -69,7 +69,8 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Matrix.h File Reference</div>  </div>
 </div><!--header-->
@@ -80,6 +81,7 @@ $(function() {
 <code>#include &lt;array&gt;</code><br />
 <code>#include &lt;cassert&gt;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;concepts&gt;</code><br />
 <code>#include &lt;initializer_list&gt;</code><br />
 <code>#include &lt;iomanip&gt;</code><br />
 <code>#include &lt;numeric&gt;</code><br />
@@ -92,7 +94,7 @@ Include dependency graph for Matrix.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="Matrix_8h__incl.png" border="0" usemap="#ainclude_2LinAlg_2Matrix_8h" alt=""/></div>
 <map name="ainclude_2LinAlg_2Matrix_8h" id="ainclude_2LinAlg_2Matrix_8h">
-<area shape="rect" title=" " alt="" coords="505,5,676,32"/>
+<area shape="rect" title=" " alt="" coords="553,5,724,32"/>
 <area shape="rect" href="error__msg__helpers_8h.html" title=" " alt="" coords="26,155,169,196"/>
 <area shape="rect" title=" " alt="" coords="112,244,171,271"/>
 <area shape="rect" href="Vector_8h.html" title="Vector template class &amp; functions." alt="" coords="531,80,650,107"/>
@@ -106,6 +108,7 @@ Include dependency graph for Matrix.h:</div>
 <area shape="rect" title=" " alt="" coords="949,162,1025,189"/>
 <area shape="rect" title=" " alt="" coords="1049,162,1135,189"/>
 <area shape="rect" title=" " alt="" coords="1159,162,1251,189"/>
+<area shape="rect" title=" " alt="" coords="979,80,1059,107"/>
 <area shape="rect" title=" " alt="" coords="17,244,87,271"/>
 </map>
 </div>
@@ -130,20 +133,20 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMathUtils_1_1Matrix.html">MathUtils::Matrix&lt; T_ROWS, T_COLS &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMathUtils_1_1Matrix.html">MathUtils::Matrix&lt; ROWS, COLS &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">2D matrix class.  <a href="classMathUtils_1_1Matrix.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a4caaab721d4f72f6c3983e9b97bb7172"><td class="memTemplParams" colspan="2">template&lt;std::size_t N, std::size_t M, typename T , std::enable_if_t&lt; std::is_fundamental&lt; T &gt;::value, bool &gt;  = true&gt; </td></tr>
-<tr class="memitem:a4caaab721d4f72f6c3983e9b97bb7172"><td class="memTemplItemLeft" align="right" valign="top">Matrix&lt; N, M &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Matrix_8h.html#a4caaab721d4f72f6c3983e9b97bb7172">MathUtils::operator*</a> (const T scalar, const Matrix&lt; N, M &gt; &amp;mat)</td></tr>
-<tr class="memdesc:a4caaab721d4f72f6c3983e9b97bb7172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scalar-matrix multiplication.  <a href="Matrix_8h.html#a4caaab721d4f72f6c3983e9b97bb7172">More...</a><br /></td></tr>
-<tr class="separator:a4caaab721d4f72f6c3983e9b97bb7172"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac3c2a82bd4b10f3c9e6b92c1c586c5c"><td class="memTemplParams" colspan="2">template&lt;std::size_t N, std::size_t M, typename T , std::enable_if_t&lt; std::is_fundamental&lt; T &gt;::value, bool &gt;  = true&gt; </td></tr>
-<tr class="memitem:aac3c2a82bd4b10f3c9e6b92c1c586c5c"><td class="memTemplItemLeft" align="right" valign="top">Matrix&lt; N, M &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Matrix_8h.html#aac3c2a82bd4b10f3c9e6b92c1c586c5c">MathUtils::operator*</a> (const Matrix&lt; N, M &gt; &amp;mat, const T scalar)</td></tr>
-<tr class="memdesc:aac3c2a82bd4b10f3c9e6b92c1c586c5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix-scalar multiplication.  <a href="Matrix_8h.html#aac3c2a82bd4b10f3c9e6b92c1c586c5c">More...</a><br /></td></tr>
-<tr class="separator:aac3c2a82bd4b10f3c9e6b92c1c586c5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fd3449707b80e3d740480cbe82c9fa8"><td class="memTemplParams" colspan="2">template&lt;std::size_t N, std::size_t M, typename T &gt; </td></tr>
+<tr class="memitem:a1fd3449707b80e3d740480cbe82c9fa8"><td class="memTemplItemLeft" align="right" valign="top">requires valid_matrix_element&lt; T &gt; Matrix&lt; N, M &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Matrix_8h.html#a1fd3449707b80e3d740480cbe82c9fa8">MathUtils::operator*</a> (const T scalar, const Matrix&lt; N, M &gt; &amp;mat)</td></tr>
+<tr class="memdesc:a1fd3449707b80e3d740480cbe82c9fa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scalar-matrix multiplication.  <a href="Matrix_8h.html#a1fd3449707b80e3d740480cbe82c9fa8">More...</a><br /></td></tr>
+<tr class="separator:a1fd3449707b80e3d740480cbe82c9fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a026969d87a7f979c31ebdd383e4b0e77"><td class="memTemplParams" colspan="2">template&lt;std::size_t N, std::size_t M, typename T &gt; </td></tr>
+<tr class="memitem:a026969d87a7f979c31ebdd383e4b0e77"><td class="memTemplItemLeft" align="right" valign="top">requires valid_matrix_element&lt; T &gt; Matrix&lt; N, M &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Matrix_8h.html#a026969d87a7f979c31ebdd383e4b0e77">MathUtils::operator*</a> (const Matrix&lt; N, M &gt; &amp;mat, const T scalar)</td></tr>
+<tr class="memdesc:a026969d87a7f979c31ebdd383e4b0e77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix-scalar multiplication.  <a href="Matrix_8h.html#a026969d87a7f979c31ebdd383e4b0e77">More...</a><br /></td></tr>
+<tr class="separator:a026969d87a7f979c31ebdd383e4b0e77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a119218721f747bae25cc391109c490f8"><td class="memItemLeft" align="right" valign="top">Matrix&lt; 2, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Matrix_8h.html#a119218721f747bae25cc391109c490f8">MathUtils::operator*</a> (const Matrix&lt; 2, 2 &gt; &amp;a, const Matrix&lt; 2, 2 &gt; &amp;b)</td></tr>
 <tr class="memdesc:a119218721f747bae25cc391109c490f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">2x2 matrix-matrix multiplication A * B.  <a href="Matrix_8h.html#a119218721f747bae25cc391109c490f8">More...</a><br /></td></tr>
 <tr class="separator:a119218721f747bae25cc391109c490f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -172,6 +175,17 @@ Functions</h2></td></tr>
 <tr class="memitem:ac0abd6bd6b1606cd3228ef9741431bf7"><td class="memTemplItemLeft" align="right" valign="top">double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Matrix_8h.html#ac0abd6bd6b1606cd3228ef9741431bf7">MathUtils::trace</a> (const Matrix&lt; N, N &gt; &amp;mat)</td></tr>
 <tr class="memdesc:ac0abd6bd6b1606cd3228ef9741431bf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the trace of a matrix (sum of diagonal elements).  <a href="Matrix_8h.html#ac0abd6bd6b1606cd3228ef9741431bf7">More...</a><br /></td></tr>
 <tr class="separator:ac0abd6bd6b1606cd3228ef9741431bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a1d9d08bd102b0f060afd13302b34b161"><td class="memTemplParams" colspan="2">template&lt;std::size_t ROWS, std::size_t COLS&gt; </td></tr>
+<tr class="memitem:a1d9d08bd102b0f060afd13302b34b161"><td class="memTemplItemLeft" align="right" valign="top">concept&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Matrix_8h.html#a1d9d08bd102b0f060afd13302b34b161">MathUtils::valid_matrix_dims</a> = (ROWS != 0) &amp;&amp; (COLS != 0) &amp;&amp; (ROWS != 1 &amp;&amp; COLS != 1)</td></tr>
+<tr class="memdesc:a1d9d08bd102b0f060afd13302b34b161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Criteria to define valid <a class="el" href="classMathUtils_1_1Matrix.html" title="2D matrix class.">MathUtils::Matrix</a> dimensions.  <a href="Matrix_8h.html#a1d9d08bd102b0f060afd13302b34b161">More...</a><br /></td></tr>
+<tr class="separator:a1d9d08bd102b0f060afd13302b34b161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eb993ba7e0e78c54c40d68f31b6a005"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a2eb993ba7e0e78c54c40d68f31b6a005"><td class="memTemplItemLeft" align="right" valign="top">concept&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Matrix_8h.html#a2eb993ba7e0e78c54c40d68f31b6a005">MathUtils::valid_matrix_element</a> = std::integral&lt;T&gt; || std::floating_point&lt;T&gt;</td></tr>
+<tr class="memdesc:a2eb993ba7e0e78c54c40d68f31b6a005"><td class="mdescLeft">&#160;</td><td class="mdescRight">Criteria for a valid <a class="el" href="classMathUtils_1_1Matrix.html" title="2D matrix class.">MathUtils::Matrix</a> element.  <a href="Matrix_8h.html#a2eb993ba7e0e78c54c40d68f31b6a005">More...</a><br /></td></tr>
+<tr class="separator:a2eb993ba7e0e78c54c40d68f31b6a005"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Michael Wrona </dd></dl>
@@ -427,16 +441,16 @@ template&lt;std::size_t N, std::size_t M, std::size_t P&gt; </div>
 
 </div>
 </div>
-<a id="aac3c2a82bd4b10f3c9e6b92c1c586c5c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac3c2a82bd4b10f3c9e6b92c1c586c5c">&#9670;&nbsp;</a></span>operator*() <span class="overload">[6/8]</span></h2>
+<a id="a026969d87a7f979c31ebdd383e4b0e77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a026969d87a7f979c31ebdd383e4b0e77">&#9670;&nbsp;</a></span>operator*() <span class="overload">[6/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t N, std::size_t M, typename T , std::enable_if_t&lt; std::is_fundamental&lt; T &gt;::value, bool &gt;  = true&gt; </div>
+template&lt;std::size_t N, std::size_t M, typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Matrix&lt;N,M&gt; MathUtils::operator* </td>
+          <td class="memname">requires valid_matrix_element&lt;T&gt; Matrix&lt;N,M&gt; MathUtils::operator* </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classMathUtils_1_1Matrix.html">Matrix</a>&lt; N, M &gt; &amp;&#160;</td>
           <td class="paramname"><em>mat</em>, </td>
@@ -524,16 +538,16 @@ template&lt;std::size_t N, std::size_t M&gt; </div>
 
 </div>
 </div>
-<a id="a4caaab721d4f72f6c3983e9b97bb7172"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4caaab721d4f72f6c3983e9b97bb7172">&#9670;&nbsp;</a></span>operator*() <span class="overload">[8/8]</span></h2>
+<a id="a1fd3449707b80e3d740480cbe82c9fa8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fd3449707b80e3d740480cbe82c9fa8">&#9670;&nbsp;</a></span>operator*() <span class="overload">[8/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t N, std::size_t M, typename T , std::enable_if_t&lt; std::is_fundamental&lt; T &gt;::value, bool &gt;  = true&gt; </div>
+template&lt;std::size_t N, std::size_t M, typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Matrix&lt;N,M&gt; MathUtils::operator* </td>
+          <td class="memname">requires valid_matrix_element&lt;T&gt; Matrix&lt;N,M&gt; MathUtils::operator* </td>
           <td>(</td>
           <td class="paramtype">const T&#160;</td>
           <td class="paramname"><em>scalar</em>, </td>
@@ -649,10 +663,60 @@ template&lt;std::size_t N&gt; </div>
 
 </div>
 </div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a1d9d08bd102b0f060afd13302b34b161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d9d08bd102b0f060afd13302b34b161">&#9670;&nbsp;</a></span>valid_matrix_dims</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::size_t ROWS, std::size_t COLS&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">concept MathUtils::valid_matrix_dims = (ROWS != 0) &amp;&amp; (COLS != 0) &amp;&amp; (ROWS != 1 &amp;&amp; COLS != 1)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Criteria to define valid <a class="el" href="classMathUtils_1_1Matrix.html" title="2D matrix class.">MathUtils::Matrix</a> dimensions. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">ROWS</td><td>Matrix rows. </td></tr>
+    <tr><td class="paramname">COLS</td><td>Matrix cols. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2eb993ba7e0e78c54c40d68f31b6a005"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2eb993ba7e0e78c54c40d68f31b6a005">&#9670;&nbsp;</a></span>valid_matrix_element</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">concept MathUtils::valid_matrix_element = std::integral&lt;T&gt; || std::floating_point&lt;T&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Criteria for a valid <a class="el" href="classMathUtils_1_1Matrix.html" title="2D matrix class.">MathUtils::Matrix</a> element. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Element type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 25 2023 00:35:26 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Thu May 25 2023 06:49:16 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>
