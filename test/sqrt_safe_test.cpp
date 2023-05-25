@@ -22,11 +22,12 @@ TEST(SafeSqrtTest, ValidInput)
 }
 
 // =================================================================================================
-TEST(SafeSqrtTest, NegativeInput)
+TEST(SafeSqrtDeathTest, NegativeInput)
 {
-    const float val = -1.0;
-
-    EXPECT_DOUBLE_EQ(MathUtils::sqrt_safe(val), 0.0F);
+    EXPECT_DEBUG_DEATH({
+        double res = MathUtils::sqrt_safe(-1.0);
+        EXPECT_DOUBLE_EQ(res, 0.0);
+    }, "");
 }
 
 // =================================================================================================
