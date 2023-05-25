@@ -26,7 +26,7 @@ namespace MathUtils {
 
 /**
  * @brief Criteria to define valid MathUtils::Matrix dimensions.
- * 
+ *
  * @tparam ROWS Matrix rows.
  * @tparam COLS Matrix cols.
  */
@@ -35,7 +35,7 @@ concept valid_matrix_dims = (ROWS != 0) && (COLS != 0) && (ROWS != 1 && COLS != 
 
 /**
  * @brief Criteria for a valid MathUtils::Matrix element.
- * 
+ *
  * @tparam T Element type.
  */
 template<typename T>
