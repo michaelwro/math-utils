@@ -30,14 +30,8 @@ concept valid_euler321_element = std::integral<T> || std::floating_point<T>;
  */
 class Euler321 {
 public:
-    /**
-     * @brief Create an Euler321.
-     */
     Euler321() = default;
 
-    /**
-     * @brief Destroy an Euler321.
-     */
     ~Euler321() = default;
 
     /**
@@ -78,18 +72,8 @@ public:
         m_roll_rad = *(angles.begin() + 2);
     }
 
-    /**
-     * @brief Copy construct Euler321.
-     *
-     * @param other Other GoeCoord.
-     */
     Euler321(const Euler321& other) = default;
 
-    /**
-     * @brief Move construct Euler321.
-     *
-     * @param other Other Euler321.
-     */
     Euler321(Euler321&& other) = default;
 
     /**
@@ -119,20 +103,8 @@ public:
         return *this;
     }
 
-    /**
-     * @brief Copy assign Euler321.
-     *
-     * @param other Other Euler321.
-     * @return Euler321.
-     */
     Euler321& operator=(const Euler321& other) = default;
 
-    /**
-     * @brief Move assign Euler321.
-     *
-     * @param other Other Euler321.
-     * @return Euler321.
-     */
     Euler321& operator=(Euler321&& other) noexcept = default;
 
     /**

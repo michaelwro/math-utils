@@ -30,15 +30,8 @@ concept valid_geocoord_element = std::integral<T> || std::floating_point<T>;
  */
 class GeoCoord {
 public:
-
-    /**
-     * @brief Create a GeoCoord.
-     */
     GeoCoord() = default;
 
-    /**
-     * @brief Destroy the GeoCoord.
-     */
     ~GeoCoord() = default;
 
     /**
@@ -80,18 +73,8 @@ public:
         m_alt_m = *(lla.begin() + 2);
     }
 
-    /**
-     * @brief Copy construct GeoCoord.
-     *
-     * @param other Other GoeCoord.
-     */
     GeoCoord(const GeoCoord& other) = default;
 
-    /**
-     * @brief Move construct GeoCoord.
-     *
-     * @param other Other GeoCoord.
-     */
     GeoCoord(GeoCoord&& other) = default;
 
     /**
@@ -121,20 +104,8 @@ public:
         return *this;
     }
 
-    /**
-     * @brief Copy assign GeoCoord.
-     *
-     * @param other Other GeoCoord.
-     * @return GeoCoord.
-     */
     GeoCoord& operator=(const GeoCoord& other) = default;
 
-    /**
-     * @brief Move assign GeoCoord.
-     *
-     * @param other Other GeoCoord.
-     * @return GeoCoord.
-     */
     GeoCoord& operator=(GeoCoord&& other) = default;
 
     /**

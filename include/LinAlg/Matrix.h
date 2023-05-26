@@ -43,7 +43,7 @@ concept valid_matrix_element = std::integral<T> || std::floating_point<T>;
 /**
  * @brief 2D matrix class.
  *
- * @details Stores elements in row-major order.
+ * @details Stores elements in row-major order. All elements are zero at initialization.
  *
  * @tparam ROWS Number of rows.
  * @tparam COLS Number of columns.
@@ -52,16 +52,8 @@ template<std::size_t ROWS, std::size_t COLS>
 requires valid_matrix_dims<ROWS, COLS>
 class Matrix {
 public:
-    /**
-     * @brief Create a matrix.
-     *
-     * @details Default constructor sets all values to zero.
-     */
     Matrix() = default;
 
-    /**
-     * @brief Destroy the matrix.
-     */
     ~Matrix() = default;
 
     /**
@@ -150,34 +142,12 @@ public:
         assert(array_element == m_arr.end());  // make sure we reached the end
     }
 
-    /**
-     * @brief Copy construct matrix.
-     *
-     * @param other Other matrix.
-     */
     Matrix(const Matrix& other) = default;
 
-    /**
-     * @brief Move construct matrix.
-     *
-     * @param other Other matrix.
-     */
     Matrix(Matrix&& other) noexcept = default;
 
-    /**
-     * @brief Copy-assign matrix.
-     *
-     * @param other Other matrix.
-     * @return Matrix.
-     */
     Matrix& operator=(const Matrix& other) = default;
 
-    /**
-     * @brief Move assign matrix.
-     *
-     * @param other Other matrix.
-     * @return Matrix.
-     */
     Matrix& operator=(Matrix&& other) noexcept = default;
 
     /**

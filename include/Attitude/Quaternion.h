@@ -18,20 +18,12 @@ namespace MathUtils {
 /**
  * @brief Quaternion class.
  *
- * @details Scalar-first representation: [s, x, y, z].
+ * @details Scalar-first representation: [s, x, y, z]. Sets to unity [1, 0, 0, 0]
  */
 class Quaternion {
 public:
-    /**
-     * @brief Create a quaternion.
-     *
-     * @details Sets to unity [1, 0, 0, 0]
-     */
     Quaternion() = default;
 
-    /**
-     * @brief Destroy the quaternion.
-     */
     ~Quaternion() = default;
 
     /**
@@ -53,34 +45,12 @@ public:
      */
     Quaternion(const std::initializer_list<double> quat_vals);  //  cppcheck-suppress noExplicitConstructor
 
-    /**
-     * @brief Copy-construct quaternion.
-     *
-     * @param other Other quaternion.
-     */
     Quaternion(const Quaternion& other) = default;
 
-    /**
-     * @brief Move construct quaternion.
-     *
-     * @param other Other quaternion.
-     */
     Quaternion(Quaternion&& other) noexcept = default;
 
-    /**
-     * @brief Copy-assign quaternion.
-     *
-     * @param other Other quaternion.
-     * @return Copied quaternion.
-     */
     Quaternion& operator=(const Quaternion& other) = default;
 
-    /**
-     * @brief Move-assign quaternion.
-     *
-     * @param other Other quaternion.
-     * @return Copied quaternion.
-     */
     Quaternion& operator=(Quaternion&& other) noexcept = default;
 
     /**
