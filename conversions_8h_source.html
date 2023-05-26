@@ -112,12 +112,12 @@ $(function() {
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
 <div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="conversions_8h.html#a6beeda57105f5ead97b9ccc4f4c43356">   57</a></span>&#160;[[nodiscard]] <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="conversions_8h.html#a6beeda57105f5ead97b9ccc4f4c43356">rmp2rps</a>(<span class="keyword">const</span> <span class="keywordtype">double</span> rpm) noexcept</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;{</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">return</span> rpm * (Constants::PI / 30.0);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">return</span> rpm * (2.0 * Constants::PI / 60.0);</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
 <div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="conversions_8h.html#ad05484b8cdeec8cdaaf4ef2f1afe41d7">   65</a></span>&#160;[[nodiscard]] <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="conversions_8h.html#ad05484b8cdeec8cdaaf4ef2f1afe41d7">rps2rpm</a>(<span class="keyword">const</span> <span class="keywordtype">double</span> rps) noexcept</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;{</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">return</span> rps * (30.0 / Constants::PI);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">return</span> rps * (0.5 * 60.0 / Constants::PI);</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">// =================================================================================================</span></div>
@@ -272,12 +272,12 @@ $(function() {
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
 <div class="line"><a name="l00301"></a><span class="lineno"><a class="line" href="conversions_8h.html#aabcacf4a6c5d2d10e834364678cf6dba">  301</a></span>&#160;[[nodiscard]] <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="conversions_8h.html#aabcacf4a6c5d2d10e834364678cf6dba">f2c</a>(<span class="keyword">const</span> <span class="keywordtype">double</span> f) noexcept</div>
 <div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;{</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="keywordflow">return</span> (5.0 * (f - 32.0)) / 9.0;</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="keywordflow">return</span> (5.0 / 9.0) * (f - 32.0);</div>
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;}</div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
 <div class="line"><a name="l00309"></a><span class="lineno"><a class="line" href="conversions_8h.html#ab86eab46a1ebde6b1ef55073fddfd7ed">  309</a></span>&#160;[[nodiscard]] <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="conversions_8h.html#ab86eab46a1ebde6b1ef55073fddfd7ed">c2f</a>(<span class="keyword">const</span> <span class="keywordtype">double</span> c) noexcept</div>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;{</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keywordflow">return</span> 32.0 + ((9.0 * c) / 5.0);</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keywordflow">return</span> 32.0 + ((9.0 / 5.0) * c);</div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;}</div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
 <div class="line"><a name="l00317"></a><span class="lineno"><a class="line" href="conversions_8h.html#af41da18686f53c0bcb0bfad0c254a6fd">  317</a></span>&#160;[[nodiscard]] <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="conversions_8h.html#af41da18686f53c0bcb0bfad0c254a6fd">c2k</a>(<span class="keyword">const</span> <span class="keywordtype">double</span> c) noexcept</div>
@@ -330,7 +330,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 25 2023 17:26:13 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Fri May 26 2023 03:47:15 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>
