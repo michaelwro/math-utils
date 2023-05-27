@@ -128,6 +128,8 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classMathUtils_1_1Quaternion.html" title="Quaternion class.">Quaternion</a> class. </p>
 <p>Scalar-first representation: [s, x, y, z]. Sets to unity [1, 0, 0, 0] </p>
+
+<p class="definition">Definition at line <a class="el" href="Quaternion_8h_source.html#l00023">23</a> of file <a class="el" href="Quaternion_8h_source.html">Quaternion.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a1e99186c45dcf2504bf2b37024e53fab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1e99186c45dcf2504bf2b37024e53fab">&#9670;&nbsp;</a></span>Quaternion() <span class="overload">[1/2]</span></h2>
@@ -178,6 +180,8 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p class="definition">Definition at line <a class="el" href="Quaternion_8cpp_source.html#l00023">23</a> of file <a class="el" href="Quaternion_8cpp_source.html">Quaternion.cpp</a>.</p>
+
 </div>
 </div>
 <a id="a23843b01945062afe3860fff8bd3c243"></a>
@@ -210,6 +214,8 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p class="definition">Definition at line <a class="el" href="Quaternion_8cpp_source.html#l00029">29</a> of file <a class="el" href="Quaternion_8cpp_source.html">Quaternion.cpp</a>.</p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -230,6 +236,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Return the quaternion's rotation angle. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classMathUtils_1_1Quaternion.html" title="Quaternion class.">Quaternion</a> rotation angle in [rad]. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Quaternion_8cpp_source.html#l00114">114</a> of file <a class="el" href="Quaternion_8cpp_source.html">Quaternion.cpp</a>.</p>
 
 </div>
 </div>
@@ -272,6 +280,8 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p class="definition">Definition at line <a class="el" href="Quaternion_8h_source.html#l00085">85</a> of file <a class="el" href="Quaternion_8h_source.html">Quaternion.h</a>.</p>
+
 </div>
 </div>
 <a id="a91e00af3656f0306b86807976ad796d8"></a>
@@ -292,6 +302,8 @@ Public Member Functions</h2></td></tr>
 <p>Return the quaternion's eigen axis. </p>
 <p>No divide-by-zero checks are performed.</p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classMathUtils_1_1Quaternion.html" title="Quaternion class.">Quaternion</a> eigen axis. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Quaternion_8cpp_source.html#l00099">99</a> of file <a class="el" href="Quaternion_8cpp_source.html">Quaternion.cpp</a>.</p>
 
 </div>
 </div>
@@ -321,6 +333,8 @@ Public Member Functions</h2></td></tr>
 <p>If the scalar part is negative, negate (*= -1) the quaternion elements to enforce a positive rotation angle [0, 180]. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classMathUtils_1_1Quaternion.html" title="Quaternion class.">Quaternion</a>. </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="Quaternion_8cpp_source.html#l00065">65</a> of file <a class="el" href="Quaternion_8cpp_source.html">Quaternion.cpp</a>.</p>
+
 </div>
 </div>
 <a id="ae3ee5dff78b002916184933c87508f5b"></a>
@@ -342,6 +356,8 @@ Public Member Functions</h2></td></tr>
 <p>q^-1 = [qs, -qx, -qy, -qz] / ||q||</p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classMathUtils_1_1Quaternion.html" title="Quaternion class.">Quaternion</a> inverse. </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="Quaternion_8cpp_source.html#l00060">60</a> of file <a class="el" href="Quaternion_8cpp_source.html">Quaternion.cpp</a>.</p>
+
 </div>
 </div>
 <a id="a766478c5eeabffdfd1c4f048d5365133"></a>
@@ -361,6 +377,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Normalize the quaternion to have a magnitude of 1. </p>
 <p>Make sure its not too small before dividing. Assert instead of throwing, since it would never make logical sense that a quaternion would have zero magnitude.</p>
+
+<p class="definition">Definition at line <a class="el" href="Quaternion_8cpp_source.html#l00076">76</a> of file <a class="el" href="Quaternion_8cpp_source.html">Quaternion.cpp</a>.</p>
 
 </div>
 </div>
@@ -397,6 +415,8 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classMathUtils_1_1Quaternion.html" title="Quaternion class.">Quaternion</a> element at specified index. </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="Quaternion_8h_source.html#l00072">72</a> of file <a class="el" href="Quaternion_8h_source.html">Quaternion.h</a>.</p>
+
 </div>
 </div>
 <a id="a51ee7405306a29b342561d6b7f5f5169"></a>
@@ -430,16 +450,18 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p class="definition">Definition at line <a class="el" href="Quaternion_8cpp_source.html#l00044">44</a> of file <a class="el" href="Quaternion_8cpp_source.html">Quaternion.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/Attitude/<a class="el" href="Quaternion_8h_source.html">Quaternion.h</a></li>
-<li>src/Attitude/<a class="el" href="Quaternion_8cpp.html">Quaternion.cpp</a></li>
+<li>src/Attitude/<a class="el" href="Quaternion_8cpp_source.html">Quaternion.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat May 27 2023 15:31:07 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Sat May 27 2023 15:47:02 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>
