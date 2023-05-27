@@ -546,6 +546,7 @@ inline Matrix<3,3> operator*(const Matrix<3,3>& a, const Matrix<3,3>& b)
  * @brief Matrix-matrix multiplication A * B.
  *
  * @details Naive implementation.
+ * https://en.wikipedia.org/wiki/Matrix_multiplication_algorithm
  *
  * @tparam N Matrix A rows.
  * @tparam M Matrix A columns and matrix B rows.
@@ -553,8 +554,6 @@ inline Matrix<3,3> operator*(const Matrix<3,3>& a, const Matrix<3,3>& b)
  * @param a Matrix A.
  * @param b Matrix B.
  * @return Matrix-matrix product, (N, P).
- *
- * @ref https://en.wikipedia.org/wiki/Matrix_multiplication_algorithm
  */
 template<std::size_t N, std::size_t M, std::size_t P>
 Matrix<N,P> operator*(const Matrix<N,M>& a, const Matrix<M,P>& b)
@@ -629,13 +628,13 @@ inline Vector<3> operator*(const Matrix<3,3>& mat, const Vector<3>& vec)
 /**
  * @brief Matrix-vector multiplication.
  *
+ * @details http://www.cs.umsl.edu/~sanjiv/classes/cs5740/lectures/mvm.pdf
+ *
  * @tparam N Rows.
  * @tparam M Columns.
  * @param mat Matrix.
  * @param vec Vector.
  * @return Matrix-vector product.
- *
- * @ref http://www.cs.umsl.edu/~sanjiv/classes/cs5740/lectures/mvm.pdf
  */
 template<std::size_t N, std::size_t M>
 Vector<N> operator*(const Matrix<N,M>& mat, const Vector<M>& vec)

@@ -16,11 +16,10 @@ namespace MathUtils {
  * @brief Convert quaternion to direction cosine matrix.
  *
  * @details Equation from "Analytical Mechanics of Aerospace Systems" (H. Schaub et. al.).
+ * https://repositories.lib.utexas.edu/bitstream/handle/2152/74954/Hans-JoachimWuensche.pdf?sequence=2&isAllowed=y
  *
  * @param q Quaternion.
  * @return Corresponding DCM.
- *
- * @ref https://repositories.lib.utexas.edu/bitstream/handle/2152/74954/Hans-JoachimWuensche.pdf?sequence=2&isAllowed=y
  */
 Matrix<3,3> quaternion_to_dcm(const Quaternion& q);
 

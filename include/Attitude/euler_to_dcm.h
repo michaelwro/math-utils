@@ -15,11 +15,10 @@ namespace MathUtils {
  * @brief Convert Euler321 (yaw, pitch, roll) angles to a direction cosine matrix.
  *
  * @details Equation 3.33 from "Analytical Mechanics of Aerospace Systems" (Schaub).
+ * https://www.vectornav.com/resources/inertial-navigation-primer/math-fundamentals/math-attitudetran
  *
  * @param euler Euler angles in [rad].
  * @return DCM
- *
- * @ref https://www.vectornav.com/resources/inertial-navigation-primer/math-fundamentals/math-attitudetran
  */
 Matrix<3,3> euler_to_dcm(const Euler321& euler);
 
