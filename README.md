@@ -1,7 +1,5 @@
 # Math Utilities
 
-[![Development Build & Test](https://github.com/michaelwro/math-utils/actions/workflows/build-test-main.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/build-test-main.yml) [![Release Build & Test](https://github.com/michaelwro/math-utils/actions/workflows/build-test-release.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/build-test-release.yml) [![Coverage Status](https://coveralls.io/repos/github/michaelwro/math-utils/badge.svg?branch=refs/heads/main)](https://coveralls.io/github/michaelwro/math-utils?branch=refs/heads/main) [![Pre-Commit](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml)
-
 **Created By:** Michael Wrona
 
 A collection of C++20 math utilities for MicWro Engineering projects. I add new utilities on an "as-required" basis.

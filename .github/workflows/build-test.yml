@@ -3,65 +3,58 @@ name: Build & Test
 on:
   workflow_call:
     inputs:
-      ubuntu_version:
+      os:
         required: true
         type: string
       build_type:
         required: true
         type: string
+      cc:
+        required: true
+        type: string
+      cxx:
+        required: true
+        type: string
+      coverage:
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   build-and-test:
-    name: ${{ inputs.build_type }} Build & Test
-    runs-on: ubuntu-latest
+    name: $${{ inputs.build_type }} Build & Test
+    runs-on: $${{ inputs.os }}
     if: "${{ !contains(github.event.head_commit.message, 'ci skip') }}"
+
+    env:
+      CC: ${{ inputs.cc }}
+      CXX: ${{ inputs.cxx }}
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Check deps versions
-        uses: devcontainers/ci@v0.3
-        env:
-          UBUNTU_VERSION: ${{ inputs.ubuntu_version }}
-        with:
-          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
-          runCmd: |
-            cmake --version
-            ctest --version
-            g++ --version
+      - name: Install deps
+        run: sudo apt install -y cppcheck gdb lcov
 
       - name: Build
-        uses: devcontainers/ci@v0.3
-        env:
-          UBUNTU_VERSION: ${{ inputs.ubuntu_version }}
-        with:
-          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
-          runCmd: |
-            cmake -B build/ -DCMAKE_BUILD_TYPE=${{ inputs.build_type }}
-            cmake --build build/ -j
-
-      - name: Run tests
-        uses: devcontainers/ci@v0.3
-        env:
-          UBUNTU_VERSION: ${{ inputs.ubuntu_version }}
-        with:
-          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
-          runCmd: |
-            ctest --test-dir ./build/ --output-on-failure -T Test
-
-      - name: Run CppCheck
-        uses: devcontainers/ci@v0.3
-        env:
-          UBUNTU_VERSION: ${{ inputs.ubuntu_version }}
-        with:
-          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
-          runCmd: |
-            bash scripts/run-cppcheck.sh
-
-      - name: Coverage (lcov)
-        if: ${{ success() && inputs.build_type == 'Debug' }}
         run: |
-          sudo apt install -y lcov
+          cmake -B build/ \
+            -DCMAKE_BUILD_TYPE=${{ inputs.build_type }}
+          cmake --build build/ -j
+
+      - name: Test
+        run: ctest --test-dir ./build/ --output-on-failure -T Test
+
+      - name: CppCheck
+        run: bash scripts/run-cppcheck.sh
+
+      - name: clang-tidy
+        if: ${{ inputs.build_type == 'Release' }}
+        run: bash scripts/run-clang-tidy.sh
+
+      - name: Coverage
+        if: ${{ success() && inputs.coverage }}
+        run: |
           lcov --capture --directory ./build/ --output-file ./build/coverage.info
           lcov --remove ./build/coverage.info -o ./build/lcov.info \
             '/usr/include/*' \
@@ -69,20 +62,10 @@ jobs:
             '*/test/*' \
             '*google*'
 
-      - name: Coveralls
+      - name: Upload Coverage to Coveralls
         uses: coverallsapp/github-action@master
-        if: ${{ success() && inputs.build_type == 'Debug' }}
+        if: ${{ success() && inputs.coverage }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ./build/lcov.info
           debug: true
-
-      - name: Run clang-tidy
-        uses: devcontainers/ci@v0.3
-        if: ${{ inputs.build_type == 'Release' }}
-        env:
-          UBUNTU_VERSION: ${{ inputs.ubuntu_version }}
-        with:
-          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
-          runCmd: |
-            bash scripts/run-clang-tidy.sh

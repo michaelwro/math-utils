@@ -1,4 +1,4 @@
-name: Development Build & Test
+name: Development CI
 
 on:
   push:
@@ -10,7 +10,18 @@ on:
 
 jobs:
   build-and-test-main:
+    strategy:
+      matrix:
+        os: ["ubuntu-22.04"]
+        build_type: ["Debug"]
+        cc: ["gcc-10"]
+        cxx: ["g++-10"]
+        coverage: true
+
     uses: ./.github/workflows/build-test.yml
     with:
-      ubuntu_version: "22.04"
-      build_type: Debug
+      os: ${{ matrix.os }}
+      build_type: ${{ matrix.build_type }}
+      cc: ${{ matrix.cc }}
+      cxx: ${{ matrix.cxx }}
+

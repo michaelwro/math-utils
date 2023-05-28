@@ -1,18 +1,31 @@
-name: Release Build & Test
+name: Release CI
 
 on:
+  push:
+    branches: ["release"]
   pull_request:
     branches: ["release"]
 
   workflow_dispatch:
 
 jobs:
-  build-and-test-full:
+  build-and-test-main:
     strategy:
       matrix:
-        ubuntu_version: ["20.04", "22.04"]
-        build_type: [Debug, Release]
+        os: ["ubuntu-20.04", "ubuntu-22.04"]
+        build_type: ["Debug", "Release"]
+        cc: ["gcc-10"]
+        cxx: ["g++-10"]
+        coverage: false
+        include:
+          - os: "ubuntu-22.04"
+            cc: "clang-14"
+            cxx: "clang++-14"
+
     uses: ./.github/workflows/build-test.yml
     with:
-      ubuntu_version: ${{ matrix.ubuntu_version }}
+      os: ${{ matrix.os }}
       build_type: ${{ matrix.build_type }}
+      cc: ${{ matrix.cc }}
+      cxx: ${{ matrix.cxx }}
+

@@ -2,7 +2,7 @@ name: Doxygen
 
 on:
   push:
-    branches: ["main", "release"]
+    branches: ["main"]
 
   workflow_dispatch:
 
@@ -15,14 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Install deps
+        run: |
+          sudo apt install -y doxygen graphviz
+
       - name: Generate docs
-        uses: devcontainers/ci@v0.3
-        env:
-          UBUNTU_VERSION: 22.04
-        with:
-          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:22.04
-          runCmd: |
-            bash ./scripts/gen-doxygen.sh
+        run: |
+          bash ./scripts/gen-doxygen.sh
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
