@@ -74,18 +74,17 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;algorithm&gt;</code><br />
-<code>#include &lt;cassert&gt;</code><br />
+<code>#include &lt;concepts&gt;</code><br />
 <code>#include &lt;limits&gt;</code><br />
-<code>#include &lt;type_traits&gt;</code><br />
 </div>
 <p><a href="float__equality_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a8cc6b00d5f731867c5c6257507bec51f"><td class="memTemplParams" colspan="2">template&lt;typename T , std::enable_if_t&lt; std::is_floating_point&lt; T &gt;::value, bool &gt;  = true&gt; </td></tr>
-<tr class="memitem:a8cc6b00d5f731867c5c6257507bec51f"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="float__equality_8h.html#a8cc6b00d5f731867c5c6257507bec51f">MathUtils::float_equality</a> (const T a, const T b)</td></tr>
-<tr class="memdesc:a8cc6b00d5f731867c5c6257507bec51f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if two floating-point value are "close enough" to be equal.  <a href="float__equality_8h.html#a8cc6b00d5f731867c5c6257507bec51f">More...</a><br /></td></tr>
-<tr class="separator:a8cc6b00d5f731867c5c6257507bec51f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18f5bc2f26745bc71761f34a64ea5ef5"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a18f5bc2f26745bc71761f34a64ea5ef5"><td class="memTemplItemLeft" align="right" valign="top">requires std::floating_point&lt; T &gt; bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="float__equality_8h.html#a18f5bc2f26745bc71761f34a64ea5ef5">MathUtils::float_equality</a> (const T a, const T b)</td></tr>
+<tr class="memdesc:a18f5bc2f26745bc71761f34a64ea5ef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if two floating-point value are "close enough" to be equal.  <a href="float__equality_8h.html#a18f5bc2f26745bc71761f34a64ea5ef5">More...</a><br /></td></tr>
+<tr class="separator:a18f5bc2f26745bc71761f34a64ea5ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Michael Wrona </dd></dl>
@@ -93,19 +92,19 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition in file <a class="el" href="float__equality_8h_source.html">float_equality.h</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a8cc6b00d5f731867c5c6257507bec51f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cc6b00d5f731867c5c6257507bec51f">&#9670;&nbsp;</a></span>float_equality()</h2>
+<a id="a18f5bc2f26745bc71761f34a64ea5ef5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18f5bc2f26745bc71761f34a64ea5ef5">&#9670;&nbsp;</a></span>float_equality()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , std::enable_if_t&lt; std::is_floating_point&lt; T &gt;::value, bool &gt;  = true&gt; </div>
+template&lt;typename T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool MathUtils::float_equality </td>
+          <td class="memname">requires std::floating_point&lt;T&gt; bool MathUtils::float_equality </td>
           <td>(</td>
           <td class="paramtype">const T&#160;</td>
           <td class="paramname"><em>a</em>, </td>
@@ -154,7 +153,7 @@ template&lt;typename T , std::enable_if_t&lt; std::is_floating_point&lt; T &gt;:
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun May 28 2023 21:34:14 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Sun May 28 2023 22:23:04 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>
