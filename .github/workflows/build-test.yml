@@ -60,7 +60,7 @@ jobs:
 
       - name: Coverage (lcov)
         uses: devcontainers/ci@v0.3
-        if: ${{ inputs.build_type == 'Debug' }}
+        if: ${{ success() && inputs.build_type == 'Debug' }}
         env:
           UBUNTU_VERSION: ${{ inputs.ubuntu_version }}
         with:
@@ -73,13 +73,11 @@ jobs:
               '*/test/*' \
               '*google*'
 
-      - name: Coveralls Parallel
+      - name: Coveralls
         uses: coverallsapp/github-action@master
-        if: ${{ inputs.build_type == 'Debug' }}
+        if: ${{ success() && inputs.build_type == 'Debug' }}
         with:
           path-to-lcov: ./build/lcov.info
-          parallel: true
-          flag-name: run-${{ inputs.build_type }}
 
       - name: Run clang-tidy
         uses: devcontainers/ci@v0.3
@@ -90,14 +88,3 @@ jobs:
           cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
           runCmd: |
             bash scripts/run-clang-tidy.sh
-
-  finish:
-    needs: build-and-test
-    if: ${{ inputs.build_type == 'Debug' }}
-    runs-on: ubuntu-latest
-    steps:
-    - name: Coveralls Finished
-      uses: coverallsapp/github-action@master
-      with:
-        parallel-finished: true
-        carryforward: "run-Debug"
