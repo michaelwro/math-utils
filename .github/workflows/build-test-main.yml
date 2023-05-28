@@ -16,7 +16,6 @@ jobs:
         build_type: ["Debug"]
         cc: ["gcc-10"]
         cxx: ["g++-10"]
-        coverage: true
 
     uses: ./.github/workflows/build-test.yml
     with:
@@ -24,4 +23,5 @@ jobs:
       build_type: ${{ matrix.build_type }}
       cc: ${{ matrix.cc }}
       cxx: ${{ matrix.cxx }}
+      coverage: true
 

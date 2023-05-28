@@ -16,7 +16,6 @@ jobs:
         build_type: ["Debug", "Release"]
         cc: ["gcc-10"]
         cxx: ["g++-10"]
-        coverage: false
         include:
           - os: "ubuntu-22.04"
             cc: "clang-14"
@@ -28,4 +27,5 @@ jobs:
       build_type: ${{ matrix.build_type }}
       cc: ${{ matrix.cc }}
       cxx: ${{ matrix.cxx }}
+      coverage: false
 
