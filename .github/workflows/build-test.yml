@@ -59,19 +59,15 @@ jobs:
             bash scripts/run-cppcheck.sh
 
       - name: Coverage (lcov)
-        uses: devcontainers/ci@v0.3
         if: ${{ success() && inputs.build_type == 'Debug' }}
-        env:
-          UBUNTU_VERSION: ${{ inputs.ubuntu_version }}
-        with:
-          cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
-          runCmd: |
-            lcov --capture --directory ./build/ --output-file ./build/coverage.info
-            lcov --remove ./build/coverage.info -o ./build/lcov.info \
-              '/usr/include/*' \
-              '/usr/local/include/*' \
-              '*/test/*' \
-              '*google*'
+        run: |
+          apt install -y lcov
+          lcov --capture --directory ./build/ --output-file ./build/coverage.info
+          lcov --remove ./build/coverage.info -o ./build/lcov.info \
+            '/usr/include/*' \
+            '/usr/local/include/*' \
+            '*/test/*' \
+            '*google*'
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
