@@ -10,9 +10,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # enable for clang-tidy
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# set path to CMake modules
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules/)
-
 # define compiler and preprocessor options
 # compile with -DCMAKE_BUILD_TYPE=Release or -DCMAKE_BUILD_TYPE=Debug
 set(MATHUTILS_COMPILE_DEFINITIONS_DEBUG "")
@@ -67,6 +64,8 @@ target_compile_definitions(${MATHUTILS_LIB} PUBLIC "$<$<CONFIG:RELEASE>:${MATHUT
 
 target_compile_options(${MATHUTILS_LIB} PRIVATE "$<$<CONFIG:DEBUG>:${MATHUTILS_COMPILE_OPTIONS_DEBUG}>")
 target_compile_options(${MATHUTILS_LIB} PRIVATE "$<$<CONFIG:RELEASE>:${MATHUTILS_COMPILE_OPTIONS_RELEASE}>")
+
+target_link_options(${MATHUTILS_LIB} PRIVATE "$<$<CONFIG:DEBUG>:--coverage>")
 
 target_include_directories(${MATHUTILS_LIB} PUBLIC
     ${INCL_DIR}
