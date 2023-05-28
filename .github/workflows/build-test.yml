@@ -77,7 +77,7 @@ jobs:
         uses: coverallsapp/github-action@master
         if: ${{ inputs.build_type == 'Debug' }}
         with:
-          path-to-lcov: ./build/
+          path-to-lcov: ./build/lcov.info
           parallel: true
           flag-name: run-${{ join(matrix.*, '-') }}
 
