@@ -7,9 +7,8 @@
 #pragma once
 
 #include <algorithm>
-#include <cassert>
+#include <concepts>
 #include <limits>
-#include <type_traits>
 
 namespace MathUtils {
 
@@ -27,7 +26,8 @@ namespace MathUtils {
  * @ref https://realtimecollisiondetection.net/blog/?p=89
  * @ref https://floating-point-gui.de/errors/comparison/
  */
-template<typename T, std::enable_if_t<std::is_floating_point<T>::value, bool> = true>
+template<typename T>
+requires std::floating_point<T>
 [[nodiscard]] inline bool float_equality(const T a, const T b)
 {
     return std::abs(a - b) <= std::numeric_limits<T>::epsilon() * std::max(
