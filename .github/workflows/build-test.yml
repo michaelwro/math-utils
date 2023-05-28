@@ -79,7 +79,7 @@ jobs:
         with:
           path-to-lcov: ./build/lcov.info
           parallel: true
-          flag-name: run-${{ join([inputs.build_type, inputs.ubuntu_version], '-') }}
+          flag-name: run-${{ inputs.build_type }}
 
       - name: Run clang-tidy
         uses: devcontainers/ci@v0.3
@@ -93,11 +93,11 @@ jobs:
 
   finish:
     needs: build-and-test
-    if: ${{ always() }}
+    if: ${{ inputs.build_type == 'Debug' }}
     runs-on: ubuntu-latest
     steps:
     - name: Coveralls Finished
       uses: coverallsapp/github-action@master
       with:
         parallel-finished: true
-        carryforward: "run-Debug-22.04"
+        carryforward: "run-Debug"
