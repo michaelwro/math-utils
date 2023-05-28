@@ -79,7 +79,7 @@ jobs:
         with:
           path-to-lcov: ./build/lcov.info
           parallel: true
-          flag-name: run-${{ join(matrix.*, '-') }}
+          flag-name: run-${{ join([inputs.build_type, inputs.ubuntu_version], '-') }}
 
       - name: Run clang-tidy
         uses: devcontainers/ci@v0.3
@@ -100,3 +100,4 @@ jobs:
       uses: coverallsapp/github-action@master
       with:
         parallel-finished: true
+        carryforward: "run-Debug-22.04"
