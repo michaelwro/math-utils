@@ -22,6 +22,14 @@ target_link_libraries(${TEST_LINALG_EXEC} PUBLIC
     GTest::gtest_main
 )
 
+target_compile_options(${TEST_LINALG_EXEC} PUBLIC
+    "$<$<CONFIG:DEBUG>:--coverage>"
+)
+
+target_link_options(${TEST_LINALG_EXEC} PUBLIC
+    "$<$<CONFIG:DEBUG>:--coverage>"
+)
+
 # ADD TESTS ========================================================================================
 add_test(NAME ${TEST_LINALG_EXEC}
     COMMAND ${TEST_LINALG_EXEC}

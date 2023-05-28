@@ -41,6 +41,14 @@ target_link_libraries(${TEST_MATHUTILS_EXEC} PUBLIC
     GTest::gtest_main
 )
 
+target_compile_options(${TEST_MATHUTILS_EXEC} PUBLIC
+    "$<$<CONFIG:DEBUG>:--coverage>"
+)
+
+target_link_options(${TEST_MATHUTILS_EXEC} PUBLIC
+    "$<$<CONFIG:DEBUG>:--coverage>"
+)
+
 
 # ADD TESTS ========================================================================================
 add_test(NAME ${TEST_MATHUTILS_EXEC}

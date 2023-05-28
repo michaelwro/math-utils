@@ -22,6 +22,14 @@ target_link_libraries(${TEST_GEODESY_EXEC} PUBLIC
     GTest::gtest_main
 )
 
+target_compile_options(${TEST_GEODESY_EXEC} PUBLIC
+    "$<$<CONFIG:DEBUG>:--coverage>"
+)
+
+target_link_options(${TEST_GEODESY_EXEC} PUBLIC
+    "$<$<CONFIG:DEBUG>:--coverage>"
+)
+
 # ADD TESTS ========================================================================================
 add_test(NAME ${TEST_GEODESY_EXEC}
     COMMAND ${TEST_GEODESY_EXEC}
