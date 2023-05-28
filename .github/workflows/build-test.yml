@@ -22,7 +22,7 @@ on:
 
 jobs:
   build-and-test:
-    name: $${{ inputs.build_type }} Build & Test
+    name: ${{ inputs.build_type }} Build & Test
     runs-on: $${{ inputs.os }}
     if: "${{ !contains(github.event.head_commit.message, 'ci skip') }}"
 
