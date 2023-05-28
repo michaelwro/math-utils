@@ -61,7 +61,7 @@ jobs:
       - name: Coverage (lcov)
         if: ${{ success() && inputs.build_type == 'Debug' }}
         run: |
-          apt install -y lcov
+          sudo apt install -y lcov
           lcov --capture --directory ./build/ --output-file ./build/coverage.info
           lcov --remove ./build/coverage.info -o ./build/lcov.info \
             '/usr/include/*' \
