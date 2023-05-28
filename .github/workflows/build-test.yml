@@ -60,7 +60,7 @@ jobs:
 
       - name: Coverage (lcov)
         uses: devcontainers/ci@v0.3
-        if: ${{ success() && inputs.build_type == 'Debug' && inputs.ubuntu_version == "22.04" }}
+        if: ${{ inputs.build_type == 'Debug' }}
         env:
           UBUNTU_VERSION: ${{ inputs.ubuntu_version }}
         with:
@@ -75,7 +75,7 @@ jobs:
 
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@v2
-        if: ${{ success() }}
+        if: ${{ inputs.build_type == 'Debug' }}
         with:
           parallel: true
           flag-name: run-${{ join(matrix.*, '-') }}
