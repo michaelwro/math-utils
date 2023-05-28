@@ -67,19 +67,18 @@ jobs:
           cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
           runCmd: |
             lcov --capture --directory ./build/ --output-file ./build/coverage.info
-            lcov --remove ./build/coverage.info -o ./build/coverage_filtered.info \
+            lcov --remove ./build/coverage.info -o ./coverage/lcov.info \
               '/usr/include/*' \
               '/usr/local/include/*' \
               '*/test/*' \
               '*google*'
 
       - name: Coveralls Parallel
-        uses: coverallsapp/github-action@v2
+        uses: coverallsapp/github-action@master
         if: ${{ inputs.build_type == 'Debug' }}
         with:
           parallel: true
           flag-name: run-${{ join(matrix.*, '-') }}
-          path-to-lcov: ./build/coverage_filtered.info
 
       - name: Run clang-tidy
         uses: devcontainers/ci@v0.3
@@ -97,6 +96,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Coveralls Finished
-      uses: coverallsapp/github-action@v2
+      uses: coverallsapp/github-action@master
       with:
         parallel-finished: true
