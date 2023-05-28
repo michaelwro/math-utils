@@ -47,7 +47,7 @@ jobs:
         with:
           cacheFrom: ghcr.io/${{ github.repository }}-devcontainer:${{ inputs.ubuntu_version }}
           runCmd: |
-            ctest -V --test-dir ./build/ --output-on-failure -T Test
+            ctest --test-dir ./build/ --output-on-failure -T Test
 
       - name: Run CppCheck
         uses: devcontainers/ci@v0.3
