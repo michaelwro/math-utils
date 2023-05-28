@@ -77,7 +77,9 @@ jobs:
         uses: coverallsapp/github-action@master
         if: ${{ success() && inputs.build_type == 'Debug' }}
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ./build/lcov.info
+          debug: true
 
       - name: Run clang-tidy
         uses: devcontainers/ci@v0.3
