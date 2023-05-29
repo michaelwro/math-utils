@@ -1,6 +1,11 @@
 # Math Utilities
 
-[![Development CI](https://github.com/michaelwro/math-utils/actions/workflows/build-test-main.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/build-test-main.yml) [![Release CI](https://github.com/michaelwro/math-utils/actions/workflows/build-test-release.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/build-test-release.yml) [![Coverage Status](https://coveralls.io/repos/github/michaelwro/math-utils/badge.svg?branch=refs/heads/main)](https://coveralls.io/github/michaelwro/math-utils?branch=refs/heads/main) [![Pre-Commit](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml)
+[![GitHub tag](https://img.shields.io/github/tag/michaelwro/math-utils?include_prereleases=&sort=semver&color=blue)](https://github.com/michaelwro/math-utils/releases/)
+[![Development CI](https://github.com/michaelwro/math-utils/actions/workflows/build-test-main.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/build-test-main.yml)
+[![Release CI](https://github.com/michaelwro/math-utils/actions/workflows/build-test-release.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/build-test-release.yml)
+[![Coverage Status](https://coveralls.io/repos/github/michaelwro/math-utils/badge.svg?branch=refs/heads/main)](https://coveralls.io/github/michaelwro/math-utils?branch=refs/heads/main)
+[![Pre-Commit](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml)
+[![License](https://img.shields.io/badge/License-MIT-blue)](#license)
 
 **Created By:** Michael Wrona
 
@@ -48,7 +53,7 @@ bash scripts/build-release.sh
 
 ## Doxygen Site
 
-Find the Doxygen site at [https://michaelwro.github.io/math-utils/files.html](https://michaelwro.github.io/math-utils/files.html)
+[![View site - GH Pages](https://img.shields.io/badge/View_site-GH_Pages-2ea44f?style=for-the-badge)](https://michaelwro.github.io/math-utils/)
 
 ## Dev Workflow
 
@@ -102,4 +107,3 @@ The code repo can be found [here](https://github.com/michaelwro/math-utils).
 
 ```shell
 git clone https://github.com/michaelwro/math-utils.git
-```
