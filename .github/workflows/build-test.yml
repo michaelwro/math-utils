@@ -18,17 +18,13 @@ jobs:
       matrix:
         os: ["ubuntu-22.04"]
         build_type: ["Debug", "Release"]
-        cc: ["gcc-10"]
-        cxx: ["g++-10"]
+        cc: ["gcc-11"]
+        cxx: ["g++-11"]
         include:
           - os: "ubuntu-22.04"
             build_type: "Debug"
             cc: "clang-14"
             cxx: "clang++-14"
-          - os: "ubuntu-22.04"
-            build_type: "Debug"
-            cc: "gcc-11"
-            cxx: "g++-11"
 
     env:
       CC: ${{ matrix.cc }}
@@ -50,7 +46,7 @@ jobs:
         run: ctest --test-dir ./build/ --output-on-failure -T Test
 
       - name: Coverage
-        if: ${{ success() }}
+        if: ${{ !contains(matrix.cxx, 'clang') && success() }}
         run: |
           lcov --capture --directory ./build/ --output-file ./build/coverage.info
           lcov --remove ./build/coverage.info -o ./build/lcov.info \
@@ -60,7 +56,7 @@ jobs:
             '*google*'
 
       - name: Upload coverage to Coveralls
-        if: ${{ success() }}
+        if: ${{ !contains(matrix.cxx, 'clang') && success() }}
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
