@@ -1,59 +1,56 @@
 name: Build & Test
 
 on:
-  workflow_call:
-    inputs:
-      os:
-        required: true
-        type: string
-      build_type:
-        required: true
-        type: string
-      cc:
-        required: true
-        type: string
-      cxx:
-        required: true
-        type: string
-      coverage:
-        required: false
-        type: boolean
-        default: false
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+  workflow_dispatch:
 
 jobs:
   build-and-test:
-    name: ${{ inputs.build_type }} Build & Test
-    runs-on: ${{ inputs.os }}
-    if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
+    name: ${{ matrix.build_type }} Build & Test
+    runs-on: ${{ matrix.os }}
+    if: ${{ !contains(github.event.head_commit.message, '[ci skip]') }}
+
+    strategy:
+      matrix:
+        os: ["ubuntu-22.04"]
+        build_type: ["Debug", "Release"]
+        cc: ["gcc-10"]
+        cxx: ["g++-10"]
+        include:
+          - os: "ubuntu-22.04"
+            build_type: "Debug"
+            cc: "clang-14"
+            cxx: "clang++-14"
+          - os: "ubuntu-22.04"
+            build_type: "Debug"
+            cc: "gcc-11"
+            cxx: "g++-11"
 
     env:
-      CC: ${{ inputs.cc }}
-      CXX: ${{ inputs.cxx }}
+      CC: ${{ matrix.cc }}
+      CXX: ${{ matrix.cxx }}
 
     steps:
       - uses: actions/checkout@v3
 
       - name: Install deps
-        run: sudo apt install -y cppcheck gdb lcov
+        run: sudo apt install -y lcov
 
       - name: Build
         run: |
           cmake -B build/ \
-            -DCMAKE_BUILD_TYPE=${{ inputs.build_type }}
+            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           cmake --build build/ -j
 
       - name: Test
         run: ctest --test-dir ./build/ --output-on-failure -T Test
 
-      - name: CppCheck
-        run: bash scripts/run-cppcheck.sh
-
-      - name: clang-tidy
-        if: ${{ inputs.build_type == 'Release' }}
-        run: bash scripts/run-clang-tidy.sh
-
       - name: Coverage
-        if: ${{ success() && inputs.coverage }}
+        if: ${{ success() }}
         run: |
           lcov --capture --directory ./build/ --output-file ./build/coverage.info
           lcov --remove ./build/coverage.info -o ./build/lcov.info \
@@ -62,10 +59,22 @@ jobs:
             '*/test/*' \
             '*google*'
 
-      - name: Upload Coverage to Coveralls
+      - name: Upload coverage to Coveralls
+        if: ${{ success() }}
         uses: coverallsapp/github-action@master
-        if: ${{ success() && inputs.coverage }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ./build/lcov.info
+          flag-name: run-${{ join(matrix.*, '-') }}
+          parallel: true
           debug: true
+
+  finish:
+    needs: build-and-test
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        parallel-finished: true

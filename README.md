@@ -1,8 +1,6 @@
 # Math Utilities
 
 [![GitHub tag](https://img.shields.io/github/tag/michaelwro/math-utils?include_prereleases=&sort=semver&color=blue)](https://github.com/michaelwro/math-utils/releases/)
-[![Development CI](https://github.com/michaelwro/math-utils/actions/workflows/build-test-main.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/build-test-main.yml)
-[![Release CI](https://github.com/michaelwro/math-utils/actions/workflows/build-test-release.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/build-test-release.yml)
 [![Coverage Status](https://coveralls.io/repos/github/michaelwro/math-utils/badge.svg?branch=refs/heads/main)](https://coveralls.io/github/michaelwro/math-utils?branch=refs/heads/main)
 [![Pre-Commit](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml)
 [![License](https://img.shields.io/badge/License-MIT-blue)](#license)

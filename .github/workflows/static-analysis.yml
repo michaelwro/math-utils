@@ -1,0 +1,29 @@
+name: Static Analysis
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+jobs:
+  static-analysys:
+    name: Static Analysis
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install deps
+        run: sudo apt install -y cppcheck
+
+      - name: CMake compile commands
+        run: |
+          cmake -B build/ -DCMAKE_BUILD_TYPE=Debug
+
+      - name: CppCheck
+        run: bash scripts/run-cppcheck.sh
+
+      - name: clang-tidy
+        run: bash scripts/run-clang-tidy.sh
