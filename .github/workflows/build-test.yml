@@ -9,21 +9,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-test:
-    name: ${{ matrix.build_type }} Build & Test
+  debug-build-and-test:
+    name: Debug Build & Test ${{ matrix.cxx }}
     runs-on: ${{ matrix.os }}
     if: ${{ !contains(github.event.head_commit.message, '[ci skip]') }}
 
     strategy:
       matrix:
         os: ["ubuntu-22.04"]
-        build_type: ["Debug", "Release"]
         cc: ["gcc-11"]
         cxx: ["g++-11"]
         include:
-          - os: "ubuntu-22.04"
-            build_type: "Debug"
-            cc: "clang-14"
+          - cc: "clang-14"
             cxx: "clang++-14"
 
     env:
@@ -37,26 +34,15 @@ jobs:
         run: sudo apt install -y lcov
 
       - name: Build
-        run: |
-          cmake -B build/ \
-            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-          cmake --build build/ -j
+        run: scripts/build-debug.sh
 
-      - name: Test
-        run: ctest --test-dir ./build/ --output-on-failure -T Test
-
-      - name: Coverage
-        if: ${{ !contains(matrix.cxx, 'clang') && success() }}
-        run: |
-          lcov --capture --directory ./build/ --output-file ./build/coverage.info
-          lcov --remove ./build/coverage.info -o ./build/lcov.info \
-            '/usr/include/*' \
-            '/usr/local/include/*' \
-            '*/test/*' \
-            '*google*'
+      # script builds, runs tests, and generates coverage info
+      - name: Generate test coverage
+        if: ${{ !contains(matrix.cxx, 'clang') }}
+        run: bash scripts/run-coverage.sh
 
       - name: Upload coverage to Coveralls
-        if: ${{ !contains(matrix.cxx, 'clang') && success() }}
+        if: ${{ !contains(matrix.cxx, 'clang') }}
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -65,8 +51,36 @@ jobs:
           parallel: true
           debug: true
 
+
+  release-build-test:
+    name: Relase Build & Test ${{ matrix.cxx }}
+    runs-on: ${{ matrix.os }}
+    if: ${{ !contains(github.event.head_commit.message, '[ci skip]') }}
+
+    strategy:
+      matrix:
+        os: ["ubuntu-22.04"]
+        cc: ["gcc-11"]
+        cxx: ["g++-11"]
+        include:
+          - cc: "clang-14"
+            cxx: "clang++-14"
+
+    env:
+      CC: ${{ matrix.cc }}
+      CXX: ${{ matrix.cxx }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: bash scripts/build-release.sh
+
+      - name: Test
+        run: ctest --test-dir ./build/ --output-on-failure -T Test
+
   finish:
-    needs: build-and-test
+    needs: debug-build-and-test
     if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
