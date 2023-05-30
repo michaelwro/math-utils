@@ -1,8 +1,10 @@
 # Math Utilities
 
 [![GitHub tag](https://img.shields.io/github/tag/michaelwro/math-utils?include_prereleases=&sort=semver&color=blue)](https://github.com/michaelwro/math-utils/releases/)
+[![Build & Test](https://github.com/michaelwro/math-utils/actions/workflows/build-test.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/build-test.yml)
+[![Static Analysis](https://github.com/michaelwro/math-utils/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/static-analysis.yml)
 [![Coverage Status](https://coveralls.io/repos/github/michaelwro/math-utils/badge.svg?branch=refs/heads/main)](https://coveralls.io/github/michaelwro/math-utils?branch=refs/heads/main)
-[![Pre-Commit](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/michaelwro/math-utils/actions/workflows/pre-commit.yml)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![License](https://img.shields.io/badge/License-MIT-blue)](#license)
 
 **Created By:** Michael Wrona
