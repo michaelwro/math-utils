@@ -35,7 +35,7 @@ jobs:
         run: sudo apt install -y lcov
 
       - name: Build
-        run: scripts/build-debug.sh
+        run: bash scripts/build-debug.sh
 
       # script builds, runs tests, and generates coverage info
       - name: Generate test coverage
