@@ -1,9 +1,11 @@
 var searchData=
 [
-  ['valid_5feuler321_5felement_294',['valid_euler321_element',['../Euler321_8h.html#a113e4820069833f92191fea81ad6e28f',1,'MathUtils']]],
-  ['valid_5fgeocoord_5felement_295',['valid_geocoord_element',['../GeoCoord_8h.html#acc86f342d117a0232703a97e18b71aeb',1,'MathUtils']]],
-  ['valid_5fmatrix_5fdims_296',['valid_matrix_dims',['../Matrix_8h.html#a1d9d08bd102b0f060afd13302b34b161',1,'MathUtils']]],
-  ['valid_5fmatrix_5felement_297',['valid_matrix_element',['../Matrix_8h.html#a2eb993ba7e0e78c54c40d68f31b6a005',1,'MathUtils']]],
-  ['valid_5fvector_5fdim_298',['valid_vector_dim',['../Vector_8h.html#ae05208c1ae4976c24ff1d3c9492303e0',1,'MathUtils']]],
-  ['valid_5fvector_5felement_299',['valid_vector_element',['../Vector_8h.html#ab9590928a1a025aa0689128e84f8b5aa',1,'MathUtils']]]
+  ['wgs84_5fa_5fm_0',['WGS84_A_M',['../constants_8h.html#a408bf32c11a47d3f17820649b70f3b0e',1,'MathUtils::Constants']]],
+  ['wgs84_5fb_5fm_1',['WGS84_B_M',['../constants_8h.html#aa4ff8ada0b4daec8cff610cdaa276e45',1,'MathUtils::Constants']]],
+  ['wgs84_5fecc_2',['WGS84_ECC',['../constants_8h.html#ab13ffcb46e1d11912b46b48fd708413d',1,'MathUtils::Constants']]],
+  ['wgs84_5fecc2_3',['WGS84_ECC2',['../constants_8h.html#a58ab10674940ca241c533d12dc153c2c',1,'MathUtils::Constants']]],
+  ['wgs84_5ff_4',['WGS84_F',['../constants_8h.html#ae5d89d8301c13bc13c0bd5c9295cae2a',1,'MathUtils::Constants']]],
+  ['wgs84_5fgm_5fm3ps2_5',['WGS84_GM_M3PS2',['../constants_8h.html#aa299d510466e07dc42fd4997977bf5a6',1,'MathUtils::Constants']]],
+  ['wgs84_5finvf_6',['WGS84_INVF',['../constants_8h.html#a2a4880204e070c7701cea15a3c59883b',1,'MathUtils::Constants']]],
+  ['wgs84_5frate_5frps_7',['WGS84_RATE_RPS',['../constants_8h.html#aa1222eb662149339b13d47b72f3a2759',1,'MathUtils::Constants']]]
 ];
