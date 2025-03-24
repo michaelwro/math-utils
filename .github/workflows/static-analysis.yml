@@ -21,8 +21,7 @@ jobs:
         run: sudo apt install -y cppcheck
 
       - name: CMake compile commands
-        run: |
-          cmake -B build/ -DCMAKE_BUILD_TYPE=Debug
+        run: bash scripts/build-debug.sh
 
       - name: CppCheck
         run: bash scripts/run-cppcheck.sh
