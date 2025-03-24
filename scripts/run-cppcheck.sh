@@ -9,13 +9,14 @@
 REPO_DIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../"
 
 # find project files and run cppcheck
-find $REPO_DIR/src/ $REPO_DIR/include/ -type f \( -iname *.cpp -o -iname *.h \) | \
+find $REPO_DIR/src/ $REPO_DIR/include/ -type f \( -iname *.cpp \) | \
     cppcheck --file-list=- \
-        --enable=style,warning \
+        --enable=style \
         --language=c++ \
         --std=c++20 \
         --platform=unix64 \
         --inline-suppr \
-        -I $REPO_DIR/include/ \
+        --check-level=exhaustive \
+        -I $REPO_DIR/src/ \
         -i $REPO_DIR/build/ \
         -i $REPO_DIR/test/
