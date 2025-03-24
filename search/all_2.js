@@ -7,5 +7,5 @@ var searchData=
   ['cols_4',['cols',['../classMathUtils_1_1Matrix.html#a7c6d4aa701b52115c4bf8fc1d909bb03',1,'MathUtils::Matrix']]],
   ['constants_2eh_5',['constants.h',['../constants_8h.html',1,'']]],
   ['conversions_2eh_6',['conversions.h',['../conversions_8h.html',1,'']]],
-  ['cross_7',['cross',['../Vector_8h.html#ad39d8327e5a1338654b9c4c8bf5184cd',1,'MathUtils']]]
+  ['cross_7',['cross',['../src_2math_2Vector_8h.html#a54a77a662805f53d873800821df2eb75',1,'math::cross()'],['../include_2LinAlg_2Vector_8h.html#ad39d8327e5a1338654b9c4c8bf5184cd',1,'MathUtils::cross()']]]
 ];

@@ -4,7 +4,7 @@ var searchData=
   ['m2ft_1',['m2ft',['../conversions_8h.html#ad8c1cb0639565a1240f6af44106e47e5',1,'MathUtils::Conversions']]],
   ['m2mi_2',['m2mi',['../conversions_8h.html#a361a757e174d31daa76e2baa9f7fa42d',1,'MathUtils::Conversions']]],
   ['m2nmi_3',['m2nmi',['../conversions_8h.html#afcd697e299308f973658276ff1895a8a',1,'MathUtils::Conversions']]],
-  ['magnitude_4',['magnitude',['../classMathUtils_1_1Vector.html#a46d194151a7acdacac995e5978615a22',1,'MathUtils::Vector']]],
+  ['magnitude_4',['magnitude',['../classmath_1_1Vector.html#adb9138e324a81156eb0c8a9dd90d0886',1,'math::Vector::magnitude()'],['../classMathUtils_1_1Vector.html#a46d194151a7acdacac995e5978615a22',1,'MathUtils::Vector::magnitude()']]],
   ['mathutils_3a_3avalid_5feuler321_5felement_5',['valid_euler321_element',['../conceptMathUtils_1_1valid__euler321__element.html',1,'MathUtils']]],
   ['mathutils_3a_3avalid_5fgeocoord_5felement_6',['valid_geocoord_element',['../conceptMathUtils_1_1valid__geocoord__element.html',1,'MathUtils']]],
   ['mathutils_3a_3avalid_5fmatrix_5fdims_7',['valid_matrix_dims',['../conceptMathUtils_1_1valid__matrix__dims.html',1,'MathUtils']]],

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Math Utilities: src/Geodesy/lla_to_ecef.cpp File Reference</title>
+<title>Math Utilities: src/geodesy/GeoType.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -70,67 +70,75 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_48b70290ec5c7d9f344f09fa91595927.html">Geodesy</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_73caa2301e872f2af169474288ae71fb.html">geodesy</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">lla_to_ecef.cpp File Reference</div></div>
+  <div class="headertitle"><div class="title">GeoType.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="lla__to__ecef_8h_source.html">Geodesy/lla_to_ecef.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="constants_8h_source.html">constants.h</a>&quot;</code><br />
-<code>#include &lt;cmath&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="GeoType_8hpp_source.html">geodesy/GeoType.hpp</a>&quot;</code><br />
 </div>
-<p><a href="lla__to__ecef_8cpp_source.html">Go to the source code of this file.</a></p>
+<p><a href="GeoType_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a6dec09d112fd697828677692d13344cb" id="r_a6dec09d112fd697828677692d13344cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMathUtils_1_1Vector.html">Vector</a>&lt; 3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lla__to__ecef_8cpp.html#a6dec09d112fd697828677692d13344cb">MathUtils::lla_to_ecef</a> (<a class="el" href="classMathUtils_1_1Matrix.html">const</a> <a class="el" href="classMathUtils_1_1GeoCoord.html">GeoCoord</a> &amp;<a class="el" href="classMathUtils_1_1Matrix.html">lla</a>)</td></tr>
-<tr class="memdesc:a6dec09d112fd697828677692d13344cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert geodetic latitude, longitude, and WGS84 ellipsoid altitude to ECEF position.  <br /></td></tr>
-<tr class="separator:a6dec09d112fd697828677692d13344cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01ed479d0d1773693cc236b222d16efa" id="r_a01ed479d0d1773693cc236b222d16efa"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GeoType_8cpp.html#a01ed479d0d1773693cc236b222d16efa">math::operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="GeoType_8hpp.html#a02ab2dad837021d7ce747262d1a5d93d">GeoType</a> &amp;type)</td></tr>
+<tr class="memdesc:a01ed479d0d1773693cc236b222d16efa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output a GeoType to a stream. Converts to the corresponding INTEGER.  <br /></td></tr>
+<tr class="separator:a01ed479d0d1773693cc236b222d16efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section author"><dt>Author</dt><dd>Michael Wrona </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2023-03-29 </dd></dl>
+<div class="textblock"><dl class="section author"><dt>Author</dt><dd>michaelwro </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2025-03-23 </dd></dl>
 
-<p class="definition">Definition in file <a class="el" href="lla__to__ecef_8cpp_source.html">lla_to_ecef.cpp</a>.</p>
+<p class="definition">Definition in file <a class="el" href="GeoType_8cpp_source.html">GeoType.cpp</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a6dec09d112fd697828677692d13344cb" name="a6dec09d112fd697828677692d13344cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6dec09d112fd697828677692d13344cb">&#9670;&#160;</a></span>lla_to_ecef()</h2>
+<a id="a01ed479d0d1773693cc236b222d16efa" name="a01ed479d0d1773693cc236b222d16efa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01ed479d0d1773693cc236b222d16efa">&#9670;&#160;</a></span>operator&lt;&lt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Vector&lt; 3 &gt; MathUtils::lla_to_ecef </td>
+          <td class="memname">std::ostream &amp; math::operator&lt;&lt; </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classMathUtils_1_1Matrix.html">const</a> <a class="el" href="classMathUtils_1_1GeoCoord.html">GeoCoord</a> &amp;&#160;</td>
-          <td class="paramname"><em>lla</em></td><td>)</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const <a class="el" href="GeoType_8hpp.html#a02ab2dad837021d7ce747262d1a5d93d">GeoType</a> &amp;&#160;</td>
+          <td class="paramname"><em>type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Convert geodetic latitude, longitude, and WGS84 ellipsoid altitude to ECEF position. </p>
-<p>Equation 3.14 from "Fundamentals of Astrodynamics and Applications" (Vallado). Uses WGS84 semi-major axis.</p>
+<p>Output a GeoType to a stream. Converts to the corresponding INTEGER. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">lla</td><td>Latitude [rad], longitude [rad], altitude [m]. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">os</td><td>The stream. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">type</td><td>The type. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>ECEF position [m]. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Stream with the integer added. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lla__to__ecef_8cpp_source.html#l00015">15</a> of file <a class="el" href="lla__to__ecef_8cpp_source.html">lla_to_ecef.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GeoType_8cpp_source.html#l00011">11</a> of file <a class="el" href="GeoType_8cpp_source.html">GeoType.cpp</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Mar 23 2025 22:40:05 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Mar 24 2025 02:57:31 for Math Utilities by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
