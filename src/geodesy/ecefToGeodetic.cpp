@@ -4,8 +4,6 @@
  * @date 2025-03-23
  */
 
-#pragma once
-
 #include "geodesy/ecefToGeodetic.hpp"
 
 #include <cmath>
