@@ -15,3 +15,7 @@ AllowShortFunctionsOnASingleLine: false
 
 # add a space so that we get `int a {};` instead of `int a{};`
 SpaceBeforeCpp11BracedList: true
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  BeforeElse: true
