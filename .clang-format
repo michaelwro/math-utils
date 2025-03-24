@@ -1,0 +1,17 @@
+BasedOnStyle: Google
+
+# set public, etc. to be all the way to the left
+AccessModifierOffset: -4
+
+# tabs are 4 spaces
+IndentWidth: 4
+TabWidth: 4
+
+# use 90 spaces
+ColumnLimit: 90
+
+# do not allow statements to be without braces
+AllowShortFunctionsOnASingleLine: false
+
+# add a space so that we get `int a {};` instead of `int a{};`
+SpaceBeforeCpp11BracedList: true
