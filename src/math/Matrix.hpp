@@ -10,15 +10,11 @@
 #include <array>
 #include <cassert>
 #include <cmath>
-#include <initializer_list>
 #include <iomanip>
-#include <numeric>
 #include <ostream>
-#include <stdexcept>
 #include <string>
 #include <type_traits>
 
-#include "Internal/error_msg_helpers.h"
 #include "math/Vector.hpp"
 
 namespace math {
