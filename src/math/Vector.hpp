@@ -341,8 +341,6 @@ public:
     /**
      * @brief Divide all elements by a scalar in-place.
      *
-     * @details No divide-by-zero checks.
-     *
      * @tparam T Scalar type.
      * @param scalar Scalar to divide by.
      * @return Vector with scalar divided.
@@ -353,10 +351,18 @@ public:
 
         const auto scalard = static_cast<double>(scalar);
 
+        assert(std::isnormal(scalard));
+
         std::for_each(m_arr.begin(), m_arr.end(),
                       [scalard](auto& element) { element /= scalard; });
 
         return *this;
+    }
+
+    template <typename T>
+    Vector& operator/(const T scalar) {
+        Vector vec(*this);
+        return vec /= scalar;
     }
 
     /**
@@ -446,6 +452,34 @@ std::ostream& operator<<(std::ostream& os, const Vector<N>& vec) {
 // =======================================================================================
 // VECTOR-ONLY FUNCTIONS
 // =======================================================================================
+
+/**
+ * @brief Get a vector element with compile-time bounds checks.
+ *
+ * @tparam IDX Desired index.
+ * @tparam N Vector length.
+ * @param vec The vector.
+ * @return Vector element.
+ */
+template <std::size_t IDX, std::size_t N>
+double& vget(Vector<N>& vec) {
+    static_assert(IDX < N, "Vector index out of range");
+    return vec(IDX);
+}
+
+/**
+ * @brief Get a vector element with compile-time bounds checks.
+ *
+ * @tparam IDX Desired index.
+ * @tparam N Vector length.
+ * @param vec The vector.
+ * @return Vector element.
+ */
+template <std::size_t IDX, std::size_t N>
+const double& vget(const Vector<N>& vec) {
+    static_assert(IDX < N, "Vector index out of range");
+    return vec(IDX);
+}
 
 /**
  * @brief 3D vector cross product of v1 x v2.
