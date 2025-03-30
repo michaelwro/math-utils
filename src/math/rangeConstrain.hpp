@@ -20,7 +20,7 @@ namespace math {
  * @return `val` constrained to be within [lower, upper].
  */
 template <typename T>
-[[nodiscard]] T range_constrain(const T val, const T lower, const T upper) noexcept {
+[[nodiscard]] T rangeConstrain(const T val, const T lower, const T upper) noexcept {
     static_assert(std::is_fundamental_v<T>, "Scalar types only.");
 
     if (val < lower) {
