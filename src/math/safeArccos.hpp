@@ -21,7 +21,7 @@ namespace math {
  * @return Arccosine of `val`.
  */
 template <typename T>
-[[nodiscard]] T acos_safe(const T val) {
+[[nodiscard]] T safeArccos(const T val) {
     assert(std::abs(val) <= 1.0);
 
     if (val >= 1.0) {

@@ -21,7 +21,7 @@ namespace math {
  * @return Arcsine of `val`.
  */
 template <typename T>
-[[nodiscard]] T asin_safe(const T val) noexcept {
+[[nodiscard]] T safeArcsin(const T val) noexcept {
     assert(std::abs(val) <= 1.0);
 
     constexpr auto pidiv2 = static_cast<T>(constants::pi_div2);
