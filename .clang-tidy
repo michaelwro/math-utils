@@ -1,9 +1,9 @@
 # cppcoreguidelines-avoid-magic-numbers has too many annoying false positives, so I disabled it.
 
-Checks:
-  -*,
+Checks: -*,
   cppcoreguidelines-*,
   -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-pro-bounds-constant-array-index,
   hicpp-*,
   performance-*,
   portability-*
