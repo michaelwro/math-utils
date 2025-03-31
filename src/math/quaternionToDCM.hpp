@@ -15,9 +15,9 @@ namespace math {
  * @brief Convert a quaternion to the corresponding transformation matrix (DCM). Equation
  * 45 from https://sites.utexas.edu/near/files/2022/07/Rotations.pdf
  *
- * @param q The quaternion.
+ * @param quat The quaternion.
  * @return Corresponding transformation matrix.
  */
-Matrix3 quaternionToDCM(const Quaternion& q);
+Matrix3 quaternionToDCM(const Quaternion& quat);
 
 }  // namespace math
