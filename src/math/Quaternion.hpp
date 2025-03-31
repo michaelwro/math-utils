@@ -149,7 +149,7 @@ private:
      */
     template <typename T, std::size_t N>
     static void negateArray(std::array<T, N>& arr) {
-        static_assert(arr.size() > 1, "Invalid array size.");
+        static_assert(N > 1, "Invalid array size.");
         std::for_each(arr.begin(), arr.end(), [](T& val) { val *= -1.0; });
     }
 

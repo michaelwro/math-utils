@@ -70,15 +70,7 @@ public:
                                  (std::is_floating_point_v<std::common_type_t<Args...>>)),
                             Matrix> {
         Matrix mat {};
-
-        std::size_t idx = 0;
-
-        for (const auto& element : {elements...}) {
-            mat.m_arr[idx++] = static_cast<double>(element);
-        }
-
-        assert(idx == ROWS * COLS);
-
+        mat.m_arr = {std::forward<Args>(elements)...};
         return mat;
     }
 
@@ -92,7 +84,7 @@ public:
      */
     [[nodiscard]] double& operator()(const std::size_t row, std::size_t col) {
         assert(row < ROWS);
-        assert(cols < COLS);
+        assert(col < COLS);
 
         return m_arr[arrayIndex(row, col)];
     }
@@ -106,7 +98,7 @@ public:
      */
     [[nodiscard]] const double& operator()(const std::size_t row, std::size_t col) const {
         assert(row < ROWS);
-        assert(cols < COLS);
+        assert(col < COLS);
 
         return m_arr[arrayIndex(row, col)];
     }
@@ -292,14 +284,14 @@ public:
      *
      * @return Matrix trace.
      */
-    [[nodiscard]] auto trace() const -> std::enable_if_t<ROWS == COLS, double> {
+    [[nodiscard]] auto getTrace() const -> std::enable_if_t<ROWS == COLS, double> {
         double tr = 0.0;
 
         for (std::size_t idx = 0; idx < ROWS; idx++) {
             tr += operator()(idx, idx);
         }
 
-        return trace;
+        return tr;
     }
 
     /**
@@ -360,8 +352,6 @@ private:
  */
 template <std::size_t N, std::size_t M, typename T>
 Matrix<N, M> operator*(const T scalar, const Matrix<N, M>& mat) {
-    static_assert(Matrix<N, M>::template isValidType<T>, "Invalid type.");
-
     Matrix<N, M> result(mat);
     const auto scalard = static_cast<double>(scalar);
     return result *= scalard;
@@ -381,7 +371,6 @@ Matrix<N, M> operator*(const T scalar, const Matrix<N, M>& mat) {
  */
 template <std::size_t N, std::size_t M, typename T>
 Matrix<N, M> operator*(const Matrix<N, M>& mat, const T scalar) {
-    static_assert(Matrix<N, M>::template isValidType<T>, "Invalid type.");
     return scalar * mat;
 }
 
