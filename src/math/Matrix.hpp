@@ -334,6 +334,42 @@ private:
     std::array<double, ROWS * COLS> m_arr {0};  ///< Underlying array to store values.
 };
 
+/**
+ * @brief Get a matrix element with compile-time bounds checks.
+ *
+ * @tparam R Row index.
+ * @tparam C Column index.
+ * @tparam ROWS Number of rows.
+ * @tparam COLS Number of columns/
+ * @param mat The matrix.
+ * @return Matrix element.
+ */
+template <std::size_t R, std::size_t C, std::size_t ROWS, std::size_t COLS>
+double& mget(Matrix<ROWS, COLS>& mat) {
+    static_assert(R < ROWS, "Invalid row index.");
+    static_assert(C < COLS, "Invalid column index.");
+
+    return mat(R, C);
+}
+
+/**
+ * @brief Get a matrix element with compile-time bounds checks.
+ *
+ * @tparam R Row index.
+ * @tparam C Column index.
+ * @tparam ROWS Number of rows.
+ * @tparam COLS Number of columns/
+ * @param mat The matrix.
+ * @return Matrix element.
+ */
+template <std::size_t R, std::size_t C, std::size_t ROWS, std::size_t COLS>
+const double& mget(const Matrix<ROWS, COLS>& mat) {
+    static_assert(R < ROWS, "Invalid row index.");
+    static_assert(C < COLS, "Invalid column index.");
+
+    return mat(R, C);
+}
+
 // =======================================================================================
 // MULTIPLICATION OPERATORS
 // =======================================================================================

@@ -381,6 +381,34 @@ private:
     std::array<double, LEN> m_arr {0};  ///< Underlying array to store vector values.
 };
 
+/**
+ * @brief Get a vector element with compile-time bounds checks.
+ *
+ * @tparam IDX Vector index.
+ * @tparam N Vector length.
+ * @param vec The vector.
+ * @return Vector element.
+ */
+template <std::size_t IDX, std::size_t N>
+double& vget(Vector<N> vec) {
+    static_assert(IDX < N, "Invalid vector index.");
+    return vec(IDX);
+}
+
+/**
+ * @brief Get a vector element with compile-time bounds checks.
+ *
+ * @tparam IDX Vector index.
+ * @tparam N Vector length.
+ * @param vec The vector.
+ * @return Vector element.
+ */
+template <std::size_t IDX, std::size_t N>
+const double& vget(const Vector<N> vec) {
+    static_assert(IDX < N, "Invalid vector index.");
+    return vec(IDX);
+}
+
 // =======================================================================================
 // MULTIPLICATION OPERATORS
 // =======================================================================================
