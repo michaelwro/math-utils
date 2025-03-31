@@ -129,7 +129,7 @@ public:
      * @return Number of elements in the matrix.
      */
     [[nodiscard]] static constexpr std::size_t size() noexcept {
-        return ROWS * COLS;
+        return static_cast<std::size_t>(ROWS * COLS);
     }
 
     // =============================================================================================
