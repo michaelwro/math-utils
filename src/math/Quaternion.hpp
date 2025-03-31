@@ -171,6 +171,20 @@ private:
 // =======================================================================================
 
 /**
+ * @brief Get a quaternion element with compile-time bounds checks. QUATERNIONS ARE
+ * SCALAR-FIRST!
+ *
+ * @tparam IDX Quaternion index.
+ * @param quat The quaternion.
+ * @return Quaternion value at the index.
+ */
+template <std::size_t IDX>
+const double& qget(const Quaternion& quat) {
+    static_assert(IDX < quat.size(), "Invalid quaternion index.");
+    return quat(IDX);
+}
+
+/**
  * @brief Compute the quaternion product. Hamilton transformation convention. Normalizes
  * result. Equation 34 from https://sites.utexas.edu/near/files/2022/07/Rotations.pdf
  *
