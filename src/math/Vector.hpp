@@ -360,7 +360,7 @@ public:
     }
 
     template <typename T>
-    Vector& operator/(const T scalar) {
+    Vector operator/(const T scalar) {
         Vector vec(*this);
         return vec /= scalar;
     }
