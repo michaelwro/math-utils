@@ -18,10 +18,9 @@
 namespace math {
 
 /**
- * @brief Quaternion class.
+ * @brief Quaternion class. Scalar-first. Hamilton right transformation quaternion
+ * convention.
  *
- * @details Scalar-first representation: [s, x, y, z]. Sets to unity [1, 0, 0,
- * 0]
  */
 class Quaternion {
 public:
@@ -120,7 +119,7 @@ public:
      *
      * @return [rad] Eigen angle, [uvec] eigen axis.
      */
-    [[nodiscard]] std::tuple<double, Vector<3>> getEigenAxisAngle() const;
+    [[nodiscard]] std::tuple<double, Vector<3>> eigenAxisAngle() const;
 
     /**
      * @brief Return the quaternion's eigen axis.
@@ -129,14 +128,14 @@ public:
      *
      * @return Quaternion eigen axis.
      */
-    [[nodiscard]] Vector<3> getEigenAxis() const;
+    [[nodiscard]] Vector<3> eigenAxis() const;
 
     /**
      * @brief Return the quaternion's rotation angle.
      *
      * @return [rad] Quaternion rotation angle.
      */
-    [[nodiscard]] double getEigenAngle() const;
+    [[nodiscard]] double eigenAngle() const;
 
 protected:
 private:

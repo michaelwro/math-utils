@@ -82,7 +82,7 @@ void Quaternion::normalize() {
                   [norm_scale_factor](auto& val) { val *= norm_scale_factor; });
 }
 
-std::tuple<double, Vector<3>> Quaternion::getEigenAxisAngle() const {
+std::tuple<double, Vector<3>> Quaternion::eigenAxisAngle() const {
     // force positive rotation
     Quaternion quat(*this);
     quat.forcePositiveRotation();
@@ -114,13 +114,13 @@ std::tuple<double, Vector<3>> Quaternion::getEigenAxisAngle() const {
     return {eigen_angle_rad, eigen_axis};
 }
 
-Vector<3> Quaternion::getEigenAxis() const {
-    [[maybe_unused]] auto [_, axis] = getEigenAxisAngle();
+Vector<3> Quaternion::eigenAxis() const {
+    [[maybe_unused]] auto [_, axis] = eigenAxisAngle();
     return axis;
 }
 
-double Quaternion::getEigenAngle() const {
-    [[maybe_unused]] auto [angle, _] = getEigenAxisAngle();
+double Quaternion::eigenAngle() const {
+    [[maybe_unused]] auto [angle, _] = eigenAxisAngle();
     return angle;
 }
 
