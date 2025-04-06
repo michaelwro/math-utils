@@ -131,7 +131,6 @@ public:
      */
     void normalize() {
         const double magn = this->magnitude();
-
         std::for_each(m_arr.begin(), m_arr.end(), [magn](auto& val) { val /= magn; });
     }
 
@@ -151,6 +150,28 @@ public:
      */
     void negate() {
         std::for_each(m_arr.begin(), m_arr.end(), [](auto& val) { val *= -1.0; });
+    }
+
+    /**
+     * @brief Get a vector filled with all zeros.
+     *
+     * @return Zero-value vector.
+     */
+    static Vector zeros() {
+        Vector vec {};
+        vec.fill(0.0);
+        return vec;
+    }
+
+    /**
+     * @brief Get a vector filled with all ones.
+     *
+     * @return Ones vector.
+     */
+    static Vector ones() {
+        Vector vec {};
+        vec.fill(1.0);
+        return vec;
     }
 
     // =============================================================================================
