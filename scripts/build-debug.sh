@@ -6,5 +6,5 @@
 
 REPO_DIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../"
 
-cmake -B $REPO_DIR/build/ -DCMAKE_BUILD_TYPE=Debug
-cmake --build $REPO_DIR/build/ -j4
+cmake --preset debug
+cmake --build --preset debug -j4

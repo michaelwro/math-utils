@@ -17,4 +17,4 @@ fi
 # run analysis
 clang-tidy --config="$(cat $REPO_DIR/.clang-tidy)" \
     -p $BUILD_DIR --quiet \
-    $(find $REPO_DIR/src/ -type f \( -iname *.cpp -o -iname *.h \))
+    $(find $REPO_DIR/src/ -type f \( -iname *.cpp -o -iname *.hpp \))
