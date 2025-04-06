@@ -11,6 +11,7 @@
 #include "constants.hpp"
 #include "conversions.hpp"
 #include "geodesy/GeoCoord.hpp"
+#include "math/safeArcsin.hpp"
 #include "math/sgn.hpp"
 #include "math/wrapPi.hpp"
 
@@ -44,10 +45,12 @@ GeoCoord ecefToGeodetic(const Vector3& pos_ecef_m,
      * If `r_delta` is small, that corresponds to a near +/- 90 deg latitude and a
      * divide-by-zero in the subsequent steps.
      */
-    constexpr double RDELTA_SINGULARITY_THRESHOLD = 1e-8;
+    constexpr double rdelta_singularity_threshold = 1e-8;
+    static_assert(rdelta_singularity_threshold > 0.0, "Must be positive.");
+
     double right_ascension {};
 
-    if (r_delta <= RDELTA_SINGULARITY_THRESHOLD) {
+    if (r_delta <= rdelta_singularity_threshold) {
         right_ascension = sgn(z) * constants::pi_div2;
     }
     else {
@@ -55,7 +58,7 @@ GeoCoord ecefToGeodetic(const Vector3& pos_ecef_m,
     }
 
     // make sure longitude is within [-180, 180] deg
-    double longitude = wrapPi(right_ascension);
+    const double longitude = wrapPi(right_ascension);
 
     // latitude iteration tolerance
     constexpr double latitude_tolerance = degreeToRadian(1e-9);
@@ -63,10 +66,12 @@ GeoCoord ecefToGeodetic(const Vector3& pos_ecef_m,
     // maximum number of iterations
     constexpr std::uint16_t max_iterations = 15;
 
+    static_assert(latitude_tolerance > 0.0, "Must be positive.");
+    static_assert(max_iterations > 1, "Must have >1 iteration.");
+
     // start off with latitude = declination
     const double factor = z / r;
-    assert(std::abs(factor) <= 1.0);
-    double latitude = std::asin(factor);
+    double latitude = safeArcsin(factor);
 
     // perform iteration until latitude is converged
     double prev_latitude = latitude + 10.0;  // add big number to start with
@@ -76,7 +81,7 @@ GeoCoord ecefToGeodetic(const Vector3& pos_ecef_m,
         prev_latitude = latitude;
         latitude =
             std::atan((z + (c_planet(latitude) * ecc2 * std::sin(latitude))) / r_delta);
-    } while (std::abs(latitude - prev_latitude) >= latitude_tolerance and
+    } while (std::abs(prev_latitude - latitude) >= latitude_tolerance and
              ++iterations < max_iterations);
 
     /**
@@ -86,7 +91,7 @@ GeoCoord ecefToGeodetic(const Vector3& pos_ecef_m,
     constexpr double near_pole_threshold = degreeToRadian(1.0);
     double height {};
 
-    if (constants::pi_div2 - std::abs(latitude) < near_pole_threshold) {
+    if (constants::pi_div2 - std::abs(latitude) <= near_pole_threshold) {
         height = (z / std::sin(latitude)) - s_planet(latitude);
     }
     else {

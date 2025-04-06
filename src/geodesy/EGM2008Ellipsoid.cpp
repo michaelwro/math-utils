@@ -9,10 +9,13 @@
 #include <cmath>
 
 double EGM2008Ellipsoid::getGravParam() const {
+    static_assert(m_grav_param_m3ps2 > 0.0, "Must be positive.");
+
     return m_grav_param_m3ps2;
 }
 
 double EGM2008Ellipsoid::getSemiMajorAxis() const {
+    static_assert(m_sma_m > 0.0, "Must be positive.");
     return m_sma_m;
 }
 
@@ -21,6 +24,7 @@ double EGM2008Ellipsoid::getSemiMinorAxis() const {
 }
 
 double EGM2008Ellipsoid::getFlattening() const {
+    static_assert(m_flattening > 0.0, "Must be positive.");
     return m_flattening;
 }
 

@@ -8,6 +8,14 @@
 
 namespace math {
 
+GeoCoord::GeoCoord(const double latitude_rad, const double longitude_rad,
+                   const double altitude_m, GeoType coord_type)
+    : m_lat_rad {latitude_rad},
+      m_lon_rad {longitude_rad},
+      m_alt_m {altitude_m},
+      m_type {coord_type} {
+}
+
 const double& GeoCoord::latitude() const noexcept {
     return m_lat_rad;
 }
