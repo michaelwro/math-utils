@@ -24,18 +24,18 @@ namespace math {
  */
 template <typename T>
 [[nodiscard]] T wrapPi(const T angle_rad) {
-    static_assert(std::is_integral_v<T> or std::is_floating_point_v<T>, "Invalid type.");
+    static_assert(std::is_floating_point_v<T>, "Must be float-type.");
 
     constexpr auto pi = static_cast<T>(constants::pi);
     constexpr auto two_pi = static_cast<T>(constants::two_pi);
 
-    T dangle_rad = std::fmod(angle_rad + pi, two_pi);
+    T fmod_angle = std::fmod(angle_rad + pi, two_pi);
 
-    if (dangle_rad < 0.0) {
-        dangle_rad += two_pi;
+    if (fmod_angle < 0.0) {
+        fmod_angle += two_pi;
     }
 
-    return dangle_rad - pi;
+    return fmod_angle - pi;
 }
 
 }  // namespace math
