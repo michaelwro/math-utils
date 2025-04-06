@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.19)
 project(mathutils
     LANGUAGES CXX
     HOMEPAGE_URL https://github.com/michaelwro/math-utils
@@ -7,16 +7,21 @@ project(mathutils
 include(CTest)
 
 # set some configs
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)  # for clang-tidy
 
 # source and include folders
 set(mathutils_SOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/)
 
+# option to en/disable treating warnings as errors
+option(WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
+
 # define library and get sources
 add_library(mathutils STATIC)
 add_subdirectory(${mathutils_SOURCES_DIR})
+
+target_compile_features(mathutils PUBLIC cxx_std_17)
 
 # pre-processor definitions
 target_compile_definitions(mathutils
@@ -36,8 +41,9 @@ target_compile_options(mathutils
         -Wfloat-equal
         -Wundef
         -Wformat=2
-        $<$<CONFIG:DEBUG>:-Werror;-g3;-O0;-Wcast-align;-Wcast-qual;>
+        $<$<CONFIG:DEBUG>:-g3;-O0;-Wcast-align;-Wcast-qual;>
         $<$<CONFIG:RELEASE>:-O2>
+        $<$<BOOL:WARNINGS_AS_ERRORS>:-Werror>
 )
 
 target_include_directories(mathutils
