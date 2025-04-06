@@ -9,8 +9,7 @@
 
 #include "constants.hpp"
 
-namespace math {
-namespace internal {
+namespace math::internal {
 
 /**
  * NOTE: all conversions are from:
@@ -31,8 +30,9 @@ constexpr double bar_to_hpa = 1e3;
 constexpr double pa_to_inhg_32f = 3.386389e-3;
 constexpr double atm_to_pa = 101325.0;
 
-}  // namespace internal
+}  // namespace math::internal
 
+namespace math {
 // =======================================================================================
 // ANGLES
 // =======================================================================================
